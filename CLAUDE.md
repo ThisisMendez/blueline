@@ -18,6 +18,7 @@ own red lines that drives the analysis; and a saved library of past documents.
 Decided. Do not reopen.
 
 - Next.js, Supabase for auth and database, deployed on Vercel.
+- PostgreSQL is the write model.
 - Model calls go through OpenRouter.
 - The uploaded file is parsed in the browser. Only the extracted text is stored.
 - Every risk flag cites the exact sentence it came from. A flag whose source
