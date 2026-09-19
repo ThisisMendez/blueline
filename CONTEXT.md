@@ -4,6 +4,14 @@ Language for the people and contract judgments Blueline serves.
 
 ## Language
 
+**Blueline Redline**:
+The official public-facing product name.
+_Avoid_: Blueline as the public product name
+
+**Blueline**:
+The project shorthand used in internal documents and conversation.
+_Avoid_: Treating it as a separate product
+
 **Lease signer**:
 A person deciding whether to sign or renew a residential lease they did not write, with the document in hand and a decision approaching.
 _Avoid_: General renter, tenant in a dispute

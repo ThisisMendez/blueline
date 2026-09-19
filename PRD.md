@@ -1,4 +1,6 @@
-# Blueline — first-version brief
+# Blueline Redline — first-version brief
+
+Blueline is the project shorthand. The official product name and visual direction are in [BRAND.md](BRAND.md).
 
 ## Who this is for
 

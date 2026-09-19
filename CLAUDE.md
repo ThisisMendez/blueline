@@ -1,5 +1,8 @@
 # Blueline
 
+Blueline is the project shorthand. The official product name is **Blueline Redline**.
+Use [BRAND.md](BRAND.md) for the public name, palette, and brand voice.
+
 A web app for people signing contracts they did not write. Someone uploads a
 contract, lease, freelance agreement, or terms of service and gets back: a
 plain-English summary; the clauses that could hurt them, ranked by severity,
@@ -11,7 +14,7 @@ own red lines that drives the analysis; and a saved library of past documents.
 
 - `research/summary.md` holds the user research. Read it before deciding what
   the product should do.
-- `PRD.md` will hold the brief once it exists. Read it before building.
+- `PRD.md` holds the first-version brief. Read it before building.
 
 ## Settled
 
