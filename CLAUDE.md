@@ -1,7 +1,6 @@
 # Blueline
 
-Blueline is the project shorthand. The official product name is **Blueline Redline**.
-Use [BRAND.md](BRAND.md) for the public name, palette, and brand voice.
+Blueline is the project shorthand. The official product name is **Blueline Redline**. Use [BRAND.md](BRAND.md) for the public name, palette, and brand voice.
 
 A web app for people signing contracts they did not write. Someone uploads a
 contract, lease, freelance agreement, or terms of service and gets back: a
@@ -12,8 +11,7 @@ own red lines that drives the analysis; and a saved library of past documents.
 
 ## Read these first
 
-- `research/summary.md` holds the user research. Read it before deciding what
-  the product should do.
+- `research/summary.md` holds the user research. Read it before deciding what the product should do.
 - `PRD.md` holds the first-version brief. Read it before building.
 
 ## Settled
@@ -33,8 +31,7 @@ Do not pick one of these to stay unblocked.
 
 - Which OpenRouter model. Read it from one env var; never hardcode a model id.
 - Which formats parse in the browser (paste, PDF, docx). Settles in the PRD.
-- Whether a Supabase project exists yet. Do not scaffold a throwaway project
-  or mock auth to get past a missing key.
+- Whether a Supabase project exists yet. Do not scaffold a throwaway project or mock auth to get past a missing key.
 
 ## Scope
 
@@ -48,8 +45,7 @@ it, because a citation is worthless when the text it points at was misread.
 
 ## Rules
 
-- Keep credentials in `.env.local`, which is gitignored. Never commit a secret,
-  because a key is public the moment it is pushed and has to be rotated.
+- Keep credentials in `.env.local`, which is gitignored. Never commit a secret, because a key is public the moment it is pushed and has to be rotated.
 - Call OpenRouter from a server route so the key never reaches the browser.
 - State only what the document says. Where the text does not support a claim,
   the product does not make it.
