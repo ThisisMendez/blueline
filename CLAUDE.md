@@ -50,6 +50,7 @@ it, because a citation is worthless when the text it points at was misread.
 - State only what the document says. Where the text does not support a claim,
   the product does not make it.
 - Ask before adding a dependency.
+- All copy a user reads in this product — the landing page, UI labels, error messages, and empty states — has to be run through the humanizer skill before it's committed. Copy that reads as though a model wrote it is a defect, not a matter of taste.
 - When grilling me, put every question as options to pick from, not free text.
 - Anything else that needs me and is not in the stop-and-ask list: park it in
   `QUESTIONS.md`, keep building what does not depend on it, and raise the
