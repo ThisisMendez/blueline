@@ -145,3 +145,8 @@ desktop.ini
 .history/
 tmp/
 temp/
+
+# ---- Impeccable working evidence (keep design.json and surfaces/) ----
+.impeccable/review/
+.impeccable/hook.cache.json
+.impeccable/mocks/

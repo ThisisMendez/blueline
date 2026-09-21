@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-21T00:00:00Z",
+  "title": "Design System: Blueline Redline",
+  "extensions": {
+    "colorMeta": {
+      "navy": {
+        "role": "primary",
+        "displayName": "Blueprint Navy",
+        "canonical": "#123b5d",
+        "tonalRamp": ["#081d2f", "#0c2c46", "#123b5d", "#1c5484", "#3d75a6", "#7fa3c4", "#bcd0e2", "#e7eef5"]
+      },
+      "navy-ink": {
+        "role": "primary",
+        "displayName": "Navy Ink",
+        "canonical": "#0c2c46",
+        "tonalRamp": ["#050f19", "#0c2c46", "#123b5d", "#1c5484", "#3d75a6", "#7fa3c4", "#bcd0e2", "#e7eef5"]
+      },
+      "red": {
+        "role": "secondary",
+        "displayName": "Signal Red",
+        "canonical": "#e5453a",
+        "tonalRamp": ["#3d0f0b", "#7a1f17", "#a82a22", "#c23327", "#e5453a", "#ee7269", "#f5a8a1", "#fbdcd9"]
+      },
+      "red-ink": {
+        "role": "secondary",
+        "displayName": "Red Ink",
+        "canonical": "#c23327",
+        "tonalRamp": ["#330b08", "#661710", "#8f2119", "#c23327", "#e5453a", "#ee7269", "#f5a8a1", "#fbdcd9"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#f6f1e7",
+        "tonalRamp": ["#3c352a", "#5e5544", "#8b7f68", "#b8ab90", "#d9cdb4", "#ece3d1", "#f6f1e7", "#fdfbf6"]
+      },
+      "paper-deep": {
+        "role": "neutral",
+        "displayName": "Paper Deep",
+        "canonical": "#ece3d1",
+        "tonalRamp": ["#37311f", "#584f35", "#847550", "#ad9c73", "#cabb9c", "#ece3d1", "#f4eee2", "#faf7f0"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Archivo Display",
+        "purpose": "Section headings, wordmark, and the single CTA. Structural and action text only, never prose."
+      },
+      "body": {
+        "displayName": "Source Serif 4 Body",
+        "purpose": "The specimen clause text and all running prose/copy. Largest single use is the demo clause itself."
+      },
+      "label": {
+        "displayName": "JetBrains Mono Label",
+        "purpose": "Every citation line, specimen kicker, and badge. Data/citation voice; never carries prose."
+      }
+    },
+    "shadows": [
+      {
+        "name": "specimen-lift",
+        "value": "0 28px 54px -24px rgba(18,59,93,0.5), 0 10px 22px -14px rgba(18,59,93,0.35)",
+        "purpose": "Hero specimen card at rest; the system's strongest elevation, reserved for the page's one anchor object."
+      },
+      {
+        "name": "proposed-edit-lift",
+        "value": "0 24px 46px -22px rgba(18,59,93,0.5), 0 8px 18px -12px rgba(18,59,93,0.32)",
+        "purpose": "The 'Proposed edit' counter-offer panel; a quieter version of specimen-lift marking it as the resolved state next to the flat 'As written' panel."
+      }
+    ],
+    "motion": [
+      {
+        "name": "leader-draw",
+        "value": "stroke-dashoffset 0.9s cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Leader-line SVG paths draw on when the specimen card enters view (IntersectionObserver, 0.3 threshold). Disabled under prefers-reduced-motion."
+      },
+      {
+        "name": "badge-settle",
+        "value": "opacity/transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 0.5s delay",
+        "purpose": "Margin labels fade and settle into place after the leader lines begin drawing. Disabled under prefers-reduced-motion."
+      },
+      {
+        "name": "cited-mark-intensify",
+        "value": "background-color 0.15s on hover/focus, 1.1s cubic-bezier(0.16, 1, 0.3, 1) back to rest",
+        "purpose": "The cited mark's highlight intensifies fast on interaction and fades slowly back — 'the trace of having been read.' The named adaptation for STORY's literal 'circled' language."
+      }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single CTA on the page: navy fill, paper text, uppercase Archivo, no radius.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\">Sign in and try it on your lease</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; background: #123b5d; color: #f6f1e7; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 24px; border: none; border-radius: 0; transition: background-color 0.2s; } .ds-btn-primary:hover { background: #0c2c46; } .ds-btn-primary:focus-visible { outline: 2px solid #e5453a; outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Ghost Link",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Nav and footer 'Sign in' link: underlined navy text, no fill, turns red on hover.",
+      "html": "<a href=\"#\" class=\"ds-link-ghost\">Sign in</a>",
+      "css": ".ds-link-ghost { font-family: 'Archivo', sans-serif; font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: #123b5d; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; transition: color 0.2s; } .ds-link-ghost:hover { color: #e5453a; } .ds-link-ghost:focus-visible { outline: 2px solid #e5453a; outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Alert Badge",
+      "kind": "chip",
+      "refersTo": "badge-alert",
+      "description": "Filled red-ink badge for urgent states: 'Severity: High', 'Preference match'.",
+      "html": "<span class=\"ds-badge-alert\">Severity: High</span>",
+      "css": ".ds-badge-alert { display: inline-block; background: #c23327; color: #f6f1e7; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 8px; border-radius: 0; }"
+    },
+    {
+      "name": "Neutral Badge",
+      "kind": "chip",
+      "refersTo": "badge-neutral",
+      "description": "Outlined navy badge for conditional states: 'Matters if'.",
+      "html": "<span class=\"ds-badge-neutral\">Matters if</span>",
+      "css": ".ds-badge-neutral { display: inline-block; background: transparent; color: #123b5d; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 8px; border: 2px solid #123b5d; border-radius: 0; }"
+    },
+    {
+      "name": "Absent Badge",
+      "kind": "chip",
+      "refersTo": "badge-absent",
+      "description": "Dashed-border navy badge/callout for 'Not found' checklist items — kept visually distinct from a risk flag on purpose.",
+      "html": "<div class=\"ds-badge-absent\"><span class=\"ds-badge-absent-label\">Not found</span><span class=\"ds-badge-absent-body\">Dispute routes — not stated anywhere in the packet you gave us</span></div>",
+      "css": ".ds-badge-absent { display: flex; flex-direction: column; gap: 4px; padding: 8px 12px; border: 2px dashed #123b5d; } .ds-badge-absent-label { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #123b5d; } .ds-badge-absent-body { font-family: 'Source Serif 4', Georgia, serif; font-size: 0.875rem; color: #0c2c46; }"
+    },
+    {
+      "name": "Specimen Card",
+      "kind": "custom",
+      "refersTo": "specimen-card",
+      "description": "The signature component: a bordered paper plate holding a cited lease clause with runtime-measured leader lines to margin labels. Static snapshot (lines pre-drawn); the live build measures and animates this at runtime.",
+      "html": "<div class=\"ds-specimen\"><p class=\"ds-specimen-kicker\">Specimen — Early Termination Clause</p><p class=\"ds-specimen-clause\">\"Tenant shall be liable for <mark class=\"ds-cited-mark\">the full remaining balance of rent due under this Lease</mark> if Tenant vacates prior to the expiration date.\"</p><p class=\"ds-specimen-source\">Source: sample lease, Section 8(c)</p></div>",
+      "css": ".ds-specimen { border: 2px solid #123b5d; background: #f6f1e7; box-shadow: 0 28px 54px -24px rgba(18,59,93,0.5), 0 10px 22px -14px rgba(18,59,93,0.35); padding: 24px; } .ds-specimen-kicker { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: #123b5d; } .ds-specimen-clause { margin-top: 20px; font-family: 'Source Serif 4', Georgia, serif; font-size: 1.25rem; line-height: 1.6; color: #0c2c46; } .ds-cited-mark { background: rgba(229,69,58,0.14); border-bottom: 2px solid #e5453a; padding: 0 0.15em; border-radius: 2px; transition: background-color 1.1s cubic-bezier(0.16,1,0.3,1); } .ds-cited-mark:hover, .ds-cited-mark:focus-visible { background: rgba(229,69,58,0.38); transition-duration: 0.15s; } .ds-specimen-source { margin-top: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: rgba(18,59,93,0.7); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Field Guide",
+    "overview": "Blueline Redline's landing world reads a lease clause the way a naturalist field guide reads a specimen: identified, labeled, and cited — never pitched. The build refuses the category default of hero claim, feature grid, and testimonial carousel; the first viewport is the specimen card itself, at rest, doing the identification live. Everything locks to a strict shared grid of 2px navy rules; nothing floats free of a border. Paper is the ground the specimen sits on, navy is the ink that does the identifying (labels, leader lines, structure, body), and signal red is rationed to exactly one job — marking the cited, diagnostic phrase and the severity/alert state. It is never a button color or a general accent.\n\nThe system is calm and procedural rather than persuasive. Density is moderate: generous card padding (2.5–3rem), wide section rhythm (5–7rem between below-fold plates), but tight, exact leader-line geometry inside the specimen itself. Confirmed visual rejection: no hero claim headline, no feature-icon grid, no testimonial carousel, no rounded 'SaaS card' chrome, no flat zero-blur block shadow (the craft floor rejected the original hard-offset shadow during finish review; the shipped shadow is a real two-layer offset+blur elevation, documented below).",
+    "keyCharacteristics": [
+      "Paper-ground specimen cards bordered in solid 2px navy, radius-0, holding diagnostic content the way a museum plate holds a labeled specimen.",
+      "Signal red reserved to the cited mark and the alert-severity badge only; every other UI color role runs on navy/paper.",
+      "A three-voice type system — Archivo for structural/display and label text, Source Serif 4 for prose and the clause itself, JetBrains Mono for data/citation labels — never interchanged.",
+      "Runtime-measured SVG leader lines connecting cited phrases to margin labels, drawing on via stroke-dashoffset on viewport entry.",
+      "Two-layer soft elevation shadow (not a flat block shadow) reserved for the specimen hero card and the 'Proposed edit' counter-offer card."
+    ],
+    "rules": [
+      { "name": "The Reserved Red Rule", "body": "Signal red marks exactly two things: the cited/diagnostic phrase and an alert-severity state. It is never a button color, a link color, a decorative accent, or a general-purpose highlight.", "section": "colors" },
+      { "name": "The Red-Ink Substitution Rule", "body": "Any red at text scale or in a small filled badge uses --color-red-ink (#c23327), never --color-red (#e5453a). --color-red is reserved for borders, strokes, and large marks where its contrast already clears AA.", "section": "colors" },
+      { "name": "The Three-Voice Rule", "body": "Archivo is structure and action, Source Serif 4 is prose and the specimen itself, JetBrains Mono is data and citation. A given piece of text uses exactly one voice for its role.", "section": "typography" },
+      { "name": "The Two-Layer Lift Rule", "body": "Where a card needs to read as elevated, use a two-layer soft shadow in navy (rgba(18,59,93,...)) at the documented values — never a flat, zero-blur, hard-offset block shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do hold signal red to the cited mark, leader lines, and alert-severity/preference badges only (The Reserved Red Rule).",
+      "Do use --color-red-ink (#c23327) for any small-scale red text or filled badge; use --color-red (#e5453a) only for borders, strokes, and large marks (The Red-Ink Substitution Rule).",
+      "Do border every card and panel in solid 2px navy at radius-0; reserve the dashed-navy border exclusively for 'not found'/absence states.",
+      "Do use the two-layer navy soft-shadow recipe when a card needs to read as elevated (The Two-Layer Lift Rule), and leave every other surface flat.",
+      "Do measure leader-line geometry at runtime (getBoundingClientRect/ResizeObserver) rather than hardcoding coordinates, and respect prefers-reduced-motion on every animated element.",
+      "Do keep the three type voices separated by role: Archivo for structure/action, Source Serif 4 for prose/specimen text, JetBrains Mono for data/labels/citations."
+    ],
+    "donts": [
+      "Don't use a flat, zero-blur, hard-offset block shadow anywhere in this system — it was tried on the elevated cards and rejected in finish review as a craft-floor violation.",
+      "Don't use signal red as a button, link, or general accent color; it is reserved to citation and alert states.",
+      "Don't merge the 'not found' (dashed navy) treatment with a risk-flag or alert badge — absence and risk are product-distinct and must stay visually distinct.",
+      "Don't treat the checkmark glyphs in the coverage checklist (BelowFold.tsx) as an established icon system. They are a single incumbent instance, not a documented icon convention — this system otherwise has no icon language, and a future surface should not extend glyph iconography from this one unreviewed use."
+    ]
+  }
+}
