@@ -1,8 +1,8 @@
-import { BelowFold } from "@/components/landing/BelowFold";
-import { FieldNotes } from "@/components/landing/FieldNotes";
-import { Footer } from "@/components/landing/Footer";
-import { Nav } from "@/components/landing/Nav";
-import { SpecimenHero } from "@/components/landing/SpecimenHero";
+import { BelowFold } from "@/features/landing/components/BelowFold";
+import { FieldNotes } from "@/features/landing/components/FieldNotes";
+import { Footer } from "@/features/landing/components/Footer";
+import { Nav } from "@/features/landing/components/Nav";
+import { SpecimenHero } from "@/features/landing/components/SpecimenHero";
 
 export default function Home() {
   return (

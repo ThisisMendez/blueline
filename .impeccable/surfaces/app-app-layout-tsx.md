@@ -1,7 +1,7 @@
 ---
 version: 1
 slug: "app-app-layout-tsx"
-primary_target: "app/(app)/layout.tsx"
+primary_target: "src/app/(app)/layout.tsx"
 related_targets: []
 ---
 

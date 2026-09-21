@@ -26,8 +26,8 @@ export function InView({
       "(prefers-reduced-motion: reduce)"
     ).matches;
     if (reduceMotion || typeof IntersectionObserver === "undefined") {
-      setInView(true);
-      return;
+      const frame = requestAnimationFrame(() => setInView(true));
+      return () => cancelAnimationFrame(frame);
     }
 
     const observer = new IntersectionObserver(

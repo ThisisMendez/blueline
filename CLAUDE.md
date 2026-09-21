@@ -40,6 +40,15 @@ Build only what PRD.md, the spec, and the tracked tickets call for. Something th
 
 Issue tracker, triage labels, and domain docs are configured in `docs/agents/`.
 
+## Repository layout
+
+- `src/app/` owns routes, layouts, and route-level styling.
+- Route groups organize marketing, authentication, and product surfaces without changing their URLs.
+- `src/features/<feature>/` owns feature-specific UI, state, schemas, server logic, and tests.
+- Create `src/shared/` only when code is genuinely used by multiple features.
+- Root directories are reserved for configuration, durable product context, research, tracked plans, migrations, tests, and agent tooling.
+- Do not create a new top-level source directory or a second application root without recording the architectural reason.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
