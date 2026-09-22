@@ -153,7 +153,7 @@ async function askModel(
  * The sentence the signer reads is cut from their own extracted text at the
  * recorded offsets, never copied from the model's reply — the same rule ADR
  * 0001 sets for a flag's citation. A reference we cannot show the sentence
- * for is not a reference we will stop someone's review for.
+ * for is a failed verification, never proof that the packet is complete.
  */
 function locateReferences(
   candidates: readonly CandidateReference[],
@@ -213,7 +213,7 @@ function matchFor(
     const chosen = resolutions.get(located.reference.id) ?? null;
     if (chosen === null) return null;
     // A document the packet does not hold is not an answer, whoever named it.
-    if (!findDocument(packet, chosen)) return null;
+    if (!findDocument(packet, chosen) || chosen === located.reference.citingDocumentId) return null;
     return { reference: located.reference, documentId: chosen, matchedBy: "signer" };
   }
 
@@ -247,6 +247,9 @@ export async function checkCompleteness({
       buildCompletenessRetryUserMessage(packet, firstPass.unlocatable),
     );
     const secondPass = locateReferences(retry.references, packet);
+    if (secondPass.unlocatable.length > 0) {
+      throw new ModelError("verification-failed", "The document references could not be verified.");
+    }
 
     const alreadyHeld = new Set(located.map((entry) => entry.reference.id));
     const recovered = secondPass.located.filter(
@@ -258,6 +261,9 @@ export async function checkCompleteness({
       0,
       firstPass.unlocatable.length - recovered.length,
     );
+    if (droppedReferenceCount > 0) {
+      throw new ModelError("verification-failed", "The completeness retry left unverified document references.");
+    }
   }
 
   const byReferenceId = new Map(

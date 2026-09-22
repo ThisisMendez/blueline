@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -103,10 +103,17 @@ describe("a signer who has a PDF rather than text to paste", () => {
 
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
 
-    expect(
-      await screen.findByRole("heading", { name: /terms to look at/i }, { timeout: 10_000 }),
-    ).toBeInTheDocument();
+    const flagsHeading = await screen.findByRole(
+      "heading",
+      { name: /terms to look at/i },
+      { timeout: 10_000 },
+    );
+    expect(flagsHeading).toBeInTheDocument();
     expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+
+    // A sentence can be both a flag and the sentence covering a checklist
+    // topic, so the flag assertions below look inside the flag list.
+    const flagsSection = flagsHeading.closest("section")!;
 
     // Every flag quotes the file: the sentence on screen is a slice of the
     // text that came out of the PDF, not of the .txt the fixture was cut from.
@@ -126,7 +133,9 @@ describe("a signer who has a PDF rather than text to paste", () => {
     for (const flag of stored!.review.riskFlags) {
       expect(pdfText.includes(flag.sourceSentence)).toBe(true);
       expect(pdfText.slice(flag.sourceStart, flag.sourceEnd)).toBe(flag.sourceSentence);
-      expect(screen.getByText(normalizeText(flag.sourceSentence))).toBeInTheDocument();
+      expect(
+        within(flagsSection).getByText(normalizeText(flag.sourceSentence)),
+      ).toBeInTheDocument();
     }
   }, 20_000);
 

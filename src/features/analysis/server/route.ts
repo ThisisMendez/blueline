@@ -83,6 +83,7 @@ const FAILURE_STATUS: Record<AnalysisFailure, number> = {
   "model-rate-limited": 429,
   "model-unavailable": 502,
   "model-unreadable": 502,
+  "model-verification-failed": 502,
 };
 
 function failureFor(error: ModelError): AnalysisFailure {
@@ -95,6 +96,8 @@ function failureFor(error: ModelError): AnalysisFailure {
       return "model-rate-limited";
     case "unreadable":
       return "model-unreadable";
+    case "verification-failed":
+      return "model-verification-failed";
     default:
       return "model-unavailable";
   }
@@ -121,10 +124,7 @@ export function createAnalysisRoute(
     if (parsed.data.text.trim().length === 0) return reject("empty-text");
 
     const accounts = await dependencies.accounts();
-    // Configured accounts mean the spec's rule applies: signed in before
-    // anything is pasted. With accounts absent there is nobody to sign in as,
-    // and the review runs unsaved rather than behind a pretend session.
-    if (accounts.kind === "signed-out") return reject("not-signed-in");
+    // Anonymous reviews are ephemeral in every deployment configuration.
 
     const lease: ExtractedDocument = {
       id: PASTED_DOCUMENT_ID,

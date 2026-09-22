@@ -401,18 +401,16 @@ describe("a lease that points at nothing", () => {
 });
 
 describe("a reference whose sentence cannot be found", () => {
-  it("is dropped after the retry rather than stopping the review", async () => {
+  it("fails verification after one retry without issuing a partial review", async () => {
     useModel({ unquotableReferences: ["Pet Addendum"] });
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
 
-    // The pet addendum is not in the packet, so an unverifiable reference to
-    // it would block this signer if it were trusted. It is not trusted.
     await buildPacket(user, ["fee-schedule"]);
     await submit(user);
 
     expect(
-      await screen.findByRole("heading", { name: REVIEW_HEADING }, { timeout: 10_000 }),
+      await screen.findByText(/couldn't verify the answer against your document/i),
     ).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: BLOCKED_HEADING })).toBeNull();
 
@@ -420,12 +418,10 @@ describe("a reference whose sentence cannot be found", () => {
     expect(model.completenessRequests).toHaveLength(2);
 
     const outcome = outcomes[0];
-    expect(outcome.status).toBe("reviewed");
-    if (outcome.status !== "reviewed") return;
-    expect(outcome.completeness.droppedReferenceCount).toBe(1);
-    expect(outcome.completeness.matches.map((match) => match.reference.name)).toEqual([
-      "Schedule of Resident Fees",
-    ]);
+    expect(outcome).toEqual({ status: "failed", reason: "model-verification-failed" });
+    expect(model.analysisRequests).toHaveLength(0);
+    expect(store.size).toBe(0);
+    expect(screen.queryByRole("heading", { name: REVIEW_HEADING })).toBeNull();
   }, 30_000);
 });
 

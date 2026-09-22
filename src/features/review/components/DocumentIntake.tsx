@@ -31,6 +31,7 @@ const FAILURE_MESSAGE: Record<AnalysisFailure, string> = {
   "model-rate-limited": "Too many reviews are running at once. Give it a minute and try again.",
   "model-unavailable": "The reading service didn't answer. Try it again in a moment.",
   "model-unreadable": "The answer came back garbled, so there was nothing worth showing you.",
+  "model-verification-failed": "We couldn't verify the answer against your document. The review could not be completed. Try again.",
 };
 
 const REJECTION_MESSAGE: Record<AnalysisRejection, string> = {
@@ -313,7 +314,7 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
             {working ? "Reading your lease" : "Read my lease"}
           </button>
           <p className="font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
-            {persists ? "Kept in your library" : "Not kept anywhere"}
+            {persists ? "Kept in your library" : "Not saved by Blueline"}
           </p>
         </div>
       </form>

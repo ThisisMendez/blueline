@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
 import { AccountsNotice } from "@/features/auth/components/AccountsNotice";
 import { getAccountsState } from "@/features/auth/session";
@@ -12,21 +12,9 @@ export const metadata: Metadata = {
   title: "Review a lease | Blueline Redline",
 };
 
-/**
- * The intake screen, in both of the product's real configurations.
- *
- * With accounts running, the spec's rule holds: sign in before anything is
- * pasted or opened, so every piece of extracted text has an owner from the
- * first keystroke. With accounts absent there is nobody to sign in as, so the
- * review runs and is shown once, unsaved, and the screen says so instead of
- * inventing a session to keep the flow tidy.
- */
+/** Public intake; authenticated signers also see their retained reviews. */
 export default async function ReviewPage() {
   const accounts = await getAccountsState();
-
-  if (accounts.kind === "signed-out") {
-    redirect("/sign-in?next=/review");
-  }
 
   const signedIn = accounts.kind === "signed-in";
   let library: readonly StoredReviewSummary[] = [];
@@ -56,7 +44,12 @@ export default async function ReviewPage() {
         </p>
       </div>
 
-      {signedIn ? null : <AccountsNotice />}
+      {accounts.kind === "unconfigured" ? <AccountsNotice /> : !signedIn ? (
+        <p className="font-[family-name:var(--font-body)]">
+          This review stays in this tab. <Link href="/sign-in" className="underline">Sign in</Link> to
+          keep reviews in your library and set personal red lines.
+        </p>
+      ) : null}
 
       <DocumentIntake persists={signedIn} />
 

@@ -59,7 +59,7 @@ Blueline accepts a complete agreement as pasted text or selectable-text PDFs, bl
 ## Implementation Decisions
 
 - A public, unauthenticated landing page is the product's front door. It states the product's capabilities (summary, cited risk flags, coverage checklist, document-grounded Q&A, counter-offers, personal red lines, saved library) and voice per BRAND.md, and its call to action is to sign in. It makes no legal-validity, safe-to-sign, or outcome claim, and includes no invented testimonial, statistic, or case study — consistent with the product's evidence-on-hand constraints. It states the product is free to use for this version without implying that stays true later.
-- A signer must be signed in before they can paste or upload anything. Extracted text and reviews are associated with the authenticated signer from the first action, not retrofitted after an anonymous session — there is no anonymous-review state to give a retention rule to.
+- Analysis accepts anonymous pasted text and selectable-text PDFs whether or not Supabase is configured. Anonymous reviews are ephemeral and never persisted. Only the library and personal red lines require an account. Signed-in reviews are scoped to their authenticated owner. This supersedes the former sign-in-before-analysis requirement per the 2026-09-22 build instructions.
 - The product is a Next.js web app deployed on Vercel, with Supabase authentication and PostgreSQL persistence. Model calls go through OpenRouter from a server route; the chosen model is read from one environment variable rather than hardcoded.
 - The browser accepts pasted text and extracts text from selectable-text PDFs. It preserves document identity and enough sentence location information to verify a flag against the extracted text. Original files are not stored; only extracted text is retained.
 - A complete agreement includes every document referenced by the lease. Completeness is checked before general review. A missing referenced document produces a blocking result naming the missing material, not a partial summary or partial flag set.
@@ -81,7 +81,7 @@ Blueline accepts a complete agreement as pasted text or selectable-text PDFs, bl
 - Exercise authentication boundaries, automatic and explicit-save expiry, and deletion of expired review text from persistence. Assert the displayed expiry matches the stored lifecycle.
 - For model quality, independently adjudicate a held-out corpus before viewing Blueline output. Include serious terms, clean leases, harmless oddities, and incomplete packets. Expansion requires verifiable source sentences for every flag and no missed adjudicated high-severity term in that corpus; count plausible false alarms separately from unsupported claims.
 - For the landing page, an independent reviewer checks its copy against the product's actual capabilities and evidence base: no legal-validity, safe-to-sign, or outcome claim, and no invented testimonial, statistic, or case study.
-- There is no existing application code or test suite in this repository, so there is no prior test seam to reuse. The first acceptance suite establishes the full-flow pattern.
+- The application and Vitest full-flow suite now exist. Extend their external model-client, authentication/persistence and clock boundaries.
 
 ## Out of Scope
 

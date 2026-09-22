@@ -50,12 +50,11 @@ export default async function SignInPage(props: PageProps<"/sign-in">) {
             Blueline <span className="text-[var(--color-red-ink)]">Redline</span>
           </Link>
           <h1 className="mt-6 font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl">
-            Sign in to read your lease
+            Sign in to keep your reviews
           </h1>
           <p className="mt-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-            Your lease text belongs to your account from the moment you paste
-            it, so sign-in comes first. We send a link instead of asking you to
-            make up another password.
+            Your account holds your review library and personal red lines.
+            We send an email link to sign you in.
           </p>
         </div>
 
@@ -79,6 +78,7 @@ export default async function SignInPage(props: PageProps<"/sign-in">) {
               </p>
             ) : null}
             <SignInForm />
+            <Link href="/review" className="underline">Review a lease without an account</Link>
           </>
         )}
       </div>

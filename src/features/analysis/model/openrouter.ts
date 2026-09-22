@@ -119,6 +119,9 @@ export class OpenRouterModelClient implements ModelClient {
     }
 
     const body = (await response.json().catch(() => null)) as OpenRouterBody | null;
+    if (body?.error) {
+      throw new ModelError("unavailable", body.error.message ?? "The provider returned an error.");
+    }
     const choice = body?.choices?.[0];
 
     // An error can arrive inside a 200, attached to the choice.

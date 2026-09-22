@@ -85,14 +85,20 @@ describe("a signed-in signer pasting a lease", () => {
   it("reads the ranked flags on screen and finds the review again after a reload", async () => {
     await pasteAndSubmit();
 
-    expect(
-      await screen.findByRole("heading", { name: /terms to look at/i }, { timeout: 10_000 }),
-    ).toBeInTheDocument();
+    const flagsHeading = await screen.findByRole(
+      "heading",
+      { name: /terms to look at/i },
+      { timeout: 10_000 },
+    );
+    expect(flagsHeading).toBeInTheDocument();
 
-    // The summary, then every flag, quoting the signer's own text.
+    // The summary, then every flag, quoting the signer's own text. The
+    // lookup is scoped to the flag list because one sentence can be both a
+    // flag and the sentence covering a checklist topic.
+    const flagsSection = flagsHeading.closest("section")!;
     expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
     for (const planted of sidecar.plantedFlags) {
-      expect(screen.getByText(planted.sourceSentence)).toBeInTheDocument();
+      expect(within(flagsSection).getByText(planted.sourceSentence)).toBeInTheDocument();
     }
 
     const severities = screen
@@ -113,8 +119,11 @@ describe("a signed-in signer pasting a lease", () => {
     renderScreen(reloaded);
 
     expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+    const reloadedFlags = screen
+      .getByRole("heading", { name: /terms to look at/i })
+      .closest("section")!;
     for (const planted of sidecar.plantedFlags) {
-      expect(screen.getByText(planted.sourceSentence)).toBeInTheDocument();
+      expect(within(reloadedFlags).getByText(planted.sourceSentence)).toBeInTheDocument();
     }
     const reloadedSeverities = screen
       .getAllByText(/^Severity: (High|Medium|Low)$/)

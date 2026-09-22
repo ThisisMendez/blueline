@@ -33,5 +33,5 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 ## Unresolved decisions
 
-- Whether starting a review from the app requires sign-in before or after the first paste/upload was resolved separately (sign-in first; see .scratch/lease-review/spec.md) — this brief's CTA reflects that.
+- The landing CTA may lead through sign-in, but anonymous review is also available from that screen; only library and personal red lines require an account, per the 2026-09-22 build decision.
 - Exact wording of the demo specimen's clause and flag copy is authored during build, run through the humanizer skill, and checked against PRODUCT.md's Evidence on Hand before commit.

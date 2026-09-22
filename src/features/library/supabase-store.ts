@@ -1,9 +1,13 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+// The checklist as published today: rows are read back against this list,
+// so the review shows the topics the product publishes now, in that order.
+import { COVERAGE_CHECKLIST } from "@/features/analysis/checklist";
 import { flagId } from "@/features/analysis/verify";
 import {
   CLEAN_REVIEW_STATEMENT,
   rankFlags,
+  type CoverageItem,
   type RiskFlag,
   type Severity,
 } from "@/features/analysis/types";
@@ -55,6 +59,14 @@ interface FlagRow {
   source_end: number;
 }
 
+interface ChecklistRow {
+  topic_id: string;
+  status: "found" | "not-found";
+  source_document_id: string | null;
+  source_start: number | null;
+  source_end: number | null;
+}
+
 export class SupabaseReviewStore implements ReviewStore {
   constructor(private readonly client: SupabaseClient) {}
 
@@ -97,6 +109,25 @@ export class SupabaseReviewStore implements ReviewStore {
       const flagInsert = await this.client.from("review_flags").insert(flags);
       if (flagInsert.error) throw new Error(flagInsert.error.message);
     }
+
+    // A found topic stores offsets, as a flag does; a not-found item stores
+    // three nulls, because there is nothing it could store instead.
+    const topics = review.review.coverage.items.map((item, position) => ({
+      review_id: review.id,
+      user_id: review.signerId,
+      position,
+      topic_id: item.topicId,
+      status: item.status,
+      source_document_id: item.status === "found" ? item.sourceDocumentId : null,
+      source_start: item.status === "found" ? item.sourceStart : null,
+      source_end: item.status === "found" ? item.sourceEnd : null,
+    }));
+    if (topics.length > 0) {
+      const topicInsert = await this.client
+        .from("review_checklist_topics")
+        .insert(topics);
+      if (topicInsert.error) throw new Error(topicInsert.error.message);
+    }
   }
 
   async findForSigner(signerId: string, reviewId: string): Promise<StoredReview | null> {
@@ -118,6 +149,9 @@ export class SupabaseReviewStore implements ReviewStore {
       .order("position", { ascending: true });
     if (documentResult.error) throw new Error(documentResult.error.message);
     const documentRows = (documentResult.data ?? []) as DocumentRow[];
+    if (documentRows.length === 0 || documentRows.some((document) => !document.extracted_text.trim())) {
+      throw new Error("Stored agreement text is incomplete.");
+    }
 
     const flagResult = await this.client
       .from("review_flags")
@@ -130,6 +164,15 @@ export class SupabaseReviewStore implements ReviewStore {
     if (flagResult.error) throw new Error(flagResult.error.message);
     const flagRows = (flagResult.data ?? []) as FlagRow[];
 
+    const topicResult = await this.client
+      .from("review_checklist_topics")
+      .select("topic_id, status, source_document_id, source_start, source_end")
+      .eq("review_id", reviewId)
+      .eq("user_id", signerId)
+      .order("position", { ascending: true });
+    if (topicResult.error) throw new Error(topicResult.error.message);
+    const topicRows = (topicResult.data ?? []) as ChecklistRow[];
+
     const documents: ExtractedDocument[] = documentRows.map((document) => ({
       id: document.document_id,
       title: document.title,
@@ -140,14 +183,15 @@ export class SupabaseReviewStore implements ReviewStore {
     const riskFlags: RiskFlag[] = [];
     for (const flag of flagRows) {
       const text = textById.get(flag.source_document_id);
-      // No text, no citation, no flag. An uncitable flag is never shown.
-      if (text === undefined) continue;
+      if (!validCitation(text, flag.source_start, flag.source_end)) {
+        throw new Error("Stored risk citation is incomplete.");
+      }
       riskFlags.push({
         id: flagId(flag.source_document_id, flag.source_start, flag.source_end),
         severity: flag.severity,
         consequence: flag.consequence,
         triggeringCondition: flag.triggering_condition,
-        sourceSentence: text.slice(flag.source_start, flag.source_end),
+        sourceSentence: text!.slice(flag.source_start, flag.source_end),
         sourceDocumentId: flag.source_document_id,
         sourceStart: flag.source_start,
         sourceEnd: flag.source_end,
@@ -155,8 +199,42 @@ export class SupabaseReviewStore implements ReviewStore {
     }
 
     const ranked = rankFlags(riskFlags);
-    const clean = ranked.length === 0;
+    const clean = ranked.length === 0 && row.clean && row.dropped_flag_count === 0;
+    if (ranked.length === 0 && !clean) {
+      throw new Error("Stored review cannot establish a clean result.");
+    }
 
+    const storedTopics = new Map(topicRows.map((topic) => [topic.topic_id, topic]));
+    if (topicRows.length !== COVERAGE_CHECKLIST.length || storedTopics.size !== COVERAGE_CHECKLIST.length) {
+      throw new Error("Stored coverage checklist is incomplete.");
+    }
+    const items: CoverageItem[] = [];
+    for (const topic of COVERAGE_CHECKLIST) {
+      const stored = storedTopics.get(topic.id);
+      if (!stored) throw new Error("Stored coverage checklist is incomplete.");
+      if (stored.status === "not-found") {
+        if (stored.source_document_id !== null || stored.source_start !== null || stored.source_end !== null) {
+          throw new Error("Stored absence has unexpected citation fields.");
+        }
+        items.push({ status: "not-found", topicId: topic.id });
+        continue;
+      }
+      if (stored.status !== "found" || stored.source_document_id === null || stored.source_start === null || stored.source_end === null) {
+        throw new Error("Stored coverage citation is incomplete.");
+      }
+      const text = textById.get(stored.source_document_id);
+      if (!validCitation(text, stored.source_start, stored.source_end)) {
+        throw new Error("Stored coverage citation is incomplete.");
+      }
+      items.push({
+        status: "found",
+        topicId: topic.id,
+        sourceSentence: text!.slice(stored.source_start, stored.source_end),
+        sourceDocumentId: stored.source_document_id,
+        sourceStart: stored.source_start,
+        sourceEnd: stored.source_end,
+      });
+    }
     return {
       id: row.id,
       signerId: row.user_id,
@@ -165,6 +243,7 @@ export class SupabaseReviewStore implements ReviewStore {
       review: {
         summary: row.summary,
         riskFlags: ranked,
+        coverage: { items },
         clean,
         cleanStatement: clean ? CLEAN_REVIEW_STATEMENT : null,
         droppedFlagCount: row.dropped_flag_count,
@@ -198,6 +277,11 @@ export class SupabaseReviewStore implements ReviewStore {
       clean: row.clean,
     }));
   }
+}
+
+function validCitation(text: string | undefined, start: number, end: number): boolean {
+  return text !== undefined && Number.isInteger(start) && Number.isInteger(end)
+    && start >= 0 && end > start && end <= text.length;
 }
 
 /**

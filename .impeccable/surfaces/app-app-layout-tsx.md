@@ -7,7 +7,7 @@ related_targets: []
 
 # App shell
 
-Scope: the authenticated app frame (behind sign-in) that holds paste/upload intake, the review result (summary, ranked flags, clean verdict), the question box, the reader's red lines, and the library. Visitor mode: Operate. Brief only — no screen inside this frame is built today.
+Scope: the app frame that holds paste/upload intake, the review result (summary, ranked flags, clean verdict), the question box, the reader's red lines, and the library. Analysis is available anonymously and remains ephemeral; only personal red lines and the library require an account. Visitor mode: Operate.
 
 ## Audience, job, task, states, constraints
 
@@ -35,4 +35,4 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 - Composition of each individual state (intake, blocked, results, Q&A, red-lines editor, library) — deferred to when this surface is scheduled for build.
 - The interaction model for switching between the general review and a personalized rerun view.
-- Auth-timing (sign-in required before pasting/uploading) is settled in the spec; the exact sign-in screen's composition is not part of this frame and is not addressed here.
+- Auth timing follows the 2026-09-22 build decision: anonymous analysis is available; library and personal red lines require an account. The sign-in screen retains this design system.

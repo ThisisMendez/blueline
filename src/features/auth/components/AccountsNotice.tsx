@@ -16,9 +16,9 @@ export function AccountsNotice() {
         Accounts aren&apos;t running yet
       </p>
       <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-        There is no account to sign in to on this deployment, so nothing you
-        paste is kept. You can still run a review and read it here. Close the
-        tab and it is gone, with no copy left anywhere.
+        Accounts are not configured on this deployment, so the library and
+        personal red lines are unavailable. You can still review a lease here.
+        Blueline does not save anonymous reviews; closing this tab loses the review.
       </p>
     </section>
   );

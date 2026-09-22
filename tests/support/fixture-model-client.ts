@@ -1,11 +1,16 @@
+import { CHECKLIST_TOPIC_IDS } from "@/features/analysis/checklist";
 import type { ModelClient, ModelRequest } from "@/features/analysis/model/client";
+import { CHECKLIST_SCHEMA_NAME } from "@/features/analysis/model/checklist-schema";
 import { COMPLETENESS_SCHEMA_NAME } from "@/features/analysis/model/completeness-schema";
+import { ANALYSIS_SCHEMA_NAME } from "@/features/analysis/model/schema";
 import { normalizeText } from "@/features/packet/normalize";
 
 import {
   fixtureReferences,
   loadFixture,
+  type ChecklistTopicId,
   type FixtureId,
+  type FixtureSidecar,
   type LoadedFixture,
 } from "../fixtures/index";
 
@@ -19,10 +24,11 @@ import {
  * verification, the retry, the drop, ranking, persistence, the screens — runs
  * for real.
  *
- * It answers two questions, told apart by the schema the caller asked for:
- * what the packet refers to, and what the packet says. Both come out of the
- * same sidecars, so a reference the corpus adjudicated is the reference the
- * gate sees.
+ * It answers three questions, told apart by the schema the caller asked for:
+ * what the packet refers to, what the packet says, and where the packet
+ * covers each published checklist topic. All three come out of the same
+ * sidecars, so a reference or a topic the corpus adjudicated is the one the
+ * product sees.
  *
  * Matching compares the product's normalised form of both texts, because the
  * same lease arrives with different line breaks depending on whether it was
@@ -56,6 +62,8 @@ export interface FixtureModelClient extends ModelClient {
   readonly completenessRequests: readonly ModelRequest[];
   /** Requests that asked the general-review schema. */
   readonly analysisRequests: readonly ModelRequest[];
+  /** Requests that asked the coverage-checklist schema. */
+  readonly checklistRequests: readonly ModelRequest[];
 }
 
 interface PromptDocument {
@@ -80,6 +88,27 @@ interface ModelReferencePayload {
   citingDocumentId: string;
   citingSentence: string;
   satisfiedByDocumentId: string | null;
+}
+
+interface ModelTopicPayload {
+  topicId: string;
+  status: "found" | "not-found";
+  sourceDocumentId: string | null;
+  sourceSentence: string | null;
+}
+
+/** A topic the model claims to have found, outside the published list. */
+export interface InventedTopic {
+  readonly topicId: string;
+  /** A sentence that really is in one of the supplied documents. */
+  readonly sourceSentence: string;
+}
+
+/** True for a sidecar that adjudicated the checklist, which leases do. */
+function hasChecklist(
+  sidecar: LoadedFixture["sidecar"],
+): sidecar is FixtureSidecar {
+  return Object.hasOwn(sidecar, "checklistTopics");
 }
 
 function readDocuments(userMessage: string): PromptDocument[] {
@@ -113,6 +142,16 @@ export interface FixtureModelClientOptions {
    * miss a document the signer really did supply.
    */
   readonly mismatchedReferences?: Readonly<Record<string, FixtureId | null>>;
+  /**
+   * Coverage checklist: the sentence the model quotes for a topic, in place
+   * of the one the lease sidecar adjudicated. The client still works out
+   * which supplied document the sentence is in, so a sentence from a
+   * referenced document comes back cited to that document — and a sentence
+   * in none of them comes back as the unverifiable citation it is.
+   */
+  readonly topicCitations?: Readonly<Partial<Record<ChecklistTopicId, string>>>;
+  /** Coverage checklist: topics the model proposes that nobody published. */
+  readonly inventedTopics?: readonly InventedTopic[];
 }
 
 export function createFixtureModelClient(
@@ -124,6 +163,8 @@ export function createFixtureModelClient(
   );
   const unquotableReferences = new Set(options.unquotableReferences ?? []);
   const mismatched = options.mismatchedReferences ?? {};
+  const topicCitations = options.topicCitations ?? {};
+  const inventedTopics = options.inventedTopics ?? [];
   const requests: ModelRequest[] = [];
 
   function fixtureFor(document: PromptDocument): LoadedFixture | null {
@@ -205,12 +246,89 @@ export function createFixtureModelClient(
     return payloads;
   }
 
+  /**
+   * Where a sentence actually sits in the packet the caller sent, by the
+   * document ids the caller used. A sentence in none of them comes back
+   * null, exactly as a model quoting something that is not there would.
+   */
+  function documentHolding(
+    documents: IdentifiedDocument[],
+    sentence: string,
+  ): IdentifiedDocument | null {
+    const needle = normalizeText(sentence);
+    return (
+      documents.find((document) => normalizeText(document.text).includes(needle)) ??
+      null
+    );
+  }
+
+  /**
+   * The published checklist, answered off the sidecars of what was supplied.
+   *
+   * A topic is found when any supplied lease adjudicated it present, and it
+   * is cited to whichever supplied document the sentence is really in — the
+   * lease, or a document the lease refers to.
+   */
+  function topicsIn(documents: IdentifiedDocument[]): ModelTopicPayload[] {
+    const payloads: ModelTopicPayload[] = [];
+
+    for (const topicId of CHECKLIST_TOPIC_IDS) {
+      let sentence: string | null = topicCitations[topicId] ?? null;
+
+      if (sentence === null) {
+        for (const document of documents) {
+          const sidecar = document.fixture?.sidecar;
+          if (!sidecar || !hasChecklist(sidecar)) continue;
+          const adjudicated = sidecar.checklistTopics[topicId];
+          if (adjudicated.present) {
+            sentence = adjudicated.sourceSentence;
+            break;
+          }
+        }
+      }
+
+      if (sentence === null) {
+        payloads.push({
+          topicId,
+          status: "not-found",
+          sourceDocumentId: null,
+          sourceSentence: null,
+        });
+        continue;
+      }
+
+      const holder = documentHolding(documents, sentence);
+      payloads.push({
+        topicId,
+        status: "found",
+        sourceDocumentId: holder?.id ?? documents[0]?.id ?? null,
+        sourceSentence: sentence,
+      });
+    }
+
+    for (const invented of inventedTopics) {
+      const holder = documentHolding(documents, invented.sourceSentence);
+      payloads.push({
+        topicId: invented.topicId,
+        status: "found",
+        sourceDocumentId: holder?.id ?? documents[0]?.id ?? null,
+        sourceSentence: invented.sourceSentence,
+      });
+    }
+
+    return payloads;
+  }
+
   function completenessRequests(): ModelRequest[] {
     return requests.filter((request) => request.schemaName === COMPLETENESS_SCHEMA_NAME);
   }
 
   function analysisRequests(): ModelRequest[] {
-    return requests.filter((request) => request.schemaName !== COMPLETENESS_SCHEMA_NAME);
+    return requests.filter((request) => request.schemaName === ANALYSIS_SCHEMA_NAME);
+  }
+
+  function checklistRequests(): ModelRequest[] {
+    return requests.filter((request) => request.schemaName === CHECKLIST_SCHEMA_NAME);
   }
 
   return {
@@ -226,12 +344,19 @@ export function createFixtureModelClient(
     get analysisRequests() {
       return analysisRequests();
     },
+    get checklistRequests() {
+      return checklistRequests();
+    },
     async complete(request: ModelRequest): Promise<unknown> {
       requests.push(request);
       const documents = identify(request.user);
 
       if (request.schemaName === COMPLETENESS_SCHEMA_NAME) {
         return { references: referencesIn(documents) };
+      }
+
+      if (request.schemaName === CHECKLIST_SCHEMA_NAME) {
+        return { topics: topicsIn(documents) };
       }
 
       // The spoiled-flag behaviours count their own calls, so a completeness

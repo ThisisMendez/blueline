@@ -1,6 +1,7 @@
 import type { GeneralReview } from "@/features/analysis/types";
 import type { ExtractedDocument } from "@/features/packet/types";
 
+import { CoverageChecklistSection } from "./CoverageChecklistSection";
 import { RiskFlagCard } from "./RiskFlagCard";
 
 export interface ReviewResultProps {
@@ -10,7 +11,13 @@ export interface ReviewResultProps {
 
 /**
  * A finished general review: the neutral summary, then the ranked flags or
- * the clean-review statement.
+ * the clean-review statement, then the published coverage checklist in a
+ * section of its own.
+ *
+ * The checklist sits apart from the flags because its items are a different
+ * kind of result: a topic the agreement does not cover is not a warning
+ * about the agreement, and a review with two not-found items can still be a
+ * clean review.
  *
  * Nothing here says a lease is safe to sign, and nothing rules on whether a
  * term would hold up. A clean review reports what was not found in the text
@@ -94,6 +101,8 @@ export function ReviewResult({ review, documents }: ReviewResultProps) {
             : `${review.droppedFlagCount} more warnings came back quoting sentences that are not in your text, so they are not shown here.`}
         </p>
       ) : null}
+
+      <CoverageChecklistSection coverage={review.coverage} documents={documents} />
     </div>
   );
 }

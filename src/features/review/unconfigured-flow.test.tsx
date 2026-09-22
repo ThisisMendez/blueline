@@ -56,7 +56,7 @@ describe("the product with accounts unavailable", () => {
     renderScreen(await ReviewPage());
 
     expect(screen.getByText("Accounts aren't running yet")).toBeInTheDocument();
-    expect(screen.getByText("Not kept anywhere")).toBeInTheDocument();
+    expect(screen.getByText("Not saved by Blueline")).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: /your reviews/i })).toBeNull();
 
     const textarea = screen.getByLabelText("Paste your lease");

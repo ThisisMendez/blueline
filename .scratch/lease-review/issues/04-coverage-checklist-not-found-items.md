@@ -4,10 +4,12 @@
 
 **Blocked by:** 03 (a not-found item only means something once completeness is guaranteed — otherwise "not found" could just mean "not yet supplied")
 
-**Status:** ready-for-agent
+**Status:** verified offline; database deployment verification pending
 
-- [ ] The checklist topics (deposit deductions/return, early-exit costs, rent changes, repairs, access, dispute routes) are fixed and published, not generated per lease
-- [ ] Each checklist topic is checked against the complete agreement
-- [ ] An absent topic appears as a not-found item, in a category distinct from risk flags
-- [ ] A not-found item never asserts the agreement is unlawful or invalid — only that the topic wasn't located
-- [ ] Deterministic test: a packet with all checklist topics present shows no not-found items; a packet missing one or more topics shows them as not-found, not as risk flags
+- [x] The checklist topics (deposit deductions/return, early-exit costs, rent changes, repairs, access, dispute routes) are fixed and published, not generated per lease
+- [x] Each checklist topic is checked against the complete agreement
+- [x] An absent topic appears as a not-found item, in a category distinct from risk flags
+- [x] A not-found item never asserts the agreement is unlawful or invalid — only that the topic wasn't located
+- [x] Deterministic test: a packet with all checklist topics present shows no not-found items; a packet missing one or more topics shows them as not-found, not as risk flags
+
+Evidence: coverage pipeline/UI and Supabase readback boundary tests, plus full suite (161 tests), typecheck, lint and offline smoke passed on 2026-09-22. Failed output and failed verification remain distinct from clean results. Migration 0002 is tracked but unapplied; SQL/RLS is not claimed verified.

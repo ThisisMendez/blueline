@@ -9,6 +9,7 @@ import {
 import { loadFixture } from "~tests/fixtures/index";
 
 import { runGeneralReview } from "./review";
+import { ANALYSIS_SCHEMA_NAME, type ModelAnalysis } from "./model/schema";
 import { CLEAN_REVIEW_STATEMENT, SEVERITY_RANK } from "./types";
 
 const DOCUMENT_ID = "pasted-lease";
@@ -27,6 +28,28 @@ function packetFor(fixtureId: "adhesion-lease" | "clean-lease"): {
 }
 
 describe("the general review of an adhesion lease", () => {
+  it("keeps a failed flag in the drop count when the retry supplies an unrelated verified flag", async () => {
+    const { packet } = packetFor("adhesion-lease");
+    const fixture = createFixtureModelClient();
+    let attempts = 0;
+    const model = {
+      async complete(request: Parameters<typeof fixture.complete>[0]) {
+        const answer = await fixture.complete(request);
+        if (request.schemaName !== ANALYSIS_SCHEMA_NAME) return answer;
+        const analysis = answer as ModelAnalysis;
+        return {
+          ...analysis,
+          flags: ++attempts === 1
+            ? [{ ...analysis.flags[0], sourceSentence: UNQUOTABLE_SENTENCE }]
+            : [analysis.flags[1]],
+        };
+      },
+    };
+    const review = await runGeneralReview({ packet, model });
+    expect(review.riskFlags).toHaveLength(1);
+    expect(review.droppedFlagCount).toBe(1);
+    expect(review.clean).toBe(false);
+  });
   it("returns a summary and flags ranked by consequence, each quoting the text at its offsets", async () => {
     const { packet, text } = packetFor("adhesion-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
@@ -69,7 +92,7 @@ describe("the general review of an adhesion lease", () => {
     expect(review.riskFlags).toHaveLength(sidecar.plantedFlags.length - 1);
     expect(review.droppedFlagCount).toBe(1);
     // One retry, then the flag is gone for good.
-    expect(model.callCount).toBe(2);
+    expect(model.analysisRequests).toHaveLength(2);
   });
 
   it("recovers a flag the retry quotes correctly", async () => {
@@ -79,7 +102,7 @@ describe("the general review of an adhesion lease", () => {
 
     const review = await runGeneralReview({ packet, model });
 
-    expect(model.callCount).toBe(2);
+    expect(model.analysisRequests).toHaveLength(2);
     expect(review.droppedFlagCount).toBe(0);
     expect(review.riskFlags).toHaveLength(sidecar.plantedFlags.length);
 
@@ -92,11 +115,18 @@ describe("the general review of an adhesion lease", () => {
     );
 
     // The retry names the quotation that failed, so the model can correct it.
-    expect(model.requests[1].user).toContain(UNQUOTABLE_SENTENCE);
+    expect(model.analysisRequests[1].user).toContain(UNQUOTABLE_SENTENCE);
   });
 });
 
 describe("the general review of a clean lease", () => {
+  it("does not report a clean review when every proposed flag failed verification", async () => {
+    const { packet } = packetFor("clean-lease");
+    const model = createFixtureModelClient({ behaviour: "unquotable-flag" });
+    await expect(runGeneralReview({ packet, model })).rejects.toMatchObject({
+      kind: "verification-failed",
+    });
+  });
   it("reports a clean review in the product's exact words, and claims nothing more", async () => {
     const { packet } = packetFor("clean-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
@@ -109,7 +139,7 @@ describe("the general review of a clean lease", () => {
     expect(review.cleanStatement).toBe(CLEAN_REVIEW_STATEMENT);
     expect(review.summary.length).toBeGreaterThan(100);
     expect(review.droppedFlagCount).toBe(0);
-    expect(model.callCount).toBe(1);
+    expect(model.analysisRequests).toHaveLength(1);
 
     const everything = JSON.stringify(review).toLowerCase();
     for (const forbidden of [

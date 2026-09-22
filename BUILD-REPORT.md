@@ -1,5 +1,35 @@
 # Build report
 
+## Resume checkpoint: 2026-09-22
+
+- Branch `main`, upstream `origin/main`, starting commit `1a87788`; seven local commits ahead of upstream at entry.
+- Existing changes belong to ticket 04: analysis checklist/schema/verifier, coverage presentation and tests, fixture model responses, Supabase coverage adapter and migration 0002. Preserve and finish these changes. No unrelated changes found.
+- Prior Claude build stopped at a session limit at 03:41 UTC. Other attached sessions are idle; no continuing checkout writes observed. No sessions terminated.
+- Commits already implement ticket 01 (`4a7bd53`), 02 (`c013fe1`), 03 (`1a87788`), and landing work 10 (`90e28f1`). Their checked criteria still require current verification; the older table below is historical and stale.
+- Remaining: finish 04; implement 05, 06, 07, 08; establish evaluation tooling for 09, with independent human adjudication an external prerequisite. Recheck landing claims/accessibility. Establish the missing smoke script (the command currently points to a nonexistent file).
+- Next action: native worker inspects and completes 04 while main reconciles requirements and existing pipeline. Main owns status, integration and commits.
+- Superseding user decision: analysis is available anonymously whether or not Supabase is configured. Anonymous text is ephemeral; only library and personal red lines require an authenticated account. The historical two-mode interpretation below is incorrect and will be corrected narrowly in code and requirements.
+- OpenRouter remains env-selected with Fireworks only, no fallback, required parameters, low reasoning, structured JSON validation. No remote Supabase project creation or migration application. Minimum necessary dependencies are authorized by this run.
+- Humanizer 3.0.0 is available at `/Users/mendez/.claude/plugins/cache/humanizer/humanizer/3.0.0/SKILL.md`; use its embedded workflow for new product copy. TDD uses the already-approved full-flow seam in the spec. Broad final code-review workflow is explicitly skipped.
+- Existing synthetic fixtures and exact-sentence sidecars are reused; they are implementation fixtures, not independently adjudicated evaluation evidence.
+
+## Integration checkpoint: tickets 01–04
+
+- Preserved the ticket 04 partial implementation and completed fixed checklist validation, exact citations, separate absence UI, migration 0002 and database readback checks. Main inspected source and diffs before integration.
+- Corrected anonymous access in ticket 01 for configured accounts, plus screen/route regression tests. Updated only the corresponding PRD, spec and auth-timing surface requirements. Landing design and public URLs remain intact.
+- Corrected ticket 03: references still unverifiable after retry stop review with a verification failure; a supplied document cannot satisfy its own reference through a signer override.
+- Errors from OpenRouter inside HTTP 200 now remain provider errors. Provider configuration tests assert env-selected model, Fireworks/no fallback/required parameters/low reasoning/JSON schema.
+- Citation matching still normalizes whitespace only and returns the original source slice. No semantic matching or punctuation/case normalization was introduced. Retry drop counting is conservative: a recovered flag must preserve its consequence and condition to retire the failed candidate, so changed wording may retain a dropped count.
+- Added the missing smoke script, setup README, credential-free env template and fixture provenance notes. New dependencies: none this session.
+- Verification: `npm run typecheck`, `npm run lint`, `npm test` (161 tests across 15 files), `npm run smoke` all pass. Offline smoke: planted fixture 9 returned/9 verified/0 dropped; clean 0/0/0 with repairs and dispute routes not found; incomplete packet blocked and names both missing documents.
+- Red/green regressions demonstrated signed-out analysis was rejected, HTTP-200 provider errors were misclassified, and bad reference citations previously allowed review. Focused suites pass after correction.
+- Humanizer 3.0.0 applied to coverage, account and error copy. Replaced unsupported "not kept anywhere" with "not saved by Blueline".
+- OpenRouter key/model configured (values not recorded). Supabase variables absent; no local `psql` or Docker. Live smoke deferred until final product schema is integrated; database deployment checks remain external.
+- Ticket 09 tooling was developed in parallel in disjoint eval files. Its independent corpus, two-reviewer adjudication and restricted runner are missing; these do not block remaining product tickets.
+- Next: commit verified coverage and corrections, checkpoint evaluation tooling, then implement ticket 05. Retry count: 0 worker verification failures. Remaining uncommitted files belong to this build.
+
+The original report follows for provenance; the checkpoints above supersede conflicting status or decisions.
+
 An unattended build ran against `.scratch/lease-review/spec.md` and the ten tickets
 beside it. This report says what got finished, what did not, what I decided without
 you, and what to run first when you sit down.

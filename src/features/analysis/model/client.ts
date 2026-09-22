@@ -25,6 +25,7 @@ export type ModelErrorKind =
   | "timeout"
   | "rate-limited"
   | "unavailable"
+  | "verification-failed"
   | "unreadable";
 
 /** Thrown by a {@link ModelClient} when a call cannot produce usable output. */

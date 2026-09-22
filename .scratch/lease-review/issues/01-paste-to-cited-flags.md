@@ -8,6 +8,8 @@ This ticket establishes the one full-stack seam — paste in, gated analysis, ci
 
 **Status:** done
 
+2026-09-22 requirement correction: analysis also works anonymously with or without configured Supabase. Anonymous reviews are never persisted; only the library and personal red lines require an account. Signed-in persistence and isolation criteria remain unchanged.
+
 - [x] Signer can sign in and paste lease text
 - [x] Server route calls OpenRouter using a model id read from one environment variable; no model id is hardcoded anywhere
 - [x] Original pasted content is not stored as a file; only extracted text is persisted

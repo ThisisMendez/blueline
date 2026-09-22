@@ -82,14 +82,18 @@ describe("the analysis route", () => {
     expect(store.size).toBe(0);
   });
 
-  it("refuses to analyse anything for a signed-out visitor when accounts are running", async () => {
+  it("reviews ephemerally for a signed-out visitor even when accounts are running", async () => {
     accounts = { kind: "signed-out" };
 
     const response = await route()(post({ text: adhesionText }));
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(200);
     const outcome = (await response.json()) as AnalysisOutcome;
-    expect(outcome).toEqual({ status: "rejected", reason: "not-signed-in" });
+    expect(outcome.status).toBe("reviewed");
+    if (outcome.status !== "reviewed") return;
+    expect(outcome.persisted).toBe(false);
+    expect(outcome.reviewId).toBeNull();
+    expect(outcome.review.riskFlags.length).toBeGreaterThan(0);
     expect(store.size).toBe(0);
   });
 
