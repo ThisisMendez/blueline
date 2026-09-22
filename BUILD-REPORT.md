@@ -127,7 +127,13 @@ The first attempt at this run returned HTTP 429 and stopped cleanly at
 `model-rate-limited` without producing a partial review. The configured model,
 `z-ai/glm-5.3-flash`, rate-limits on back-to-back calls often enough that you should
 expect this; wait a minute and run it again. The failure path is the one the product
-would show a signer, and it is honest: no flags, no summary, no clean result.
+would show a signer, and it is honest: no flags, no summary, no clean result. A third
+run, fired by accident at the same moment as the second, collided with it and shows
+what a mid-pipeline 429 does: nine flags had already come back and verified when a
+later call was refused, and the run still reported zero flags and a failure rather
+than handing over the part it had. That is the same discipline ADR 0005 applies to a
+missing document, extended to a provider that stops answering. Two smoke runs at once
+will rate-limit each other, so run one at a time.
 
 The other drafts offered concrete compromises, but ticket 07's plausibility criterion
 remains unchecked. No prompt, model, provider or expected-answer changes were made to
