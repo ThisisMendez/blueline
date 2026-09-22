@@ -1,6 +1,13 @@
 import type { GeneralReview } from "@/features/analysis/types";
 import type { ExtractedDocument } from "@/features/packet/types";
 
+export class ReviewNeedsRerunError extends Error {
+  constructor() {
+    super("This review needs a new analysis to include proposed edits and remaining risks.");
+    this.name = "ReviewNeedsRerunError";
+  }
+}
+
 /**
  * The persistence port. Everything a review needs to be read back later, and
  * nothing that could hold an original file: a stored review is extracted text

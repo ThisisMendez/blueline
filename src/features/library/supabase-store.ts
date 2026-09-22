@@ -15,6 +15,7 @@ import { createServerSupabaseClient } from "@/features/auth/server-client";
 import type { ExtractedDocument } from "@/features/packet/types";
 
 import {
+  ReviewNeedsRerunError,
   type ReviewStore,
   type StoredReview,
   type StoredReviewSummary,
@@ -54,6 +55,8 @@ interface FlagRow {
   severity: Severity;
   consequence: string;
   triggering_condition: string;
+  counter_offer: string | null;
+  residual_risk: string | null;
   source_document_id: string;
   source_start: number;
   source_end: number;
@@ -101,6 +104,8 @@ export class SupabaseReviewStore implements ReviewStore {
       severity: flag.severity,
       consequence: flag.consequence,
       triggering_condition: flag.triggeringCondition,
+      counter_offer: flag.counterOffer,
+      residual_risk: flag.residualRisk,
       source_document_id: flag.sourceDocumentId,
       source_start: flag.sourceStart,
       source_end: flag.sourceEnd,
@@ -156,7 +161,7 @@ export class SupabaseReviewStore implements ReviewStore {
     const flagResult = await this.client
       .from("review_flags")
       .select(
-        "severity, consequence, triggering_condition, source_document_id, source_start, source_end",
+        "severity, consequence, triggering_condition, counter_offer, residual_risk, source_document_id, source_start, source_end",
       )
       .eq("review_id", reviewId)
       .eq("user_id", signerId)
@@ -182,6 +187,9 @@ export class SupabaseReviewStore implements ReviewStore {
     const textById = new Map(documents.map((document) => [document.id, document.text]));
     const riskFlags: RiskFlag[] = [];
     for (const flag of flagRows) {
+      if (!flag.counter_offer?.trim() || !flag.residual_risk?.trim()) {
+        throw new ReviewNeedsRerunError();
+      }
       const text = textById.get(flag.source_document_id);
       if (!validCitation(text, flag.source_start, flag.source_end)) {
         throw new Error("Stored risk citation is incomplete.");
@@ -191,6 +199,8 @@ export class SupabaseReviewStore implements ReviewStore {
         severity: flag.severity,
         consequence: flag.consequence,
         triggeringCondition: flag.triggering_condition,
+        counterOffer: flag.counter_offer,
+        residualRisk: flag.residual_risk,
         sourceSentence: text!.slice(flag.source_start, flag.source_end),
         sourceDocumentId: flag.source_document_id,
         sourceStart: flag.source_start,

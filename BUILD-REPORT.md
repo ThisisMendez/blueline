@@ -17,8 +17,8 @@ were terminated. No unrelated edits found. Earlier report versions remain in Git
 | 03 Complete agreement | Verified offline: `1a87788`, stricter failed-reference handling `9507bf4` |
 | 04 Coverage checklist | Verified offline: `9507bf4` |
 | 05 Grounded Q&A | Verified offline: `d03b74b` |
-| 06 Personal red lines | Implemented and verified offline; DB/live quality pending; commit recorded next checkpoint |
-| 07 Counter-offers | Ready after 06 integration |
+| 06 Personal red lines | Implemented and verified offline `b7eb335`; DB/live quality pending |
+| 07 Counter-offers | Implemented and verified offline; live plausibility pending; commit recorded next checkpoint |
 | 08 Retention | Ready; storage/scheduler plan inspected |
 | 09 Independent evaluation | Tooling verified: `385279e`; independent evidence blocked |
 | 10 Landing | Implemented `90e28f1`, truthful copy corrections `c61f93e`; full WCAG verification pending |
@@ -65,6 +65,14 @@ are checked verbatim. They contain no real personal information and are implemen
 fixtures, not independently human-adjudicated evidence. Fixture provenance documented.
 
 ## Verification completed so far
+
+- Ticket07: required proposed-edit/residual-risk fields flow through schema, verifier
+  and storage. Keyboard-tested two-step disclosure across all planted flags; closing
+  explanation hides draft and residual together. Missing/empty fields fail validation.
+  Legacy stored flags require a new analysis, never invented content. Main inspected
+  source/diff/migration/tests. Typecheck, lint, 196 tests, offline smoke and fixture
+  production build pass. Humanizer applied. SQL/live plausibility remain pending.
+- Browser harness committed as `fc9a7d7`; fixture build passes with all current routes.
 
 - Ticket06: main inspected routes, model contract, citation checks, real preferences
   adapter, migration0003, UI and tests. Eleven new tests cover account isolation,
@@ -121,8 +129,8 @@ fixtures, not independently human-adjudicated evidence. Fixture provenance docum
 
 ## Resume without rebuilding completed work
 
-Current uncommitted ownership: verified ticket06, browser harness and main report/comments. No unrelated work.
-Next: commit 06 and harness, then delegate 07 and 08 sequentially; final smoke/build,
+Current uncommitted ownership: verified ticket07 and main report/smoke additions. No unrelated work.
+Next: commit 07, implement 08; final smoke/build,
 practical browser checks, status synchronization and normal push to `origin/main`.
 
 Routine commands: `npm run typecheck`, `npm run lint`, `npm test`, `npm run smoke`,

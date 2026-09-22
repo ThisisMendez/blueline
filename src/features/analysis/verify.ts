@@ -125,6 +125,8 @@ export function verifyFlags(
       severity: candidate.severity,
       consequence: candidate.consequence,
       triggeringCondition: candidate.triggeringCondition,
+      counterOffer: candidate.counterOffer,
+      residualRisk: candidate.residualRisk,
       // The signer reads the document's own words, not the model's echo.
       sourceSentence: located.sentence,
       sourceDocumentId: document.id,

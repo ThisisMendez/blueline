@@ -78,6 +78,13 @@ async function main() {
       assert.equal(source.text.slice(flag.sourceStart, flag.sourceEnd), flag.sourceSentence);
       assert.ok(source.text.includes(flag.sourceSentence));
       console.log(`[${flag.severity}] ${flag.sourceDocumentId}: ${flag.sourceSentence}`);
+      assert.ok(flag.counterOffer.trim());
+      assert.ok(flag.residualRisk.trim());
+      if (live) {
+        console.log(`Consequence: ${flag.consequence}`);
+        console.log(`Proposed edit: ${flag.counterOffer}`);
+        console.log(`Risk that remains: ${flag.residualRisk}`);
+      }
     }
     console.log(`Coverage: ${outcome.review.coverage.items.map(item => `${item.topicId}=${item.status}`).join(", ")}`);
     if (!live) {

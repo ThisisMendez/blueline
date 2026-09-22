@@ -18,6 +18,8 @@ function candidate(overrides: Partial<{ sourceSentence: string; sourceDocumentId
     severity: "high" as const,
     consequence: planted.consequence,
     triggeringCondition: planted.triggeringCondition,
+    counterOffer: planted.counterOffer,
+    residualRisk: planted.residualRisk,
     sourceDocumentId: "pasted-lease",
     sourceSentence: planted.sourceSentence,
     ...overrides,

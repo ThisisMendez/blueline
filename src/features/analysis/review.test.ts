@@ -28,6 +28,19 @@ function packetFor(fixtureId: "adhesion-lease" | "clean-lease"): {
 }
 
 describe("the general review of an adhesion lease", () => {
+  it.each(["missing", "empty", "missing-residual", "empty-residual"])("rejects %s counter-offer content instead of returning an incomplete flag", async (failure) => {
+    const { packet } = packetFor("adhesion-lease");
+    const fixture = createFixtureModelClient();
+    const model = { async complete(request: Parameters<typeof fixture.complete>[0]) {
+      const raw = await fixture.complete(request);
+      if (request.schemaName !== ANALYSIS_SCHEMA_NAME) return raw;
+      const answer = raw as ModelAnalysis;
+      return { ...answer, flags: answer.flags.map((flag) => failure.includes("residual")
+        ? { ...flag, residualRisk: failure === "empty-residual" ? "  " : undefined }
+        : { ...flag, counterOffer: failure === "empty" ? "  " : undefined }) };
+    } };
+    await expect(runGeneralReview({ packet, model })).rejects.toMatchObject({ kind: "unreadable" });
+  });
   it("keeps a failed flag in the drop count when the retry supplies an unrelated verified flag", async () => {
     const { packet } = packetFor("adhesion-lease");
     const fixture = createFixtureModelClient();

@@ -81,6 +81,8 @@ interface ModelFlagPayload {
   severity: string;
   consequence: string;
   triggeringCondition: string;
+  counterOffer: string;
+  residualRisk: string;
   sourceDocumentId: string;
   sourceSentence: string;
 }
@@ -194,6 +196,8 @@ export function createFixtureModelClient(
         severity: planted.expectedSeverity,
         consequence: planted.consequence,
         triggeringCondition: planted.triggeringCondition,
+        counterOffer: planted.counterOffer,
+        residualRisk: planted.residualRisk,
         sourceDocumentId: document.id,
         sourceSentence: planted.sourceSentence,
       }),
@@ -207,6 +211,8 @@ export function createFixtureModelClient(
           severity: "medium",
           consequence: "The Resident would owe an extra duty every month.",
           triggeringCondition: "Each month of the Term begins.",
+          counterOffer: "Provide the report only when the landlord requests it in writing with seven days notice.",
+          residualRisk: "The Resident would still need to prepare a report after a written request.",
           sourceDocumentId: document.id,
           sourceSentence: UNQUOTABLE_SENTENCE,
         },

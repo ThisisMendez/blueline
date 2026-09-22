@@ -31,6 +31,10 @@ export interface RiskFlag {
   readonly consequence: string;
   /** What would have to happen for the consequence to matter. */
   readonly triggeringCondition: string;
+  /** A proposed compromise that reduces this flag's concrete downside. */
+  readonly counterOffer: string;
+  /** What could still happen if the proposed edit were accepted. */
+  readonly residualRisk: string;
   /** Cut from the extracted text at the offsets below. */
   readonly sourceSentence: string;
   readonly sourceDocumentId: string;

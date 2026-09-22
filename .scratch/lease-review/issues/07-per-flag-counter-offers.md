@@ -4,10 +4,12 @@
 
 **Blocked by:** 01 (a counter-offer is drafted against a risk flag that must already have severity and an explanation)
 
-**Status:** ready-for-agent
+**Status:** implemented and verified offline; live compromise-quality check pending
 
-- [ ] Every risk flag has an associated counter-offer
-- [ ] The counter-offer text is hidden until the signer has opened the flag's explanation
-- [ ] Each counter-offer states any residual risk that would remain if it were accepted
+- [x] Every risk flag has an associated counter-offer
+- [x] The counter-offer text is hidden until the signer has opened the flag's explanation
+- [x] Each counter-offer states any residual risk that would remain if it were accepted
 - [ ] Counter-offers read as plausible compromises, not maximal demands
-- [ ] Deterministic test: opening a flag's explanation reveals its counter-offer and residual-risk statement; the counter-offer is not visible before that
+- [x] Deterministic test: opening a flag's explanation reveals its counter-offer and residual-risk statement; the counter-offer is not visible before that
+
+Evidence: required nonempty schema fields through verification/storage, explicit legacy-rerun error, keyboard full-flow disclosure test across all planted flags. Typecheck, lint, 196 tests, offline smoke and fixture production build pass. Prompt requests plausible compromises and remaining risk; actual live draft quality still requires inspection and independent evaluation. Migration0004 not applied remotely.

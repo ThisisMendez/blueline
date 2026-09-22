@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { AccountsNotice } from "@/features/auth/components/AccountsNotice";
 import { getAccountsState } from "@/features/auth/session";
 import { openReviewStore } from "@/features/library/supabase-store";
+import { ReviewNeedsRerunError } from "@/features/library/store";
 import { ReviewResult } from "@/features/review/components/ReviewResult";
 
 /**
@@ -44,7 +45,17 @@ export default async function SavedReviewPage(
   const store = await openReviewStore();
   if (!store) notFound();
 
-  const stored = await store.findForSigner(accounts.signer.id, reviewId);
+  let stored;
+  try {
+    stored = await store.findForSigner(accounts.signer.id, reviewId);
+  } catch (error) {
+    if (!(error instanceof ReviewNeedsRerunError)) throw error;
+    return <section className="border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-6">
+      <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold">This review needs a new analysis</h1>
+      <p className="mt-3 font-[family-name:var(--font-body)]">This earlier review does not include proposed edits or their remaining risks. Run a new review to include them.</p>
+      <Link href="/review" className="mt-4 inline-block font-[family-name:var(--font-display)] underline">Run a new review</Link>
+    </section>;
+  }
   if (!stored) notFound();
 
   return (

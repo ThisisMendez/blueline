@@ -39,6 +39,14 @@ export const analysisJsonSchema: Record<string, unknown> = {
             type: "string",
             description: "What would have to happen for the consequence to matter.",
           },
+          counterOffer: {
+            type: "string",
+            description: "Concrete proposed lease wording aimed at a plausible compromise, reducing the cited downside while preserving legitimate landlord interests.",
+          },
+          residualRisk: {
+            type: "string",
+            description: "The specific risk or cost remaining if this proposed edit is accepted. No guarantee of full protection or landlord acceptance.",
+          },
           sourceDocumentId: {
             type: "string",
             description: "The id of the supplied document the sentence came from.",
@@ -52,6 +60,8 @@ export const analysisJsonSchema: Record<string, unknown> = {
           "severity",
           "consequence",
           "triggeringCondition",
+          "counterOffer",
+          "residualRisk",
           "sourceDocumentId",
           "sourceSentence",
         ],
@@ -67,6 +77,8 @@ export const modelFlagSchema = z.object({
   severity: z.enum(["high", "medium", "low"]),
   consequence: z.string().trim().min(1),
   triggeringCondition: z.string().trim().min(1),
+  counterOffer: z.string().trim().min(1),
+  residualRisk: z.string().trim().min(1),
   sourceDocumentId: z.string().trim().min(1),
   sourceSentence: z.string().trim().min(1),
 });

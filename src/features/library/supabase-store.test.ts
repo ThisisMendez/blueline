@@ -6,16 +6,16 @@ import { loadFixture } from "~tests/fixtures/index";
 import { createFixtureModelClient } from "~tests/support/fixture-model-client";
 import { SupabaseReviewStore } from "./supabase-store";
 
-async function databaseRows() {
-  const { text } = loadFixture("clean-lease");
+async function databaseRows(fixtureId: "clean-lease" | "adhesion-lease" = "clean-lease") {
+  const { text } = loadFixture(fixtureId);
   const review = await runGeneralReview({
     packet: { documents: [{ id: "lease", title: "Lease", text }] },
     model: createFixtureModelClient(),
   });
   return {
-    reviews: { id: "review", user_id: "signer", created_at: "2027-01-01", summary: review.summary, clean: true, dropped_flag_count: 0 },
+    reviews: { id: "review", user_id: "signer", created_at: "2027-01-01", summary: review.summary, clean: review.clean, dropped_flag_count: 0 },
     review_documents: [{ document_id: "lease", title: "Lease", extracted_text: text, position: 0 }],
-    review_flags: [] as Record<string, unknown>[],
+    review_flags: review.riskFlags.map((flag) => ({ severity: flag.severity, consequence: flag.consequence, triggering_condition: flag.triggeringCondition, source_document_id: flag.sourceDocumentId, source_start: flag.sourceStart, source_end: flag.sourceEnd, counter_offer: flag.counterOffer, residual_risk: flag.residualRisk })) as Record<string, unknown>[],
     review_checklist_topics: review.coverage.items.map((item) => ({
       topic_id: item.topicId, status: item.status,
       source_document_id: item.status === "found" ? item.sourceDocumentId : null,
@@ -41,6 +41,22 @@ function storeFor(rows: Awaited<ReturnType<typeof databaseRows>>) {
 }
 
 describe("stored review citation integrity", () => {
+  it("reads each stored proposed edit together with its residual risk", async () => {
+    const rows = await databaseRows("adhesion-lease");
+    const stored = await storeFor(rows).findForSigner("signer", "review");
+    const expected = loadFixture("adhesion-lease").sidecar.plantedFlags;
+    for (const flag of stored!.review.riskFlags) {
+      const fixture = expected.find((candidate) => candidate.sourceSentence === flag.sourceSentence)!;
+      expect(flag.counterOffer).toBe(fixture.counterOffer);
+      expect(flag.residualRisk).toBe(fixture.residualRisk);
+    }
+  });
+  it("requires a new analysis for legacy flags rather than inventing a proposed edit", async () => {
+    const rows = await databaseRows("adhesion-lease");
+    rows.review_flags[0].counter_offer = null;
+    rows.review_flags[0].residual_risk = null;
+    await expect(storeFor(rows).findForSigner("signer", "review")).rejects.toThrow("needs a new analysis");
+  });
   it("reconstructs all checklist sentences from stored extracted text", async () => {
     const rows = await databaseRows();
     const stored = await storeFor(rows).findForSigner("signer", "review");
