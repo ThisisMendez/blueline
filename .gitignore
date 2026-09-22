@@ -92,6 +92,7 @@ coverage/
 *.lcov
 playwright-report/
 test-results/
+evals/runs/
 blob-report/
 .playwright/
 cypress/videos/

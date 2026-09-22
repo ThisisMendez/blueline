@@ -15,6 +15,8 @@
 
 ## Integration checkpoint: tickets 01–04
 
+Implementation commit: `9507bf4`.
+
 - Preserved the ticket 04 partial implementation and completed fixed checklist validation, exact citations, separate absence UI, migration 0002 and database readback checks. Main inspected source and diffs before integration.
 - Corrected anonymous access in ticket 01 for configured accounts, plus screen/route regression tests. Updated only the corresponding PRD, spec and auth-timing surface requirements. Landing design and public URLs remain intact.
 - Corrected ticket 03: references still unverifiable after retry stop review with a verification failure; a supplied document cannot satisfy its own reference through a signer override.
@@ -27,6 +29,14 @@
 - OpenRouter key/model configured (values not recorded). Supabase variables absent; no local `psql` or Docker. Live smoke deferred until final product schema is integrated; database deployment checks remain external.
 - Ticket 09 tooling was developed in parallel in disjoint eval files. Its independent corpus, two-reviewer adjudication and restricted runner are missing; these do not block remaining product tickets.
 - Next: commit verified coverage and corrections, checkpoint evaluation tooling, then implement ticket 05. Retry count: 0 worker verification failures. Remaining uncommitted files belong to this build.
+
+## Ticket 09 checkpoint
+
+Evaluation scorer and three-run route harness are implemented and verified offline (11 behavioral tests, scoped lint, included in the 161-test integration run). `npm run eval` checks prerequisites without sending model requests; absent evidence returns pending/exit 2. Reports under `evals/runs/` are ignored generated output. Raw private outputs must remain outside the checkout.
+
+Production `npm run build` passes at this checkpoint, preserving `/`, `/sign-in`, `/review`, `/review/[reviewId]`, `/api/analysis` and `/auth/confirm`.
+
+Missing independent held-out corpus, two reviewers' pre-output adjudication, restricted execution environment and full-flow human evidence block ticket 09 completion. The scorer requires serious deposit, early-exit and dispute-rights coverage and reports each missed serious term separately. Metadata does not prove independence or runner isolation. Product implementation continues; retry count 0.
 
 The original report follows for provenance; the checkpoints above supersede conflicting status or decisions.
 

@@ -11,6 +11,7 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "smoke": "tsx scripts/smoke.ts",
+    "eval": "tsx evals/cli.ts",
     "fixtures:pdf": "tsx tests/fixtures/make-pdfs.ts"
   },
   "dependencies": {
