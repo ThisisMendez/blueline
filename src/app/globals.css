@@ -59,7 +59,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-red);
+  background: var(--color-red-ink);
   color: var(--color-paper);
 }
 
@@ -95,6 +95,23 @@ body {
 .skip-link:focus {
   left: 1rem;
   top: 1rem;
+}
+
+/* Reachable by a screen reader, never painted. The landing page's h1 uses
+   this: the direction contract refuses a visible hero claim headline, but
+   the page still needs a top-level heading. Not interactive, so unlike
+   .skip-link it stays hidden on focus. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Leader-line draw-on: paths start undrawn, then draw to full length */

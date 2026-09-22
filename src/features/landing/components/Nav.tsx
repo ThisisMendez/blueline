@@ -7,11 +7,11 @@ export function Nav() {
         <span
           className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight text-[var(--color-navy-ink)]"
         >
-          Blueline <span className="text-[var(--color-red)]">Redline</span>
+          Blueline <span className="text-[var(--color-red-ink)]">Redline</span>
         </span>
         <Link
           href="/sign-in"
-          className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-wide text-[var(--color-navy)] underline decoration-2 underline-offset-4 hover:text-[var(--color-red)]"
+          className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-wide text-[var(--color-navy)] underline decoration-2 underline-offset-4 hover:text-[var(--color-red-ink)]"
         >
           Sign in
         </Link>

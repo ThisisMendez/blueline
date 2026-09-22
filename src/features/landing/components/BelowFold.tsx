@@ -13,15 +13,15 @@ export function BelowFold() {
       <InView className="mx-auto grid w-full max-w-4xl gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-start">
         <div>
           <h2 className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl">
-            Absence gets reported too — separately from risk.
+            Absence gets reported too, separately from risk.
           </h2>
           <p className="mt-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]/85">
             Blueline Redline checks your complete agreement against a
-            published list of protections renters usually see: deposit
-            return, early-exit costs, rent changes, repairs, access, and
-            dispute routes. A missing one isn&apos;t a citation and isn&apos;t
-            an accusation — it&apos;s a fact about what your document
-            doesn&apos;t say.
+            published list of six protections: deposit return, early-exit
+            costs, rent changes, repairs, access, and dispute routes. The same
+            six for every lease. Anything your document doesn&apos;t state gets
+            reported apart from the risk flags, because there is no sentence to
+            quote for it.
           </p>
         </div>
         <ul className="flex flex-col gap-3 border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-6">
@@ -54,7 +54,7 @@ export function BelowFold() {
           Every flag opens onto a proposed edit.
         </h2>
         <p className="mt-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]/85">
-          A plausible compromise a landlord might actually accept — with
+          A plausible compromise a landlord might actually accept, with
           whatever risk would still remain if they said yes.
         </p>
 
@@ -94,7 +94,7 @@ export function BelowFold() {
             &ldquo;Can I have a roommate take over my lease?&rdquo;
           </p>
           <p className="mt-3 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
-            The agreement doesn&apos;t answer this — reassignment isn&apos;t
+            The agreement doesn&apos;t answer this. Reassignment isn&apos;t
             mentioned anywhere in the text you gave us.
           </p>
         </div>

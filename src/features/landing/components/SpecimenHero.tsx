@@ -149,49 +149,58 @@ export function SpecimenHero() {
 
           <p className="mt-5 font-[family-name:var(--font-body)] text-xl leading-relaxed text-[var(--color-navy-ink)] sm:text-2xl">
             &ldquo;Tenant shall be liable for{" "}
-            <mark ref={mark1Ref} tabIndex={0} className="cited-mark">
+            <mark
+              ref={mark1Ref}
+              tabIndex={0}
+              aria-describedby="specimen-note-1"
+              className="cited-mark"
+            >
               the full remaining balance of rent due under this Lease
             </mark>{" "}
             if Tenant vacates prior to the expiration date,{" "}
-            <mark ref={mark2Ref} tabIndex={0} className="cited-mark">
+            <mark
+              ref={mark2Ref}
+              tabIndex={0}
+              aria-describedby="specimen-note-2"
+              className="cited-mark"
+            >
               regardless of whether Landlord re-rents the unit
             </mark>
             .&rdquo;
           </p>
 
-          <p className="mt-5 font-[family-name:var(--font-data)] text-xs text-[var(--color-navy)]/70">
+          <p className="mt-5 font-[family-name:var(--font-data)] text-xs text-[var(--color-navy)]">
             Source: sample lease, Section 8(c) — demonstration text, not a real
             agreement.
           </p>
         </div>
 
         <div className="flex flex-col gap-6 md:pt-9">
-          <div ref={label1Ref} className="badge-in">
+          <div id="specimen-note-1" ref={label1Ref} className="badge-in">
             <span className="inline-block bg-[var(--color-red-ink)] px-2 py-1 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-paper)]">
               Severity: High
             </span>
             <p className="mt-2 font-[family-name:var(--font-body)] text-sm leading-snug text-[var(--color-navy-ink)]">
-              You could owe rent for months you don&apos;t live there — this
-              clause says a new tenant moving in doesn&apos;t reduce what you
-              owe.
+              You could owe rent for months you don&apos;t live there. By this
+              clause, a new tenant moving in doesn&apos;t reduce what you owe.
             </p>
           </div>
 
-          <div ref={label2Ref} className="badge-in">
+          <div id="specimen-note-2" ref={label2Ref} className="badge-in">
             <span className="inline-block border-2 border-[var(--color-navy)] px-2 py-1 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
               Matters if
             </span>
             <p className="mt-2 font-[family-name:var(--font-body)] text-sm leading-snug text-[var(--color-navy-ink)]">
-              Your situation could change before the lease ends — a job move,
-              a health issue, a roommate falling through.
+              Your situation could change before the lease ends: a job move, a
+              health issue, a roommate falling through.
             </p>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col gap-4 border-t-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-6 py-6 sm:px-10 sm:py-7 md:flex-row md:items-center md:justify-between md:px-12">
-        <p className="font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]/70">
-          Specimen 1 of 1 — yours is next
+        <p className="font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
+          Specimen 1 of 1. Yours is next.
         </p>
         <Link
           href="/sign-in"

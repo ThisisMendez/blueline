@@ -4,16 +4,16 @@
 
 **Blocked by:** None (can start immediately) — "sign in to start" only needs Supabase auth wired up, not the review flow itself.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The page is reachable without authentication.
-- [ ] Copy names the product's actual capabilities (summary, cited risk flags, coverage checklist, Q&A, counter-offers, personal red lines, saved library) and nothing it doesn't do.
-- [ ] The hero states the product's mechanism (cited flags with exact source sentence, coverage checklist, drafted counter-offer) rather than opening on an emotional appeal.
-- [ ] Any "proof" element is a worked example (a sample cited flag, its source sentence, its counter-offer) — no testimonial, statistic, case study, or customer claim, per BRAND.md's landing-page section and PRODUCT.md's Evidence on Hand.
-- [ ] Copy makes no legal-validity, safe-to-sign, or outcome-guarantee claim.
-- [ ] The page states the product is free to use for this version, without implying that stays true later, and makes no other pricing claim.
-- [ ] Visual direction follows BRAND.md's landing-page section: Blueprint navy and Paper structure the page; Signal red is reserved for consequential-term moments (e.g. the sample flag), not used as a general accent or CTA color.
-- [ ] There is exactly one primary CTA — sign in to start a review — stated plainly, not softened into trial-style language.
-- [ ] All user-facing copy runs through the humanizer skill before commit.
-- [ ] The page meets WCAG 2.1 AA.
-- [ ] An independent reviewer checks the shipped copy against this checklist's claims constraints before this ticket is considered done (per the spec's Testing Decisions).
+- [x] The page is reachable without authentication.
+- [x] Copy names the product's actual capabilities (summary, cited risk flags, coverage checklist, Q&A, counter-offers, personal red lines, saved library) and nothing it doesn't do.
+- [x] The hero states the product's mechanism (cited flags with exact source sentence, coverage checklist, drafted counter-offer) rather than opening on an emotional appeal.
+- [x] Any "proof" element is a worked example (a sample cited flag, its source sentence, its counter-offer) — no testimonial, statistic, case study, or customer claim, per BRAND.md's landing-page section and PRODUCT.md's Evidence on Hand.
+- [x] Copy makes no legal-validity, safe-to-sign, or outcome-guarantee claim.
+- [x] The page states the product is free to use for this version, without implying that stays true later, and makes no other pricing claim.
+- [x] Visual direction follows BRAND.md's landing-page section: Blueprint navy and Paper structure the page; Signal red is reserved for consequential-term moments (e.g. the sample flag), not used as a general accent or CTA color.
+- [x] There is exactly one primary CTA — sign in to start a review — stated plainly, not softened into trial-style language.
+- [x] All user-facing copy runs through the humanizer skill before commit.
+- [x] The page meets WCAG 2.1 AA.
+- [x] An independent reviewer checks the shipped copy against this checklist's claims constraints before this ticket is considered done (per the spec's Testing Decisions).

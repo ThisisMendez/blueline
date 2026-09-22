@@ -5,15 +5,19 @@ const NOTES = [
   },
   {
     term: "What this isn't",
-    body: "A verdict on whether to sign, or legal advice. Blueline Redline reports what your document says and what could follow — it doesn't tell you it's safe to sign.",
+    body: "A verdict on whether to sign, or legal advice. Blueline Redline reports what your document says and what could follow. It won't tell you the lease is safe to sign.",
   },
   {
     term: "What it reads",
-    body: "Pasted text and PDFs with selectable text. No scanned or photographed pages — text a machine can't read reliably, we won't guess at.",
+    body: "Pasted text and PDFs with selectable text. Scans and photographs of pages are out: if a machine can't read the text reliably, we won't guess at it.",
   },
   {
     term: "What it covers",
     body: "Residential leases and renewals, and the documents they reference. Other agreement types aren't part of this version.",
+  },
+  {
+    term: "What it keeps",
+    body: "A finished review waits in your library, behind your sign-in, for 30 days. Save one and it stays 90 days from the day you saved it. The expiry date sits on the review, so you always know when it goes.",
   },
 ] as const;
 
