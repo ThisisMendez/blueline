@@ -77,8 +77,8 @@ export function BelowFold() {
               or the lease term ends, whichever comes first.&rdquo;
             </p>
             <p className="mt-3 border-t border-[var(--color-navy)]/30 pt-3 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]/75">
-              Residual risk: you may still owe a reasonable re-renting fee,
-              which this draft doesn&apos;t address.
+              Residual risk: you would still owe rent until the unit is
+              re-rented or the lease ends.
             </p>
           </div>
         </div>
@@ -101,6 +101,10 @@ export function BelowFold() {
         <div className="border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-6">
           <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
             Your red lines
+          </p>
+          <p className="mt-3 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
+            Sign in to edit your personal red-line list and rerun the review.
+            Preference matches stay separate from general risk flags.
           </p>
           <p className="mt-3 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
             &ldquo;I need to be able to leave within 3 months if my job

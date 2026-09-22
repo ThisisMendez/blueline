@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately) — "sign in to start" only needs Supabase auth wired up, not the review flow itself.
 
-**Status:** done
+**Status:** implemented; claims reviewed, full WCAG verification pending
 
 - [x] The page is reachable without authentication.
 - [x] Copy names the product's actual capabilities (summary, cited risk flags, coverage checklist, Q&A, counter-offers, personal red lines, saved library) and nothing it doesn't do.
@@ -15,5 +15,7 @@
 - [x] Visual direction follows BRAND.md's landing-page section: Blueprint navy and Paper structure the page; Signal red is reserved for consequential-term moments (e.g. the sample flag), not used as a general accent or CTA color.
 - [x] There is exactly one primary CTA — sign in to start a review — stated plainly, not softened into trial-style language.
 - [x] All user-facing copy runs through the humanizer skill before commit.
-- [x] The page meets WCAG 2.1 AA.
+- [ ] The page meets WCAG 2.1 AA.
 - [x] An independent reviewer checks the shipped copy against this checklist's claims constraints before this ticket is considered done (per the spec's Testing Decisions).
+
+2026-09-22: independent native reviewer inspected landing claims and identified retention/account qualification and unsupported sample residual-fee language; both corrected. Humanizer applied. Desktop 1280×900 and mobile 390×844 inspected in Chrome; keyboard skip link works. Static accessibility evidence and these browser checks do not establish full WCAG AA. Screen-reader, zoom/text-spacing and comprehensive contrast checks remain pending. Capability claims also depend on completion of tickets 05–08.

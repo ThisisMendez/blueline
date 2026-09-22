@@ -17,7 +17,7 @@ const NOTES = [
   },
   {
     term: "What it keeps",
-    body: "A finished review waits in your library, behind your sign-in, for 30 days. Save one and it stays 90 days from the day you saved it. The expiry date sits on the review, so you always know when it goes.",
+    body: "Reviews completed while signed in stay in your library for 30 days. Save one to keep it for 90 days from that save. Each review shows its expiry date. Anonymous reviews aren't saved.",
   },
 ] as const;
 
