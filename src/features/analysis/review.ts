@@ -1,5 +1,6 @@
 import type { Packet } from "@/features/packet/types";
 
+import { checkResidualRiskConsistency } from "./consistency";
 import { runCoverageChecklist } from "./coverage";
 import { ModelError, type ModelClient } from "./model/client";
 import {
@@ -57,6 +58,13 @@ async function askModel(model: ModelClient, user: string): Promise<ModelAnalysis
  * retries. An unverifiable flag is withheld, and an unresolved checklist
  * citation fails the review. Its result lands in its own field and never
  * joins the ranked flags.
+ *
+ * A third question follows verified flags, not the packet: does each flag's
+ * counter-offer agree with its own residual-risk statement (ADR 0013). That
+ * check can withhold a residual-risk claim; it never withholds the flag or
+ * fails the review the way an unverifiable citation does, because it is a
+ * judgment about the model's own output, not a fact checked against the
+ * signer's document.
  */
 export async function runGeneralReview({
   packet,
@@ -109,7 +117,8 @@ export async function runGeneralReview({
 
   const coverage = await runCoverageChecklist({ packet, model });
 
-  const riskFlags = rankFlags(flags);
+  const ranked = rankFlags(flags);
+  const riskFlags = await checkResidualRiskConsistency(ranked, model);
   // Absences do not make a review dirty. A lease can be silent on repairs
   // and still carry nothing that would cost the signer.
   const clean = riskFlags.length === 0;

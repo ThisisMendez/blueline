@@ -8,6 +8,7 @@ import {
 } from "~tests/support/fixture-model-client";
 import { loadFixture } from "~tests/fixtures/index";
 
+import { RESIDUAL_RISK_UNCONFIRMED } from "./consistency";
 import { runGeneralReview } from "./review";
 import { ANALYSIS_SCHEMA_NAME, type ModelAnalysis } from "./model/schema";
 import { CLEAN_REVIEW_STATEMENT, SEVERITY_RANK } from "./types";
@@ -89,6 +90,32 @@ describe("the general review of an adhesion lease", () => {
       expect(text).toContain(flag.sourceSentence);
       expect(flag.consequence.length).toBeGreaterThan(0);
       expect(flag.triggeringCondition.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("withholds a residual-risk claim the consistency check cannot confirm, without dropping the flag", async () => {
+    const { packet } = packetFor("adhesion-lease");
+    const { sidecar } = loadFixture("adhesion-lease");
+    const suspectFlag = sidecar.plantedFlags[0];
+    const model = createFixtureModelClient({
+      inconsistentFlagSentences: [suspectFlag.sourceSentence],
+    });
+
+    const review = await runGeneralReview({ packet, model });
+
+    expect(review.riskFlags).toHaveLength(sidecar.plantedFlags.length);
+    const withheld = review.riskFlags.find(
+      (flag) => flag.sourceSentence === suspectFlag.sourceSentence,
+    );
+    expect(withheld?.residualRisk).toBe(RESIDUAL_RISK_UNCONFIRMED);
+    expect(withheld?.counterOffer).toBe(suspectFlag.counterOffer);
+
+    // Every other flag's residual risk is untouched.
+    const others = review.riskFlags.filter(
+      (flag) => flag.sourceSentence !== suspectFlag.sourceSentence,
+    );
+    for (const other of others) {
+      expect(other.residualRisk).not.toBe(RESIDUAL_RISK_UNCONFIRMED);
     }
   });
 

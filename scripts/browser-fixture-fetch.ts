@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { CONSISTENCY_SCHEMA_NAME } from "../src/features/analysis/model/consistency-schema";
 import { normalizeText } from "../src/features/packet/normalize";
 import { loadFixture, type FixtureId } from "../tests/fixtures";
 import { createFixtureModelClient } from "../tests/support/fixture-model-client";
@@ -30,13 +31,18 @@ export function createBrowserFixtureFetch(networkFetch: typeof fetch, delayMs = 
     try { body = requestSchema.parse(await request.json()); }
     catch { return Response.json({ error: { message: "Fixture transport received an unsupported request." } }, { status: 400 }); }
     const user = body.messages[1].content;
-    const documents = [...user.matchAll(/=== DOCUMENT id=(\S+) title="([^"]*)" ===\n([\s\S]*?)\n=== END DOCUMENT id=\1 ===/g)];
-    // Equality is intentional: a known fixture plus arbitrary added text is not a fixture.
-    const openings = user.match(/=== DOCUMENT id=/g)?.length ?? 0;
-    const closings = user.match(/=== END DOCUMENT id=/g)?.length ?? 0;
-    if (!documents.length || documents.length !== openings || documents.length !== closings
-      || documents.some((document) => !knownTexts.has(normalizeText(document[3])))) {
-      return Response.json({ error: { message: "Browser fixture mode accepts only the synthetic documents in tests/fixtures." } }, { status: 422 });
+    const isConsistencyCheck = body.response_format.json_schema.name === CONSISTENCY_SCHEMA_NAME;
+    // The consistency check reasons about a flag's own drafted text, not the
+    // packet, so it carries no document blocks to validate against the corpus.
+    if (!isConsistencyCheck) {
+      const documents = [...user.matchAll(/=== DOCUMENT id=(\S+) title="([^"]*)" ===\n([\s\S]*?)\n=== END DOCUMENT id=\1 ===/g)];
+      // Equality is intentional: a known fixture plus arbitrary added text is not a fixture.
+      const openings = user.match(/=== DOCUMENT id=/g)?.length ?? 0;
+      const closings = user.match(/=== END DOCUMENT id=/g)?.length ?? 0;
+      if (!documents.length || documents.length !== openings || documents.length !== closings
+        || documents.some((document) => !knownTexts.has(normalizeText(document[3])))) {
+        return Response.json({ error: { message: "Browser fixture mode accepts only the synthetic documents in tests/fixtures." } }, { status: 422 });
+      }
     }
     if (delayMs > 0) await new Promise<void>((resolve) => setTimeout(resolve, delayMs));
     const result = await model.complete({

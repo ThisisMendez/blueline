@@ -2,6 +2,7 @@ import { CHECKLIST_TOPIC_IDS } from "@/features/analysis/checklist";
 import type { ModelClient, ModelRequest } from "@/features/analysis/model/client";
 import { CHECKLIST_SCHEMA_NAME } from "@/features/analysis/model/checklist-schema";
 import { COMPLETENESS_SCHEMA_NAME } from "@/features/analysis/model/completeness-schema";
+import { CONSISTENCY_SCHEMA_NAME } from "@/features/analysis/model/consistency-schema";
 import { ANALYSIS_SCHEMA_NAME } from "@/features/analysis/model/schema";
 import { normalizeText } from "@/features/packet/normalize";
 import { QUESTION_SCHEMA_NAME } from "@/features/questions/contract";
@@ -66,6 +67,8 @@ export interface FixtureModelClient extends ModelClient {
   readonly analysisRequests: readonly ModelRequest[];
   /** Requests that asked the coverage-checklist schema. */
   readonly checklistRequests: readonly ModelRequest[];
+  /** Requests that asked the counter-offer consistency schema. */
+  readonly consistencyRequests: readonly ModelRequest[];
 }
 
 interface PromptDocument {
@@ -156,7 +159,17 @@ export interface FixtureModelClientOptions {
   readonly topicCitations?: Readonly<Partial<Record<ChecklistTopicId, string>>>;
   /** Coverage checklist: topics the model proposes that nobody published. */
   readonly inventedTopics?: readonly InventedTopic[];
+  /**
+   * Consistency check: source sentences whose flag the model reports as
+   * inconsistent, so a test can exercise the residual-risk fallback without
+   * depending on the pipeline's flag ranking or ordering.
+   */
+  readonly inconsistentFlagSentences?: readonly string[];
 }
+
+/** Matches one rendered item from buildConsistencyUserMessage. */
+const CONSISTENCY_ITEM_PATTERN =
+  /^(\d+)\. Original clause: "([\s\S]*?)"\nCounter-offer: "[\s\S]*?"\nResidual risk: "[\s\S]*?"/gm;
 
 export function createFixtureModelClient(
   options: FixtureModelClientOptions = {},
@@ -169,6 +182,7 @@ export function createFixtureModelClient(
   const mismatched = options.mismatchedReferences ?? {};
   const topicCitations = options.topicCitations ?? {};
   const inventedTopics = options.inventedTopics ?? [];
+  const inconsistentFlagSentences = options.inconsistentFlagSentences ?? [];
   const requests: ModelRequest[] = [];
 
   function fixtureFor(document: PromptDocument): LoadedFixture | null {
@@ -339,6 +353,10 @@ export function createFixtureModelClient(
     return requests.filter((request) => request.schemaName === CHECKLIST_SCHEMA_NAME);
   }
 
+  function consistencyRequests(): ModelRequest[] {
+    return requests.filter((request) => request.schemaName === CONSISTENCY_SCHEMA_NAME);
+  }
+
   return {
     get requests() {
       return requests;
@@ -355,8 +373,28 @@ export function createFixtureModelClient(
     get checklistRequests() {
       return checklistRequests();
     },
+    get consistencyRequests() {
+      return consistencyRequests();
+    },
     async complete(request: ModelRequest): Promise<unknown> {
       requests.push(request);
+
+      if (request.schemaName === CONSISTENCY_SCHEMA_NAME) {
+        const results = [...request.user.matchAll(CONSISTENCY_ITEM_PATTERN)].map((match) => {
+          const index = Number(match[1]);
+          const sourceSentence = match[2];
+          const inconsistent = inconsistentFlagSentences.some((needle) =>
+            sourceSentence.includes(needle),
+          );
+          return {
+            index,
+            consistent: !inconsistent,
+            reason: inconsistent ? "Marked inconsistent by test fixture." : "consistent",
+          };
+        });
+        return { results };
+      }
+
       const documents = identify(request.user);
 
       if (request.schemaName === COMPLETENESS_SCHEMA_NAME) {
