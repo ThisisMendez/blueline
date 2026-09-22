@@ -119,6 +119,9 @@ lerna-debug.log*
 *.sql
 *.dump
 *.bak
+# Schema migrations are source, not data. They carry no rows and have to be
+# tracked so they can be applied to a real project later.
+!supabase/migrations/*.sql
 
 # ---- Editor / IDE ----
 .idea/

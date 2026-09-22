@@ -6,14 +6,14 @@ This ticket establishes the one full-stack seam — paste in, gated analysis, ci
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Signer can sign in and paste lease text
-- [ ] Server route calls OpenRouter using a model id read from one environment variable; no model id is hardcoded anywhere
-- [ ] Original pasted content is not stored as a file; only extracted text is persisted
-- [ ] Response includes a plain-English summary and a list of risk flags ranked by severity
-- [ ] Each risk flag includes: severity, concrete consequence, triggering condition, exact source sentence, source document identifier
-- [ ] A risk flag whose quoted sentence does not match the extracted text verbatim is retried or dropped — never shown
-- [ ] A lease with no material risk flags returns a clean-review result, not silence and not a safe-to-sign claim
-- [ ] The review persists and is visible again after reload, scoped to the authenticated signer only
-- [ ] Deterministic test: given a stubbed/fixed model response, the full paste → flags → persisted → reload path is exercised without a live model call
+- [x] Signer can sign in and paste lease text
+- [x] Server route calls OpenRouter using a model id read from one environment variable; no model id is hardcoded anywhere
+- [x] Original pasted content is not stored as a file; only extracted text is persisted
+- [x] Response includes a plain-English summary and a list of risk flags ranked by severity
+- [x] Each risk flag includes: severity, concrete consequence, triggering condition, exact source sentence, source document identifier
+- [x] A risk flag whose quoted sentence does not match the extracted text verbatim is retried or dropped — never shown
+- [x] A lease with no material risk flags returns a clean-review result, not silence and not a safe-to-sign claim
+- [x] The review persists and is visible again after reload, scoped to the authenticated signer only
+- [x] Deterministic test: given a stubbed/fixed model response, the full paste → flags → persisted → reload path is exercised without a live model call
