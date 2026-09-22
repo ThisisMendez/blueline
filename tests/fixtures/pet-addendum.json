@@ -1,0 +1,39 @@
+{
+  "documentId": "pet-addendum",
+  "title": "Pet Addendum, Apartment 12C, 340 Marlowe Court",
+  "file": "pet-addendum.txt",
+  "summary": "The addendum the lease names in section 10.1. It allows up to two listed animals, excludes dogs over sixty pounds without written consent, and exempts service and assistance animals from every fee in it. It sets a nonrefundable $600 fee per animal plus $75 per animal per month, makes the resident pay for damage an animal causes, and lets the landlord end the addendum on fourteen days notice after written complaints from two separate units.",
+  "plantedFlags": [
+    {
+      "id": "nonrefundable-pet-fee-and-monthly-pet-rent",
+      "category": "other",
+      "sourceSentence": "A nonrefundable pet fee of $600 per animal is due before the animal enters the premises, and pet rent of $75 per animal is added to each month's rent for the rest of the term.",
+      "expectedSeverity": "medium",
+      "consequence": "One cat costs $600 up front that never comes back, plus $900 over the twelve-month term, so keeping one animal adds $1,500 to the cost of the lease.",
+      "triggeringCondition": "The Resident keeps any animal that is not a service or assistance animal.",
+      "counterOffer": "Make the $600 a refundable pet deposit applied against actual animal damage, and drop the monthly pet rent.",
+      "residualRisk": "Damage an animal causes is still charged in full under section 4.1, at the contractor's invoice."
+    },
+    {
+      "id": "animal-must-leave-after-two-complaints",
+      "category": "other",
+      "sourceSentence": "If the landlord receives written complaints about an animal from residents of two separate dwelling units, the landlord may end this addendum on fourteen (14) days written notice, and the animal must then leave the premises.",
+      "expectedSeverity": "medium",
+      "consequence": "Two written complaints from neighbours are enough to require the animal to be rehomed or boarded within fourteen days, and the $600 fee is not returned.",
+      "triggeringCondition": "Residents of two separate units put a complaint about the animal in writing, whatever the complaint says.",
+      "counterOffer": "Require the complaints to describe conduct the addendum actually forbids, and give the Resident a chance to fix the problem before the animal has to go.",
+      "residualRisk": "The Landlord still decides whether the problem was fixed, and the lease itself continues either way."
+    }
+  ],
+  "harmlessOddities": [
+    {
+      "sourceSentence": "The resident shall have an animal treated for fleas twice a year and shall keep the receipts.",
+      "why": "Ordinary animal care, written down; no charge attached."
+    },
+    {
+      "sourceSentence": "An animal that is not listed on the signature page is not permitted in the premises, including an animal kept for a friend for a weekend.",
+      "why": "Strictly worded but it only restates the listing rule already in section 1.1."
+    }
+  ],
+  "references": []
+}

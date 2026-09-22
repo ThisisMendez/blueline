@@ -1,0 +1,133 @@
+{
+  "documentId": "referencing-lease",
+  "title": "Crestline Residential Partners residential lease, Apartment 12C, 340 Marlowe Court",
+  "file": "referencing-lease.txt",
+  "summary": "This is a one-year lease for Apartment 12C at 340 Marlowe Court, running from June 1, 2027 to noon on May 31, 2028, at $1,875 per month with a $1,875 security deposit. The Resident pays electricity, gas, internet, and television service; the Landlord pays water, sewer, and trash collection, and keeps the roof, plumbing, heating, and electrical system in working order. The lease does not state its own fees: the late charge, the cost of ending the lease early, the parking and storage rates, and the forced-place insurance rate all sit in a separate Schedule of Resident Fees, and the terms for keeping an animal sit in a separate Pet Addendum. Entry needs twenty-four hours notice except during the last sixty days of the term, when the Landlord may show the unit without notice. A claim against the Landlord has to be brought within six months of the event complained of.",
+  "plantedFlags": [
+    {
+      "id": "six-month-deadline-on-claims",
+      "category": "dispute-rights",
+      "sourceSentence": "The Resident agrees that any claim against the Landlord arising out of this Lease must be brought within six (6) months of the event complained of, and gives up any longer period that would otherwise be available.",
+      "expectedSeverity": "high",
+      "consequence": "A problem the Resident discovers late, such as a deposit deduction or a repair the Landlord never made, can no longer be taken to court once six months have passed from the event.",
+      "triggeringCondition": "The Resident learns of something worth contesting more than six months after it happened, which is common for move-out charges and for damage that shows up slowly.",
+      "counterOffer": "Drop the shortened deadline and let the ordinary period for bringing a claim apply to both parties equally.",
+      "residualRisk": "The Resident still has to notice the problem and act on it, and the lease sets no obligation on the Landlord to point one out."
+    },
+    {
+      "id": "deposit-applied-to-charges-from-named-documents",
+      "category": "deposit",
+      "sourceSentence": "The Landlord may apply the security deposit to any amount the Resident owes under this Lease or under any document this Lease names, including charges that fall due after the Resident has returned possession.",
+      "expectedSeverity": "medium",
+      "consequence": "The $1,875 deposit can be spent on charges set out in the Schedule of Resident Fees rather than on damage, including charges raised after the Resident has moved out and handed back the keys.",
+      "triggeringCondition": "Any fee from the schedule is outstanding at move-out, or the Landlord raises one afterwards.",
+      "counterOffer": "Limit deductions to unpaid rent and the documented cost of damage beyond ordinary wear, and require any charge raised after move-out to be itemized within the thirty-day window.",
+      "residualRisk": "The Landlord still decides what the damage cost, and the schedule can be revised once a year on thirty days notice."
+    },
+    {
+      "id": "unannounced-showings-in-the-final-sixty-days",
+      "category": "other",
+      "sourceSentence": "The Landlord may enter the Premises to show it to prospective residents on any day during the final sixty (60) days of the Term, without notice to the Resident.",
+      "expectedSeverity": "medium",
+      "consequence": "For the last two months of the lease, strangers can be brought through the home on any day with no warning, including while the Resident is out or asleep.",
+      "triggeringCondition": "The Term reaches its final sixty days and the Landlord starts showing the unit to the next resident.",
+      "counterOffer": "Keep the twenty-four hour notice for showings, and agree a window of days and hours when showings may happen.",
+      "residualRisk": "Showings can still be frequent inside the agreed window, and the Resident is expected to keep the home presentable for them."
+    }
+  ],
+  "harmlessOddities": [
+    {
+      "sourceSentence": "The Landlord shall change the furnace filter twice a year, in April and in October, and shall leave a card in the door saying the filter was changed.",
+      "why": "An oddly specific housekeeping promise, and it is a duty on the Landlord rather than a cost to the Resident."
+    },
+    {
+      "sourceSentence": "The Resident may hang pictures on the walls using nails no wider than the width of a pencil lead, and shall fill the holes before returning possession.",
+      "why": "A strangely worded permission that grants more than it takes away; filling nail holes is ordinary."
+    },
+    {
+      "sourceSentence": "The Resident shall break down cardboard boxes before putting them in the building's recycling bins.",
+      "why": "A building-manners rule with no charge attached and no consequence stated."
+    }
+  ],
+  "checklistTopics": {
+    "deposit-deductions-and-return": {
+      "present": true,
+      "sourceSentence": "The Landlord shall return the balance of the security deposit, with a written itemized statement of every deduction, within thirty (30) days after the Resident returns possession of the Premises."
+    },
+    "early-exit-costs": {
+      "present": true,
+      "sourceSentence": "The Resident may end this Lease before the last day of the Term by giving the Landlord sixty (60) days written notice and paying the charges the Schedule of Resident Fees sets for an early ending."
+    },
+    "rent-changes": {
+      "present": true,
+      "sourceSentence": "If the tenancy continues month to month under section 2.3, the Landlord may change the rent on sixty (60) days written notice."
+    },
+    "repairs": {
+      "present": true,
+      "sourceSentence": "The Landlord shall keep the roof, the exterior walls, the plumbing, the heating equipment, and the electrical system of the Premises in working order."
+    },
+    "access-to-the-home": {
+      "present": true,
+      "sourceSentence": "The Landlord may enter the Premises after giving the Resident at least twenty-four (24) hours notice, and only between eight in the morning and six in the evening."
+    },
+    "dispute-routes": {
+      "present": true,
+      "sourceSentence": "A dispute under this Lease may be brought in the courts of the county in which the Premises are located."
+    }
+  },
+  "referencedDocuments": [
+    "Schedule of Resident Fees",
+    "Pet Addendum"
+  ],
+  "references": [
+    {
+      "name": "Schedule of Resident Fees",
+      "citingSentence": "The Resident shall pay the charges set out in the Schedule of Resident Fees, a separate document delivered with this Lease, and that schedule forms part of the agreement between the Landlord and the Resident.",
+      "satisfiedBy": "fee-schedule"
+    },
+    {
+      "name": "Pet Addendum",
+      "citingSentence": "No animal may be kept in the Premises except under the Pet Addendum, a separate document the Resident must sign before an animal enters the Premises.",
+      "satisfiedBy": "pet-addendum"
+    }
+  ],
+  "qa": {
+    "answerable": [
+      {
+        "question": "How much is the rent each month?",
+        "expectedSourceSentence": "The Resident shall pay rent of $1,875 per month, due in advance on the first day of each month.",
+        "expectedAnswer": "$1,875, due in advance on the first of each month."
+      },
+      {
+        "question": "How much notice does the Landlord have to give before coming in?",
+        "expectedSourceSentence": "The Landlord may enter the Premises after giving the Resident at least twenty-four (24) hours notice, and only between eight in the morning and six in the evening.",
+        "expectedAnswer": "Twenty-four hours, and only between eight in the morning and six in the evening, except for emergencies and for showings in the last sixty days of the term."
+      },
+      {
+        "question": "Who pays the water bill?",
+        "expectedSourceSentence": "The Landlord shall pay for water, sewer service, and trash collection.",
+        "expectedAnswer": "The Landlord pays for water, sewer service, and trash collection."
+      }
+    ],
+    "unanswerable": [
+      {
+        "question": "How much is the late charge if I pay rent on the seventh?"
+      },
+      {
+        "question": "Can I let someone who does not live in the building use my parking space?"
+      }
+    ]
+  },
+  "redLines": [
+    {
+      "redLine": "I need to be able to leave if my job moves me out of the city.",
+      "expectedMatchSentence": "The Resident may end this Lease before the last day of the Term by giving the Landlord sixty (60) days written notice and paying the charges the Schedule of Resident Fees sets for an early ending.",
+      "why": "Leaving early is allowed, but the cost of it is not stated in the lease at all."
+    },
+    {
+      "redLine": "Nobody comes into my home without telling me first.",
+      "expectedMatchSentence": "The Landlord may enter the Premises to show it to prospective residents on any day during the final sixty (60) days of the Term, without notice to the Resident.",
+      "why": "The final sixty days of the term are carved out of the notice rule entirely."
+    }
+  ]
+}

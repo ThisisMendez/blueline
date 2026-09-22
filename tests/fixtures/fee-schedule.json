@@ -1,0 +1,39 @@
+{
+  "documentId": "fee-schedule",
+  "title": "Schedule of Resident Fees, 340 Marlowe Court",
+  "file": "fee-schedule.txt",
+  "summary": "The fee schedule the lease names in section 5.1. It sets the charges for moving in, paying rent late, ending the lease before the term is up, living in the building, and moving out. The lease break administration fee of three months rent lives here and appears nowhere in the lease itself, as does the $95 late charge, the $350 transfer fee, the parking and storage rates, and the forced-place insurance rate.",
+  "plantedFlags": [
+    {
+      "id": "lease-break-administration-fee-of-three-months-rent",
+      "category": "early-exit",
+      "sourceSentence": "A resident who ends the lease before the last day of the term shall pay a lease break administration fee of three (3) months rent, due on the day the resident returns possession, and this fee is in addition to rent owed through the end of the notice period.",
+      "expectedSeverity": "high",
+      "consequence": "Ending the lease early costs $5,625 on top of the rent owed through the sixty-day notice period, which is another $3,750, so leaving early costs around $9,375 in total.",
+      "triggeringCondition": "A job move, a household change, or any other reason leads the Resident to give up the unit before May 31, 2028.",
+      "counterOffer": "Replace the three-month fee with a termination fee of one month of rent, and let it be waived once a replacement occupant starts paying.",
+      "residualRisk": "Ending the lease early still costs a month of rent plus the notice period, and the schedule can be revised once a year."
+    },
+    {
+      "id": "early-key-return-charge",
+      "category": "early-exit",
+      "sourceSentence": "Early return of keys without the notice the lease requires, per occurrence: one month of rent.",
+      "expectedSeverity": "medium",
+      "consequence": "Handing the keys back without the sixty days notice costs a further $1,875, charged on top of the lease break fee.",
+      "triggeringCondition": "The Resident has to leave faster than the notice period allows.",
+      "counterOffer": "Let the notice period be shortened by agreement, with the charge limited to the rent for the days of notice not given.",
+      "residualRisk": "The Landlord still has to agree to the shorter notice, and the rent for those days is still owed."
+    }
+  ],
+  "harmlessOddities": [
+    {
+      "sourceSentence": "Reletting of the mailbox lock, if the resident asks for it: $25.",
+      "why": "A small optional charge for a service the resident has to ask for."
+    },
+    {
+      "sourceSentence": "Removal of an item left in a common hallway, per item: $30.",
+      "why": "Unusual to see itemized, but it is avoidable and the amount is small."
+    }
+  ],
+  "references": []
+}

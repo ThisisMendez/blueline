@@ -1,17 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useState } from "react";
+import { useCallback, useState } from "react";
 
 import type {
   AnalysisFailure,
   AnalysisOutcome,
   AnalysisRejection,
+  GeneralReview,
 } from "@/features/analysis/types";
-import type { ExtractedDocument } from "@/features/packet/types";
-import type { GeneralReview } from "@/features/analysis/types";
+import type {
+  CompleteAgreement,
+  IncompleteAgreement,
+} from "@/features/packet/completeness";
 import { extractPdfText, type PdfExtraction } from "@/features/packet/extract/pdf";
+import {
+  MAXIMUM_PACKET_DOCUMENTS,
+  type ExtractedDocument,
+} from "@/features/packet/types";
 
+import { BlockedPacket } from "./BlockedPacket";
+import { DocumentSlot, type FileState } from "./DocumentSlot";
+import { ReferenceLedger, type ReferenceChoices } from "./ReferenceLedger";
 import { ReviewResult } from "./ReviewResult";
 
 const FAILURE_MESSAGE: Record<AnalysisFailure, string> = {
@@ -48,26 +58,41 @@ const UNREADABLE_MESSAGE: Record<"not-a-pdf" | "password-protected", string> = {
     "This PDF is locked with a password, so we can't read anything out of it. Save an unlocked copy and open that one instead.",
 };
 
+/**
+ * Where the screen is.
+ *
+ * `working` and `blocked` are the two waits, and they are different kinds of
+ * thing: one is us reading, one is us asking. Keeping them as separate
+ * members of this union is what stops the screen from showing a spinner at
+ * somebody whose next move is to go and find a document.
+ */
 type Phase =
   | { readonly kind: "idle" }
   | { readonly kind: "working" }
   | {
+      readonly kind: "blocked";
+      readonly completeness: IncompleteAgreement;
+      readonly documents: readonly ExtractedDocument[];
+    }
+  | {
       readonly kind: "reviewed";
       readonly review: GeneralReview;
+      readonly completeness: CompleteAgreement;
       readonly documents: readonly ExtractedDocument[];
       readonly reviewId: string | null;
     }
   | { readonly kind: "problem"; readonly message: string };
 
-/**
- * The file control's own state. A rejected file is its own outcome, sitting
- * with the control that produced it, and never reaches the review area.
- */
-type FileState =
-  | { readonly kind: "none" }
-  | { readonly kind: "reading"; readonly fileName: string }
-  | { readonly kind: "read"; readonly fileName: string; readonly pageCount: number }
-  | { readonly kind: "rejected"; readonly fileName: string; readonly message: string };
+interface Slot {
+  readonly key: string;
+  readonly title: string;
+  readonly text: string;
+  readonly file: FileState;
+}
+
+function emptySlot(key: string): Slot {
+  return { key, title: "", text: "", file: { kind: "none" } };
+}
 
 function rejectionFor(extraction: PdfExtraction): string {
   return extraction.kind === "unreadable"
@@ -81,33 +106,48 @@ export interface DocumentIntakeProps {
 }
 
 /**
- * Paste or choose a PDF, send, read.
+ * The packet: the lease, the documents it refers to, and one send.
  *
- * A chosen PDF is opened here, in the signer's browser, and only the text
- * that comes out of it travels any further — into the box the signer can see
- * and correct, and from there to the analysis route, which accepts nothing
- * but text. The file itself is never uploaded, never posted and never
- * stored; there is no field to put it in.
+ * Every document is opened in the signer's browser and reduced to text
+ * before anything leaves the page. The request carries text and the names
+ * the signer gave it, and nothing else; there is no field for a file, so
+ * there is no path an original could take.
+ *
+ * The send does two things in order, and the screen shows which answer came
+ * back. If the agreement names a document nobody supplied, the answer is a
+ * blocked packet with no review in it at all. Only a complete agreement
+ * reaches the review pipeline.
  */
 export function DocumentIntake({ persists }: DocumentIntakeProps) {
-  const textareaId = useId();
-  const fileId = useId();
-  const fileHintId = useId();
-  const fileStatusId = useId();
-
-  const [text, setText] = useState("");
-  const [fileName, setFileName] = useState<string | null>(null);
-  const [file, setFile] = useState<FileState>({ kind: "none" });
+  const [slots, setSlots] = useState<readonly Slot[]>([emptySlot("lease")]);
+  const [nextKey, setNextKey] = useState(2);
+  const [choices, setChoices] = useState<ReferenceChoices>({});
   const [phase, setPhase] = useState<Phase>({ kind: "idle" });
 
-  async function chooseFile(event: React.ChangeEvent<HTMLInputElement>) {
-    const chosen = event.target.files?.[0];
-    // Let the same file be chosen again after a rejection.
-    event.target.value = "";
-    if (!chosen) return;
+  const working = phase.kind === "working";
+  const reading = slots.some((slot) => slot.file.kind === "reading");
 
+  function updateSlot(index: number, change: Partial<Slot>) {
+    setSlots((current) =>
+      current.map((slot, at) => (at === index ? { ...slot, ...change } : slot)),
+    );
+  }
+
+  function addDocument() {
+    setSlots((current) => [...current, emptySlot(`document-${nextKey}`)]);
+    setNextKey((key) => key + 1);
+    // The packet changed, so answers about the old one no longer describe it.
+    setChoices({});
+  }
+
+  function removeDocument(index: number) {
+    setSlots((current) => current.filter((_, at) => at !== index));
+    setChoices({});
+  }
+
+  async function readFile(index: number, chosen: File) {
     setPhase({ kind: "idle" });
-    setFile({ kind: "reading", fileName: chosen.name });
+    updateSlot(index, { file: { kind: "reading", fileName: chosen.name } });
 
     let extraction: PdfExtraction;
     try {
@@ -117,163 +157,151 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
     }
 
     if (extraction.kind !== "text") {
-      setFileName(null);
-      setFile({
-        kind: "rejected",
-        fileName: chosen.name,
-        message: rejectionFor(extraction),
+      updateSlot(index, {
+        file: {
+          kind: "rejected",
+          fileName: chosen.name,
+          message: rejectionFor(extraction),
+        },
       });
       return;
     }
 
-    setText(extraction.text);
-    setFileName(chosen.name);
-    setFile({
-      kind: "read",
-      fileName: chosen.name,
-      pageCount: extraction.pageCount,
+    updateSlot(index, {
+      text: extraction.text,
+      title: chosen.name,
+      file: {
+        kind: "read",
+        fileName: chosen.name,
+        pageCount: extraction.pageCount,
+      },
     });
   }
 
-  function editText(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setText(event.target.value);
-    // Once the text has been edited by hand it is no longer the file's.
-    setFileName(null);
-    setFile({ kind: "none" });
-  }
+  const send = useCallback(
+    async (packet: readonly Slot[], answers: ReferenceChoices) => {
+      const [lease, ...rest] = packet;
+      const leaseTitle = lease.title.trim();
+      const referenced = rest
+        .filter((slot) => slot.text.trim().length > 0)
+        .map((slot, index) => ({
+          text: slot.text,
+          title: slot.title.trim() || `Document ${index + 2}`,
+        }));
+      const resolutions = Object.entries(answers).map(([referenceId, documentId]) => ({
+        referenceId,
+        documentId,
+      }));
+
+      setPhase({ kind: "working" });
+
+      let outcome: AnalysisOutcome;
+      try {
+        const response = await fetch("/api/analysis", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          // Text, and the names the signer gave it. The bytes are long gone.
+          body: JSON.stringify({
+            text: lease.text,
+            ...(leaseTitle ? { title: leaseTitle } : {}),
+            ...(referenced.length > 0 ? { referenced } : {}),
+            ...(resolutions.length > 0 ? { resolutions } : {}),
+          }),
+        });
+        outcome = (await response.json()) as AnalysisOutcome;
+      } catch {
+        setPhase({
+          kind: "problem",
+          message: "The review didn't reach us. Check your connection and send it again.",
+        });
+        return;
+      }
+
+      if (outcome.status === "blocked") {
+        setPhase({
+          kind: "blocked",
+          completeness: outcome.completeness,
+          documents: outcome.documents,
+        });
+        return;
+      }
+
+      if (outcome.status === "reviewed") {
+        setPhase({
+          kind: "reviewed",
+          review: outcome.review,
+          completeness: outcome.completeness,
+          documents: outcome.documents,
+          reviewId: outcome.reviewId,
+        });
+        return;
+      }
+
+      setPhase({
+        kind: "problem",
+        message:
+          outcome.status === "rejected"
+            ? REJECTION_MESSAGE[outcome.reason]
+            : FAILURE_MESSAGE[outcome.reason],
+      });
+    },
+    [],
+  );
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (file.kind === "reading") return;
-    if (text.trim().length === 0) {
+    if (reading) return;
+    if (slots[0].text.trim().length === 0) {
       setPhase({ kind: "problem", message: REJECTION_MESSAGE["empty-text"] });
       return;
     }
-
-    setPhase({ kind: "working" });
-
-    let outcome: AnalysisOutcome;
-    try {
-      const response = await fetch("/api/analysis", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        // Text, and a name for it. The bytes the signer chose are long gone.
-        body: JSON.stringify(fileName ? { text, title: fileName } : { text }),
-      });
-      outcome = (await response.json()) as AnalysisOutcome;
-    } catch {
-      setPhase({
-        kind: "problem",
-        message: "The review didn't reach us. Check your connection and send it again.",
-      });
-      return;
-    }
-
-    if (outcome.status === "reviewed") {
-      setPhase({
-        kind: "reviewed",
-        review: outcome.review,
-        documents: outcome.documents,
-        reviewId: outcome.reviewId,
-      });
-      return;
-    }
-
-    setPhase({
-      kind: "problem",
-      message:
-        outcome.status === "rejected"
-          ? REJECTION_MESSAGE[outcome.reason]
-          : FAILURE_MESSAGE[outcome.reason],
-    });
+    await send(slots, choices);
   }
 
-  const working = phase.kind === "working";
-  const reading = file.kind === "reading";
+  function choose(referenceId: string, documentId: string | null) {
+    setChoices((current) => ({ ...current, [referenceId]: documentId }));
+  }
+
+  async function recheck() {
+    if (reading) return;
+    await send(slots, choices);
+  }
 
   return (
     <div className="flex flex-col gap-10">
-      <form onSubmit={submit} className="flex flex-col gap-4">
-        <label
-          htmlFor={textareaId}
-          className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-navy)]"
-        >
-          Paste your lease
-        </label>
-        <p className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          All of it, start to finish. Anything you leave out is something we
-          cannot read for you.
-        </p>
-        <textarea
-          id={textareaId}
-          name="text"
-          rows={14}
-          value={text}
-          onChange={editText}
-          spellCheck={false}
-          className="w-full border-2 border-[var(--color-navy)] bg-[var(--color-paper)] p-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]"
-        />
+      <form onSubmit={submit} className="flex flex-col gap-6">
+        {slots.map((slot, index) => (
+          <DocumentSlot
+            key={slot.key}
+            position={index + 1}
+            title={slot.title}
+            text={slot.text}
+            file={slot.file}
+            busy={working}
+            onTitle={(title) => updateSlot(index, { title })}
+            onText={(text) =>
+              // Typed-over text is no longer the file's, so the file note goes.
+              updateSlot(index, { text, file: { kind: "none" } })
+            }
+            onFile={(chosen) => readFile(index, chosen)}
+            onRemove={index === 0 ? undefined : () => removeDocument(index)}
+          />
+        ))}
 
-        <div className="flex items-center gap-4 pt-2">
-          <span className="h-0.5 flex-1 bg-[var(--color-navy)]" aria-hidden="true" />
-          <span className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-navy)]">
-            or
-          </span>
-          <span className="h-0.5 flex-1 bg-[var(--color-navy)]" aria-hidden="true" />
-        </div>
-
-        <label
-          htmlFor={fileId}
-          className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-navy)]"
-        >
-          Open a PDF instead
-        </label>
-        <p
-          id={fileHintId}
-          className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]"
-        >
-          It has to be a PDF you can select text in. A scan or a photo of the
-          pages is a picture, and a picture has no sentences to quote. The file
-          stays on your computer. What we pull out of it lands in the box
-          above, and that is the only part that gets sent or kept.
-        </p>
-        <input
-          id={fileId}
-          type="file"
-          name="pdf"
-          accept="application/pdf,.pdf"
-          disabled={reading || working}
-          aria-describedby={`${fileHintId} ${fileStatusId}`}
-          aria-invalid={file.kind === "rejected"}
-          onChange={chooseFile}
-          className="block w-full max-w-[var(--measure)] cursor-pointer border-2 border-[var(--color-navy)] bg-[var(--color-paper)] p-3 font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)] file:mr-4 file:cursor-pointer file:border-0 file:bg-[var(--color-navy)] file:px-4 file:py-2 file:font-[family-name:var(--font-display)] file:text-xs file:font-bold file:uppercase file:tracking-wide file:text-[var(--color-paper)] disabled:opacity-70"
-        />
-
-        <div id={fileStatusId} aria-live="polite" className="empty:hidden">
-          {file.kind === "reading" ? (
-            <p className="font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)]">
-              Reading the text out of {file.fileName}.
-            </p>
-          ) : null}
-
-          {file.kind === "read" ? (
-            <p className="font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)]">
-              Read {file.pageCount === 1 ? "1 page" : `${file.pageCount} pages`} of{" "}
-              {file.fileName}. The text is in the box above. Check it, then
-              send it.
-            </p>
-          ) : null}
-
-          {file.kind === "rejected" ? (
-            <div className="max-w-[var(--measure)] border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-5 py-4">
-              <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-navy)]">
-                Nothing to read in {file.fileName}
-              </p>
-              <p className="mt-3 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-                {file.message}
-              </p>
-            </div>
-          ) : null}
+        <div className="flex flex-col gap-3">
+          <p className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
+            If your lease points at a fee schedule, building rules, or an
+            addendum, add each one here. We check what the lease asks for
+            before we read any of it.
+          </p>
+          <button
+            type="button"
+            onClick={addDocument}
+            disabled={working || reading || slots.length >= MAXIMUM_PACKET_DOCUMENTS}
+            className="self-start border-2 border-[var(--color-navy)] bg-[var(--color-paper)] px-5 py-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-navy)] transition-colors hover:bg-[var(--color-paper-deep)] disabled:opacity-70"
+          >
+            Add another document
+          </button>
         </div>
 
         <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -290,12 +318,19 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
         </div>
       </form>
 
-      <div aria-live="polite" className="flex flex-col gap-10">
+      <div aria-live="polite" className="empty:hidden">
         {working ? (
-          <p className="font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)]">
-            Reading the text and checking every quotation against it. This
-            takes a minute or so.
-          </p>
+          <div className="border-2 border-[var(--color-navy)] bg-[var(--color-paper)] px-6 py-5">
+            <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-navy)]">
+              Reading your agreement
+            </p>
+            <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
+              First we check what your lease points at, then we read the whole
+              agreement and match every quotation to your own text. You
+              don&apos;t have to do anything while it runs. It takes a minute
+              or so.
+            </p>
+          </div>
         ) : null}
 
         {phase.kind === "problem" ? (
@@ -303,25 +338,74 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
             {phase.message}
           </p>
         ) : null}
-
-        {phase.kind === "reviewed" ? (
-          <>
-            <ReviewResult review={phase.review} documents={phase.documents} />
-            {phase.reviewId ? (
-              <p className="font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
-                <Link
-                  href={`/review/${phase.reviewId}`}
-                  className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-wide text-[var(--color-navy)] underline decoration-2 underline-offset-4 hover:text-[var(--color-red-ink)]"
-                >
-                  Open this review on its own page
-                </Link>
-                . It is in your library, and the link keeps working after you
-                close the tab.
-              </p>
-            ) : null}
-          </>
-        ) : null}
       </div>
+
+      {phase.kind === "blocked" ? (
+        <BlockedPacket
+          key={phase.completeness.missing.map((reference) => reference.id).join("|")}
+          completeness={phase.completeness}
+          documents={phase.documents}
+          choices={choices}
+          onChoose={choose}
+          onRecheck={recheck}
+          busy={working}
+        />
+      ) : null}
+
+      {phase.kind === "reviewed" ? (
+        <div className="flex flex-col gap-10">
+          {phase.completeness.matches.length > 0 ? (
+            <section
+              aria-labelledby="reference-ledger-heading"
+              className="flex flex-col gap-6"
+            >
+              <div>
+                <h2
+                  id="reference-ledger-heading"
+                  className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)]"
+                >
+                  What your lease points at
+                </h2>
+                <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
+                  We matched these by reading titles and opening lines, which
+                  is a guess. If we got one wrong, change it and check the
+                  packet again.
+                </p>
+              </div>
+              <ReferenceLedger
+                completeness={phase.completeness}
+                documents={phase.documents}
+                choices={choices}
+                onChoose={choose}
+                busy={working}
+              />
+              <button
+                type="button"
+                onClick={recheck}
+                disabled={working}
+                className="self-start border-2 border-[var(--color-navy)] bg-[var(--color-paper)] px-5 py-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-navy)] transition-colors hover:bg-[var(--color-paper-deep)] disabled:opacity-70"
+              >
+                Check the packet again
+              </button>
+            </section>
+          ) : null}
+
+          <ReviewResult review={phase.review} documents={phase.documents} />
+
+          {phase.reviewId ? (
+            <p className="font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
+              <Link
+                href={`/review/${phase.reviewId}`}
+                className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-wide text-[var(--color-navy)] underline decoration-2 underline-offset-4 hover:text-[var(--color-red-ink)]"
+              >
+                Open this review on its own page
+              </Link>
+              . It is in your library, and the link keeps working after you
+              close the tab.
+            </p>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -4,11 +4,11 @@
 
 **Blocked by:** 01 (needs the review pipeline to gate in front of)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Signer can submit multiple documents as one packet (lease plus referenced material)
-- [ ] Completeness is checked before general review runs
-- [ ] A referenced document that is missing from the packet blocks review entirely and names what's missing
-- [ ] The blocking result is not a partial summary and not a partial flag set
-- [ ] Signer can distinguish "waiting on missing documents" from "waiting on analysis" in the UI
-- [ ] Deterministic test: a complete packet proceeds to review; a packet missing a referenced document is blocked and names the gap; a packet with multiple referenced documents is accepted
+- [x] Signer can submit multiple documents as one packet (lease plus referenced material)
+- [x] Completeness is checked before general review runs
+- [x] A referenced document that is missing from the packet blocks review entirely and names what's missing
+- [x] The blocking result is not a partial summary and not a partial flag set
+- [x] Signer can distinguish "waiting on missing documents" from "waiting on analysis" in the UI
+- [x] Deterministic test: a complete packet proceeds to review; a packet missing a referenced document is blocked and names the gap; a packet with multiple referenced documents is accepted

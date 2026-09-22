@@ -48,9 +48,11 @@ export default async function ReviewPage() {
           Your lease, read sentence by sentence
         </h1>
         <p className="mt-4 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          Paste the text, or open a PDF you can select text in. You get a
-          plain-English summary and the terms that could cost you, heaviest
-          first, each one quoting the sentence it came from.
+          Paste the text, or open a PDF you can select text in. Add the
+          documents your lease points at, such as a fee schedule or an
+          addendum, so we read the whole agreement rather than part of it.
+          You get a plain-English summary and the terms that could cost you,
+          heaviest first, each one quoting the sentence it came from.
         </p>
       </div>
 

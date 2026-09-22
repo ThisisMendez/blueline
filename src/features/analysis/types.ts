@@ -1,3 +1,7 @@
+import type {
+  CompleteAgreement,
+  IncompleteAgreement,
+} from "@/features/packet/completeness";
 import type { ExtractedDocument } from "@/features/packet/types";
 
 /** The product's fixed severity vocabulary, ranked high first. */
@@ -74,7 +78,16 @@ export type AnalysisFailure =
   | "model-unavailable"
   | "model-unreadable";
 
-/** What the analysis route answers with. */
+/**
+ * What the analysis route answers with.
+ *
+ * `reviewed` and `blocked` are separate members on purpose (ADR 0005). A
+ * blocked packet is not a review with its fields left empty: it has no
+ * `review` at all, and the optional `never` fields below make that a
+ * compiler error rather than a convention. Code that wants a summary has to
+ * narrow to `reviewed` first, and the route only reaches `reviewed` by
+ * running the pipeline on a complete agreement.
+ */
 export type AnalysisOutcome =
   | {
       readonly status: "reviewed";
@@ -82,7 +95,19 @@ export type AnalysisOutcome =
       readonly reviewId: string | null;
       readonly persisted: boolean;
       readonly documents: readonly ExtractedDocument[];
+      /** Every reference answered by a supplied document. */
+      readonly completeness: CompleteAgreement;
       readonly review: GeneralReview;
+    }
+  | {
+      readonly status: "blocked";
+      readonly documents: readonly ExtractedDocument[];
+      /** What is missing, and the sentence in the agreement that names it. */
+      readonly completeness: IncompleteAgreement;
+      readonly review?: never;
+      readonly summary?: never;
+      readonly riskFlags?: never;
+      readonly clean?: never;
     }
   | { readonly status: "rejected"; readonly reason: AnalysisRejection }
   | { readonly status: "failed"; readonly reason: AnalysisFailure };

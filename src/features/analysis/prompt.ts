@@ -1,3 +1,4 @@
+import { renderDocumentBlocks } from "@/features/packet/render";
 import type { Packet } from "@/features/packet/types";
 
 /**
@@ -31,20 +32,9 @@ Write each flag like this:
 
 The summary is neutral. Say what the agreement is, its main money and timing terms, and what it leaves the signer responsible for. No recommendation either way.`;
 
-const DOCUMENT_OPEN = (id: string, title: string) =>
-  `=== DOCUMENT id=${id} title="${title}" ===`;
-const DOCUMENT_CLOSE = (id: string) => `=== END DOCUMENT id=${id} ===`;
-
 /** Renders the packet as the user message the model reads. */
 export function buildAnalysisUserMessage(packet: Packet): string {
-  const documents = packet.documents
-    .map(
-      (document) =>
-        `${DOCUMENT_OPEN(document.id, document.title)}\n${document.text}\n${DOCUMENT_CLOSE(document.id)}`,
-    )
-    .join("\n\n");
-
-  return `Review the complete agreement below and return the summary and the flags.\n\n${documents}`;
+  return `Review the complete agreement below and return the summary and the flags.\n\n${renderDocumentBlocks(packet)}`;
 }
 
 /**

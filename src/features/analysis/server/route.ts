@@ -2,7 +2,12 @@ import { z } from "zod";
 
 import type { AccountsState } from "@/features/auth/session";
 import type { ReviewStore } from "@/features/library/store";
-import type { ExtractedDocument, Packet } from "@/features/packet/types";
+import { checkCompleteness } from "@/features/packet/completeness";
+import {
+  MAXIMUM_PACKET_DOCUMENTS,
+  type ExtractedDocument,
+  type Packet,
+} from "@/features/packet/types";
 
 import { ModelError, type ModelClient } from "../model/client";
 import { runGeneralReview } from "../review";
@@ -30,16 +35,40 @@ export interface AnalysisRouteDependencies {
   readonly newReviewId: () => string;
 }
 
-/** The id the pasted lease is cited by. Ticket 02 adds one id per uploaded file. */
+/** The id the lease is cited by, whether it was pasted or read out of a PDF. */
 export const PASTED_DOCUMENT_ID = "pasted-lease";
+
+/**
+ * The id of a document supplied alongside the lease, by its place in the
+ * packet. The lease is document 1, so the first referenced document is
+ * `supplied-2` — the numbering the screen shows the signer.
+ */
+export function suppliedDocumentId(position: number): string {
+  return `supplied-${position}`;
+}
+
+const suppliedDocumentSchema = z.strictObject({
+  text: z.string(),
+  title: z.string().trim().min(1).max(200),
+});
+
+const resolutionSchema = z.strictObject({
+  referenceId: z.string().trim().min(1).max(300),
+  documentId: z.string().trim().min(1).max(100).nullable(),
+});
 
 /**
  * Text in, nothing else. There is no file field to send, which is what keeps
  * original bytes out of the product rather than a policy about deleting them.
+ * A packet of several documents is several pieces of text and nothing more.
  */
 const analysisRequestSchema = z.strictObject({
   text: z.string(),
   title: z.string().trim().min(1).max(200).optional(),
+  /** The documents the lease refers to, in the order the signer added them. */
+  referenced: z.array(suppliedDocumentSchema).max(MAXIMUM_PACKET_DOCUMENTS - 1).optional(),
+  /** The signer's own answers about which supplied document covers which reference. */
+  resolutions: z.array(resolutionSchema).max(50).optional(),
 });
 
 const REJECTION_STATUS: Record<AnalysisRejection, number> = {
@@ -97,12 +126,49 @@ export function createAnalysisRoute(
     // and the review runs unsaved rather than behind a pretend session.
     if (accounts.kind === "signed-out") return reject("not-signed-in");
 
-    const document: ExtractedDocument = {
+    const lease: ExtractedDocument = {
       id: PASTED_DOCUMENT_ID,
       title: parsed.data.title ?? "Lease text you pasted",
       text: parsed.data.text,
     };
-    const packet: Packet = { documents: [document] };
+    const referenced: ExtractedDocument[] = (parsed.data.referenced ?? [])
+      .filter((supplied) => supplied.text.trim().length > 0)
+      .map((supplied, index) => ({
+        id: suppliedDocumentId(index + 2),
+        title: supplied.title,
+        text: supplied.text,
+      }));
+    const packet: Packet = { documents: [lease, ...referenced] };
+
+    // ADR 0005: completeness first. A packet that names a document nobody
+    // supplied never reaches the pipeline below, so there is no partial
+    // review to withhold — the review was never run.
+    let completeness;
+    try {
+      completeness = await checkCompleteness({
+        packet,
+        model: dependencies.model,
+        resolutions: parsed.data.resolutions ?? [],
+      });
+    } catch (error) {
+      if (error instanceof ModelError) {
+        const reason = failureFor(error);
+        const outcome: AnalysisOutcome = { status: "failed", reason };
+        return Response.json(outcome, { status: FAILURE_STATUS[reason] });
+      }
+      throw error;
+    }
+
+    if (completeness.kind === "incomplete") {
+      // Not an error: the signer asked a fair question and this is the
+      // answer. Nothing is persisted, because there is no review to keep.
+      const outcome: AnalysisOutcome = {
+        status: "blocked",
+        documents: packet.documents,
+        completeness,
+      };
+      return Response.json(outcome, { status: 200 });
+    }
 
     let review;
     try {
@@ -139,6 +205,7 @@ export function createAnalysisRoute(
       reviewId,
       persisted,
       documents: packet.documents,
+      completeness,
       review,
     };
     return Response.json(outcome, { status: 200 });
