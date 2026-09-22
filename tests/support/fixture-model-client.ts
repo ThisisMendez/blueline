@@ -4,6 +4,7 @@ import { CHECKLIST_SCHEMA_NAME } from "@/features/analysis/model/checklist-schem
 import { COMPLETENESS_SCHEMA_NAME } from "@/features/analysis/model/completeness-schema";
 import { ANALYSIS_SCHEMA_NAME } from "@/features/analysis/model/schema";
 import { normalizeText } from "@/features/packet/normalize";
+import { QUESTION_SCHEMA_NAME } from "@/features/questions/contract";
 
 import {
   fixtureReferences,
@@ -357,6 +358,21 @@ export function createFixtureModelClient(
 
       if (request.schemaName === CHECKLIST_SCHEMA_NAME) {
         return { topics: topicsIn(documents) };
+      }
+
+      if (request.schemaName === QUESTION_SCHEMA_NAME) {
+        const questionLine = request.user.split("\n")[0].slice("Question: ".length);
+        const question = JSON.parse(questionLine) as string;
+        for (const document of documents) {
+          const sidecar = document.fixture?.sidecar;
+          if (!sidecar || !hasChecklist(sidecar)) continue;
+          const expected = sidecar.qa.answerable.find((entry) => entry.question === question);
+          if (expected) return {
+            status: "answered",
+            citations: [{ sourceDocumentId: document.id, sourceSentence: expected.expectedSourceSentence }],
+          };
+        }
+        return { status: "not-addressed", citations: [] };
       }
 
       // The spoiled-flag behaviours count their own calls, so a completeness

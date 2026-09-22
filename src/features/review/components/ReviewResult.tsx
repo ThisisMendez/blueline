@@ -1,5 +1,6 @@
 import type { GeneralReview } from "@/features/analysis/types";
 import type { ExtractedDocument } from "@/features/packet/types";
+import { QuestionPanel } from "@/features/questions/QuestionPanel";
 
 import { CoverageChecklistSection } from "./CoverageChecklistSection";
 import { RiskFlagCard } from "./RiskFlagCard";
@@ -103,6 +104,7 @@ export function ReviewResult({ review, documents }: ReviewResultProps) {
       ) : null}
 
       <CoverageChecklistSection coverage={review.coverage} documents={documents} />
+      <QuestionPanel documents={documents} />
     </div>
   );
 }

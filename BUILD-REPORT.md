@@ -38,6 +38,20 @@ Production `npm run build` passes at this checkpoint, preserving `/`, `/sign-in`
 
 Missing independent held-out corpus, two reviewers' pre-output adjudication, restricted execution environment and full-flow human evidence block ticket 09 completion. The scorer requires serious deposit, early-exit and dispute-rights coverage and reports each missed serious term separately. Metadata does not prove independence or runner isolation. Product implementation continues; retry count 0.
 
+## Browser and landing checkpoint
+
+- Chrome: landing and intake inspected at 1280×900 and 390×844; mobile intake has no horizontal overflow. Keyboard skip link navigates to main. Anonymous navigation through `/sign-in` to `/review` works. Empty submission displays its explanation.
+- Restarted only this session's local server with empty OpenRouter environment variables and confirmed a synthetic paste shows the model-unconfigured error, with no review. This sent no model request.
+- Browser PDF upload blocked by Chrome extension file access (`Not allowed`). Requires enabling "Allow access to file URLs" for the ChatGPT extension; parser and offline PDF flows pass. No browser permissions changed.
+- Independent native landing reviewer identified an unsupported sample re-renting fee and missing anonymous-retention qualification. Corrected both and clarified red-line account/edit/rerun behavior; retained layout/tokens/CTA. Humanizer applied. Full WCAG AA remains unchecked; static accessibility inspection and limited browser checks do not establish conformance.
+- Current main-owned uncommitted changes: landing copy, ticket10 status and this report. Ticket05 worker owns Q&A files/integration/tests. No unrelated edits.
+
+## Ticket 05 checkpoint
+
+- Q&A is implemented and verified offline: free-text form after review, server completeness gate, structured extractive answers, document/offset citations, explicit not-addressed state, one citation retry and distinct provider/verification errors. Extractive answers avoid attaching unverified legal prose to a valid quotation; relevance still requires model evaluation.
+- Main inspected route, schema, UI and tests. Typecheck, lint and full deterministic suite pass (172 tests). Humanizer applied; no new dependencies. Worker verification failures: 0.
+- Next: ticket 06 personal red lines. Landing copy changes are a separate build-owned checkpoint.
+
 The original report follows for provenance; the checkpoints above supersede conflicting status or decisions.
 
 An unattended build ran against `.scratch/lease-review/spec.md` and the ten tickets
@@ -50,16 +64,16 @@ you, and what to run first when you sit down.
 
 | # | Ticket | Status |
 | --- | --- | --- |
-| 01 | Paste a lease, get cited risk flags | in progress |
-| 02 | Selectable-text PDF input | not started |
-| 03 | Complete-agreement gating | not started |
-| 04 | Published coverage checklist with not-found items | not started |
-| 05 | Document-grounded Q&A | not started |
+| 01 | Paste a lease, get cited risk flags | verified offline; hosted auth/DB pending |
+| 02 | Selectable-text PDF input | verified offline; browser file upload permission unavailable |
+| 03 | Complete-agreement gating | verified offline |
+| 04 | Published coverage checklist with not-found items | verified offline, `9507bf4` |
+| 05 | Document-grounded Q&A | verified offline; commit recorded in next checkpoint |
 | 06 | Personal red lines with rerun | not started |
 | 07 | Per-flag counter-offers | not started |
 | 08 | Review retention and expiry | not started |
-| 09 | Independent evaluator corpus | not started |
-| 10 | Public landing page | **done** |
+| 09 | Independent evaluator corpus | tooling verified, `385279e`; independent evidence blocked |
+| 10 | Public landing page | implemented; current browser/claims verification underway |
 
 ## Decisions I made in your absence
 
