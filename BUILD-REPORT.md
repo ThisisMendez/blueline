@@ -15,12 +15,12 @@ were terminated. No unrelated edits found. Earlier report versions remain in Git
 | --- | --- |
 | 01 Paste and cited flags | Verified offline and live transport: `4a7bd53`, corrections `9507bf4`; hosted auth/DB pending |
 | 02 Selectable PDF | Verified offline: `c013fe1`; native Chrome upload permission blocked |
-| 03 Complete agreement | Verified offline and native browser gate: `1a87788`, stricter handling `9507bf4`; final selector correction in retention integration commit |
+| 03 Complete agreement | Verified offline and native browser gate: `1a87788`, stricter handling `9507bf4`, selector correction `24dc67b` |
 | 04 Coverage checklist | Verified offline: `9507bf4` |
 | 05 Grounded Q&A | Verified offline: `d03b74b` |
 | 06 Personal red lines | Implemented and verified offline `b7eb335`; DB/live quality pending |
 | 07 Counter-offers | Implemented and verified offline `09427ea`; live draft/residual concern needs independent review |
-| 08 Retention | Implemented and verified offline in final retention integration commit; hosted DB/RLS/cron verification pending |
+| 08 Retention | Implemented and verified offline `24dc67b`; hosted DB/RLS/cron verification pending |
 | 09 Independent evaluation | Tooling verified: `385279e`; independent evidence blocked |
 | 10 Landing | Implemented `90e28f1`, truthful copy corrections `c61f93e`; full WCAG verification pending |
 
@@ -210,10 +210,14 @@ Ticket09's independent adjudication gate remains unsatisfied.
 
 ## Resume without rebuilding completed work
 
-All remaining changes at this checkpoint belong to this build: worker08 implementation,
-main selector regression and main status/report synchronization. No unrelated changes.
-These are being committed together as verified retention integration; a final records
-commit will record its hash and push result. No blocked partial implementation is included.
+Retention integration, the main selector regression and synchronized acceptance evidence
+were committed as `24dc67b`. Normal `git push` succeeded to the existing `origin/main`
+upstream, advancing it from `b6ec739` through `24dc67b`, including the preserved earlier
+session commits. No force-push, remote changes or credential changes. The worktree was
+clean before this final records-only update; no unrelated or unowned changes remain.
+This records update is committed and pushed separately. No blocked partial implementation
+is represented as verified, and all migrations0001–0006 are tracked. Private `.env.local`
+and generated `.next`/evaluation output remain ignored and untracked.
 
 Next actions requiring the owner's setup or independent evidence:
 
