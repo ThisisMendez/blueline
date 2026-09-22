@@ -1,0 +1,189 @@
+{
+  "documentId": "adhesion-lease",
+  "title": "Harrowgate Property Holdings residential lease, Apartment 4B, 118 Fenmore Street",
+  "file": "adhesion-lease.txt",
+  "summary": "This is a one-year lease for Apartment 4B at 118 Fenmore Street, running from March 1, 2027 to noon on February 28, 2028, at $2,150 per month with a $2,150 security deposit. The Resident pays electricity, gas, internet, and television service; the Landlord pays water, sewer, and trash collection. The lease puts the cost of all repairs inside the unit on the Resident, including plumbing, heating, and electrical work, and lets the Landlord enter at any hour without advance notice. Leaving before the last day of the Term costs the Resident the full remaining rent and the whole deposit, and transferring the lease to someone else costs $1,200. Disputes go to binding arbitration before an arbitrator the Landlord picks, in the county where the Landlord keeps its office, with no jury trial and no class proceeding. A renewal is optional, but the renewal rent rises by at least twelve percent plus any tax or utility increases the Landlord allocates to the unit.",
+  "plantedFlags": [
+    {
+      "id": "deposit-full-forfeiture-on-early-move-out",
+      "category": "deposit",
+      "sourceSentence": "If the Resident vacates the Premises before the last day of the Term for any reason, the entire security deposit shall be retained by the Landlord as a nonrefundable charge for administration and re-letting, whatever the condition of the Premises at move-out.",
+      "expectedSeverity": "high",
+      "consequence": "The Resident loses the whole $2,150 deposit, even if the unit is left in perfect condition.",
+      "triggeringCondition": "The Resident hands back the keys on any date before February 28, 2028, for any reason at all.",
+      "counterOffer": "Limit the retained amount to the Landlord's documented costs of re-letting, capped at one month of rent, with the rest of the deposit returned under the usual itemized statement.",
+      "residualRisk": "An early move-out could still cost up to a month of rent out of the deposit, and the Landlord decides what its re-letting costs were."
+    },
+    {
+      "id": "deposit-flat-repainting-charge",
+      "category": "deposit",
+      "sourceSentence": "The Landlord may deduct from the security deposit a flat repainting charge of $450 at the end of the Term, and this charge applies whether or not the walls need repainting.",
+      "expectedSeverity": "medium",
+      "consequence": "The Resident loses $450 of the deposit at move-out regardless of how the walls were left.",
+      "triggeringCondition": "The Term ends and the Landlord applies the charge, which the clause allows in every case.",
+      "counterOffer": "Make the repainting charge apply only when the walls need repainting beyond ordinary wear, supported by move-out photographs and a painter's invoice.",
+      "residualRisk": "The Landlord still judges what counts as beyond ordinary wear, and a disputed charge would go to arbitration under section 14."
+    },
+    {
+      "id": "early-exit-accelerated-remaining-rent",
+      "category": "early-exit",
+      "sourceSentence": "A Resident who ends this Lease before the last day of the Term remains liable for all rent that would have come due through the last day of the Term, and that entire amount is payable on the day the Resident hands back the keys.",
+      "expectedSeverity": "high",
+      "consequence": "Leaving early makes every remaining month of rent due at once, which is $21,500 if the Resident leaves after the first two months.",
+      "triggeringCondition": "A job move, a household change, or any other reason leads the Resident to give up the unit before February 28, 2028.",
+      "counterOffer": "Allow the Resident to end the lease on sixty days written notice by paying two months of rent as a termination fee, with any remaining rent obligation ending when a replacement occupant starts paying.",
+      "residualRisk": "An early exit still costs up to two months of rent, and the sixty-day notice period may not fit a fast relocation."
+    },
+    {
+      "id": "reassignment-charge-regardless-of-who-finds-replacement",
+      "category": "early-exit",
+      "sourceSentence": "Any transfer of this Lease to another occupant requires the written consent of the Landlord and payment of a reassignment charge of $1,200, which is owed even when the Resident finds the replacement occupant without the Landlord's help.",
+      "expectedSeverity": "medium",
+      "consequence": "Handing the lease to someone else costs the Resident $1,200, more than half a month of rent, on top of moving costs.",
+      "triggeringCondition": "The Resident wants out of the unit and lines up someone to take it over rather than paying the remaining rent.",
+      "counterOffer": "Reduce the charge to the Landlord's actual cost of screening the replacement occupant, stated as a fixed $300, and waive it when the Resident presents a qualified replacement.",
+      "residualRisk": "The Landlord still has to consent to the replacement occupant, and the lease sets no standard for when consent may be refused."
+    },
+    {
+      "id": "arbitration-with-jury-and-class-waiver",
+      "category": "dispute-rights",
+      "sourceSentence": "The Resident and the Landlord each waive the right to a jury trial and the right to bring or join any class or collective proceeding, and agree that every dispute arising out of this Lease shall be decided by binding arbitration before a single arbitrator selected by the Landlord.",
+      "expectedSeverity": "high",
+      "consequence": "A serious complaint about the unit or about withheld deposit money would be decided by an arbitrator the Landlord chose, with no jury and no way to join other residents of the building in one case.",
+      "triggeringCondition": "Any disagreement the Resident cannot settle with the Landlord directly, including a deposit the Resident believes was wrongly kept.",
+      "counterOffer": "Keep arbitration optional by agreement after a dispute arises, name a neutral arbitration provider chosen jointly, and carve out small claims so the Resident can still bring a deposit case there.",
+      "residualRisk": "The class-proceeding waiver may remain, so a problem shared by several units would still have to be raised one resident at a time."
+    },
+    {
+      "id": "venue-in-landlords-home-county",
+      "category": "dispute-rights",
+      "sourceSentence": "Any arbitration or other proceeding permitted by this Lease shall take place only in the county where the Landlord keeps its principal business office, which may be a county other than the one in which the Premises are located.",
+      "expectedSeverity": "medium",
+      "consequence": "The Resident would have to travel to the Landlord's county, and pay for that travel and time off work, to pursue or defend a claim.",
+      "triggeringCondition": "A dispute proceeds and the Landlord's business office sits in a different county from the apartment.",
+      "counterOffer": "Hold any proceeding in the county where the apartment is located, or allow it to be conducted by video at the Resident's election.",
+      "residualRisk": "The Resident still bears the time and cost of attending, and the arbitrator selection in section 14.1 is unchanged."
+    },
+    {
+      "id": "renewal-rent-escalation-formula",
+      "category": "other",
+      "sourceSentence": "Rent for any renewal term shall increase by the greater of twelve percent (12%) or the change in the regional consumer price index over the preceding twelve months, and the Landlord may add to that increase any rise in property taxes or utility costs that the Landlord allocates to the Premises.",
+      "expectedSeverity": "high",
+      "consequence": "Staying a second year costs at least $258 more per month, and the tax and utility add-on has no stated ceiling, so the renewal figure cannot be worked out in advance.",
+      "triggeringCondition": "The Resident wants to stay past February 28, 2028 and is offered a renewal on these terms.",
+      "counterOffer": "Cap the renewal increase at the lower of five percent or the change in the regional consumer price index, and drop the separate tax and utility add-on.",
+      "residualRisk": "Rent can still rise each renewal, and the Landlord is not obliged to offer a renewal at all."
+    },
+    {
+      "id": "all-repair-costs-shifted-to-resident",
+      "category": "other",
+      "sourceSentence": "The Resident shall pay the full cost of all repairs to the Premises, including repairs to the plumbing, heating, and electrical systems, whether the need for repair arises from the Resident's use or from the ordinary age and wear of the equipment.",
+      "expectedSeverity": "high",
+      "consequence": "A failed water heater, furnace, or electrical panel becomes the Resident's bill, which can run into thousands of dollars in a single year.",
+      "triggeringCondition": "Any building system inside the unit fails during the Term, including from age rather than anything the Resident did.",
+      "counterOffer": "Make the Resident responsible only for damage the Resident or a guest causes, and leave the plumbing, heating, and electrical systems with the Landlord.",
+      "residualRisk": "Arguments about what the Resident caused would still arise, and the three-day written reporting rule in section 9.2 stays in place."
+    },
+    {
+      "id": "entry-at-any-hour-without-notice",
+      "category": "other",
+      "sourceSentence": "The Landlord and the Landlord's agents may enter the Premises at any hour and without advance notice to inspect the unit, to carry out work, or to show the Premises to prospective residents or buyers.",
+      "expectedSeverity": "medium",
+      "consequence": "The Resident can be walked in on at any time, including overnight and during showings to strangers, with no warning.",
+      "triggeringCondition": "The Landlord decides to inspect, do work, or show the unit, which the clause allows at any hour without asking.",
+      "counterOffer": "Require twenty-four hours written notice and entry between nine in the morning and six in the evening, with no-notice entry kept for genuine emergencies.",
+      "residualRisk": "The Landlord would still decide what counts as an emergency, and showings during the last weeks of the Term would continue."
+    }
+  ],
+  "harmlessOddities": [
+    {
+      "sourceSentence": "No aquarium holding more than ten (10) gallons of water may be kept in the Premises.",
+      "why": "An oddly specific house rule with no charge, deduction, or other consequence attached anywhere in the lease."
+    },
+    {
+      "sourceSentence": "The Resident shall place felt pads under the legs of every chair, table, and sofa that rests on the wood flooring.",
+      "why": "A small housekeeping instruction that costs a few dollars and carries no penalty for missing it."
+    },
+    {
+      "sourceSentence": "Mail arriving for a previous occupant should be left in the marked basket in the lobby rather than handed back to the carrier.",
+      "why": "An unusual building habit that asks nothing of the Resident financially and attaches no consequence."
+    },
+    {
+      "sourceSentence": "The parties acknowledge that they have read this Lease in full and have had the opportunity to consider its terms.",
+      "why": "A formal recital that states nothing either party must do and changes no obligation in the lease."
+    }
+  ],
+  "checklistTopics": {
+    "deposit-deductions-and-return": {
+      "present": true,
+      "sourceSentence": "The Landlord shall return the balance of the security deposit, with a written itemized statement of every deduction, within twenty-one (21) days after the Resident returns possession of the Premises."
+    },
+    "early-exit-costs": {
+      "present": true,
+      "sourceSentence": "A Resident who ends this Lease before the last day of the Term remains liable for all rent that would have come due through the last day of the Term, and that entire amount is payable on the day the Resident hands back the keys."
+    },
+    "rent-changes": {
+      "present": true,
+      "sourceSentence": "Rent for any renewal term shall increase by the greater of twelve percent (12%) or the change in the regional consumer price index over the preceding twelve months, and the Landlord may add to that increase any rise in property taxes or utility costs that the Landlord allocates to the Premises."
+    },
+    "repairs": {
+      "present": true,
+      "sourceSentence": "The Resident shall pay the full cost of all repairs to the Premises, including repairs to the plumbing, heating, and electrical systems, whether the need for repair arises from the Resident's use or from the ordinary age and wear of the equipment."
+    },
+    "access-to-the-home": {
+      "present": true,
+      "sourceSentence": "The Landlord and the Landlord's agents may enter the Premises at any hour and without advance notice to inspect the unit, to carry out work, or to show the Premises to prospective residents or buyers."
+    },
+    "dispute-routes": {
+      "present": true,
+      "sourceSentence": "The Resident and the Landlord each waive the right to a jury trial and the right to bring or join any class or collective proceeding, and agree that every dispute arising out of this Lease shall be decided by binding arbitration before a single arbitrator selected by the Landlord."
+    }
+  },
+  "referencedDocuments": [],
+  "qa": {
+    "answerable": [
+      {
+        "question": "How much notice does the landlord have to give before coming into my apartment?",
+        "expectedSourceSentence": "The Landlord and the Landlord's agents may enter the Premises at any hour and without advance notice to inspect the unit, to carry out work, or to show the Premises to prospective residents or buyers.",
+        "expectedAnswer": "None. The lease lets the Landlord and its agents enter at any hour without advance notice to inspect, carry out work, or show the unit."
+      },
+      {
+        "question": "When do I get my security deposit back after I move out?",
+        "expectedSourceSentence": "The Landlord shall return the balance of the security deposit, with a written itemized statement of every deduction, within twenty-one (21) days after the Resident returns possession of the Premises.",
+        "expectedAnswer": "Within twenty-one days after you return possession, along with a written itemized statement of every deduction."
+      },
+      {
+        "question": "What does it cost to transfer the lease to someone else?",
+        "expectedSourceSentence": "Any transfer of this Lease to another occupant requires the written consent of the Landlord and payment of a reassignment charge of $1,200, which is owed even when the Resident finds the replacement occupant without the Landlord's help.",
+        "expectedAnswer": "A reassignment charge of $1,200, plus the Landlord's written consent, and the charge is owed even if you find the replacement occupant yourself."
+      },
+      {
+        "question": "Who pays for the water bill?",
+        "expectedSourceSentence": "The Landlord shall pay for water, sewer service, and trash collection for the building.",
+        "expectedAnswer": "The Landlord pays for water, along with sewer service and trash collection for the building."
+      }
+    ],
+    "unanswerable": [
+      { "question": "Does the lease say anything about renters insurance?" },
+      { "question": "Does the lease say whether the landlord pays interest on my security deposit?" },
+      { "question": "What happens to my rent if the building is damaged by a fire?" }
+    ]
+  },
+  "redLines": [
+    {
+      "redLine": "I will not accept binding arbitration if something serious goes wrong with the apartment.",
+      "expectedMatchSentence": "The Resident and the Landlord each waive the right to a jury trial and the right to bring or join any class or collective proceeding, and agree that every dispute arising out of this Lease shall be decided by binding arbitration before a single arbitrator selected by the Landlord.",
+      "why": "The lease sends every dispute to binding arbitration before an arbitrator the Landlord selects, which is exactly what this red line rules out."
+    },
+    {
+      "redLine": "I need to be able to leave with 60 days notice if my job relocates me.",
+      "expectedMatchSentence": "A Resident who ends this Lease before the last day of the Term remains liable for all rent that would have come due through the last day of the Term, and that entire amount is payable on the day the Resident hands back the keys.",
+      "why": "Notice does not end the obligation here: leaving early makes all the remaining rent payable at once on the day the keys go back."
+    },
+    {
+      "redLine": "I am not willing to lose my whole deposit because of when I move out.",
+      "expectedMatchSentence": "If the Resident vacates the Premises before the last day of the Term for any reason, the entire security deposit shall be retained by the Landlord as a nonrefundable charge for administration and re-letting, whatever the condition of the Premises at move-out.",
+      "why": "Moving out before the last day of the Term forfeits the entire deposit under this sentence, whatever condition the unit is left in."
+    }
+  ]
+}

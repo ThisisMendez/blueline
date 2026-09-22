@@ -1,0 +1,83 @@
+{
+  "documentId": "clean-lease",
+  "title": "Brandt residential lease, second-floor apartment, 27 Larkin Way",
+  "file": "clean-lease.txt",
+  "summary": "This is a one-year lease for the second-floor apartment at 27 Larkin Way, running from June 1, 2027 to May 31, 2028, at $1,780 per month with a $1,780 deposit held in a separate account. The rent is fixed for the whole Term, and any change can only come in a written renewal offer delivered at least sixty days before the Term ends. The Resident pays electricity, gas, and internet; the Owner pays water, sewer, trash, and recycling. The Owner may take unpaid rent and damage beyond ordinary wear and tear out of the deposit and must send the balance with an itemized list within fourteen days of move-out. The Resident may end the lease at any time on sixty days written notice and owes no fee or further rent after the notice period. The Owner gives forty-eight hours written notice before entering, except where there is an immediate threat to safety or the building. The lease does not say who handles repairs to the home, and it does not say how a disagreement between the Owner and the Resident would be handled.",
+  "plantedFlags": [],
+  "harmlessOddities": [
+    {
+      "sourceSentence": "Neighbors in this building have long left a shared umbrella in the stand by the front door, and the Resident is welcome to borrow it and to add one of their own.",
+      "why": "An unusual custom written into a lease, but it is an invitation rather than an obligation and carries no cost or penalty."
+    },
+    {
+      "sourceSentence": "The Owner will leave a printed neighborhood map and a list of nearby grocery stores on the kitchen counter before move-in day.",
+      "why": "A quirky promise by the Owner that asks nothing of the Resident and has no consequence if it does not happen."
+    },
+    {
+      "sourceSentence": "The Resident may grow vegetables in the raised bed at the south end of the yard, and whatever grows there belongs to the Resident.",
+      "why": "An oddly specific permission that grants the Resident something and imposes no duty or charge."
+    }
+  ],
+  "checklistTopics": {
+    "deposit-deductions-and-return": {
+      "present": true,
+      "sourceSentence": "The Owner will send the Resident the deposit balance and an itemized written list of anything taken out of it within fourteen (14) days after the Resident moves out."
+    },
+    "early-exit-costs": {
+      "present": true,
+      "sourceSentence": "A Resident who gives that notice owes rent only through the last day of the notice period and owes no fee, penalty, or further rent after that day."
+    },
+    "rent-changes": {
+      "present": true,
+      "sourceSentence": "The rent stated in section 3.1 does not change at any time during the Term."
+    },
+    "repairs": { "present": false },
+    "access-to-the-home": {
+      "present": true,
+      "sourceSentence": "The Owner will give the Resident at least forty-eight (48) hours written notice before entering the home."
+    },
+    "dispute-routes": { "present": false }
+  },
+  "referencedDocuments": [],
+  "qa": {
+    "answerable": [
+      {
+        "question": "How much notice do I have to give if I want to move out early?",
+        "expectedSourceSentence": "The Resident may end this Lease at any time by giving the Owner sixty (60) days written notice.",
+        "expectedAnswer": "Sixty days written notice, which you may give at any time during the Term."
+      },
+      {
+        "question": "Can the rent go up while the lease is running?",
+        "expectedSourceSentence": "The rent stated in section 3.1 does not change at any time during the Term.",
+        "expectedAnswer": "No. The rent is fixed for the whole Term, and a change can only be proposed in a written renewal offer."
+      },
+      {
+        "question": "How long does the owner have to return my deposit?",
+        "expectedSourceSentence": "The Owner will send the Resident the deposit balance and an itemized written list of anything taken out of it within fourteen (14) days after the Resident moves out.",
+        "expectedAnswer": "Fourteen days after you move out, with an itemized written list of anything taken out of the deposit."
+      },
+      {
+        "question": "Do I have to pay extra to keep a cat?",
+        "expectedSourceSentence": "The Resident may keep pets, and this Lease adds no pet deposit and no monthly pet rent.",
+        "expectedAnswer": "No. The lease allows pets and adds no pet deposit and no monthly pet rent."
+      }
+    ],
+    "unanswerable": [
+      { "question": "Who pays to fix the dishwasher if it stops working?" },
+      { "question": "Does the lease say anything about renters insurance?" },
+      { "question": "If the owner and I disagree about the deposit, where would that be settled?" }
+    ]
+  },
+  "redLines": [
+    {
+      "redLine": "I must be able to end the lease with 60 days notice if my job relocates me.",
+      "expectedMatchSentence": "The Resident may end this Lease at any time by giving the Owner sixty (60) days written notice.",
+      "why": "The lease already allows the Resident to end it on sixty days written notice at any time, so this red line is met by the text."
+    },
+    {
+      "redLine": "I will not pay a monthly fee for having a cat.",
+      "expectedMatchSentence": "The Resident may keep pets, and this Lease adds no pet deposit and no monthly pet rent.",
+      "why": "The lease states there is no pet deposit and no monthly pet rent, which matches this red line."
+    }
+  ]
+}
