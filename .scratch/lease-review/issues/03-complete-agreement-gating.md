@@ -4,7 +4,7 @@
 
 **Blocked by:** 01 (needs the review pipeline to gate in front of)
 
-**Status:** done
+**Status:** implemented and verified offline; native browser incomplete-packet gate verified
 
 - [x] Signer can submit multiple documents as one packet (lease plus referenced material)
 - [x] Completeness is checked before general review runs
@@ -12,3 +12,5 @@
 - [x] The blocking result is not a partial summary and not a partial flag set
 - [x] Signer can distinguish "waiting on missing documents" from "waiting on analysis" in the UI
 - [x] Deterministic test: a complete packet proceeds to review; a packet missing a referenced document is blocked and names the gap; a packet with multiple referenced documents is accepted
+
+Final browser integration: both missing references remain visible with no review or Q&A. A referring document is excluded from its own resolution selector, matching the server rejection policy; a red/green full-flow regression covers this correction. Final deterministic suite: 212 passing tests.

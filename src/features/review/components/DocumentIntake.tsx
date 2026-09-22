@@ -1,5 +1,8 @@
 "use client";
 
+import type { ReviewRetention } from "@/features/library/store";
+import { RetentionControls } from "@/features/library/RetentionControls";
+
 import Link from "next/link";
 import { useCallback, useState } from "react";
 
@@ -81,6 +84,8 @@ type Phase =
       readonly completeness: CompleteAgreement;
       readonly documents: readonly ExtractedDocument[];
       readonly reviewId: string | null;
+      readonly retention: ReviewRetention | null;
+      readonly persistenceFailed: boolean;
     }
   | { readonly kind: "problem"; readonly message: string };
 
@@ -234,6 +239,8 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
           completeness: outcome.completeness,
           documents: outcome.documents,
           reviewId: outcome.reviewId,
+          retention: outcome.retention,
+          persistenceFailed: outcome.persistenceFailed,
         });
         return;
       }
@@ -314,7 +321,7 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
             {working ? "Reading your lease" : "Read my lease"}
           </button>
           <p className="font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
-            {persists ? "Kept in your library" : "Not saved by Blueline"}
+            {persists ? "Account library enabled" : "Not saved by Blueline"}
           </p>
         </div>
       </form>
@@ -392,6 +399,8 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
           ) : null}
 
           <ReviewResult review={phase.review} documents={phase.documents} reviewId={phase.reviewId} />
+          {phase.persistenceFailed ? <p role="alert" className="font-[family-name:var(--font-body)]">This review was not saved to your library. You can read it in this tab, but you will need to run it again to save it.</p> : null}
+          {phase.reviewId && phase.retention ? <RetentionControls reviewId={phase.reviewId} retention={phase.retention} /> : null}
 
           {phase.reviewId ? (
             <p className="font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
@@ -401,8 +410,7 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
               >
                 Open this review on its own page
               </Link>
-              . It is in your library, and the link keeps working after you
-              close the tab.
+              . It remains in your library until the expiry shown above.
             </p>
           ) : null}
         </div>

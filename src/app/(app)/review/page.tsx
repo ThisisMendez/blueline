@@ -18,12 +18,14 @@ export default async function ReviewPage() {
 
   const signedIn = accounts.kind === "signed-in";
   let library: readonly StoredReviewSummary[] = [];
+  let libraryUnavailable = false;
 
   if (signedIn) {
-    const store = await openReviewStore();
-    if (store) {
-      library = await store.listForSigner(accounts.signer.id);
-    }
+    try {
+      const store = await openReviewStore();
+      if (store) library = await store.listForSigner(accounts.signer.id);
+      else libraryUnavailable = true;
+    } catch { libraryUnavailable = true; }
   }
 
   return (
@@ -53,7 +55,7 @@ export default async function ReviewPage() {
 
       <DocumentIntake persists={signedIn} />
 
-      {signedIn ? <LibraryList reviews={library} /> : null}
+      {signedIn ? <LibraryList reviews={library} unavailable={libraryUnavailable} /> : null}
     </div>
   );
 }

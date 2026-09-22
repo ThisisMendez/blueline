@@ -1,19 +1,17 @@
 import Link from "next/link";
 
 import type { StoredReviewSummary } from "@/features/library/store";
+import { RetentionControls } from "@/features/library/RetentionControls";
 
 export interface LibraryListProps {
   readonly reviews: readonly StoredReviewSummary[];
+  readonly unavailable?: boolean;
 }
 
 /**
- * The signer's own reviews. Ticket 08 adds the expiry date to each line;
- * until it does, this says nothing about how long a review stays, because
- * implying permanence would be a promise the product has not made.
+ * Each library item includes its actual stored expiry and an explicit save.
  */
-export function LibraryList({ reviews }: LibraryListProps) {
-  if (reviews.length === 0) return null;
-
+export function LibraryList({ reviews, unavailable = false }: LibraryListProps) {
   return (
     <section
       aria-labelledby="library-heading"
@@ -25,6 +23,7 @@ export function LibraryList({ reviews }: LibraryListProps) {
       >
         Your reviews
       </h2>
+      {unavailable ? <p role="alert" className="mt-4 font-[family-name:var(--font-body)]">Your library could not be loaded. Reload the page to try again.</p> : reviews.length === 0 ? <p className="mt-4 font-[family-name:var(--font-body)]">No reviews in your library. Completed reviews stay here for 30 days, or 90 days from an explicit save.</p> : null}
       <ul className="mt-4 flex list-none flex-col gap-3 p-0">
         {reviews.map((review) => (
           <li key={review.id}>
@@ -41,6 +40,7 @@ export function LibraryList({ reviews }: LibraryListProps) {
                   ? "1 flag"
                   : `${review.flagCount} flags`}
             </span>
+            <RetentionControls reviewId={review.id} retention={review} />
           </li>
         ))}
       </ul>

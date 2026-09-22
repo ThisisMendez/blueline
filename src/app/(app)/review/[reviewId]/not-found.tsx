@@ -1,9 +1,8 @@
 import Link from "next/link";
 
 /**
- * Shown for a review id that is not in this signer's library — whether it
- * never existed or belongs to someone else. The two read the same on
- * purpose: which one it is would itself be information about another signer.
+ * Missing, expired and other signers' reviews share the same response so it
+ * reveals nothing about whether another signer's review exists.
  */
 export default function SavedReviewNotFound() {
   return (
@@ -15,7 +14,9 @@ export default function SavedReviewNotFound() {
         That review isn&apos;t in your library
       </h1>
       <p className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-        Check the link, or start again with the text in front of you.
+        Check the link, or start again with the text in front of you. It may
+        have expired or belong to another account. An expired review cannot
+        be restored.
       </p>
       <p>
         <Link

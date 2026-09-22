@@ -166,7 +166,7 @@ describe("the coverage checklist on a complete agreement of several documents", 
     return createAnalysisRoute({
       model: createFixtureModelClient({ behaviour: "correct", topicCitations }),
       accounts: async () => accounts,
-      store: async () => new InMemoryReviewStore(),
+      store: async () => new InMemoryReviewStore(() => new Date("2027-05-01T09:00:00.000Z")),
       now: () => new Date("2027-05-01T09:00:00.000Z"),
       newReviewId: () => "review-1",
     });

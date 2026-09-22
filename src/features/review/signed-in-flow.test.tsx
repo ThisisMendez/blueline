@@ -28,6 +28,7 @@ import SavedReviewPage from "@/app/(app)/review/[reviewId]/page";
 import ReviewPage from "@/app/(app)/review/page";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
 import { InMemoryReviewStore } from "@/features/library/memory-store";
+import { createRetentionRoute } from "@/features/library/retention-route";
 import { createRedLineRoutes } from "@/features/red-lines/routes";
 
 import { createFixtureModelClient } from "~tests/support/fixture-model-client";
@@ -51,9 +52,12 @@ const ORDER_ON_SCREEN = ["Severity: High", "Severity: Medium", "Severity: Low"];
 
 let store: InMemoryReviewStore;
 let restoreFetch: () => void;
+let time: number;
+const DAY = 86_400_000;
 
 beforeEach(() => {
-  store = new InMemoryReviewStore();
+  time = Date.parse("2027-02-01T09:00:00.000Z");
+  store = new InMemoryReviewStore(() => new Date(time));
   adapters.store = store;
   adapters.accounts = SIGNER_A;
   const model = createFixtureModelClient({ behaviour: "correct" });
@@ -69,12 +73,13 @@ beforeEach(() => {
   });
 
   restoreFetch = installRouteFetch({
+    "/api/library/save": createRetentionRoute({ accounts: async () => adapters.accounts, store: async () => adapters.store }),
     "/api/red-lines": redLineRoutes.preferences,
     "/api/analysis": createAnalysisRoute({
       model,
       accounts: async () => adapters.accounts,
       store: async () => adapters.store,
-      now: () => new Date("2027-02-01T09:00:00.000Z"),
+      now: () => new Date(time),
       newReviewId: () => "review-1",
     }),
   });
@@ -96,6 +101,57 @@ async function pasteAndSubmit() {
 }
 
 describe("a signed-in signer pasting a lease", () => {
+  it("explains a library load failure without losing the analysis entry point", async () => {
+    vi.spyOn(store, "listForSigner").mockRejectedValueOnce(new Error("Database unavailable"));
+    renderScreen(await ReviewPage());
+    expect(screen.getByRole("alert")).toHaveTextContent("Your library could not be loaded.");
+    expect(screen.getByLabelText("Paste your lease")).toBeEnabled();
+    expect(screen.queryByText(/No reviews in your library/)).not.toBeInTheDocument();
+  });
+  it("shows automatic expiry, extends from a later save, and removes the expired review and text", async () => {
+    await pasteAndSubmit();
+    expect(screen.getByText("Mar 3, 2027, 09:00 AM UTC")).toHaveAttribute("dateTime", "2027-03-03T09:00:00.000Z");
+    time += 12 * DAY;
+    await userEvent.click(screen.getByRole("button", { name: "Save for 90 days from now" }));
+    await screen.findByText("Saved. The expiry above has been updated.");
+    const expiresAt = new Date(time + 90 * DAY).toISOString();
+    expect(screen.getByText("May 14, 2027, 09:00 AM UTC")).toHaveAttribute("dateTime", expiresAt);
+    cleanup();
+    renderScreen(await ReviewPage());
+    expect(within(screen.getByRole("region", { name: "Your reviews" })).getByText("May 14, 2027, 09:00 AM UTC")).toBeInTheDocument();
+    cleanup();
+    time += 90 * DAY;
+    renderScreen(await ReviewPage());
+    expect(screen.getByText(/No reviews in your library/)).toBeInTheDocument();
+    expect(await store.findForSigner("signer-a", "review-1")).toBeNull();
+    expect(store.size).toBe(0);
+    await expect(SavedReviewPage({ params: Promise.resolve({ reviewId: "review-1" }) } as PageProps<"/review/[reviewId]">)).rejects.toThrow();
+  });
+
+  it("keeps the previous expiry visible when an explicit save fails", async () => {
+    await pasteAndSubmit();
+    vi.spyOn(store, "retainForSigner").mockRejectedValueOnce(new Error("Database unavailable"));
+    await userEvent.click(screen.getByRole("button", { name: "Save for 90 days from now" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("The review was not saved for longer.");
+    expect(screen.getByText("Mar 3, 2027, 09:00 AM UTC")).toBeInTheDocument();
+    expect(screen.queryByText("Saved. The expiry above has been updated.")).not.toBeInTheDocument();
+  });
+
+  it("does not claim library persistence when completing the review could not be stored", async () => {
+    vi.spyOn(store, "save").mockRejectedValueOnce(new Error("Database unavailable"));
+    // There is no trusted review id, so personal red lines are unavailable too.
+    const user = userEvent.setup();
+    renderScreen(await ReviewPage());
+    await user.click(screen.getByLabelText("Paste your lease"));
+    await user.paste(adhesionText);
+    await user.click(screen.getByRole("button", { name: "Read my lease" }));
+    await screen.findByRole("heading", { name: /terms to look at/i });
+    expect(screen.getByRole("alert")).toHaveTextContent("This review was not saved to your library.");
+    expect(screen.queryByRole("link", { name: /open this review on its own page/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Save for 90 days from now" })).not.toBeInTheDocument();
+    expect(store.size).toBe(0);
+  });
+
   it("reads the ranked flags on screen and finds the review again after a reload", async () => {
     await pasteAndSubmit();
 
@@ -181,6 +237,6 @@ describe("a signed-in signer pasting a lease", () => {
     cleanup();
     adapters.accounts = SIGNER_B;
     renderScreen(await ReviewPage());
-    expect(screen.queryByRole("region", { name: /your reviews/i })).toBeNull();
+    expect(screen.getByText(/No reviews in your library/)).toBeInTheDocument();
   }, 20_000);
 });

@@ -38,7 +38,7 @@ function post(body: unknown): Request {
 }
 
 beforeEach(() => {
-  store = new InMemoryReviewStore();
+  store = new InMemoryReviewStore(() => new Date("2027-02-01T09:00:00.000Z"));
   accounts = SIGNER_A;
 });
 

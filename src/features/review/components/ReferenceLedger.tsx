@@ -115,7 +115,7 @@ export function ReferenceLedger({
                   className="mt-2 w-full max-w-[var(--measure)] border-2 border-[var(--color-navy)] bg-[var(--color-paper)] px-3 py-2 font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)] disabled:opacity-70"
                 >
                   <option value="">I haven&apos;t sent it yet</option>
-                  {documents.map((document) => (
+                  {documents.filter((document) => document.id !== entry.reference.citingDocumentId).map((document) => (
                     <option key={document.id} value={document.id}>
                       {document.title}
                     </option>

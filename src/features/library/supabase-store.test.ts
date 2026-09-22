@@ -13,7 +13,7 @@ async function databaseRows(fixtureId: "clean-lease" | "adhesion-lease" = "clean
     model: createFixtureModelClient(),
   });
   return {
-    reviews: { id: "review", user_id: "signer", created_at: "2027-01-01", summary: review.summary, clean: review.clean, dropped_flag_count: 0 },
+    reviews: { id: "review", user_id: "signer", created_at: "2027-01-01T00:00:00Z", saved_at: null, expires_at: "2027-01-31T00:00:00Z", summary: review.summary, clean: review.clean, dropped_flag_count: 0 },
     review_documents: [{ document_id: "lease", title: "Lease", extracted_text: text, position: 0 }],
     review_flags: review.riskFlags.map((flag) => ({ severity: flag.severity, consequence: flag.consequence, triggering_condition: flag.triggeringCondition, source_document_id: flag.sourceDocumentId, source_start: flag.sourceStart, source_end: flag.sourceEnd, counter_offer: flag.counterOffer, residual_risk: flag.residualRisk })) as Record<string, unknown>[],
     review_checklist_topics: review.coverage.items.map((item) => ({
@@ -41,6 +41,50 @@ function storeFor(rows: Awaited<ReturnType<typeof databaseRows>>) {
 }
 
 describe("stored review citation integrity", () => {
+  it("disambiguates library joins through the composite ownership relationships", async () => {
+    let selection = "";
+    const query = { select(value: string) { selection = value; return query; }, eq() { return query; }, async order() { return { data: [], error: null }; } };
+    const client = { from() { return query; } } as unknown as SupabaseClient;
+    expect(await new SupabaseReviewStore(client).listForSigner("signer")).toEqual([]);
+    expect(selection).toContain("review_documents!review_documents_owner_fk(title, position)");
+    expect(selection).toContain("review_flags!review_flags_owner_fk(rank)");
+  });
+
+  it("returns the database save clock, including expired/missing and failure responses", async () => {
+    const calls: unknown[] = [];
+    let data: unknown = { created_at: "2027-01-01T00:00:00Z", saved_at: "2027-01-12T00:00:00Z", expires_at: "2027-04-12T00:00:00Z" };
+    let error: unknown = null;
+    const client = { async rpc(name: string, args: unknown) { calls.push({ name, args }); return { data, error }; } } as unknown as SupabaseClient;
+    const store = new SupabaseReviewStore(client);
+    expect(await store.retainForSigner("signer", "review")).toEqual({ createdAt: "2027-01-01T00:00:00Z", savedAt: "2027-01-12T00:00:00Z", expiresAt: "2027-04-12T00:00:00Z" });
+    expect(calls[0]).toEqual({ name: "retain_review", args: { p_signer_id: "signer", p_review_id: "review" } });
+    data = null;
+    expect(await store.retainForSigner("signer", "review")).toBeNull();
+    error = { message: "Database unavailable" };
+    await expect(store.retainForSigner("signer", "review")).rejects.toThrow();
+  });
+  it("returns database timestamps from an atomic save without sending caller lifecycle fields", async () => {
+    const calls: Record<string, unknown>[] = [];
+    const client = { async rpc(name: string, args: Record<string, unknown>) {
+      calls.push({ name, ...args });
+      return { data: { created_at: "2027-02-01T00:00:00Z", saved_at: null, expires_at: "2027-03-03T00:00:00Z" }, error: null };
+    } } as unknown as SupabaseClient;
+    const documents = [{ id: "lease", title: "Lease", text: loadFixture("adhesion-lease").text }];
+    const review = await runGeneralReview({ packet: { documents }, model: createFixtureModelClient() });
+    const retention = await new SupabaseReviewStore(client).save({ id: "review", signerId: "signer", createdAt: "2099-01-01T00:00:00Z", documents, review });
+    expect(retention).toEqual({ createdAt: "2027-02-01T00:00:00Z", savedAt: null, expiresAt: "2027-03-03T00:00:00Z" });
+    expect(calls).toHaveLength(1);
+    expect(calls[0].name).toBe("create_review");
+    expect(JSON.stringify(calls[0])).not.toContain("2099");
+    expect(calls[0].p_review).toMatchObject({ documents: [{ extracted_text: documents[0].text }], flags: expect.any(Array), topics: expect.any(Array) });
+  });
+
+  it("propagates failed atomic saves and does not fabricate successful retention", async () => {
+    const client = { async rpc() { return { data: null, error: { message: "Transaction failed" } }; } } as unknown as SupabaseClient;
+    const documents = [{ id: "lease", title: "Lease", text: loadFixture("clean-lease").text }];
+    const review = await runGeneralReview({ packet: { documents }, model: createFixtureModelClient() });
+    await expect(new SupabaseReviewStore(client).save({ id: "review", signerId: "signer", createdAt: "2027-01-01T00:00:00Z", documents, review })).rejects.toThrow("could not be stored");
+  });
   it("reads each stored proposed edit together with its residual risk", async () => {
     const rows = await databaseRows("adhesion-lease");
     const stored = await storeFor(rows).findForSigner("signer", "review");

@@ -2,7 +2,8 @@
 
 ## Current checkpoint — 2026-09-22
 
-Status: implementation in progress. Branch `main`, existing upstream `origin/main`.
+Status: all unblocked implementation and local verification finished; external release
+gates remain below. Branch `main`, existing upstream `origin/main`.
 Starting commit: `1a87788` (seven commits ahead at entry). No history rewritten.
 
 The starting dirty files belonged to unfinished ticket 04: coverage schema, verifier,
@@ -12,14 +13,14 @@ were terminated. No unrelated edits found. Earlier report versions remain in Git
 
 | Ticket | Status and implementation commits |
 | --- | --- |
-| 01 Paste and cited flags | Verified offline: `4a7bd53`, corrected anonymous/error handling `9507bf4`; hosted auth/DB pending |
+| 01 Paste and cited flags | Verified offline and live transport: `4a7bd53`, corrections `9507bf4`; hosted auth/DB pending |
 | 02 Selectable PDF | Verified offline: `c013fe1`; native Chrome upload permission blocked |
-| 03 Complete agreement | Verified offline: `1a87788`, stricter failed-reference handling `9507bf4` |
+| 03 Complete agreement | Verified offline and native browser gate: `1a87788`, stricter handling `9507bf4`; final selector correction in retention integration commit |
 | 04 Coverage checklist | Verified offline: `9507bf4` |
 | 05 Grounded Q&A | Verified offline: `d03b74b` |
 | 06 Personal red lines | Implemented and verified offline `b7eb335`; DB/live quality pending |
-| 07 Counter-offers | Implemented and verified offline; live plausibility pending; commit recorded next checkpoint |
-| 08 Retention | Ready; storage/scheduler plan inspected |
+| 07 Counter-offers | Implemented and verified offline `09427ea`; live draft/residual concern needs independent review |
+| 08 Retention | Implemented and verified offline in final retention integration commit; hosted DB/RLS/cron verification pending |
 | 09 Independent evaluation | Tooling verified: `385279e`; independent evidence blocked |
 | 10 Landing | Implemented `90e28f1`, truthful copy corrections `c61f93e`; full WCAG verification pending |
 
@@ -51,6 +52,15 @@ Main owns status, integration, commits and this report. Workers do not push.
 - Implement and TDD skills applied at approved full-flow/external-boundary seams.
   Humanizer 3.0.0 was available and applied to new copy. Broad final code review skipped
   as requested; main still inspects every ticket diff and relevant source.
+- Retention uses database-owned dates and atomic write RPCs, not caller timestamps.
+  Direct table writes are revoked; owner and expiry policies constrain reads. An
+  explicit save resets expiry to 90 days from that save; default retention is 30 fixed
+  24-hour days. Expiry blocks access immediately; successful minute-based maintenance
+  physically deletes the review and all stored text on its next run. No exact-instant
+  physical-deletion claim. Missing cron support is a deployment blocker.
+- A storage failure leaves an explicitly ephemeral usable review with a warning;
+  it never claims successful persistence. SQL relationship hints avoid ambiguity from
+  composite ownership foreign keys. Controlled clocks replaced stale test dates.
 
 ## Dependencies and fixtures
 
@@ -64,14 +74,65 @@ fee schedule, pet addendum, selectable PDF and textless PDF. Sidecar exact quota
 are checked verbatim. They contain no real personal information and are implementation
 fixtures, not independently human-adjudicated evidence. Fixture provenance documented.
 
-## Verification completed so far
+## Final verification
+
+All checks below ran after the final retention and selector changes. No dependencies
+or product source changed after these checks; subsequent edits only synchronize records.
+
+| Command | Result |
+| --- | --- |
+| `npm run typecheck` | Pass |
+| `npm run lint` | Pass |
+| `npm test` | Pass: 212 tests, 24 files; no live credentials needed |
+| `npm run smoke` | Pass, deterministic/offline mode; actual internal pipeline |
+| `npm run build:fixtures` | Pass; native browser final integration checked |
+| `npm run build` | Pass; normal production output restored after fixture build |
+| `npm run smoke -- --live` | One bounded run; 3 calls, 9 returned / 9 verified / 0 dropped, no provider errors; quality concerns below |
+| `npm run eval` | Expected exit 2: prerequisites missing, 0 live runs, expansion decision pending |
+| `git diff --check` | Pass |
+
+Offline smoke: planted agreement 9/9/0; clean agreement 0/0/0, with repairs and dispute
+routes separately not found; incomplete agreement blocked before review, naming the
+Schedule of Resident Fees and Pet Addendum. Smoke prints mode, exact sources and counts.
+Normal build preserves the landing, sign-in, review and saved-review routes and adds the
+approved Q&A, personal-red-line and library-save API routes. Private environment files,
+generated build output and evaluation runs remain ignored and untracked.
+
+### Bounded live findings — not a quality pass
+
+Configured OpenRouter model/provider accepted the required routing, low reasoning and
+structured-output settings. Credentials and model values were never printed. All six
+coverage topics were found. Citation verification proves source matching, not the
+correctness of consequences, severity, counter-offers or residual-risk statements.
+
+- Renewal-rent severity was medium versus the synthetic sidecar's high expectation.
+- Venue clause14.2 had no separate flag. The arbitration flag cited14.1 but its
+  consequence also referred to the landlord-office county from14.2. Independent
+  adjudication is needed before classifying this as a serious miss or acceptable grouping.
+- A low-severity three-day repair-reporting warning needs false-alarm review.
+- An arbitration draft replaced14.1 without its express jury/class-waiver wording,
+  while its residual-risk statement still said jury/class proceedings were barred.
+  This is a draft/residual consistency concern, not a conclusion about legal effect.
+
+The other drafts offered concrete compromises, but ticket07's plausibility criterion
+remains unchecked. No prompt, model, provider or expected-answer changes were made to
+tune away these findings. Do not rerun a live test merely to obtain a cleaner result.
+Ticket09's independent adjudication gate remains unsatisfied.
+
+## Ticket-level evidence
+
+- Ticket08: main inspected source, complete diff, UI, tests and migrations0005/0006;
+  a separate native worker performed a bounded SQL review. Controlled-clock tests cover
+  expiry, full stored-object deletion, later/repeated saves and non-resurrection. Route,
+  database-boundary and UI tests cover ownership, persistence warnings, save loading/error
+  states and visible dates. README documents staging verification. No SQL execution.
 
 - Ticket07: required proposed-edit/residual-risk fields flow through schema, verifier
   and storage. Keyboard-tested two-step disclosure across all planted flags; closing
   explanation hides draft and residual together. Missing/empty fields fail validation.
   Legacy stored flags require a new analysis, never invented content. Main inspected
   source/diff/migration/tests. Typecheck, lint, 196 tests, offline smoke and fixture
-  production build pass. Humanizer applied. SQL/live plausibility remain pending.
+  production build pass. Humanizer applied. SQL and independent live plausibility remain pending.
 - Browser harness committed as `fc9a7d7`; fixture build passes with all current routes.
 
 - Ticket06: main inspected routes, model contract, citation checks, real preferences
@@ -86,27 +147,41 @@ fixtures, not independently human-adjudicated evidence. Fixture provenance docum
   and normal startup are unchanged. Loopback-only, exact synthetic fixtures only,
   anonymous only; build marker requires blank Supabase configuration at build time.
   Six behavior tests pass. Fixture provenance comments corrected to remove an old
-  unsupported independent-reviewer claim. Native browser run pending final UI integration.
+  unsupported independent-reviewer claim. Native browser verification completed below.
 
 - Tickets 01–04: typecheck, lint, 161-test full suite and offline smoke passed.
 - Ticket 05: main inspected schema, route, UI, fixtures and tests; typecheck, lint and
   all 172 deterministic tests passed. Eleven Q&A tests cover grounded/non-answer flows,
   incomplete packets, addenda, fabricated/wrong-document citations, provider errors and
   failed retry handling. No model credentials required.
-- `npm run build` passed at `385279e`, preserving `/`, `/sign-in`, `/review`,
-  `/review/[reviewId]`, `/api/analysis` and `/auth/confirm`. Final build pending integration.
+- `npm run build` also passed at the earlier `385279e` checkpoint; final results above
+  supersede historical per-ticket test counts without repeating unchanged checks.
 - `npm run smoke` runs the actual internal route/pipeline with deterministic model
   responses: planted 9 returned/9 verified/0 dropped; clean 0/0/0 with missing repairs
   and dispute routes; incomplete packet blocked with both missing references named.
   It prints mode, sources and verification counts.
 - `npm run smoke -- --live` is explicitly bounded to one synthetic packet, six requests,
   per-call timeout and a start budget. Key/model configured, values never printed.
-  Run once after final schema integration. Live provider compatibility remains unknown.
+  Ran once after final schema integration; technical result and quality limitations above.
 - Evaluation scorer/harness: 11 behavioral tests pass; `npm run eval` checks prerequisites
   and reports pending/exit 2 without a live request when evidence is absent. Generated
   reports are ignored. No quality result has been manufactured.
 
 ## Browser, copy and external limits
+
+- Native Chrome fixture production preview at `09427ea`: observed analysis and Q&A
+  loading, nine exact-cited planted flags, keyboard explanation/edit disclosures,
+  residual risk beside the draft, grounded answer and explicit non-answer. Inspected
+  desktop1280×900 and mobile390×844; no horizontal overflow or console warnings/errors.
+  Clean fixture renders zero flags plus separate repairs/dispute-route absences;
+  incomplete fixture names both missing documents and exposes neither review nor Q&A.
+  Unknown synthetic text produces a service error, never a clean result. All model
+  responses came from the test transport; no fake account and no live request.
+- Browser found a confusing self-reference option in the document selector. Server
+  already rejected it; main added a red/green full-flow regression and filtered the
+  referring document out of choices. Final fixture build/browser confirms both selectors
+  contain only the missing-document option for the incomplete fixture. Full suite passes.
+  Temporary viewport overrides reset; this session's preview servers were stopped.
 
 - Native Chrome inspected landing/intake at 1280×900 and 390×844, plus landing reflow
   at 320px. No observed horizontal overflow. Keyboard skip link navigates to main.
@@ -115,6 +190,9 @@ fixtures, not independently human-adjudicated evidence. Fixture provenance docum
   sent no external request. Only this session's own server was restarted.
 - Chrome PDF upload failed `Not allowed`: enable “Allow access to file URLs” for the
   ChatGPT extension to resume. No browser permissions changed. Parser/offline flow tests pass.
+- The PDF skill was consulted for supplementary fixture inspection; Poppler/pypdf/
+  pdfplumber were unavailable. No duplicate tooling added: real pdfjs parser and flow
+  tests remain the verification evidence, not an invented rendered-PDF check.
 - Independent native reviewer checked landing claims. Corrected unsupported sample
   re-renting fee and anonymous retention qualification; clarified red-line accounts/reruns.
   Reviewer signed off on revised claims conditional on completion of tickets 05–08.
@@ -123,17 +201,37 @@ fixtures, not independently human-adjudicated evidence. Fixture provenance docum
   evidence. Screen-reader, text-spacing/zoom and comprehensive interactive checks pending.
 - Supabase variables absent; no local psql/Docker. Client-boundary mocks do not prove
   deployed SQL, RLS, transactions or scheduled deletion. Database verification is separate.
+  Native authenticated library, personal-red-line and save flows also need that staging
+  configuration; offline UI tests cover their implemented loading/error/empty behavior.
 - Ticket 09 blocked by missing independent held-out corpus, two reviewers' pre-output
   adjudication, restricted runner and full-flow human evidence. Retry count 0; does not
-  block remaining implementation. Agent-authored fixtures cannot satisfy this gate.
+  block independent implementation. Agent-authored fixtures cannot satisfy this gate.
+  No Humanizer review is pending: the actual installed skill was applied to new copy.
 
 ## Resume without rebuilding completed work
 
-Current uncommitted ownership: verified ticket07 and main report/smoke additions. No unrelated work.
-Next: commit 07, implement 08; final smoke/build,
-practical browser checks, status synchronization and normal push to `origin/main`.
+All remaining changes at this checkpoint belong to this build: worker08 implementation,
+main selector regression and main status/report synchronization. No unrelated changes.
+These are being committed together as verified retention integration; a final records
+commit will record its hash and push result. No blocked partial implementation is included.
 
-Routine commands: `npm run typecheck`, `npm run lint`, `npm test`, `npm run smoke`,
-`npm run build`. Final live check: `npm run smoke -- --live`. Evaluation instructions:
-`evals/README.md`. Do not treat SQL mocks as database sign-off or repeat completed work
-merely because the original report was stale. No automatic restart after session closure.
+Next actions requiring the owner's setup or independent evidence:
+
+1. Configure an existing staging Supabase project, apply ordered migrations0001–0006,
+   and follow README's retention deployment gate: two-account RLS, atomic rollback,
+   timestamp tampering, expiry/non-resurrection and administrative proof of cron-driven
+   physical deletion. Set the prescribed public environment variables and verify real
+   sign-in, library reload, red lines and save in the browser. No remote apply authorized here.
+2. Supply the independently adjudicated held-out corpus, two reviewers and restricted
+   runner described in `evals/README.md`; run `npm run eval` with that documented setup.
+   Review the live observations above, especially draft/residual consistency, before
+   marking ticket07 or the independent expansion gate complete.
+3. Enable the browser extension's file-URL access to finish native PDF upload, and
+   complete screen-reader, zoom/text-spacing and remaining WCAG2.1AA checks.
+
+Routine regression commands after changes: `npm run typecheck`, `npm run lint`,
+`npm test`, `npm run smoke`, `npm run build`. Native synthetic preview:
+`npm run build:fixtures` then `npm run start:fixtures`; use only documented fixtures.
+Explicit live mode is `npm run smoke -- --live` (already run once for this build).
+Do not repeat verified implementation because a report was stale. Do not treat SQL
+mocks or agent-authored fixtures as external sign-off. No automatic restart after closure.

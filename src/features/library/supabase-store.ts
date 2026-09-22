@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { z } from "zod";
 
 // The checklist as published today: rows are read back against this list,
 // so the review shows the topics the product publishes now, in that order.
@@ -19,6 +20,8 @@ import {
   type ReviewStore,
   type StoredReview,
   type StoredReviewSummary,
+  type NewReview,
+  type ReviewRetention,
 } from "./store";
 
 /**
@@ -39,6 +42,8 @@ interface ReviewRow {
   id: string;
   user_id: string;
   created_at: string;
+  saved_at: string | null;
+  expires_at: string;
   summary: string;
   clean: boolean;
   dropped_flag_count: number;
@@ -73,33 +78,14 @@ interface ChecklistRow {
 export class SupabaseReviewStore implements ReviewStore {
   constructor(private readonly client: SupabaseClient) {}
 
-  async save(review: StoredReview): Promise<void> {
-    const reviewInsert = await this.client.from("reviews").insert({
-      id: review.id,
-      user_id: review.signerId,
-      created_at: review.createdAt,
-      summary: review.review.summary,
-      clean: review.review.clean,
-      dropped_flag_count: review.review.droppedFlagCount,
-    });
-    if (reviewInsert.error) throw new Error(reviewInsert.error.message);
-
+  async save(review: NewReview): Promise<ReviewRetention> {
     const documents = review.documents.map((document, position) => ({
-      review_id: review.id,
-      user_id: review.signerId,
       document_id: document.id,
       title: document.title,
       extracted_text: document.text,
       position,
     }));
-    if (documents.length > 0) {
-      const documentInsert = await this.client.from("review_documents").insert(documents);
-      if (documentInsert.error) throw new Error(documentInsert.error.message);
-    }
-
     const flags = review.review.riskFlags.map((flag, rank) => ({
-      review_id: review.id,
-      user_id: review.signerId,
       rank,
       severity: flag.severity,
       consequence: flag.consequence,
@@ -110,16 +96,9 @@ export class SupabaseReviewStore implements ReviewStore {
       source_start: flag.sourceStart,
       source_end: flag.sourceEnd,
     }));
-    if (flags.length > 0) {
-      const flagInsert = await this.client.from("review_flags").insert(flags);
-      if (flagInsert.error) throw new Error(flagInsert.error.message);
-    }
-
     // A found topic stores offsets, as a flag does; a not-found item stores
     // three nulls, because there is nothing it could store instead.
     const topics = review.review.coverage.items.map((item, position) => ({
-      review_id: review.id,
-      user_id: review.signerId,
       position,
       topic_id: item.topicId,
       status: item.status,
@@ -127,18 +106,26 @@ export class SupabaseReviewStore implements ReviewStore {
       source_start: item.status === "found" ? item.sourceStart : null,
       source_end: item.status === "found" ? item.sourceEnd : null,
     }));
-    if (topics.length > 0) {
-      const topicInsert = await this.client
-        .from("review_checklist_topics")
-        .insert(topics);
-      if (topicInsert.error) throw new Error(topicInsert.error.message);
-    }
+    // One database transaction writes the complete review and assigns its
+    // timestamps. Caller timestamps are deliberately not sent to the RPC.
+    const result = await this.client.rpc("create_review", {
+      p_signer_id: review.signerId,
+      p_review: { id: review.id, summary: review.review.summary, clean: review.review.clean, dropped_flag_count: review.review.droppedFlagCount, documents, flags, topics },
+    });
+    if (result.error) throw new Error("The review could not be stored.");
+    return retentionFromRow(result.data);
+  }
+
+  async retainForSigner(signerId: string, reviewId: string): Promise<ReviewRetention | null> {
+    const result = await this.client.rpc("retain_review", { p_signer_id: signerId, p_review_id: reviewId });
+    if (result.error) throw new Error("The review could not be saved for longer.");
+    return result.data === null ? null : retentionFromRow(result.data);
   }
 
   async findForSigner(signerId: string, reviewId: string): Promise<StoredReview | null> {
     const reviewResult = await this.client
       .from("reviews")
-      .select("id, user_id, created_at, summary, clean, dropped_flag_count")
+      .select("id, user_id, created_at, saved_at, expires_at, summary, clean, dropped_flag_count")
       .eq("id", reviewId)
       .eq("user_id", signerId)
       .maybeSingle();
@@ -248,7 +235,7 @@ export class SupabaseReviewStore implements ReviewStore {
     return {
       id: row.id,
       signerId: row.user_id,
-      createdAt: row.created_at,
+      ...retentionFromRow(row),
       documents,
       review: {
         summary: row.summary,
@@ -264,7 +251,7 @@ export class SupabaseReviewStore implements ReviewStore {
   async listForSigner(signerId: string): Promise<readonly StoredReviewSummary[]> {
     const result = await this.client
       .from("reviews")
-      .select("id, created_at, clean, review_documents(title, position), review_flags(rank)")
+      .select("id, created_at, saved_at, expires_at, clean, review_documents!review_documents_owner_fk(title, position), review_flags!review_flags_owner_fk(rank)")
       .eq("user_id", signerId)
       .order("created_at", { ascending: false });
     if (result.error) throw new Error(result.error.message);
@@ -272,6 +259,8 @@ export class SupabaseReviewStore implements ReviewStore {
     const rows = (result.data ?? []) as Array<{
       id: string;
       created_at: string;
+      saved_at: string | null;
+      expires_at: string;
       clean: boolean;
       review_documents: Array<{ title: string; position: number }>;
       review_flags: Array<{ rank: number }>;
@@ -279,7 +268,7 @@ export class SupabaseReviewStore implements ReviewStore {
 
     return rows.map((row) => ({
       id: row.id,
-      createdAt: row.created_at,
+      ...retentionFromRow(row),
       title:
         [...row.review_documents].sort((left, right) => left.position - right.position)[0]
           ?.title ?? "Untitled review",
@@ -287,6 +276,13 @@ export class SupabaseReviewStore implements ReviewStore {
       clean: row.clean,
     }));
   }
+}
+
+const timestamp = z.string().refine((value) => Number.isFinite(Date.parse(value)));
+const retentionRowSchema = z.object({ created_at: timestamp, saved_at: timestamp.nullable(), expires_at: timestamp });
+function retentionFromRow(value: unknown): ReviewRetention {
+  const row = retentionRowSchema.parse(value);
+  return { createdAt: row.created_at, savedAt: row.saved_at, expiresAt: row.expires_at };
 }
 
 function validCitation(text: string | undefined, start: number, end: number): boolean {

@@ -99,7 +99,7 @@ function holdTheRoute() {
 }
 
 beforeEach(() => {
-  store = new InMemoryReviewStore();
+  store = new InMemoryReviewStore(() => new Date("2027-05-01T09:00:00.000Z"));
   adapters.store = store;
   adapters.accounts = SIGNER;
   requests = [];
@@ -160,6 +160,19 @@ const REVIEW_HEADING = /terms to look at/i;
 const BLOCKED_HEADING = /points at .*(isn't|aren't) here/i;
 
 describe("a packet that holds the whole agreement", () => {
+  it("does not offer the referring lease as its own missing document", async () => {
+    useModel();
+    const user = userEvent.setup();
+    renderScreen(await ReviewPage());
+    await buildPacket(user, []);
+    await submit(user);
+    await screen.findByRole("heading", { name: BLOCKED_HEADING });
+    for (const selector of screen.getAllByRole("combobox", { name: "Which document is this?" })) {
+      expect(within(selector).queryByRole("option", { name: "marlowe-lease.pdf" })).toBeNull();
+      expect(within(selector).getByRole("option", { name: "I haven't sent it yet" })).toBeInTheDocument();
+    }
+  });
+
   it("passes the gate and flags a term that is only in a referenced document", async () => {
     useModel();
     const user = userEvent.setup();

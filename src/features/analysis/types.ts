@@ -3,6 +3,7 @@ import type {
   IncompleteAgreement,
 } from "@/features/packet/completeness";
 import type { ExtractedDocument } from "@/features/packet/types";
+import type { ReviewRetention } from "@/features/library/store";
 
 import type { ChecklistTopicId } from "./checklist";
 
@@ -176,6 +177,8 @@ export type AnalysisOutcome =
       /** Present when the review was persisted for a signed-in signer. */
       readonly reviewId: string | null;
       readonly persisted: boolean;
+      readonly retention: ReviewRetention | null;
+      readonly persistenceFailed: boolean;
       readonly documents: readonly ExtractedDocument[];
       /** Every reference answered by a supplied document. */
       readonly completeness: CompleteAgreement;

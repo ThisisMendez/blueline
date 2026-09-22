@@ -60,7 +60,7 @@ beforeEach(async () => {
   if (extraction.kind !== "text") throw new Error("the PDF fixture stopped extracting");
   pdfText = extraction.text;
 
-  store = new InMemoryReviewStore();
+  store = new InMemoryReviewStore(() => new Date("2027-02-01T09:00:00.000Z"));
   adapters.store = store;
   adapters.accounts = SIGNER;
   requests = [];

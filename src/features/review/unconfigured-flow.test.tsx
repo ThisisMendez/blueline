@@ -31,7 +31,7 @@ beforeEach(() => {
   delete process.env.NEXT_PUBLIC_SUPABASE_URL;
   delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  store = new InMemoryReviewStore();
+  store = new InMemoryReviewStore(() => new Date("2027-02-01T09:00:00.000Z"));
   restoreFetch = installRouteFetch({
     "/api/analysis": createAnalysisRoute({
       model: createFixtureModelClient({ behaviour: "correct" }),

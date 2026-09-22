@@ -4,9 +4,11 @@
 
 **Blocked by:** 01 (needs the paste → cited-flags seam to plug PDF-extracted text into)
 
-**Status:** done
+**Status:** implemented and verified offline; native browser upload permission blocked
 
 - [x] Signer can upload a selectable-text PDF and receive the same result shape as pasted text (summary + cited risk flags)
 - [x] Text extraction happens in the browser; only extracted text is sent onward and persisted, never the original file bytes
 - [x] A textless or scanned PDF is detected and rejected with an explanation, not silently reviewed
 - [x] Deterministic test: a selectable-text PDF fixture produces a review; a textless PDF fixture produces the rejection path, not a review
+
+Evidence: real pdfjs fixture extraction and deterministic UI flows pass in the final 212-test suite. Native Chrome upload returned `Not allowed`; the ChatGPT extension's “Allow access to file URLs” permission is needed to finish that browser check. No permissions were changed.

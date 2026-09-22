@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import type { AccountsState } from "@/features/auth/session";
-import type { ReviewStore } from "@/features/library/store";
+import type { ReviewRetention, ReviewStore } from "@/features/library/store";
 import { checkCompleteness } from "@/features/packet/completeness";
 import {
   MAXIMUM_PACKET_DOCUMENTS,
@@ -184,19 +184,20 @@ export function createAnalysisRoute(
 
     let reviewId: string | null = null;
     let persisted = false;
+    let retention: ReviewRetention | null = null;
+    let persistenceFailed = false;
 
     if (accounts.kind === "signed-in") {
-      const store = await dependencies.store();
-      if (store) {
-        reviewId = dependencies.newReviewId();
-        await store.save({
-          id: reviewId,
-          signerId: accounts.signer.id,
-          createdAt: dependencies.now().toISOString(),
-          documents: packet.documents,
-          review,
-        });
+      try {
+        const store = await dependencies.store();
+        if (!store) throw new Error("Persistence unavailable");
+        const newId = dependencies.newReviewId();
+        retention = await store.save({ id: newId, signerId: accounts.signer.id,
+          createdAt: dependencies.now().toISOString(), documents: packet.documents, review });
+        reviewId = newId;
         persisted = true;
+      } catch {
+        persistenceFailed = true;
       }
     }
 
@@ -204,6 +205,8 @@ export function createAnalysisRoute(
       status: "reviewed",
       reviewId,
       persisted,
+      retention,
+      persistenceFailed,
       documents: packet.documents,
       completeness,
       review,

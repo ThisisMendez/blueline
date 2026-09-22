@@ -5,6 +5,7 @@ import { AccountsNotice } from "@/features/auth/components/AccountsNotice";
 import { getAccountsState } from "@/features/auth/session";
 import { openReviewStore } from "@/features/library/supabase-store";
 import { ReviewNeedsRerunError } from "@/features/library/store";
+import { RetentionControls } from "@/features/library/RetentionControls";
 import { ReviewResult } from "@/features/review/components/ReviewResult";
 
 /**
@@ -69,6 +70,7 @@ export default async function SavedReviewPage(
         </h1>
       </div>
 
+      <RetentionControls reviewId={stored.id} retention={stored} />
       <ReviewResult review={stored.review} documents={stored.documents} reviewId={stored.id} />
 
       <p>

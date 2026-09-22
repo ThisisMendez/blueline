@@ -14,19 +14,27 @@ export class ReviewNeedsRerunError extends Error {
  * plus the analysis of it.
  */
 
-export interface StoredReview {
+export interface NewReview {
   readonly id: string;
   /** The authenticated signer the review belongs to. */
   readonly signerId: string;
-  /** ISO 8601, from the injected clock. */
+  /** Completion time for the test adapter; Supabase ignores this and uses its database clock. */
   readonly createdAt: string;
   /** Extracted text only. There is nowhere here to put bytes. */
   readonly documents: readonly ExtractedDocument[];
   readonly review: GeneralReview;
 }
 
+export interface ReviewRetention {
+  readonly createdAt: string;
+  readonly savedAt: string | null;
+  readonly expiresAt: string;
+}
+
+export interface StoredReview extends NewReview, ReviewRetention {}
+
 /** One line in the signer's library. */
-export interface StoredReviewSummary {
+export interface StoredReviewSummary extends ReviewRetention {
   readonly id: string;
   readonly createdAt: string;
   /** The first document's title, which is what the signer recognises. */
@@ -36,7 +44,9 @@ export interface StoredReviewSummary {
 }
 
 export interface ReviewStore {
-  save(review: StoredReview): Promise<void>;
+  save(review: NewReview): Promise<ReviewRetention>;
+  /** Extends only an owned, unexpired review; null means absent or expired. */
+  retainForSigner(signerId: string, reviewId: string): Promise<ReviewRetention | null>;
   /**
    * Reads one review, scoped to its owner. Another signer's id returns null —
    * the store never answers with a review it was not asked for by its owner.
@@ -50,6 +60,8 @@ export function summarizeStoredReview(review: StoredReview): StoredReviewSummary
   return {
     id: review.id,
     createdAt: review.createdAt,
+    savedAt: review.savedAt,
+    expiresAt: review.expiresAt,
     title: review.documents[0]?.title ?? "Untitled review",
     flagCount: review.review.riskFlags.length,
     clean: review.review.clean,

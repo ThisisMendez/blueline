@@ -37,3 +37,21 @@ The default 250 ms delay per model request makes loading states visible; set `BL
 Provide `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` for an existing Supabase project. Ordered schema migrations are tracked under `supabase/migrations/`. This build does not create a hosted project or apply remote migrations. SQL and deployed row-level security need separate verification before relying on account persistence.
 
 Email sign-in uses `/auth/confirm`. Configure the Supabase site URL and redirect allowlist for your deployment, and use a token-hash email template pointing at `/auth/confirm?token_hash={{ .TokenHash }}&type=email`. Do not commit private lease text, environment files, database dumps or credentials.
+
+### Retention deployment gate
+
+Apply the ordered migrations through `0006_expiry_schedule.sql` to an existing staging project before enabling the library. `0005` makes review creation atomic, derives lifecycle timestamps from the database clock, and limits table access to unexpired owned reviews. Completion retains a review for 30 fixed 24-hour days; each explicit save sets a new 90-day expiry from that save. Browser-supplied timestamps cannot change these dates. The library uses explicit composite-foreign-key hints for its nested queries because multiple relationships exist. See [Supabase joins and nesting](https://supabase.com/docs/guides/database/joins-and-nesting).
+
+At expiry, account access stops. Physical deletion is a separate operation: `0006` schedules `purge_expired_reviews()` every minute, deleting the review and cascading to its extracted text, flags and checklist rows. It requires [Supabase Cron / pg_cron](https://supabase.com/docs/guides/cron/install); migration failure or a failed cleanup job is a deployment blocker, not evidence that expired text was deleted. A normal successful job removes expired rows on the next run. Monitor job failures and delays; do not promise deletion at the exact expiry instant.
+
+The write RPCs use narrowly scoped security-definer functions because direct table writes are revoked. They pin their search path, check the authenticated owner and expose only the required execution grants. The purge RPC is unavailable to anonymous and authenticated clients. Review [Supabase function security guidance](https://supabase.com/docs/guides/database/functions) when deploying or changing grants.
+
+Before relying on persistence, verify with synthetic data in that staging database:
+
+1. Use two authenticated accounts to create/read reviews through the real API. Confirm the nested library query works and account B cannot read or save account A's review, text, flags or checklist. Confirm unauthenticated RPC calls fail.
+2. Confirm direct table inserts/updates and caller attempts to alter owner, `created_at`, `saved_at` or `expires_at` are denied. Inspect database-owned dates after creation, a later explicit save and another save: expiry must be completion +30 days or latest save +90 days.
+3. Submit a synthetic packet with an invalid child row through `create_review`; confirm the transaction leaves no review or document behind. Adapter mocks cannot establish rollback behavior.
+4. With privileged staging-only setup, create consistent synthetic rows whose expiries are just before/after now (the lifecycle check constraint must remain enabled). Verify expired rows are inaccessible through each account query and cannot be revived by `retain_review`.
+5. Inspect `cron.job` for active `blueline-purge-expired-reviews`, then `cron.job_run_details` for a successful actual run. After that run, use an administrative query to confirm the expired parent **and** its `review_documents.extracted_text` rows, flags and checklist rows are physically absent. RLS hiding alone does not prove deletion. Keep an unexpired control review and confirm it remains.
+
+The repository's controlled-clock and database-boundary tests verify application behavior only. Migrations, grants, row-level security, actual transaction rollback and scheduled physical deletion require the checks above; they have not been executed by the offline suite.

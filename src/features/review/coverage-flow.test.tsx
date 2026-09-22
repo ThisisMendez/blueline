@@ -76,7 +76,7 @@ function useModel(options: FixtureModelClientOptions = {}) {
 }
 
 beforeEach(() => {
-  adapters.store = new InMemoryReviewStore();
+  adapters.store = new InMemoryReviewStore(() => new Date("2027-02-01T09:00:00.000Z"));
   adapters.accounts = SIGNER;
   restoreFetch = () => {};
 });
