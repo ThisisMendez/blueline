@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "build:fixtures": "tsx scripts/browser-fixture-preview.ts build",
+    "start:fixtures": "tsx scripts/browser-fixture-preview.ts start",
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",

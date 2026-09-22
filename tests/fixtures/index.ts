@@ -58,8 +58,8 @@ export type Severity = "high" | "medium" | "low";
 export type FlagCategory = "deposit" | "early-exit" | "dispute-rights" | "other";
 
 /**
- * A risk flag an independent reviewer adjudicated in the fixture before any
- * Blueline output was seen.
+ * An author-selected risk expectation planted in a synthetic implementation
+ * fixture. This is not independent human adjudication or held-out evidence.
  */
 export interface PlantedFlag {
   id: string;
@@ -101,8 +101,8 @@ export interface RedLineExpectation {
 }
 
 /**
- * A document this fixture refers to, adjudicated the same way a planted flag
- * is: the name as the document states it, the one sentence that makes the
+ * An author-selected document reference: the name as the document states it,
+ * the one sentence that makes the
  * reference, and which fixture satisfies it.
  */
 export interface FixtureReference {
@@ -142,7 +142,7 @@ export interface FixtureSidecar extends FixtureSidecarBase {
 
 /**
  * The sidecar of a document that exists because a lease names it. It carries
- * the adjudicated flags and oddities but none of the lease-only sections: a
+ * the planted flags and oddities but none of the lease-only sections: a
  * fee schedule has no dispute-routes topic and answers no question about
  * access to the home.
  */
@@ -180,7 +180,7 @@ function readFixtureBytes(name: string): Buffer {
   return readFileSync(fileURLToPath(new URL(name, import.meta.url)));
 }
 
-/** Reads a fixture's extracted text and its adjudication sidecar from disk. */
+/** Reads a fixture's extracted text and author-selected expectations from disk. */
 export function loadFixture(id: LeaseFixtureId): LoadedLeaseFixture;
 export function loadFixture(id: SupportingFixtureId): LoadedSupportingFixture;
 export function loadFixture(id: FixtureId): LoadedFixture;

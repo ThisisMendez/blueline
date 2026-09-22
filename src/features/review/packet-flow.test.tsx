@@ -48,7 +48,7 @@ const feeSchedule = loadFixture("fee-schedule");
 const petAddendum = loadFixture("pet-addendum");
 const adhesionLease = loadFixture("adhesion-lease");
 
-/** The reference sentences the corpus adjudicated, by the name they carry. */
+/** Synthetic expected reference sentences, by the name they carry. */
 const CITING_SENTENCE = Object.fromEntries(
   (referencingLease.sidecar.references ?? []).map((reference) => [
     reference.name,
