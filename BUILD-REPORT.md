@@ -106,28 +106,43 @@ coverage topics were found. Citation verification proves source matching, not th
 correctness of consequences, severity, counter-offers or residual-risk statements.
 
 - Renewal-rent severity was medium versus the synthetic sidecar's high expectation.
-- Venue clause14.2 had no separate flag. The arbitration flag cited14.1 but its
-  consequence also referred to the landlord-office county from14.2. Independent
+- Venue clause 14.2 had no separate flag. The arbitration flag cited 14.1 but its
+  consequence also referred to the landlord-office county from 14.2. Independent
   adjudication is needed before classifying this as a serious miss or acceptable grouping.
 - A low-severity three-day repair-reporting warning needs false-alarm review.
 - An arbitration draft replaced14.1 without its express jury/class-waiver wording,
   while its residual-risk statement still said jury/class proceedings were barred.
   This is a draft/residual consistency concern, not a conclusion about legal effect.
 
-The other drafts offered concrete compromises, but ticket07's plausibility criterion
+### Second live run, 2026-09-22 02:1x
+
+A confirming live run went through the same path: 3 calls, 9 flags returned, 9 verified,
+0 dropped, all six coverage topics found. The findings above held. The renewal-rent flag
+again came back medium against the fixture's high expectation, and the arbitration draft
+again removed the jury and class-waiver wording while its residual-risk sentence still
+described class proceedings as unavailable. Two runs agreeing is not adjudication, but it
+does mean these are the model's settled behaviour rather than one bad sample.
+
+The first attempt at this run returned HTTP 429 and stopped cleanly at
+`model-rate-limited` without producing a partial review. The configured model,
+`z-ai/glm-5.3-flash`, rate-limits on back-to-back calls often enough that you should
+expect this; wait a minute and run it again. The failure path is the one the product
+would show a signer, and it is honest: no flags, no summary, no clean result.
+
+The other drafts offered concrete compromises, but ticket 07's plausibility criterion
 remains unchecked. No prompt, model, provider or expected-answer changes were made to
 tune away these findings. Do not rerun a live test merely to obtain a cleaner result.
-Ticket09's independent adjudication gate remains unsatisfied.
+Ticket 09's independent adjudication gate remains unsatisfied.
 
 ## Ticket-level evidence
 
-- Ticket08: main inspected source, complete diff, UI, tests and migrations0005/0006;
+- Ticket 08: main inspected source, complete diff, UI, tests and migrations 0005/0006;
   a separate native worker performed a bounded SQL review. Controlled-clock tests cover
   expiry, full stored-object deletion, later/repeated saves and non-resurrection. Route,
   database-boundary and UI tests cover ownership, persistence warnings, save loading/error
   states and visible dates. README documents staging verification. No SQL execution.
 
-- Ticket07: required proposed-edit/residual-risk fields flow through schema, verifier
+- Ticket 07: required proposed-edit/residual-risk fields flow through schema, verifier
   and storage. Keyboard-tested two-step disclosure across all planted flags; closing
   explanation hides draft and residual together. Missing/empty fields fail validation.
   Legacy stored flags require a new analysis, never invented content. Main inspected
@@ -135,7 +150,7 @@ Ticket09's independent adjudication gate remains unsatisfied.
   production build pass. Humanizer applied. SQL and independent live plausibility remain pending.
 - Browser harness committed as `fc9a7d7`; fixture build passes with all current routes.
 
-- Ticket06: main inspected routes, model contract, citation checks, real preferences
+- Ticket 06: main inspected routes, model contract, citation checks, real preferences
   adapter, migration0003, UI and tests. Eleven new tests cover account isolation,
   save/edit/clear/reload, exact citations and unchanged general flags. Typecheck, lint
   and full suite pass (189 tests including six browser-harness tests), without warnings.
@@ -172,7 +187,7 @@ Ticket09's independent adjudication gate remains unsatisfied.
 - Native Chrome fixture production preview at `09427ea`: observed analysis and Q&A
   loading, nine exact-cited planted flags, keyboard explanation/edit disclosures,
   residual risk beside the draft, grounded answer and explicit non-answer. Inspected
-  desktop1280×900 and mobile390×844; no horizontal overflow or console warnings/errors.
+  desktop 1280×900 and mobile 390×844; no horizontal overflow or console warnings/errors.
   Clean fixture renders zero flags plus separate repairs/dispute-route absences;
   incomplete fixture names both missing documents and exposes neither review nor Q&A.
   Unknown synthetic text produces a service error, never a clean result. All model
@@ -189,7 +204,7 @@ Ticket09's independent adjudication gate remains unsatisfied.
 - Local browser server deliberately has empty model variables; synthetic error check
   sent no external request. Only this session's own server was restarted.
 - Chrome PDF upload failed `Not allowed`: enable “Allow access to file URLs” for the
-  ChatGPT extension to resume. No browser permissions changed. Parser/offline flow tests pass.
+  browser extension to resume. No browser permissions changed. Parser/offline flow tests pass.
 - The PDF skill was consulted for supplementary fixture inspection; Poppler/pypdf/
   pdfplumber were unavailable. No duplicate tooling added: real pdfjs parser and flow
   tests remain the verification evidence, not an invented rendered-PDF check.
@@ -216,12 +231,12 @@ upstream, advancing it from `b6ec739` through `24dc67b`, including the preserved
 session commits. No force-push, remote changes or credential changes. The worktree was
 clean before this final records-only update; no unrelated or unowned changes remain.
 This records update is committed and pushed separately. No blocked partial implementation
-is represented as verified, and all migrations0001–0006 are tracked. Private `.env.local`
+is represented as verified, and all migrations 0001–0006 are tracked. Private `.env.local`
 and generated `.next`/evaluation output remain ignored and untracked.
 
 Next actions requiring the owner's setup or independent evidence:
 
-1. Configure an existing staging Supabase project, apply ordered migrations0001–0006,
+1. Configure an existing staging Supabase project, apply ordered migrations 0001–0006,
    and follow README's retention deployment gate: two-account RLS, atomic rollback,
    timestamp tampering, expiry/non-resurrection and administrative proof of cron-driven
    physical deletion. Set the prescribed public environment variables and verify real
@@ -229,9 +244,9 @@ Next actions requiring the owner's setup or independent evidence:
 2. Supply the independently adjudicated held-out corpus, two reviewers and restricted
    runner described in `evals/README.md`; run `npm run eval` with that documented setup.
    Review the live observations above, especially draft/residual consistency, before
-   marking ticket07 or the independent expansion gate complete.
+   marking ticket 07 or the independent expansion gate complete.
 3. Enable the browser extension's file-URL access to finish native PDF upload, and
-   complete screen-reader, zoom/text-spacing and remaining WCAG2.1AA checks.
+   complete screen-reader, zoom/text-spacing and remaining WCAG 2.1 AA checks.
 
 Routine regression commands after changes: `npm run typecheck`, `npm run lint`,
 `npm test`, `npm run smoke`, `npm run build`. Native synthetic preview:
