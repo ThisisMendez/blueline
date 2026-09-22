@@ -6,7 +6,7 @@ import { getAccountsState } from "@/features/auth/session";
 import { openReviewStore } from "@/features/library/supabase-store";
 import type { StoredReviewSummary } from "@/features/library/store";
 import { LibraryList } from "@/features/review/components/LibraryList";
-import { PasteIntake } from "@/features/review/components/PasteIntake";
+import { DocumentIntake } from "@/features/review/components/DocumentIntake";
 
 export const metadata: Metadata = {
   title: "Review a lease | Blueline Redline",
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
  * The intake screen, in both of the product's real configurations.
  *
  * With accounts running, the spec's rule holds: sign in before anything is
- * pasted, so every piece of extracted text has an owner from the first
- * keystroke. With accounts absent there is nobody to sign in as, so the
+ * pasted or opened, so every piece of extracted text has an owner from the
+ * first keystroke. With accounts absent there is nobody to sign in as, so the
  * review runs and is shown once, unsaved, and the screen says so instead of
  * inventing a session to keep the flow tidy.
  */
@@ -48,15 +48,15 @@ export default async function ReviewPage() {
           Your lease, read sentence by sentence
         </h1>
         <p className="mt-4 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          Paste the text. You get a plain-English summary and the terms that
-          could cost you, heaviest first, each one quoting the sentence it came
-          from.
+          Paste the text, or open a PDF you can select text in. You get a
+          plain-English summary and the terms that could cost you, heaviest
+          first, each one quoting the sentence it came from.
         </p>
       </div>
 
       {signedIn ? null : <AccountsNotice />}
 
-      <PasteIntake persists={signedIn} />
+      <DocumentIntake persists={signedIn} />
 
       {signedIn ? <LibraryList reviews={library} /> : null}
     </div>

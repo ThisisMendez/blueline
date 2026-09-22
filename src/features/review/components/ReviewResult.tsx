@@ -48,7 +48,7 @@ export function ReviewResult({ review, documents }: ReviewResultProps) {
             {review.cleanStatement}
           </h2>
           <p className="mt-4 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-            Nothing in what you pasted carried a material downside we could
+            Nothing in the text you gave us carried a material downside we could
             quote a sentence for. That is what we found in the text you gave
             us. It is not a verdict on the agreement: read it yourself before
             you sign, and check that everything it refers to is in front of
@@ -68,8 +68,8 @@ export function ReviewResult({ review, documents }: ReviewResultProps) {
             </h2>
             <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
               Heaviest consequence first. Every sentence below is cut from the
-              text you pasted, so you can find it in your own copy and judge it
-              yourself.
+              text you gave us, so you can find it in your own copy and judge
+              it yourself.
             </p>
           </div>
 

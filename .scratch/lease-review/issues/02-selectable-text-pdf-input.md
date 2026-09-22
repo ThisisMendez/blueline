@@ -4,9 +4,9 @@
 
 **Blocked by:** 01 (needs the paste → cited-flags seam to plug PDF-extracted text into)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Signer can upload a selectable-text PDF and receive the same result shape as pasted text (summary + cited risk flags)
-- [ ] Text extraction happens in the browser; only extracted text is sent onward and persisted, never the original file bytes
-- [ ] A textless or scanned PDF is detected and rejected with an explanation, not silently reviewed
-- [ ] Deterministic test: a selectable-text PDF fixture produces a review; a textless PDF fixture produces the rejection path, not a review
+- [x] Signer can upload a selectable-text PDF and receive the same result shape as pasted text (summary + cited risk flags)
+- [x] Text extraction happens in the browser; only extracted text is sent onward and persisted, never the original file bytes
+- [x] A textless or scanned PDF is detected and rejected with an explanation, not silently reviewed
+- [x] Deterministic test: a selectable-text PDF fixture produces a review; a textless PDF fixture produces the rejection path, not a review

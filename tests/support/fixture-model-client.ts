@@ -1,4 +1,5 @@
 import type { ModelClient, ModelRequest } from "@/features/analysis/model/client";
+import { normalizeText } from "@/features/packet/normalize";
 
 import { loadFixture, type FixtureId, type LoadedFixture } from "../fixtures/index";
 
@@ -10,6 +11,11 @@ import { loadFixture, type FixtureId, type LoadedFixture } from "../fixtures/ind
  * from that fixture's adjudicated sidecar, under the document ids the caller
  * actually used. Everything downstream of it — verification, the retry, the
  * drop, ranking, persistence, the screens — runs for real.
+ *
+ * Matching compares the product's normalised form of both texts, because the
+ * same lease arrives with different line breaks depending on whether it was
+ * pasted or lifted out of a PDF. A real model reading the PDF would quote the
+ * sentence the same way, and the verifier already normalises before it looks.
  */
 
 const DOCUMENT_PATTERN =
@@ -73,8 +79,9 @@ export function createFixtureModelClient(
   const requests: ModelRequest[] = [];
 
   function fixtureFor(document: PromptDocument): LoadedFixture | null {
+    const supplied = normalizeText(document.text);
     return (
-      corpus.find((fixture) => document.text.includes(fixture.text.trim())) ?? null
+      corpus.find((fixture) => supplied.includes(normalizeText(fixture.text))) ?? null
     );
   }
 
