@@ -1,4 +1,4 @@
-import { cleanup, screen, within } from "@testing-library/react";
+import { cleanup, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -28,6 +28,7 @@ import SavedReviewPage from "@/app/(app)/review/[reviewId]/page";
 import ReviewPage from "@/app/(app)/review/page";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
 import { InMemoryReviewStore } from "@/features/library/memory-store";
+import { createRedLineRoutes } from "@/features/red-lines/routes";
 
 import { createFixtureModelClient } from "~tests/support/fixture-model-client";
 import { renderScreen } from "~tests/support/render-screen";
@@ -55,10 +56,22 @@ beforeEach(() => {
   store = new InMemoryReviewStore();
   adapters.store = store;
   adapters.accounts = SIGNER_A;
+  const model = createFixtureModelClient({ behaviour: "correct" });
+  const preferences = new Map<string, readonly string[]>();
+  const redLineRoutes = createRedLineRoutes({
+    model,
+    accounts: async () => adapters.accounts,
+    reviews: async () => adapters.store,
+    preferences: async () => ({
+      async read(signerId) { return preferences.get(signerId) ?? []; },
+      async save(signerId, lines) { preferences.set(signerId, [...lines]); },
+    }),
+  });
 
   restoreFetch = installRouteFetch({
+    "/api/red-lines": redLineRoutes.preferences,
     "/api/analysis": createAnalysisRoute({
-      model: createFixtureModelClient({ behaviour: "correct" }),
+      model,
       accounts: async () => adapters.accounts,
       store: async () => adapters.store,
       now: () => new Date("2027-02-01T09:00:00.000Z"),
@@ -79,6 +92,7 @@ async function pasteAndSubmit() {
   await user.click(textarea);
   await user.paste(adhesionText);
   await user.click(screen.getByRole("button", { name: "Read my lease" }));
+  await waitFor(() => expect(screen.getByRole("textbox", { name: "Your red lines" })).toBeEnabled());
 }
 
 describe("a signed-in signer pasting a lease", () => {
@@ -117,6 +131,7 @@ describe("a signed-in signer pasting a lease", () => {
       params: Promise.resolve({ reviewId: "review-1" }),
     } as PageProps<"/review/[reviewId]">);
     renderScreen(reloaded);
+    await waitFor(() => expect(screen.getByRole("textbox", { name: "Your red lines" })).toBeEnabled());
 
     expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
     const reloadedFlags = screen

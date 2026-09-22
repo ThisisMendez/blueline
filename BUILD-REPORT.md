@@ -1,145 +1,131 @@
 # Build report
 
-## Resume checkpoint: 2026-09-22
+## Current checkpoint — 2026-09-22
 
-- Branch `main`, upstream `origin/main`, starting commit `1a87788`; seven local commits ahead of upstream at entry.
-- Existing changes belong to ticket 04: analysis checklist/schema/verifier, coverage presentation and tests, fixture model responses, Supabase coverage adapter and migration 0002. Preserve and finish these changes. No unrelated changes found.
-- Prior Claude build stopped at a session limit at 03:41 UTC. Other attached sessions are idle; no continuing checkout writes observed. No sessions terminated.
-- Commits already implement ticket 01 (`4a7bd53`), 02 (`c013fe1`), 03 (`1a87788`), and landing work 10 (`90e28f1`). Their checked criteria still require current verification; the older table below is historical and stale.
-- Remaining: finish 04; implement 05, 06, 07, 08; establish evaluation tooling for 09, with independent human adjudication an external prerequisite. Recheck landing claims/accessibility. Establish the missing smoke script (the command currently points to a nonexistent file).
-- Next action: native worker inspects and completes 04 while main reconciles requirements and existing pipeline. Main owns status, integration and commits.
-- Superseding user decision: analysis is available anonymously whether or not Supabase is configured. Anonymous text is ephemeral; only library and personal red lines require an authenticated account. The historical two-mode interpretation below is incorrect and will be corrected narrowly in code and requirements.
-- OpenRouter remains env-selected with Fireworks only, no fallback, required parameters, low reasoning, structured JSON validation. No remote Supabase project creation or migration application. Minimum necessary dependencies are authorized by this run.
-- Humanizer 3.0.0 is available at `/Users/mendez/.claude/plugins/cache/humanizer/humanizer/3.0.0/SKILL.md`; use its embedded workflow for new product copy. TDD uses the already-approved full-flow seam in the spec. Broad final code-review workflow is explicitly skipped.
-- Existing synthetic fixtures and exact-sentence sidecars are reused; they are implementation fixtures, not independently adjudicated evaluation evidence.
+Status: implementation in progress. Branch `main`, existing upstream `origin/main`.
+Starting commit: `1a87788` (seven commits ahead at entry). No history rewritten.
 
-## Integration checkpoint: tickets 01–04
+The starting dirty files belonged to unfinished ticket 04: coverage schema, verifier,
+presentation, fixtures and migration 0002. Preserved and completed them. Other attached
+sessions were idle after the prior Claude build hit its session limit; no sessions
+were terminated. No unrelated edits found. Earlier report versions remain in Git.
 
-Implementation commit: `9507bf4`.
+| Ticket | Status and implementation commits |
+| --- | --- |
+| 01 Paste and cited flags | Verified offline: `4a7bd53`, corrected anonymous/error handling `9507bf4`; hosted auth/DB pending |
+| 02 Selectable PDF | Verified offline: `c013fe1`; native Chrome upload permission blocked |
+| 03 Complete agreement | Verified offline: `1a87788`, stricter failed-reference handling `9507bf4` |
+| 04 Coverage checklist | Verified offline: `9507bf4` |
+| 05 Grounded Q&A | Verified offline: `d03b74b` |
+| 06 Personal red lines | Implemented and verified offline; DB/live quality pending; commit recorded next checkpoint |
+| 07 Counter-offers | Ready after 06 integration |
+| 08 Retention | Ready; storage/scheduler plan inspected |
+| 09 Independent evaluation | Tooling verified: `385279e`; independent evidence blocked |
+| 10 Landing | Implemented `90e28f1`, truthful copy corrections `c61f93e`; full WCAG verification pending |
 
-- Preserved the ticket 04 partial implementation and completed fixed checklist validation, exact citations, separate absence UI, migration 0002 and database readback checks. Main inspected source and diffs before integration.
-- Corrected anonymous access in ticket 01 for configured accounts, plus screen/route regression tests. Updated only the corresponding PRD, spec and auth-timing surface requirements. Landing design and public URLs remain intact.
-- Corrected ticket 03: references still unverifiable after retry stop review with a verification failure; a supplied document cannot satisfy its own reference through a signer override.
-- Errors from OpenRouter inside HTTP 200 now remain provider errors. Provider configuration tests assert env-selected model, Fireworks/no fallback/required parameters/low reasoning/JSON schema.
-- Citation matching still normalizes whitespace only and returns the original source slice. No semantic matching or punctuation/case normalization was introduced. Retry drop counting is conservative: a recovered flag must preserve its consequence and condition to retire the failed candidate, so changed wording may retain a dropped count.
-- Added the missing smoke script, setup README, credential-free env template and fixture provenance notes. New dependencies: none this session.
-- Verification: `npm run typecheck`, `npm run lint`, `npm test` (161 tests across 15 files), `npm run smoke` all pass. Offline smoke: planted fixture 9 returned/9 verified/0 dropped; clean 0/0/0 with repairs and dispute routes not found; incomplete packet blocked and names both missing documents.
-- Red/green regressions demonstrated signed-out analysis was rejected, HTTP-200 provider errors were misclassified, and bad reference citations previously allowed review. Focused suites pass after correction.
-- Humanizer 3.0.0 applied to coverage, account and error copy. Replaced unsupported "not kept anywhere" with "not saved by Blueline".
-- OpenRouter key/model configured (values not recorded). Supabase variables absent; no local `psql` or Docker. Live smoke deferred until final product schema is integrated; database deployment checks remain external.
-- Ticket 09 tooling was developed in parallel in disjoint eval files. Its independent corpus, two-reviewer adjudication and restricted runner are missing; these do not block remaining product tickets.
-- Next: commit verified coverage and corrections, checkpoint evaluation tooling, then implement ticket 05. Retry count: 0 worker verification failures. Remaining uncommitted files belong to this build.
+Worker verification failures: 0. No blocked partial implementation commits.
+Main owns status, integration, commits and this report. Workers do not push.
 
-## Ticket 09 checkpoint
+## Decisions and narrow requirement corrections
 
-Evaluation scorer and three-run route harness are implemented and verified offline (11 behavioral tests, scoped lint, included in the 161-test integration run). `npm run eval` checks prerequisites without sending model requests; absent evidence returns pending/exit 2. Reports under `evals/runs/` are ignored generated output. Raw private outputs must remain outside the checkout.
+- This run explicitly supersedes older sign-in-before-analysis text. Anonymous analysis
+  works whether or not Supabase is configured and is never persisted. Only library and
+  personal red lines require an account. Corresponding PRD/spec/surface text corrected;
+  unrelated ADR decisions retained.
+- OpenRouter uses only `OPENROUTER_MODEL` and server-side `OPENROUTER_API_KEY`, the
+  OpenAI-compatible endpoint, Fireworks-only routing, no fallback, required parameters,
+  low reasoning and validated structured JSON. HTTP-200 provider errors stay errors.
+- Citation matching normalizes whitespace only and displays original source slices.
+  Wrong documents and fabricated quotations fail verification. One retry; all dropped
+  flags cannot become a clean result. Failed completeness/checklist verification stops
+  review rather than showing a partial or apparently clean result.
+- Retry drop counts are conservative: a recovered flag must preserve consequence and
+  condition to retire its failed candidate; changed prose can retain a dropped count.
+- Q&A deliberately displays only verified extractive answers, with document/offset
+  citations. Free-form outside prose is rejected. Relevance still needs live evaluation.
+- No hosted Supabase project created and no remote migrations applied. Real client
+  reads the two prescribed public variables at request time. Migration SQL is tracked
+  through a narrow ignore exception; database dumps remain ignored.
+- Feature-first layout and existing public routes/design retained. Read local installed
+  Next 16.3.5 docs. No duplicate application or new design direction.
+- Implement and TDD skills applied at approved full-flow/external-boundary seams.
+  Humanizer 3.0.0 was available and applied to new copy. Broad final code review skipped
+  as requested; main still inspects every ticket diff and relevant source.
 
-Production `npm run build` passes at this checkpoint, preserving `/`, `/sign-in`, `/review`, `/review/[reviewId]`, `/api/analysis` and `/auth/confirm`.
+## Dependencies and fixtures
 
-Missing independent held-out corpus, two reviewers' pre-output adjudication, restricted execution environment and full-flow human evidence block ticket 09 completion. The scorer requires serious deposit, early-exit and dispute-rights coverage and reports each missed serious term separately. Metadata does not prove independence or runner isolation. Product implementation continues; retry count 0.
+No dependencies added during this resumed session. Earlier build added Supabase client
+and SSR adapters (real accounts/storage), Zod (response validation), pdfjs-dist (selectable
+PDF extraction), Vitest/jsdom/Testing Library tooling (deterministic flows) and tsx
+(smoke/evaluation scripts). Existing npm lockfile preserved.
 
-## Browser and landing checkpoint
+Existing synthetic fixtures reused: planted-risk lease, clean lease, referencing lease,
+fee schedule, pet addendum, selectable PDF and textless PDF. Sidecar exact quotations
+are checked verbatim. They contain no real personal information and are implementation
+fixtures, not independently human-adjudicated evidence. Fixture provenance documented.
 
-- Chrome: landing and intake inspected at 1280×900 and 390×844; mobile intake has no horizontal overflow. Keyboard skip link navigates to main. Anonymous navigation through `/sign-in` to `/review` works. Empty submission displays its explanation.
-- Restarted only this session's local server with empty OpenRouter environment variables and confirmed a synthetic paste shows the model-unconfigured error, with no review. This sent no model request.
-- Browser PDF upload blocked by Chrome extension file access (`Not allowed`). Requires enabling "Allow access to file URLs" for the ChatGPT extension; parser and offline PDF flows pass. No browser permissions changed.
-- Independent native landing reviewer identified an unsupported sample re-renting fee and missing anonymous-retention qualification. Corrected both and clarified red-line account/edit/rerun behavior; retained layout/tokens/CTA. Humanizer applied. Full WCAG AA remains unchecked; static accessibility inspection and limited browser checks do not establish conformance.
-- Current main-owned uncommitted changes: landing copy, ticket10 status and this report. Ticket05 worker owns Q&A files/integration/tests. No unrelated edits.
+## Verification completed so far
 
-## Ticket 05 checkpoint
+- Ticket06: main inspected routes, model contract, citation checks, real preferences
+  adapter, migration0003, UI and tests. Eleven new tests cover account isolation,
+  save/edit/clear/reload, exact citations and unchanged general flags. Typecheck, lint
+  and full suite pass (189 tests including six browser-harness tests), without warnings.
+  Humanizer applied; no dependencies added. Preferences persist, match results are
+  recomputed against the owned completed packet. Failed loading disables editing to
+  avoid overwriting unseen preferences. SQL remains unapplied.
+- Added separate `build:fixtures`/`start:fixtures` test commands for native browser
+  checks. Only external OpenRouter HTTP responses are substituted; production imports
+  and normal startup are unchanged. Loopback-only, exact synthetic fixtures only,
+  anonymous only; build marker requires blank Supabase configuration at build time.
+  Six behavior tests pass. Fixture provenance comments corrected to remove an old
+  unsupported independent-reviewer claim. Native browser run pending final UI integration.
 
-- Q&A is implemented and verified offline: free-text form after review, server completeness gate, structured extractive answers, document/offset citations, explicit not-addressed state, one citation retry and distinct provider/verification errors. Extractive answers avoid attaching unverified legal prose to a valid quotation; relevance still requires model evaluation.
-- Main inspected route, schema, UI and tests. Typecheck, lint and full deterministic suite pass (172 tests). Humanizer applied; no new dependencies. Worker verification failures: 0.
-- Next: ticket 06 personal red lines. Landing copy changes are a separate build-owned checkpoint.
+- Tickets 01–04: typecheck, lint, 161-test full suite and offline smoke passed.
+- Ticket 05: main inspected schema, route, UI, fixtures and tests; typecheck, lint and
+  all 172 deterministic tests passed. Eleven Q&A tests cover grounded/non-answer flows,
+  incomplete packets, addenda, fabricated/wrong-document citations, provider errors and
+  failed retry handling. No model credentials required.
+- `npm run build` passed at `385279e`, preserving `/`, `/sign-in`, `/review`,
+  `/review/[reviewId]`, `/api/analysis` and `/auth/confirm`. Final build pending integration.
+- `npm run smoke` runs the actual internal route/pipeline with deterministic model
+  responses: planted 9 returned/9 verified/0 dropped; clean 0/0/0 with missing repairs
+  and dispute routes; incomplete packet blocked with both missing references named.
+  It prints mode, sources and verification counts.
+- `npm run smoke -- --live` is explicitly bounded to one synthetic packet, six requests,
+  per-call timeout and a start budget. Key/model configured, values never printed.
+  Run once after final schema integration. Live provider compatibility remains unknown.
+- Evaluation scorer/harness: 11 behavioral tests pass; `npm run eval` checks prerequisites
+  and reports pending/exit 2 without a live request when evidence is absent. Generated
+  reports are ignored. No quality result has been manufactured.
 
-The original report follows for provenance; the checkpoints above supersede conflicting status or decisions.
+## Browser, copy and external limits
 
-An unattended build ran against `.scratch/lease-review/spec.md` and the ten tickets
-beside it. This report says what got finished, what did not, what I decided without
-you, and what to run first when you sit down.
+- Native Chrome inspected landing/intake at 1280×900 and 390×844, plus landing reflow
+  at 320px. No observed horizontal overflow. Keyboard skip link navigates to main.
+  Anonymous navigation via sign-in, empty submission and unconfigured-model error work.
+- Local browser server deliberately has empty model variables; synthetic error check
+  sent no external request. Only this session's own server was restarted.
+- Chrome PDF upload failed `Not allowed`: enable “Allow access to file URLs” for the
+  ChatGPT extension to resume. No browser permissions changed. Parser/offline flow tests pass.
+- Independent native reviewer checked landing claims. Corrected unsupported sample
+  re-renting fee and anonymous retention qualification; clarified red-line accounts/reruns.
+  Reviewer signed off on revised claims conditional on completion of tickets 05–08.
+- Checked color pairs: navy/paper 10.31:1, red/paper 4.91:1, 70% ink/paper 5.23:1,
+  70% paper/navy 5.90:1. These and limited keyboard/reflow checks are not full WCAG AA
+  evidence. Screen-reader, text-spacing/zoom and comprehensive interactive checks pending.
+- Supabase variables absent; no local psql/Docker. Client-boundary mocks do not prove
+  deployed SQL, RLS, transactions or scheduled deletion. Database verification is separate.
+- Ticket 09 blocked by missing independent held-out corpus, two reviewers' pre-output
+  adjudication, restricted runner and full-flow human evidence. Retry count 0; does not
+  block remaining implementation. Agent-authored fixtures cannot satisfy this gate.
 
-**Status: in progress.** This line is the last thing the build updates.
+## Resume without rebuilding completed work
 
-## Ticket status
+Current uncommitted ownership: verified ticket06, browser harness and main report/comments. No unrelated work.
+Next: commit 06 and harness, then delegate 07 and 08 sequentially; final smoke/build,
+practical browser checks, status synchronization and normal push to `origin/main`.
 
-| # | Ticket | Status |
-| --- | --- | --- |
-| 01 | Paste a lease, get cited risk flags | verified offline; hosted auth/DB pending |
-| 02 | Selectable-text PDF input | verified offline; browser file upload permission unavailable |
-| 03 | Complete-agreement gating | verified offline |
-| 04 | Published coverage checklist with not-found items | verified offline, `9507bf4` |
-| 05 | Document-grounded Q&A | verified offline; commit recorded in next checkpoint |
-| 06 | Personal red lines with rerun | not started |
-| 07 | Per-flag counter-offers | not started |
-| 08 | Review retention and expiry | not started |
-| 09 | Independent evaluator corpus | tooling verified, `385279e`; independent evidence blocked |
-| 10 | Public landing page | implemented; current browser/claims verification underway |
-
-## Decisions I made in your absence
-
-### Test runner: Vitest with jsdom
-
-Every ticket ends in a deterministic test and there was no runner in the repository.
-Vitest drives both the server pipeline and the signer's screens from one config, so a
-ticket's test and the full suite are the same command. `npm test` runs it.
-
-### Dependencies added without asking
-
-`CLAUDE.md` says to ask before adding a dependency, and you were not here. Each of
-these follows from something already settled rather than from a preference of mine:
-
-- `@supabase/supabase-js`, `@supabase/ssr` — the settled stack is Supabase for auth and Postgres.
-- `zod` — the model returns JSON that has to be validated before it reaches a screen. ADR 0001 makes an unverified flag a bug, so the parse has to fail closed.
-- `pdfjs-dist` — ADR 0006 requires selectable-text PDF extraction in the browser.
-- `vitest`, `@vitejs/plugin-react`, `@testing-library/react`, `@testing-library/dom`, `@testing-library/user-event`, `@testing-library/jest-dom`, `jsdom` — the test seam.
-- `tsx` — runs `npm run smoke` outside Next.
-
-Nothing else was installed.
-
-### The order I built in
-
-10 → 01 → 02 → 03 → 04 → 05 → 06 → 07 → 08 → 09. That satisfies every
-`Blocked by:` line in the tickets. Almost all of it ran one ticket at a time:
-your rule was that two agents may only run together when neither touches a
-screen, and only ticket 09 sits off the screen seam, so there was rarely a
-legal pair. Two agents editing the same screen would have collided, and the
-build is slower for it on purpose.
-
-### What "analyse without Supabase" actually means on screen
-
-Your answer said the app must start and analyse a pasted document with both
-Supabase variables absent, while the spec says a signer must be signed in
-before pasting anything. Both are true, in different configurations, so the
-product has two real modes and neither fakes the other:
-
-- **Supabase configured.** Sign-in first, as the spec requires. The review is
-  persisted, scoped to the signer, and readable again after reload. Row-level
-  security enforces the scoping in Postgres, not only in application code.
-- **Supabase absent.** The app boots, and a pasted document is analysed and
-  shown. The screens say plainly that accounts are not available yet. Nothing
-  is persisted, and the library, save, and red-line affordances are absent
-  rather than disabled-looking. No fake session, no invented user id, no
-  browser storage pretending to be an account.
-
-`@supabase/ssr` 0.7.0 throws when constructed with a missing URL or key, so
-configuration is read at call time and never at module scope. That is the
-whole reason the app can boot at all in the second mode.
-
-### The cited sentence a signer reads comes out of their own document
-
-ADR 0001 makes an unverifiable flag a bug. The model returns a quotation; the
-pipeline normalises whitespace on both sides, locates the quotation in the
-named document's extracted text, records the character offsets, and then
-**displays the slice cut from the extracted text rather than the model's echo
-of it**. A quotation that cannot be located earns one retry naming the bad
-quote; anything still unlocatable is dropped and never shown, and the drop is
-counted so the smoke script and ticket 09 can report it.
-
-### Reference notes, written once and handed to every agent
-
-Next.js 16.3.5 breaks enough habits to be worth one research pass rather than
-nine: `middleware.ts` is now `src/proxy.ts`, `error.tsx` receives `retry` and
-not `reset`, synchronous `cookies()`/`params` access is gone rather than
-deprecated, and `revalidateTag` takes a second argument. The OpenRouter notes
-pin the Fireworks provider slug, the `reasoning: { effort: "low" }` shape, and
-the fact that an error can arrive inside a 200 response.
+Routine commands: `npm run typecheck`, `npm run lint`, `npm test`, `npm run smoke`,
+`npm run build`. Final live check: `npm run smoke -- --live`. Evaluation instructions:
+`evals/README.md`. Do not treat SQL mocks as database sign-off or repeat completed work
+merely because the original report was stale. No automatic restart after session closure.

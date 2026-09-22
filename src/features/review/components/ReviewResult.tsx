@@ -1,6 +1,7 @@
 import type { GeneralReview } from "@/features/analysis/types";
 import type { ExtractedDocument } from "@/features/packet/types";
 import { QuestionPanel } from "@/features/questions/QuestionPanel";
+import { RedLinesPanel } from "@/features/red-lines/RedLinesPanel";
 
 import { CoverageChecklistSection } from "./CoverageChecklistSection";
 import { RiskFlagCard } from "./RiskFlagCard";
@@ -8,6 +9,7 @@ import { RiskFlagCard } from "./RiskFlagCard";
 export interface ReviewResultProps {
   readonly review: GeneralReview;
   readonly documents: readonly ExtractedDocument[];
+  readonly reviewId?: string | null;
 }
 
 /**
@@ -24,7 +26,7 @@ export interface ReviewResultProps {
  * term would hold up. A clean review reports what was not found in the text
  * reviewed, which is a different claim and the only one the product can make.
  */
-export function ReviewResult({ review, documents }: ReviewResultProps) {
+export function ReviewResult({ review, documents, reviewId }: ReviewResultProps) {
   const titleById = new Map(documents.map((document) => [document.id, document.title]));
 
   return (
@@ -105,6 +107,7 @@ export function ReviewResult({ review, documents }: ReviewResultProps) {
 
       <CoverageChecklistSection coverage={review.coverage} documents={documents} />
       <QuestionPanel documents={documents} />
+      {reviewId ? <RedLinesPanel key={reviewId} reviewId={reviewId} documents={documents} /> : null}
     </div>
   );
 }

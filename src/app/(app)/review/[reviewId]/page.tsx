@@ -58,7 +58,7 @@ export default async function SavedReviewPage(
         </h1>
       </div>
 
-      <ReviewResult review={stored.review} documents={stored.documents} />
+      <ReviewResult review={stored.review} documents={stored.documents} reviewId={stored.id} />
 
       <p>
         <Link

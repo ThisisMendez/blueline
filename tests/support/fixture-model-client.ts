@@ -5,6 +5,7 @@ import { COMPLETENESS_SCHEMA_NAME } from "@/features/analysis/model/completeness
 import { ANALYSIS_SCHEMA_NAME } from "@/features/analysis/model/schema";
 import { normalizeText } from "@/features/packet/normalize";
 import { QUESTION_SCHEMA_NAME } from "@/features/questions/contract";
+import { RED_LINES_SCHEMA_NAME } from "@/features/red-lines/contract";
 
 import {
   fixtureReferences,
@@ -20,7 +21,7 @@ import {
  *
  * It is not a canned response: it reads the documents out of the prompt it
  * was handed, matches each one to a fixture by its text, and builds the reply
- * from that fixture's adjudicated sidecar, under the document ids the caller
+ * from that fixture's synthetic expected sidecar, under the document ids the caller
  * actually used. Everything downstream of it — the completeness gate,
  * verification, the retry, the drop, ranking, persistence, the screens — runs
  * for real.
@@ -28,7 +29,7 @@ import {
  * It answers three questions, told apart by the schema the caller asked for:
  * what the packet refers to, what the packet says, and where the packet
  * covers each published checklist topic. All three come out of the same
- * sidecars, so a reference or a topic the corpus adjudicated is the one the
+ * sidecars, so a reference or topic in the fixture labels is the one the
  * product sees.
  *
  * Matching compares the product's normalised form of both texts, because the
@@ -48,7 +49,7 @@ export const UNQUOTABLE_SENTENCE =
   "The Resident shall deliver a written weather report to the Landlord before the first day of each month.";
 
 export type FixtureModelBehaviour =
-  /** Every adjudicated flag, quoted exactly. */
+  /** Every synthetically planted flag, quoted exactly. */
   | "correct"
   /** One flag carries a quotation that is in no document, on every call. */
   | "unquotable-flag"
@@ -105,7 +106,7 @@ export interface InventedTopic {
   readonly sourceSentence: string;
 }
 
-/** True for a sidecar that adjudicated the checklist, which leases do. */
+/** True for a sidecar containing synthetic checklist expectations. */
 function hasChecklist(
   sidecar: LoadedFixture["sidecar"],
 ): sidecar is FixtureSidecar {
@@ -145,7 +146,7 @@ export interface FixtureModelClientOptions {
   readonly mismatchedReferences?: Readonly<Record<string, FixtureId | null>>;
   /**
    * Coverage checklist: the sentence the model quotes for a topic, in place
-   * of the one the lease sidecar adjudicated. The client still works out
+   * of the one the synthetic lease sidecar specifies. The client still works out
    * which supplied document the sentence is in, so a sentence from a
    * referenced document comes back cited to that document — and a sentence
    * in none of them comes back as the unverifiable citation it is.
@@ -266,7 +267,7 @@ export function createFixtureModelClient(
   /**
    * The published checklist, answered off the sidecars of what was supplied.
    *
-   * A topic is found when any supplied lease adjudicated it present, and it
+   * A topic is found when any supplied lease fixture labels it present, and it
    * is cited to whichever supplied document the sentence is really in — the
    * lease, or a document the lease refers to.
    */
@@ -280,9 +281,9 @@ export function createFixtureModelClient(
         for (const document of documents) {
           const sidecar = document.fixture?.sidecar;
           if (!sidecar || !hasChecklist(sidecar)) continue;
-          const adjudicated = sidecar.checklistTopics[topicId];
-          if (adjudicated.present) {
-            sentence = adjudicated.sourceSentence;
+          const expected = sidecar.checklistTopics[topicId];
+          if (expected.present) {
+            sentence = expected.sourceSentence;
             break;
           }
         }
@@ -373,6 +374,18 @@ export function createFixtureModelClient(
           };
         }
         return { status: "not-addressed", citations: [] };
+      }
+
+      if (request.schemaName === RED_LINES_SCHEMA_NAME) {
+        const lines = JSON.parse(request.user.split("\n")[0].slice("Red lines: ".length)) as string[];
+        return { matches: documents.flatMap((document) => {
+          const sidecar = document.fixture?.sidecar;
+          if (!sidecar || !hasChecklist(sidecar)) return [];
+          return lines.flatMap((line, redLineIndex) => {
+            const expected = sidecar.redLines.find((entry) => entry.redLine === line);
+            return expected ? [{ redLineIndex, explanation: expected.why, sourceDocumentId: document.id, sourceSentence: expected.expectedMatchSentence }] : [];
+          });
+        }) };
       }
 
       // The spoiled-flag behaviours count their own calls, so a completeness

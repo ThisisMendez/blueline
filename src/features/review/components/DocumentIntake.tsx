@@ -391,7 +391,7 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
             </section>
           ) : null}
 
-          <ReviewResult review={phase.review} documents={phase.documents} />
+          <ReviewResult review={phase.review} documents={phase.documents} reviewId={phase.reviewId} />
 
           {phase.reviewId ? (
             <p className="font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
