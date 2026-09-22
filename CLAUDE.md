@@ -16,12 +16,12 @@ Decided. Do not reopen.
 - The uploaded file is parsed in the browser. Only the extracted text is stored, never the original file.
 - Every risk flag cites the exact sentence, verified verbatim against the extracted text. A flag whose source can't be shown is a bug.
 - State only what the document says. No safe-to-sign or legal-validity claims.
+- The OpenRouter model is `z-ai/glm-5.3-flash`, read from `OPENROUTER_MODEL`. Never hardcode a model id even though this one is chosen.
 
 ## Undecided — stop and ask
 
 Do not pick one of these to stay unblocked.
 
-- Which OpenRouter model. Read it from one env var; never hardcode a model id.
 - Whether a Supabase project exists yet. Do not scaffold a throwaway project or mock auth to get past a missing key.
 
 ## Scope
