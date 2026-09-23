@@ -16,24 +16,24 @@ export function BrandMark({ className, title }: BrandMarkProps) {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M42 10H122L151 39V158H42V10Z"
+        d="M52 12H116L144 40V156H52V12Z"
         stroke="currentColor"
-        strokeWidth="4"
+        strokeWidth="5"
         strokeLinejoin="miter"
       />
-      <path d="M122 10V39H151" stroke="currentColor" strokeWidth="4" />
-      <path d="M63 54H120" stroke="currentColor" strokeWidth="4" />
-      <path d="M63 64H132" stroke="currentColor" strokeWidth="4" />
-      <path d="M63 74H126" stroke="currentColor" strokeWidth="4" />
-      <path d="M63 111H130" stroke="currentColor" strokeWidth="4" />
-      <path d="M63 121H118" stroke="currentColor" strokeWidth="4" />
-      <path d="M63 131H132" stroke="currentColor" strokeWidth="4" />
+      <path d="M116 12V40H144" stroke="currentColor" strokeWidth="5" />
+      <path d="M70 57H113" stroke="currentColor" strokeWidth="5" />
+      <path d="M70 68H125" stroke="currentColor" strokeWidth="5" />
+      <path d="M70 79H119" stroke="currentColor" strokeWidth="5" />
+      <path d="M70 113H123" stroke="currentColor" strokeWidth="5" />
+      <path d="M70 124H113" stroke="currentColor" strokeWidth="5" />
+      <path d="M70 135H125" stroke="currentColor" strokeWidth="5" />
       <path
-        d="M18 83L36 78L52 84L69 77L87 85L102 79L114 86L130 78L145 83L162 77V94L145 89L130 96L114 90L102 97L87 90L69 97L52 89L36 95L18 91V83Z"
+        d="M28 86L47 80L61 86L76 78L92 86L105 80L105 98L92 92L76 100L61 92L47 98L28 94V86Z"
         fill="#315DDA"
       />
       <path
-        d="M90 85L102 79L114 86L130 78L145 83L162 77V94L145 89L130 96L114 90L102 97L90 91V85Z"
+        d="M105 80L119 87L135 79L152 86L163 82V100L152 96L135 103L119 95L105 98V80Z"
         fill="#E5453A"
       />
     </svg>

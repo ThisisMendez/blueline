@@ -4,10 +4,10 @@ import { BrandMark } from "./BrandMark";
 export function BrandHero() {
   return (
     <section className="relative overflow-hidden border-b-2 border-[var(--color-navy)] px-6 py-12 sm:px-10 sm:py-16 md:py-20">
-      <p className="absolute left-6 top-1/2 hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] lg:block">
+      <p className="absolute left-6 top-[34%] hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] lg:block">
         Clearer contracts. Stronger renters.
       </p>
-      <p className="absolute right-6 top-1/2 hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] lg:block">
+      <p className="absolute right-6 top-[34%] hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] lg:block">
         Same paper. A brighter tomorrow.
       </p>
 
