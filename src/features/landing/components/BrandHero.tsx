@@ -1,20 +1,24 @@
+import Image from "next/image";
 import Link from "next/link";
-import { BrandMark } from "./BrandMark";
 
 export function BrandHero() {
   return (
     <section className="relative overflow-hidden border-b-2 border-[var(--color-navy)] px-6 py-12 sm:px-10 sm:py-16 md:py-20">
-      <p className="absolute left-6 top-[34%] hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] lg:block">
+      <p className="absolute left-6 top-[28%] hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] xl:block">
         Clearer contracts. Stronger renters.
       </p>
-      <p className="absolute right-6 top-[34%] hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] lg:block">
+      <p className="absolute right-6 top-[28%] hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] xl:block">
         Same paper. A brighter tomorrow.
       </p>
 
       <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-        <BrandMark
-          title="A contract cut by a blue and red redline"
-          className="h-32 w-32 text-[var(--color-navy)] sm:h-40 sm:w-40"
+        <Image
+          src="/brand/blueline-redline-mark.png"
+          alt="A contract cut by a blue and red redline"
+          width={160}
+          height={160}
+          className="h-32 w-32 object-contain sm:h-40 sm:w-40"
+          priority
         />
         <p className="mt-5 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.16em] text-[var(--color-navy)]">
           Residential lease review

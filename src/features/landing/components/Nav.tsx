@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import { BrandMark } from "./BrandMark";
 
 export function Nav() {
   return (
@@ -10,7 +10,14 @@ export function Nav() {
           className="flex items-center gap-2.5 rounded-sm"
           aria-label="Blueline Redline home"
         >
-          <BrandMark className="h-8 w-8 text-[var(--color-navy)]" />
+          <Image
+            src="/brand/blueline-redline-mark.png"
+            alt=""
+            width={32}
+            height={32}
+            className="h-8 w-8 object-contain"
+            priority
+          />
           <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight text-[var(--color-navy-ink)]">
             Blueline{" "}
             <span className="text-[var(--color-red-ink)]">Redline</span>
