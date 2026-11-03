@@ -3,7 +3,8 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { OpenRouterModelClient } from "../../src/features/analysis/model/openrouter";
-import type { ModelClient } from "../../src/features/analysis/model/client";
+import { ModelError, type ModelClient } from "../../src/features/analysis/model/client";
+import { runGeneralReview } from "../../src/features/analysis/review";
 import { createAnalysisRoute } from "../../src/features/analysis/server/route";
 import type { AnalysisOutcome } from "../../src/features/analysis/types";
 import { loadGoldSet } from "./corpus";
@@ -15,11 +16,18 @@ import { renderGoldReport, scoreGoldRun, type DocumentRun } from "./score";
  * OpenRouterModelClient with a 30 second timeout, the same counting wrapper
  * and per-document budget, the same anonymous route wiring, and the same
  * request body. Only the documents differ.
+ *
+ * `--ungated` skips one step: the completeness check. Each document goes
+ * straight to runGeneralReview, the same review stage the route calls once a
+ * packet is complete, with the same packet shape, model client and budget.
+ * It exists because most gold-set documents refer to schedules the set does
+ * not include, and the gate correctly stops those before review. An ungated
+ * run is not how a signer is served; its report says so in the header.
  */
 
 const RUNS_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "runs");
 
-async function runDocument(text: string, title: string): Promise<{ outcome: AnalysisOutcome | null; returnedFlags: number; providerError: string | null }> {
+async function runDocument(text: string, title: string, ungated: boolean): Promise<{ outcome: AnalysisOutcome | null; returnedFlags: number; providerError: string | null }> {
   const client = new OpenRouterModelClient({ timeoutMs: 30_000 });
   let calls = 0;
   let returnedFlags = 0;
@@ -49,6 +57,23 @@ async function runDocument(text: string, title: string): Promise<{ outcome: Anal
     now: () => new Date("2027-02-01T09:00:00Z"),
     newReviewId: () => { throw new Error("Anonymous eval must never invent an owner or saved review."); },
   });
+  if (ungated) {
+    const documents = [{ id: "pasted-lease", title, text }];
+    try {
+      const review = await runGeneralReview({ packet: { documents }, model });
+      return {
+        outcome: {
+          status: "reviewed", reviewId: null, persisted: false, retention: null, persistenceFailed: false,
+          documents, completeness: { kind: "complete", references: [] } as never, review,
+        },
+        returnedFlags,
+        providerError,
+      };
+    } catch (error) {
+      if (!(error instanceof ModelError)) throw error;
+      return { outcome: null, returnedFlags, providerError: `${error.kind}: ${providerError ?? error.message}` };
+    }
+  }
   try {
     const response = await route(new Request("http://localhost/api/analysis", {
       method: "POST",
@@ -90,11 +115,12 @@ async function main() {
   if (!process.env.OPENROUTER_API_KEY || !process.env.OPENROUTER_MODEL) {
     throw new Error("The gold-set eval requires OPENROUTER_API_KEY and OPENROUTER_MODEL. No request sent.");
   }
+  const ungated = process.argv.includes("--ungated");
   const startedAt = new Date();
   const goldSet = loadGoldSet();
   const runs: DocumentRun[] = [];
   for (const document of goldSet.documents) {
-    const { outcome, returnedFlags, providerError } = await runDocument(document.text, document.title);
+    const { outcome, returnedFlags, providerError } = await runDocument(document.text, document.title, ungated);
     const run = toRun(document.id, outcome, returnedFlags, providerError);
     console.log(`${document.id}: ${run.status}${run.status === "reviewed" ? `, ${run.flags.length} flag(s), ${run.droppedFlagCount} dropped` : ""}`);
     runs.push(run);
@@ -104,17 +130,20 @@ async function main() {
     `Gold-set eval, ${goldSet.corpus} v${goldSet.version}`,
     `Started: ${startedAt.toISOString()}`,
     `Model: ${process.env.OPENROUTER_MODEL}`,
-    "Pipeline: the analysis route as npm run smoke -- --live wires it (anonymous, not persisted).",
+    ungated
+      ? "Pipeline: UNGATED. The completeness check was skipped and each document went straight to runGeneralReview. This is not how a signer is served."
+      : "Pipeline: the analysis route as npm run smoke -- --live wires it (anonymous, not persisted).",
   ];
   const text = renderGoldReport(report, header);
   mkdirSync(RUNS_DIR, { recursive: true });
-  const stamp = startedAt.toISOString().replaceAll(":", "-");
+  const stamp = `${startedAt.toISOString().replaceAll(":", "-")}${ungated ? "-ungated" : ""}`;
   writeFileSync(resolve(RUNS_DIR, `${stamp}.txt`), text);
   writeFileSync(resolve(RUNS_DIR, `${stamp}.json`), `${JSON.stringify({
     corpus: goldSet.corpus,
     version: goldSet.version,
     startedAt: startedAt.toISOString(),
     model: process.env.OPENROUTER_MODEL,
+    ungated,
     runs: runs.map((run) => (run.status === "reviewed" ? { ...run, reviewedText: undefined } : run)),
     report,
   }, null, 2)}\n`);

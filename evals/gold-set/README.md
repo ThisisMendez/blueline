@@ -59,9 +59,12 @@ The brief said to record these here instead of stopping.
 
     Only 5 of the 14 in-scope sentences carry any of these, so read the split as a direction, not a figure.
 
+11. **`--ungated` mode** (`npm run eval:gold -- --ungated`). This mode was added after the first working run, when 7 of 9 documents were blocked. Each document skips the completeness check and goes straight to `runGeneralReview`, the review stage the route calls once a packet is complete. The model client, the budget and the packet shape (one `pasted-lease` document) stay the same. A signer is never served this way, so the report header says UNGATED and the file name ends in `-ungated`. The gated run remains the main result. The ungated run is the only way this gold set yields a recall number without editing it.
+
 ## Runs
 
 | Started | Model | Result |
 |---|---|---|
 | 2026-11-03T16:45:37Z | `z-ai/glm-5.3-flash` | No numbers. All 9 calls returned 401 "API key expired", so all 9 documents were left out. Renew `OPENROUTER_API_KEY` in `.env.local` and run again. |
 | 2026-11-03T17:00:55Z | `z-ai/glm-5.3-flash` | 7 of 9 documents were blocked as incomplete, because each refers to a schedule, handbook or exhibit the gold set doesn't include. That left recall at 0/0 (nothing to measure). Groundedness was 2/2 (100.0%). Clean documents: 1 of 2 came back with no flags (50.0%). The 2 flags were both on `swim-lesson-registration`: a medium on its no-refund-after-the-third-lesson rule and a low on its make-up lessons. The third clean document was blocked. |
+| 2026-11-03T17:04:20Z (ungated) | `z-ai/glm-5.3-flash` | 9 of 9 reviewed. Recall 11/14 (78.6%): arbitration 5/5, fees 6/9. Missed: adhesion P-02 (the double-space sentence), adhesion P-03, saas P-02. Groundedness 52/54 (96.3%). Clean documents with no flags 2/3 (66.7%), with 3 flags on `swim-lesson-registration`. Out-of-scope clauses flagged anyway: 20/26. Flags on planted documents that matched no planted clause: 18. Flags on unusual-but-harmless sentences: 3. |
