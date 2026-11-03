@@ -64,3 +64,4 @@ The brief said to record these here instead of stopping.
 | Started | Model | Result |
 |---|---|---|
 | 2026-11-03T16:45:37Z | `z-ai/glm-5.3-flash` | No numbers. All 9 calls returned 401 "API key expired", so all 9 documents were left out. Renew `OPENROUTER_API_KEY` in `.env.local` and run again. |
+| 2026-11-03T17:00:55Z | `z-ai/glm-5.3-flash` | 7 of 9 documents were blocked as incomplete, because each refers to a schedule, handbook or exhibit the gold set doesn't include. That left recall at 0/0 (nothing to measure). Groundedness was 2/2 (100.0%). Clean documents: 1 of 2 came back with no flags (50.0%). The 2 flags were both on `swim-lesson-registration`: a medium on its no-refund-after-the-third-lesson rule and a low on its make-up lessons. The third clean document was blocked. |

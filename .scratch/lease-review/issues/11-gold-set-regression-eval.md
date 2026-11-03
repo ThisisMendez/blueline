@@ -6,7 +6,7 @@
 
 **Blocked by:** 01, 03 (needs real flags and completeness gating). Running it live needs a working `OPENROUTER_API_KEY`.
 
-**Status:** built and verified offline; first live run had no usable numbers because the OpenRouter key had expired
+**Status:** built; live run works, but recall can't be measured: 7 of 9 gold-set documents are blocked by completeness gating
 
 - [x] Gold set copied byte for byte (`diff -r` against the clone is clean); manifest-relative paths resolve
 - [x] `npm run eval:gold` uses the smoke script's client, timeout, call budget, route wiring and request body; no app code, prompt or model setting changed
@@ -16,6 +16,6 @@
 - [x] Recall is split by curly quote, non-breaking space, fi/fl ligature, em dash and double space
 - [x] Every rate prints as count/count and a percentage; each run saves `.txt` and `.json` under `evals/gold-set/runs/`, named for its start time, with every flag
 - [x] `tests/gold-set-eval.test.ts` checks, with no network, that every gold-set sentence appears exactly once in its document
-- [ ] A live run with a working key produces recall, groundedness and clean-document numbers
+- [ ] A live run produces a recall number (blocked: 7 of 9 documents refer to material the gold set doesn't include, so ticket 03's gate stops them before review)
 
-Evidence: `npm run typecheck` clean; `npm test` 26 files, 234 tests pass. Live run `evals/gold-set/runs/2026-11-03T16-45-37.153Z.txt`: 9 of 9 documents left out, 401 "API key expired" from OpenRouter, so every rate reads 0/0.
+Evidence: `npm run typecheck` clean; `npm test` 26 files, 234 tests pass. Live run `evals/gold-set/runs/2026-11-03T16-45-37.153Z.txt`: 9 of 9 documents left out, 401 "API key expired" from OpenRouter, so every rate reads 0/0. Second run `evals/gold-set/runs/2026-11-03T17-00-55.202Z.txt`, with a renewed key: 2 documents reviewed, 7 blocked as incomplete; recall 0/0; groundedness 2/2; clean documents with no flags 1/2 (2 flags on swim-lesson-registration).

@@ -1,0 +1,52 @@
+Gold-set eval, redline-v1 v1
+Started: 2026-11-03T17:00:55.202Z
+Model: z-ai/glm-5.3-flash
+Pipeline: the analysis route as npm run smoke -- --live wires it (anonymous, not persisted).
+
+Documents: 9 in manifest; 2 reviewed; 7 left out of every denominator.
+  left out, blocked as incomplete: adhesion-contract (missing: Schedule of Fees; Club Rules)
+  left out, blocked as incomplete: clean-document (missing: site rules)
+  left out, blocked as incomplete: saas-subscription (missing: Fee Schedule; Service Credit Policy)
+  left out, blocked as incomplete: offer-letter (missing: Ardent Employee Handbook; Employee Confidential Information and Invention Assignment Agreement; Exhibit B)
+  left out, blocked as incomplete: storage-unit-rental (missing: Unit Schedule; Schedule of Charges; the rules posted in the office)
+  left out, blocked as incomplete: phone-plan-terms (missing: Service Summary; Rate and Charge Guide)
+  left out, blocked as incomplete: internship-agreement (missing: Programme Schedule; Programme Handbook; the Firm's Information Security Policy; Restricted List)
+
+Recall (in-scope planted clauses found): 0/0 (n/a)
+  in scope     arbitration-and-class-action-waiver: 0/0 (n/a)
+  in scope     fee-escalators-and-late-fees: 0/0 (n/a)
+  out of scope auto-renewal: 0/0 (n/a)
+  out of scope unilateral-modification: 0/0 (n/a)
+  out of scope non-compete: 0/0 (n/a)
+  out of scope limitation-of-liability: 0/0 (n/a)
+  out of scope indemnification: 0/0 (n/a)
+Out-of-scope planted clauses flagged anyway (information only, never a miss): 0/0 (n/a)
+Named the right type: not measurable. Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval.
+
+Recall by characters in the planted sentence (in-scope only):
+  has at least one: 0/0 (n/a)
+  has none: 0/0 (n/a)
+  curly quote or apostrophe: 0/0 (n/a)
+  non-breaking space: 0/0 (n/a)
+  fi or fl ligature: 0/0 (n/a)
+  em dash: 0/0 (n/a)
+  two spaces in a row: 0/0 (n/a)
+
+Groundedness (delivered flags quoted verbatim / all flags the model returned, delivered + dropped): 2/2 (100.0%)
+  raw flags across every model attempt, retries included: 2
+
+Clean documents with no flags: 1/2 (50.0%); flags on clean documents: 2
+  library-volunteer-agreement: 0 flag(s)
+  swim-lesson-registration: 2 flag(s)
+Flags on planted documents that matched no planted clause: 0
+Flags on an unusual-but-harmless sentence: 0
+
+Planted clauses:
+
+Flags:
+  [medium] swim-lesson-registration type=none (product names no type) matched=no verbatim=yes
+    "After the third lesson no refund is made."
+  [low] swim-lesson-registration type=none (product names no type) matched=no verbatim=yes
+    "Two or more missed lessons in a row may be carried into the following session at no charge, on the Centre's agreement."
+
+A model wrote this gold set. These numbers are an upper bound and never a promise to a reader.
