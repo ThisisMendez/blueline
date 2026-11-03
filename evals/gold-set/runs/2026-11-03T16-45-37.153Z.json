@@ -1,0 +1,196 @@
+{
+  "corpus": "redline-v1",
+  "version": 1,
+  "startedAt": "2026-11-03T16:45:37.153Z",
+  "model": "z-ai/glm-5.3-flash",
+  "runs": [
+    {
+      "documentId": "adhesion-contract",
+      "status": "failed",
+      "reason": "model-unavailable: 401: API key expired."
+    },
+    {
+      "documentId": "clean-document",
+      "status": "failed",
+      "reason": "model-unavailable: 401: API key expired."
+    },
+    {
+      "documentId": "saas-subscription",
+      "status": "failed",
+      "reason": "model-unavailable: 401: API key expired."
+    },
+    {
+      "documentId": "offer-letter",
+      "status": "failed",
+      "reason": "model-unavailable: 401: API key expired."
+    },
+    {
+      "documentId": "storage-unit-rental",
+      "status": "failed",
+      "reason": "model-unavailable: 401: API key expired."
+    },
+    {
+      "documentId": "phone-plan-terms",
+      "status": "failed",
+      "reason": "model-unavailable: 401: API key expired."
+    },
+    {
+      "documentId": "internship-agreement",
+      "status": "failed",
+      "reason": "model-unavailable: 401: API key expired."
+    },
+    {
+      "documentId": "library-volunteer-agreement",
+      "status": "failed",
+      "reason": "model-unavailable: 401: API key expired."
+    },
+    {
+      "documentId": "swim-lesson-registration",
+      "status": "failed",
+      "reason": "model-unavailable: 401: API key expired."
+    }
+  ],
+  "report": {
+    "documents": {
+      "total": 9,
+      "reviewed": [],
+      "blocked": [],
+      "failed": [
+        {
+          "id": "adhesion-contract",
+          "reason": "model-unavailable: 401: API key expired."
+        },
+        {
+          "id": "clean-document",
+          "reason": "model-unavailable: 401: API key expired."
+        },
+        {
+          "id": "saas-subscription",
+          "reason": "model-unavailable: 401: API key expired."
+        },
+        {
+          "id": "offer-letter",
+          "reason": "model-unavailable: 401: API key expired."
+        },
+        {
+          "id": "storage-unit-rental",
+          "reason": "model-unavailable: 401: API key expired."
+        },
+        {
+          "id": "phone-plan-terms",
+          "reason": "model-unavailable: 401: API key expired."
+        },
+        {
+          "id": "internship-agreement",
+          "reason": "model-unavailable: 401: API key expired."
+        },
+        {
+          "id": "library-volunteer-agreement",
+          "reason": "model-unavailable: 401: API key expired."
+        },
+        {
+          "id": "swim-lesson-registration",
+          "reason": "model-unavailable: 401: API key expired."
+        }
+      ]
+    },
+    "recall": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByType": {
+      "arbitration-and-class-action-waiver": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "fee-escalators-and-late-fees": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "auto-renewal": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "unilateral-modification": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "non-compete": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "limitation-of-liability": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "indemnification": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      }
+    },
+    "outOfScopeFound": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByCharacters": {
+      "withAny": {
+        "count": 0,
+        "total": 0
+      },
+      "withNone": {
+        "count": 0,
+        "total": 0
+      },
+      "byClass": {
+        "curly quote or apostrophe": {
+          "count": 0,
+          "total": 0
+        },
+        "non-breaking space": {
+          "count": 0,
+          "total": 0
+        },
+        "fi or fl ligature": {
+          "count": 0,
+          "total": 0
+        },
+        "em dash": {
+          "count": 0,
+          "total": 0
+        },
+        "two spaces in a row": {
+          "count": 0,
+          "total": 0
+        }
+      }
+    },
+    "typeNamedCorrectly": {
+      "measurable": false,
+      "reason": "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval."
+    },
+    "groundedness": {
+      "count": 0,
+      "total": 0,
+      "returnedFlagsAllAttempts": 0
+    },
+    "cleanDocuments": {
+      "documentsWithNoFlags": {
+        "count": 0,
+        "total": 0
+      },
+      "flagsOnCleanDocuments": 0,
+      "perDocument": []
+    },
+    "unmatchedFlagsOnPlantedDocuments": 0,
+    "flagsOnUnusualButHarmless": 0,
+    "planted": [],
+    "flags": []
+  }
+}

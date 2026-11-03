@@ -46,6 +46,18 @@ These are Blueline's initial flag priorities, not the signer's personal red line
 
 Prefer a supported warning over missing a serious harm, while explaining the condition that makes the warning matter. A bounded fee can still matter greatly to an individual signer; general severity and personal preference remain separate.
 
+## How we measure it
+
+Between releases, a gold set of documents with known planted clauses is run through the same analysis the product uses (`npm run eval:gold`, ticket 11). Each run reports three numbers, each as a count and a percentage:
+
+- **Recall.** How many planted clauses were found, out of the planted clauses whose type appears in "My red lines" above. Types not named there are listed as out of scope and never counted as misses. A clause counts as found when a flag quotes a sentence that overlaps it.
+- **Groundedness.** How many flags quote a sentence that appears in the document character for character, out of all flags the model returned, including the ones the product dropped because the quote didn't match.
+- **Clean documents.** How many flags come back on the documents that should come back clean.
+
+A document whose model call fails is left out of every count, and the run says how many were left out. A failed call is never a miss.
+
+The limit: a model wrote the gold set, and its documents are not leases. These numbers are an upper bound, never a promise to a reader, and they are not the independent evidence that "What good looks like" and ADR 0012 require before expansion. That is still ticket 09.
+
 ## The calls I made and what I gave up
 
 | Choice | Chose against | Who is worse off because of it |
