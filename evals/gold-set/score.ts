@@ -8,22 +8,22 @@ import type { GoldClauseType, GoldDocument, GoldSet, PlantedClause } from "./cor
 
 /**
  * The gold set's seven types, against the clauses PRD.md's "My red lines"
- * says Blueline flags. `null` means PRD.md does not name the type, so it is
- * out of scope: reported for information, never counted as a miss.
+ * says Blueline flags. Auto-renewal and unilateral modification sit under
+ * that table's "any other term" row, which names a consequential rent change.
+ * `null` means PRD.md does not name the type or its harm, so it is out of
+ * scope: reported for information, never counted as a miss.
  */
 export const CLAUSE_TYPE_MAPPING: Readonly<Record<GoldClauseType, string | null>> = {
   "arbitration-and-class-action-waiver": "Waivers of dispute rights, including forced arbitration",
   "fee-escalators-and-late-fees": "Early termination, reassignment, or penalty fees (late fees); a consequential rent change (escalators)",
-  "auto-renewal": null,
-  "unilateral-modification": null,
+  "auto-renewal": "Any other term with a plausible, material downside: renewal at the then-current rate is a consequential rent change and an early-exit cost",
+  "unilateral-modification": "Any other term with a plausible, material downside: a power to rewrite the terms, fees included, is a consequential rent change",
   "non-compete": null,
   "limitation-of-liability": null,
   "indemnification": null,
 };
 
 export const OUT_OF_SCOPE_REASONS: Readonly<Partial<Record<GoldClauseType, string>>> = {
-  "auto-renewal": "PRD.md's red lines do not name it. A lease renewal clause could still be flagged under \"any other term\", which is why finds are still reported.",
-  "unilateral-modification": "PRD.md's red lines do not name it; only rent changes are named, and fee increases are already scored under fee-escalators-and-late-fees.",
   "non-compete": "Comes from employment agreements, which PRD.md's \"What we are not building\" puts outside the first version.",
   "limitation-of-liability": "PRD.md's red lines do not name it, and its research section lists the evidence for these categories as thin.",
   "indemnification": "PRD.md's red lines do not name it; its research section names indemnity as one of the thinly evidenced categories.",

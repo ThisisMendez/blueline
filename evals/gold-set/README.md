@@ -19,15 +19,24 @@ Blueline's clause names are the rows of the "My red lines" table in `PRD.md`. Th
 |---|---|---|
 | `arbitration-and-class-action-waiver` | Waivers of dispute rights, including forced arbitration | Yes |
 | `fee-escalators-and-late-fees` | Early termination, reassignment, or penalty fees (late fees), and the consequential rent change named under "any other term" (escalators) | Yes |
-| `auto-renewal` | Not named | No, out of scope |
-| `unilateral-modification` | Not named | No, out of scope |
+| `auto-renewal` | Any other term with a plausible, material downside: renewal at the then-current rate is a consequential rent change and an early-exit cost | Yes |
+| `unilateral-modification` | Any other term with a plausible, material downside: a power to rewrite the terms, fees included, is a consequential rent change | Yes |
 | `non-compete` | Not named | No, out of scope |
 | `limitation-of-liability` | Not named | No, out of scope |
 | `indemnification` | Not named | No, out of scope |
 
 Blueline's "deposit forfeiture" red line has no gold-set type, so the gold set doesn't measure it.
 
-That leaves 14 of the 40 planted clauses in scope: 5 arbitration and 9 fee clauses. A run still reports out-of-scope clauses that got flagged anyway, but only for information. They are never counted as misses.
+That leaves 26 of the 40 planted clauses in scope: 5 arbitration, 9 fee, 6 auto-renewal and 6 unilateral modification clauses.
+
+Out of scope, and why:
+
+- `non-compete` comes from employment agreements, which PRD.md's "What we are not building" leaves out of the first version.
+- `limitation-of-liability` and `indemnification` appear in leases, but PRD.md's research section calls the evidence for them thin. Revisit them once ticket 09's lease corpus shows whether they matter.
+
+A run still reports out-of-scope clauses that got flagged anyway, but only for information. They are never counted as misses.
+
+The mapping changed on 2026-11-10. Before that, only arbitration and fees were in scope (14 clauses), and auto-renewal and unilateral modification were reported as out of scope. Both now count because the "any other term" row names a consequential rent change, which is what both clauses do. Keeping auto-renewal out also hid the product's weakest type, at 1/6 found in the first ungated run. Runs before this date use the old denominator, so their recall can't be compared directly with later runs.
 
 ## Decisions made without asking
 
@@ -68,3 +77,4 @@ The brief said to record these here instead of stopping.
 | 2026-11-03T16:45:37Z | `z-ai/glm-5.3-flash` | No numbers. All 9 calls returned 401 "API key expired", so all 9 documents were left out. Renew `OPENROUTER_API_KEY` in `.env.local` and run again. |
 | 2026-11-03T17:00:55Z | `z-ai/glm-5.3-flash` | 7 of 9 documents were blocked as incomplete, because each refers to a schedule, handbook or exhibit the gold set doesn't include. That left recall at 0/0 (nothing to measure). Groundedness was 2/2 (100.0%). Clean documents: 1 of 2 came back with no flags (50.0%). The 2 flags were both on `swim-lesson-registration`: a medium on its no-refund-after-the-third-lesson rule and a low on its make-up lessons. The third clean document was blocked. |
 | 2026-11-03T17:04:20Z (ungated) | `z-ai/glm-5.3-flash` | 9 of 9 reviewed. Recall 11/14 (78.6%): arbitration 5/5, fees 6/9. Missed: adhesion P-02 (the double-space sentence), adhesion P-03, saas P-02. Groundedness 52/54 (96.3%). Clean documents with no flags 2/3 (66.7%), with 3 flags on `swim-lesson-registration`. Out-of-scope clauses flagged anyway: 20/26. Flags on planted documents that matched no planted clause: 18. Flags on unusual-but-harmless sentences: 3. |
+| 2026-11-10T18:39:51Z (ungated, new mapping) | `z-ai/glm-5.3-flash` | 9 of 9 reviewed. Recall 17/26 (65.4%): arbitration 5/5, unilateral modification 5/6, fees 5/9, auto-renewal 2/6. Missed: adhesion P-01, P-03, P-07; saas P-01, P-03; storage P-01, P-02; phone P-01, P-04. Groundedness 53/53 (100.0%). Clean documents with no flags 1/3 (33.3%), with 4 flags: 2 low on `clean-document`, a medium and a low on `swim-lesson-registration`. Fee recall fell from 6/9 to 5/9 and different fee clauses were missed this time, so expect a clause or two of variation between runs. |

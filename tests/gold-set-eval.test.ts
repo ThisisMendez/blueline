@@ -20,7 +20,7 @@ describe("the gold set copied from ankitvirmani/redline", () => {
 });
 
 describe("scoring a gold-set run", () => {
-  const text = "Disputes go to binding arbitration only. The fee rises 5% each year. Renewal is automatic. Plots are ten feet wide.";
+  const text = "Disputes go to binding arbitration only. The fee rises 5% each year. You will not compete for a year. Plots are ten feet wide.";
   const fixture: GoldSet = {
     corpus: "synthetic",
     version: 1,
@@ -30,7 +30,7 @@ describe("scoring a gold-set run", () => {
         plantedClauses: [
           { id: "P-01", clauseType: "arbitration-and-class-action-waiver", sourceSentence: "Disputes go to binding arbitration only.", expectedSeverityBand: "high", exit: null },
           { id: "P-02", clauseType: "fee-escalators-and-late-fees", sourceSentence: "The fee rises 5% each year.", expectedSeverityBand: "high", exit: null },
-          { id: "P-03", clauseType: "auto-renewal", sourceSentence: "Renewal is automatic.", expectedSeverityBand: "high", exit: null },
+          { id: "P-03", clauseType: "non-compete", sourceSentence: "You will not compete for a year.", expectedSeverityBand: "high", exit: null },
         ],
       },
       { id: "benign", path: "", title: "Benign", text: "Nothing here.", benign: true, unusualButHarmless: [], questionSentences: [], plantedClauses: [] },
@@ -52,7 +52,7 @@ describe("scoring a gold-set run", () => {
     ];
     const report = scoreGoldRun(fixture, runs);
     expect(report.recall).toEqual({ count: 1, total: 2 });
-    expect(report.recallByType["auto-renewal"]).toMatchObject({ count: 0, total: 1, inScope: false });
+    expect(report.recallByType["non-compete"]).toMatchObject({ count: 0, total: 1, inScope: false });
     expect(report.documents.failed).toEqual([{ id: "broken", reason: "model-timeout" }]);
     expect(report.groundedness).toMatchObject({ count: 2, total: 3 });
     expect(report.flagsOnUnusualButHarmless).toBe(1);
