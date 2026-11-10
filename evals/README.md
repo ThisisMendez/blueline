@@ -2,7 +2,7 @@
 
 The independent corpus and its adjudications have not been supplied. Ticket 09 remains pending. `tests/evaluation.test.ts` uses synthetic inputs to verify the scorer and runner; its invented reviewer identifiers are test data and provide no independent evidence.
 
-Run `npx tsx evals/cli.ts` to produce a prerequisite report under `evals/runs/`. It exits 2 while evidence is missing. Reports are ignored by Git; attach a reviewed, sanitized report deliberately when release evidence is available.
+Run `npm run eval:independent` (or `npx tsx evals/cli.ts`) to produce a prerequisite report under `evals/runs/`. It exits 2 while evidence is missing. Reports are ignored by Git; attach a reviewed, sanitized report deliberately when release evidence is available. `npm run eval` runs the gold-set regression check (ticket 11) instead, which is not independent evidence; see `evals/gold-set/README.md`.
 
 ## Prepare the corpus
 

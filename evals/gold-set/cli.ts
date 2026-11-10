@@ -11,7 +11,7 @@ import { loadGoldSet } from "./corpus";
 import { renderGoldReport, scoreGoldRun, type DocumentRun } from "./score";
 
 /**
- * npm run eval:gold. Sends every document in the gold-set manifest through
+ * npm run eval (ungated) and npm run eval:gated. Sends every document in the gold-set manifest through
  * the analysis route exactly as `npm run smoke -- --live` does: the same
  * OpenRouterModelClient with a 30 second timeout, the same counting wrapper
  * and per-document budget, the same anonymous route wiring, and the same

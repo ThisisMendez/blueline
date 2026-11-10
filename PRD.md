@@ -48,7 +48,7 @@ Prefer a supported warning over missing a serious harm, while explaining the con
 
 ## How we measure it
 
-Between releases, a gold set of documents with known planted clauses is run through the same analysis the product uses (`npm run eval:gold`, ticket 11). Each run reports three numbers, each as a count and a percentage:
+Between releases, a gold set of documents with known planted clauses is run through the same analysis the product uses (`npm run eval`, ticket 11; `npm run eval:gated` runs it through the completeness check too). Each run reports three numbers, each as a count and a percentage:
 
 - **Recall.** How many planted clauses were found, out of the planted clauses whose type appears in "My red lines" above. Types not named there are listed as out of scope and never counted as misses. A clause counts as found when a flag quotes a sentence that overlaps it.
 - **Groundedness.** How many flags quote a sentence that appears in the document character for character, out of all flags the model returned, including the ones the product dropped because the quote didn't match.

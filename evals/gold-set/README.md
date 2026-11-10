@@ -1,6 +1,6 @@
 # Gold-set regression eval (ticket 11)
 
-`npm run eval:gold` runs the nine documents in `corpus/manifest.json` through Blueline's analysis route, scores the flags against the planted clauses, and saves the run to `runs/` as a `.txt` and a `.json` named for its start time.
+`npm run eval` runs the nine documents in `corpus/manifest.json` through Blueline's analysis route, scores the flags against the planted clauses, and saves the run to `runs/` as a `.txt` and a `.json` named for its start time. It runs ungated (decision 11). `npm run eval:gated` runs the same documents through the completeness check first, the way a signer is served.
 
 A model wrote this gold set, and none of its documents are leases. The numbers are an upper bound and never a promise to a reader. **They are not the independent evidence ticket 09 and ADR 0012 require before expansion.** Do not cite them as that evidence, and do not put them in product copy.
 
@@ -42,7 +42,7 @@ The mapping changed on 2026-11-10. Before that, only arbitration and fees were i
 
 The brief said to record these here instead of stopping.
 
-1. **No second `npm run eval`.** That script already belongs to ticket 09's independent-evidence harness (`evals/cli.ts`). This eval is `npm run eval:gold`, so the two can't be confused. Ticket 09 stays open.
+1. **`npm run eval` is this gold set.** At first this eval was `npm run eval:gold`, because `npm run eval` belonged to ticket 09's independent-evidence harness (`evals/cli.ts`). On 2026-11-10 the owner moved `npm run eval` to the gold set, because ticket 09 can't run until real leases are independently labelled, and there are no test users yet to supply them. The main command should be one that gives numbers after a prompt or model change. Ticket 09's harness is now `npm run eval:independent`. It is still the only route to the evidence ADR 0012 requires, and ticket 09 stays open.
 2. **Folder.** The brief said `eval/`, but this eval lives in `evals/gold-set/`. CLAUDE.md asks for a recorded architectural reason before adding a top-level directory, and `evals/` already holds the evaluation code.
 3. **Run records.** These go in `evals/gold-set/runs/`, not a top-level `eval-runs/`, for the same reason. Ticket 09's `evals/runs/` is gitignored because it may hold private leases. These runs hold only public synthetic text, so they are committed.
 4. **Same pipeline as smoke.** The runner copies `scripts/smoke.ts --live`:
@@ -68,7 +68,7 @@ The brief said to record these here instead of stopping.
 
     Only 5 of the 14 in-scope sentences carry any of these, so read the split as a direction, not a figure.
 
-11. **`--ungated` mode** (`npm run eval:gold -- --ungated`). This mode was added after the first working run, when 7 of 9 documents were blocked. Each document skips the completeness check and goes straight to `runGeneralReview`, the review stage the route calls once a packet is complete. The model client, the budget and the packet shape (one `pasted-lease` document) stay the same. A signer is never served this way, so the report header says UNGATED and the file name ends in `-ungated`. The gated run remains the main result. The ungated run is the only way this gold set yields a recall number without editing it.
+11. **`--ungated` mode** (`npm run eval`; `npm run eval:gated` is the run without it). This mode was added after the first working run, when 7 of 9 documents were blocked. Each document skips the completeness check and goes straight to `runGeneralReview`, the review stage the route calls once a packet is complete. The model client, the budget and the packet shape (one `pasted-lease` document) stay the same. A signer is never served this way, so the report header says UNGATED and the file name ends in `-ungated`. The ungated run is the only way this gold set yields a recall number without editing it, so since 2026-11-10 it is the default: `npm run eval`. Its numbers measure the review stage, not what a signer sees. The gated run (`npm run eval:gated`) remains the check on gating and on clean documents as a signer is served.
 
 ## Runs
 

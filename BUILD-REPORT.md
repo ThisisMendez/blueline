@@ -88,7 +88,7 @@ or product source changed after these checks; subsequent edits only synchronize 
 | `npm run build:fixtures` | Pass; native browser final integration checked |
 | `npm run build` | Pass; normal production output restored after fixture build |
 | `npm run smoke -- --live` | One bounded run; 3 calls, 9 returned / 9 verified / 0 dropped, no provider errors; quality concerns below |
-| `npm run eval` | Expected exit 2: prerequisites missing, 0 live runs, expansion decision pending |
+| `npm run eval:independent` (then `npm run eval`) | Expected exit 2: prerequisites missing, 0 live runs, expansion decision pending |
 | `git diff --check` | Pass |
 
 Offline smoke: planted agreement 9/9/0; clean agreement 0/0/0, with repairs and dispute
@@ -184,7 +184,7 @@ Ticket 09's independent adjudication gate remains unsatisfied.
 - `npm run smoke -- --live` is explicitly bounded to one synthetic packet, six requests,
   per-call timeout and a start budget. Key/model configured, values never printed.
   Ran once after final schema integration; technical result and quality limitations above.
-- Evaluation scorer/harness: 11 behavioral tests pass; `npm run eval` checks prerequisites
+- Evaluation scorer/harness: 11 behavioral tests pass; `npm run eval:independent` checks prerequisites
   and reports pending/exit 2 without a live request when evidence is absent. Generated
   reports are ignored. No quality result has been manufactured.
 
@@ -248,7 +248,7 @@ Next actions requiring the owner's setup or independent evidence:
    physical deletion. Set the prescribed public environment variables and verify real
    sign-in, library reload, red lines and save in the browser. No remote apply authorized here.
 2. Supply the independently adjudicated held-out corpus, two reviewers and restricted
-   runner described in `evals/README.md`; run `npm run eval` with that documented setup.
+   runner described in `evals/README.md`; run `npm run eval:independent` with that documented setup.
    Review the live observations above, especially draft/residual consistency, before
    marking ticket 07 or the independent expansion gate complete.
 3. Enable the browser extension's file-URL access to finish native PDF upload, and
