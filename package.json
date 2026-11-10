@@ -16,6 +16,7 @@
     "eval": "tsx evals/gold-set/cli.ts --ungated",
     "eval:gated": "tsx evals/gold-set/cli.ts",
     "eval:independent": "tsx evals/cli.ts",
+    "label": "node evals/labels/server.mjs",
     "fixtures:pdf": "tsx tests/fixtures/make-pdfs.ts"
   },
   "dependencies": {
