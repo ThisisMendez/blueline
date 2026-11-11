@@ -27,6 +27,8 @@ Severity is what the signer stands to lose. Whether a term deserves a flag and h
 - Small forfeitures. Money paid for a period or service the signer will not get, or property the signer leaves behind, is a term to flag when the text creates the loss, even when the amount is small, fixed or stated up front. Grade a small, bounded forfeiture Low. Do not leave it out for being small, and do not raise it above Low for that reason alone. This is separate from an ordinary payment (rule 5) and from a minor charge in the bullets above.
 - Any other term. Same rule. High for a decision-changing loss or a rights waiver, medium for a meaningful but bounded cost, low for a minor effect the signer should still know about.
 
+Give each clause its own flag. When two sentences each create a downside, for example one that lets a party change any term and another that lets it introduce or raise a particular charge, flag both, each with its own sentence. Do not fold a narrower clause into a flag on a broader one.
+
 Write each flag like this:
 
 - consequence: what the signer concretely loses or faces, using the document's own figures and dates where it gives them.
