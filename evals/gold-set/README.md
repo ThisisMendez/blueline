@@ -47,7 +47,7 @@ The brief said to record these here instead of stopping.
 3. **Run records.** These go in `evals/gold-set/runs/`, not a top-level `eval-runs/`, for the same reason. Ticket 09's `evals/runs/` is gitignored because it may hold private leases. These runs hold only public synthetic text, so they are committed.
 4. **Same pipeline as smoke.** The runner copies `scripts/smoke.ts --live`:
    - the same `OpenRouterModelClient` with a 30 s timeout
-   - the same counting wrapper and per-document budget (6 calls, 120 s)
+   - the same counting wrapper and per-document budget (7 calls, 120 s; 6 until ticket 14 added the legal-claim repair call)
    - anonymous `createAnalysisRoute` wiring with the same fixed clock
    - the same request body (`text` plus the sidecar `title`)
 

@@ -146,6 +146,12 @@ export interface GeneralReview {
   readonly cleanStatement: string | null;
   /** Flags the model produced whose quotation never matched, after one retry. */
   readonly droppedFlagCount: number;
+  /**
+   * Explanation texts that stated a legal conclusion (ADR 0014): repaired
+   * from the lease sentence, or withheld when the repair still did. Absent
+   * on reviews saved before this check existed.
+   */
+  readonly legalClaims?: { readonly repaired: number; readonly withheld: number };
 }
 
 /** Why the request never reached the model. */

@@ -28,7 +28,7 @@ async function main() {
     const started = Date.now();
     const model: ModelClient = {
       async complete(request) {
-        if (++calls > 6 || Date.now() - started > 120_000) throw new Error("Live smoke budget exceeded.");
+        if (++calls > 7 || Date.now() - started > 120_000) throw new Error("Live smoke budget exceeded.");
         let result: unknown;
         try {
           result = await client.complete(request);

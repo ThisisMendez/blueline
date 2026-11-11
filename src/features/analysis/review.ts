@@ -1,6 +1,7 @@
 import type { Packet } from "@/features/packet/types";
 
 import { checkResidualRiskConsistency } from "./consistency";
+import { enforceLegalBoundary } from "./legal-claims";
 import { runCoverageChecklist } from "./coverage";
 import { ModelError, type ModelClient } from "./model/client";
 import {
@@ -118,17 +119,21 @@ export async function runGeneralReview({
   const coverage = await runCoverageChecklist({ packet, model });
 
   const ranked = rankFlags(flags);
-  const riskFlags = await checkResidualRiskConsistency(ranked, model);
+  // ADR 0014: no generated text states a legal conclusion. Repaired once,
+  // withheld if it still does; the flags themselves always stay.
+  const bounded = await enforceLegalBoundary(first.summary, ranked, model);
+  const riskFlags = await checkResidualRiskConsistency(bounded.riskFlags, model);
   // Absences do not make a review dirty. A lease can be silent on repairs
   // and still carry nothing that would cost the signer.
   const clean = riskFlags.length === 0;
 
   return {
-    summary: first.summary,
+    summary: bounded.summary,
     riskFlags,
     coverage,
     clean,
     cleanStatement: clean ? CLEAN_REVIEW_STATEMENT : null,
     droppedFlagCount,
+    legalClaims: bounded.legalClaims,
   };
 }

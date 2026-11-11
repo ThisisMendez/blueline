@@ -1,7 +1,7 @@
 /**
  * Runs one document through the analysis route exactly as
  * `npm run smoke -- --live` does: the same OpenRouterModelClient with a 30
- * second timeout, the same call budget (6 calls, 120 s), the same anonymous
+ * second timeout, the same call budget (7 calls, 120 s; 6 before the legal-claim repair call, ticket 14), the same anonymous
  * route wiring and request body. Shared by the gold-set eval and the public
  * lease corpus so both measure the same pipeline.
  */
@@ -19,7 +19,7 @@ export async function runDocument(text: string, title: string, ungated: boolean)
   const started = Date.now();
   const model: ModelClient = {
     async complete(request) {
-      if (++calls > 6 || Date.now() - started > 120_000) throw new Error("Live smoke budget exceeded.");
+      if (++calls > 7 || Date.now() - started > 120_000) throw new Error("Live smoke budget exceeded.");
       let result: unknown;
       try {
         result = await client.complete(request);

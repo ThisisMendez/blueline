@@ -51,7 +51,7 @@ async function main() {
     let line = `${document.id}: ${outcome.status}`;
     if (outcome.status === "out-of-scope") line += ` (${outcome.completeness.agreementKind}: ${outcome.completeness.description})  <-- FALSE BLOCK`;
     if (outcome.status === "blocked") line += ` (missing: ${outcome.completeness.missing.map((item) => item.name).join("; ")})`;
-    if (outcome.status === "reviewed") line += ` (${outcome.review.riskFlags.length} flags, ${outcome.review.droppedFlagCount} dropped)`;
+    if (outcome.status === "reviewed") line += ` (${outcome.review.riskFlags.length} flags, ${outcome.review.droppedFlagCount} dropped; legal-conclusion texts ${outcome.review.legalClaims?.repaired ?? 0} repaired, ${outcome.review.legalClaims?.withheld ?? 0} withheld)`;
     if (outcome.status === "failed" || outcome.status === "rejected") line += ` (${outcome.reason}${providerError ? `: ${providerError}` : ""})`;
     console.log(line);
   }

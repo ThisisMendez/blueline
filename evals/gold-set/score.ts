@@ -64,6 +64,8 @@ export type DocumentRun =
       readonly reviewedText: string;
       readonly flags: readonly DeliveredFlag[];
       readonly droppedFlagCount: number;
+      /** Explanation texts that stated a legal conclusion: repaired, or withheld (ticket 14). */
+      readonly legalClaims?: { readonly repaired: number; readonly withheld: number };
       readonly returnedFlagsAllAttempts: number;
     }
   | { readonly documentId: string; readonly status: "blocked"; readonly missing: readonly string[] }
@@ -112,6 +114,7 @@ export interface GoldReport {
     readonly unverified: string[];
     readonly failed: { id: string; reason: string }[];
   };
+  readonly legalClaims: { readonly repaired: number; readonly withheld: number };
   readonly recall: Rate;
   readonly recallByType: Record<GoldClauseType, Rate & { inScope: boolean }>;
   readonly outOfScopeFound: Rate;
@@ -230,6 +233,12 @@ export function scoreGoldRun(goldSet: GoldSet, runs: readonly DocumentRun[]): Go
       unverified: runs.flatMap((run) => (run.status === "unverified" ? [run.documentId] : [])),
       failed: runs.flatMap((run) => (run.status === "failed" ? [{ id: run.documentId, reason: run.reason }] : [])),
     },
+    legalClaims: runs.reduce(
+      (total, run) => run.status === "reviewed" && run.legalClaims
+        ? { repaired: total.repaired + run.legalClaims.repaired, withheld: total.withheld + run.legalClaims.withheld }
+        : total,
+      { repaired: 0, withheld: 0 },
+    ),
     recall: tally(scoped),
     recallByType,
     outOfScopeFound: tally(planted.filter((item) => !item.inScope)),
@@ -265,6 +274,7 @@ export function renderGoldReport(report: GoldReport, header: readonly string[]):
   for (const entry of documents.outOfScope) lines.push(`  left out, blocked as out of scope (${entry.agreementKind}): ${entry.id} (${entry.description})`);
   for (const id of documents.unverified) lines.push(`  left out, completeness could not be verified: ${id}`);
   lines.push("");
+  lines.push(`Legal-conclusion texts (ticket 14): ${report.legalClaims.repaired} repaired, ${report.legalClaims.withheld} withheld`);
   lines.push(`Recall (in-scope planted clauses found): ${formatRate(report.recall)}`);
   for (const [type, value] of Object.entries(report.recallByType)) {
     lines.push(`  ${value.inScope ? "in scope    " : "out of scope"} ${type}: ${formatRate(value)}`);

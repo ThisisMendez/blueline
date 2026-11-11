@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import type { ExtractedDocument } from "@/features/packet/types";
-import { NOT_ADDRESSED, type QuestionOutcome } from "./contract";
+import { LOCAL_LAW_NOTE, NOT_ADDRESSED, type QuestionOutcome } from "./contract";
 
 const FAILURE_COPY: Record<string, string> = {
   "not-configured": "Questions are unavailable because the review service is not configured.",
@@ -49,6 +49,9 @@ export function QuestionPanel({ documents }: { readonly documents: readonly Extr
       </form>
       <div aria-live="polite" aria-busy={pending} className="mt-5 font-[family-name:var(--font-body)] text-base leading-relaxed">
         {pending ? <p>Checking the complete agreement for an answer.</p> : null}
+        {(outcome?.status === "answered" || outcome?.status === "not-addressed") && outcome.needsLocalLaw ? (
+          <p className="mb-4 border-l-2 border-[var(--color-navy)] pl-4">{LOCAL_LAW_NOTE}</p>
+        ) : null}
         {outcome?.status === "answered" ? (
           <div className="flex flex-col gap-4">
             <p className="font-semibold">For “{submitted}”, the agreement says:</p>

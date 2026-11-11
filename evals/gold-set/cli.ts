@@ -37,6 +37,7 @@ function toRun(id: string, outcome: AnalysisOutcome | null, returnedFlags: numbe
           severity, sourceDocumentId, sourceSentence, sourceStart, sourceEnd, consequence,
         })),
         droppedFlagCount: outcome.review.droppedFlagCount,
+        legalClaims: outcome.review.legalClaims,
         returnedFlagsAllAttempts: returnedFlags,
       };
     }
