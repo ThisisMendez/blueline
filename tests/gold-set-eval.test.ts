@@ -69,6 +69,16 @@ describe("scoring a gold-set run", () => {
     expect(report.groundedness).toMatchObject({ count: 0, total: 1 });
   });
 
+  it("compares each found clause's most severe flag with the gold band", () => {
+    const medium = { ...flagAt("The fee rises 5% each year."), severity: "medium" };
+    const report = scoreGoldRun(fixture, [
+      { documentId: "loaded", status: "reviewed", reviewedText: text, droppedFlagCount: 0, returnedFlagsAllAttempts: 2,
+        flags: [flagAt("Disputes go to binding arbitration only."), medium] },
+    ]);
+    // Both planted clauses are graded high in the fixture: one flag agrees, one is graded lower.
+    expect(report.severity).toEqual({ agree: { count: 1, total: 2 }, under: 1, over: 0 });
+  });
+
   it("names the character classes a model tends to retype", () => {
     expect(characterClasses("the member’s ﬁrst fee — due  now")).toEqual([
       "curly quote or apostrophe", "non-breaking space", "fi or fl ligature", "em dash", "two spaces in a row",

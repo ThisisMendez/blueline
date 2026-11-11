@@ -103,7 +103,24 @@ export interface PlantedResult {
   readonly inScope: boolean;
   readonly found: boolean;
   readonly characterClasses: readonly CharacterClass[];
+  /** The gold set's band for this clause, mapped onto Blueline's scale (see SEVERITY_BAND_MAPPING). */
+  readonly expectedSeverity: "high" | "medium" | "low";
+  /** The most severe flag that found it, or null when nothing did. */
+  readonly foundSeverity: "high" | "medium" | "low" | null;
 }
+
+/**
+ * The gold set grades planted clauses critical, high or moderate; Blueline
+ * grades high, medium or low. Critical and high both mean "could change the
+ * decision to sign", which is Blueline's high; moderate is Blueline's medium.
+ * Nothing in the gold set is graded low.
+ */
+export const SEVERITY_BAND_MAPPING: Readonly<Record<string, "high" | "medium" | "low">> = {
+  critical: "high",
+  high: "high",
+  moderate: "medium",
+};
+const SEVERITY_RANK = { high: 3, medium: 2, low: 1 } as const;
 
 export interface GoldReport {
   readonly documents: {
@@ -125,6 +142,8 @@ export interface GoldReport {
   };
   readonly typeNamedCorrectly: { readonly measurable: false; readonly reason: string };
   readonly groundedness: Rate & { readonly returnedFlagsAllAttempts: number };
+  /** Found in-scope clauses whose most severe flag matches the gold band, plus how the rest missed. */
+  readonly severity: { readonly agree: Rate; readonly under: number; readonly over: number };
   readonly cleanDocuments: {
     readonly documentsWithNoFlags: Rate;
     readonly flagsOnCleanDocuments: number;
@@ -172,6 +191,7 @@ export function scoreGoldRun(goldSet: GoldSet, runs: readonly DocumentRun[]): Go
     const plantedSpans = document.plantedClauses.map((clause) => ({ clause, at: span(text, clause.sourceSentence) }));
     const harmlessSpans = document.unusualButHarmless.map((sentence) => span(text, sentence)).filter((at) => at !== null);
     const foundIds = new Set<string>();
+    const foundSeverity = new Map<string, "high" | "medium" | "low">();
 
     deliveredPlusDropped += run.flags.length + run.droppedFlagCount;
     returnedFlagsAllAttempts += run.returnedFlagsAllAttempts;
@@ -182,8 +202,12 @@ export function scoreGoldRun(goldSet: GoldSet, runs: readonly DocumentRun[]): Go
       const match: PlantedClause | undefined = at
         ? plantedSpans.find((entry) => entry.at && overlaps(entry.at, at))?.clause
         : undefined;
-      if (match) foundIds.add(match.id);
-      else if (!document.benign) unmatchedFlagsOnPlantedDocuments++;
+      if (match) {
+        foundIds.add(match.id);
+        const severity = flag.severity as "high" | "medium" | "low";
+        const held = foundSeverity.get(match.id);
+        if (!held || SEVERITY_RANK[severity] > SEVERITY_RANK[held]) foundSeverity.set(match.id, severity);
+      } else if (!document.benign) unmatchedFlagsOnPlantedDocuments++;
       flags.push({
         document: document.id,
         clauseType: null,
@@ -204,6 +228,8 @@ export function scoreGoldRun(goldSet: GoldSet, runs: readonly DocumentRun[]): Go
         inScope: inScope(clause.clauseType),
         found: foundIds.has(clause.id),
         characterClasses: characterClasses(clause.sourceSentence),
+        expectedSeverity: SEVERITY_BAND_MAPPING[clause.expectedSeverityBand] ?? "medium",
+        foundSeverity: foundSeverity.get(clause.id) ?? null,
       });
     }
     if (document.benign) cleanPerDocument.push({ id: document.id, flags: run.flags.length });
@@ -252,6 +278,12 @@ export function scoreGoldRun(goldSet: GoldSet, runs: readonly DocumentRun[]): Go
       reason: "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval.",
     },
     groundedness: { ...rate(grounded, deliveredPlusDropped), returnedFlagsAllAttempts },
+    severity: (() => {
+      const graded = planted.filter((item) => item.inScope && item.found && item.foundSeverity);
+      const agree = graded.filter((item) => item.foundSeverity === item.expectedSeverity).length;
+      const under = graded.filter((item) => SEVERITY_RANK[item.foundSeverity!] < SEVERITY_RANK[item.expectedSeverity]).length;
+      return { agree: rate(agree, graded.length), under, over: graded.length - agree - under };
+    })(),
     cleanDocuments: {
       documentsWithNoFlags: rate(cleanPerDocument.filter((entry) => entry.flags === 0).length, cleanPerDocument.length),
       flagsOnCleanDocuments: cleanPerDocument.reduce((sum, entry) => sum + entry.flags, 0),
@@ -287,6 +319,7 @@ export function renderGoldReport(report: GoldReport, header: readonly string[]):
   lines.push(`  has none: ${formatRate(report.recallByCharacters.withNone)}`);
   for (const [name, value] of Object.entries(report.recallByCharacters.byClass)) lines.push(`  ${name}: ${formatRate(value)}`);
   lines.push("");
+  lines.push(`Severity agreement (found in-scope clauses whose most severe flag matches the gold band; critical and high = high, moderate = medium): ${formatRate(report.severity.agree)}; graded lower: ${report.severity.under}; graded higher: ${report.severity.over}`);
   lines.push(`Groundedness (delivered flags quoted verbatim / all flags the model returned, delivered + dropped): ${formatRate(report.groundedness)}`);
   lines.push(`  raw flags across every model attempt, retries included: ${report.groundedness.returnedFlagsAllAttempts}`);
   lines.push("");
