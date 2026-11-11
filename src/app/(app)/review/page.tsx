@@ -42,7 +42,9 @@ export default async function ReviewPage() {
           documents your lease points at, such as a fee schedule or an
           addendum, so we read the whole agreement rather than part of it.
           You get a plain-English summary and the terms that could cost you,
-          heaviest first, each one quoting the sentence it came from.
+          heaviest first, each one quoting the sentence it came from. We
+          read only what you give us. We don&apos;t check it against local
+          law, so a term we describe may be limited by rules where you live.
         </p>
       </div>
 

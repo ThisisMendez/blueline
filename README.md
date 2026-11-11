@@ -1,6 +1,6 @@
 # Blueline Redline
 
-Residential lease review with exact source citations. The existing Next.js application lives in `src/app/`; feature code lives in `src/features/`.
+Residential lease review with exact source citations. It reads the lease text only: it does not check terms against local law or judge enforceability (see ADR 0014). The existing Next.js application lives in `src/app/`; feature code lives in `src/features/`.
 
 ## Run locally
 

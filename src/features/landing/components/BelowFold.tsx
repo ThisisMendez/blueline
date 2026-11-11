@@ -17,7 +17,7 @@ export function BelowFold() {
           </h2>
           <p className="mt-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]/85">
             Blueline Redline checks your complete agreement against a
-            published list of six protections: deposit return, early-exit
+            published list of six topics: deposit return, early-exit
             costs, rent changes, repairs, access, and dispute routes. The same
             six for every lease. Anything your document doesn&apos;t state gets
             reported apart from the risk flags, because there is no sentence to

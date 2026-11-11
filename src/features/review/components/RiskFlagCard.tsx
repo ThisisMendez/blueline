@@ -102,6 +102,7 @@ export function RiskFlagCard({ flag, position, documentTitle }: RiskFlagCardProp
 
       {explanationOpen && editOpen ? <section id={editId} aria-labelledby={`${editId}-heading`} className="m-6 border-2 border-[var(--color-navy)] bg-[var(--color-paper)] p-6 shadow-[0_24px_46px_-22px_rgba(18,59,93,0.5),0_8px_18px_-12px_rgba(18,59,93,0.32)] sm:m-8">
         <h3 id={`${editId}-heading`} className="font-[family-name:var(--font-display)] text-xl font-bold text-[var(--color-navy-ink)]">Proposed edit</h3>
+        <p className="mt-2 font-[family-name:var(--font-body)] text-sm leading-snug text-[var(--color-navy-ink)]">Use it to start the conversation. Your landlord doesn&apos;t have to accept it, and it isn&apos;t legal advice.</p>
         <p className="mt-3 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">{flag.counterOffer}</p>
         <h4 className="mt-5 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">Risk that remains</h4>
         <p className="mt-2 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">{flag.residualRisk}</p>

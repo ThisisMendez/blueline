@@ -31,6 +31,8 @@ it("lets a visitor review without signing in even when accounts exist", async ()
   await user.paste(loadFixture("clean-lease").text);
   await user.click(screen.getByRole("button", { name: "Read my lease" }));
   expect(await screen.findByRole("heading", { name: "No material flags found in the text reviewed" })).toBeInTheDocument();
+  expect(screen.getByText(/haven't checked it against local law either/)).toBeInTheDocument();
+  expect(screen.getByText(/don't check it against local law/)).toBeInTheDocument();
   expect(screen.queryByRole("region", { name: /your reviews/i })).toBeNull();
   expect(screen.queryByRole("link", { name: /open this review/i })).toBeNull();
 });

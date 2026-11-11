@@ -5,7 +5,7 @@ const NOTES = [
   },
   {
     term: "What this isn't",
-    body: "A verdict on whether to sign, or legal advice. Blueline Redline reports what your document says and what could follow. It won't tell you the lease is safe to sign.",
+    body: "A verdict on whether to sign, legal advice, or a check against the law where you live. Blueline Redline reports what your document says and what could follow from it. It won't tell you the lease is safe to sign, or whether a term is allowed where you rent.",
   },
   {
     term: "What it reads",

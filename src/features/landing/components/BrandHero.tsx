@@ -29,6 +29,10 @@ export function BrandHero() {
         <p className="mt-5 font-[family-name:var(--font-data)] text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-navy)] sm:text-base">
           Read the terms. Make your mark.
         </p>
+        <p className="mt-4 max-w-md font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
+          We read your lease and show what it could cost you. We don&apos;t
+          check it against local law.
+        </p>
         <Link
           href="/sign-in"
           className="mt-7 inline-flex items-center gap-4 bg-[var(--color-navy)] px-7 py-3.5 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)]"

@@ -23,6 +23,7 @@ describe("a counter-offer behind a flag's explanation", () => {
     await user.paste(fixture.text);
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
     await screen.findByRole("heading", { name: /terms to look at/i });
+    expect(screen.getByText(/haven’t checked them against local law|haven't checked them against local law/)).toBeInTheDocument();
     const flags = screen.getAllByRole("article", { name: /^Risk flag/ });
     for (const flag of flags) {
       expect(within(flag).queryByRole("button", { name: "See proposed edit" })).toBeNull();
@@ -39,6 +40,7 @@ describe("a counter-offer behind a flag's explanation", () => {
       await user.click(within(flag).getByRole("button", { name: "See proposed edit" }));
       expect(within(flag).getByText(expected.counterOffer)).toBeVisible();
       expect(within(flag).getByText(expected.residualRisk)).toBeVisible();
+      expect(within(flag).getByText(/landlord doesn't have to accept it, and it isn't legal advice/)).toBeVisible();
       await user.click(within(flag).getByRole("button", { name: "Hide explanation" }));
       expect(within(flag).queryByText(expected.counterOffer)).toBeNull();
       expect(within(flag).queryByText(expected.residualRisk)).toBeNull();

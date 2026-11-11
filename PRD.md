@@ -25,6 +25,12 @@ One renter in the research warned others: “don't accept being forced to pay 1k
 7. **Draft an actionable proposed edit for each risk flag.** Aim for a change a landlord might realistically accept, and show any risk that would remain. Reveal the draft through “See proposed edit” after the signer opens the flag's explanation.
 8. **Let the signer return to a review.** Keep completed reviews in an authenticated library for 30 days from the review. An explicitly saved review stays for 90 days from the save, then is deleted. Show the expiry date so “save” cannot be mistaken for permanent storage.
 
+## What it does, what it doesn't, and what may come later
+
+- **Does now (Layer 1):** reads the residential lease you supply, with every document it refers to, and reports its obligations, costs, deadlines and terms worth raising, each tied to an exact sentence.
+- **Doesn't do now:** check the lease against the law where you live, decide whether a term is enforceable, give legal advice, or say a lease is safe to sign. Every surface that a signer reads says so, and the system's prompts and output checks hold it to that (ADR 0014).
+- **May do later (Layer 2, not built or offered):** separately validated, jurisdiction-specific legal information. It needs its own sources, evaluation and review first.
+
 ## What good looks like
 
 Test a held-out set of complete lease packets that includes consequential deposit, early-exit, and dispute-rights terms; harmless oddities; clean leases; and missing referenced documents. Have independent reviewers mark the consequential terms and their source sentences before seeing Blueline's output. Expansion beyond renters requires that they can verify the quoted source for every flag and that no adjudicated high-severity term in this set is missed. A citation mismatch or unsupported material claim fails the review; a plausible warning that turns out harmless is acceptable but must be counted as a false alarm.
