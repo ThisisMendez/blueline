@@ -1,0 +1,52 @@
+{
+  "documentId": "H05-puget-sound-sample-lease",
+  "sourceUrl": "https://www.pugetsound.edu/sites/default/files/file/1888_OCSSsamplelease_0.pdf",
+  "retrievedFrom": "https://www.pugetsound.edu/sites/default/files/file/1888_OCSSsamplelease_0.pdf",
+  "sourceVersion": "Live file, Last-Modified Wed, 01 Dec 2021 08:26:16 GMT, ETag W/\"61a731a8-4f2d\"; byte-identical to Internet Archive snapshot 20220423110824",
+  "replaces": "L05-umass-sample-lease",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "holdout intake record: not gold-standard, no labels yet",
+  "sha256Original": "260a21aeb7973aef43260aaa715d1173dc4d184e70a4ee30fae1d1b0967efa00",
+  "sha256Text": "444b1593dfb806fdf3745b1a90905264af5595f91ccb18a4065b47362c32a5fa",
+  "textIsDerived": false,
+  "jurisdiction": "Washington State, USA",
+  "housingContext": "Private-market off-campus rental between a landlord and students (sample published by a university off-campus student services office)",
+  "programRestrictions": "None stated",
+  "documentType": "university sample lease template (unexecuted, with blanks); some sections are guidance on what a lease should contain rather than operative terms",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "unclear-as-supplied",
+    "observed": "Read by the evaluation workstream, not the product. No document is made part of the lease. Several sections tell the landlord what to include instead of stating a term, so parts of it are a checklist rather than lease wording.",
+    "needsHumanCheck": [
+      "Decide whether the guidance sections count as lease terms for labelling",
+      "Confirm no referenced document is missing"
+    ]
+  },
+  "usageRights": "No licence statement found. Published by a university for students and landlords to use as a sample. Internal evaluation only, kept locally, not redistributed; reuse terms not confirmed by anyone qualified to confirm them.",
+  "proposedSplit": "holdout-locked",
+  "exposureToPromptWork": [
+    "None. Fetched by the evaluation workstream on 2026-11-11, after the holdout exclusion list was set. No product, judge or model has been run on it, and its text has not been shared with prompt or completeness work."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}
