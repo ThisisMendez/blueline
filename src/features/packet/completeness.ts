@@ -290,7 +290,10 @@ function consolidate(located: readonly LocatedReference[], packet: Packet): Refe
     return {
       reference: {
         id: `${citation}${IDENTITY_SEPARATOR}${slug}`,
-        name: canonicalName(members.map((member) => member.name)),
+        name: canonicalName(
+          members.map((member) => member.name),
+          findDocument(packet, first.citingDocumentId)?.text ?? "",
+        ),
         citingDocumentId: first.citingDocumentId,
         citingSentence: first.citingSentence,
         citingStart: first.citingStart,

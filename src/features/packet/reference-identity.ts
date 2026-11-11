@@ -257,16 +257,18 @@ export function groupSameDocuments(inputs: readonly IdentityInput[]): number[][]
 /**
  * The one name the signer sees for a group of names of the same document:
  * the fullest of them (the longest once labels and form numbers are set
- * aside, the earliest on a tie), with the group's form number, if any,
- * added back as "(form HUD-50059)". Falls back to the first name as given
+ * aside, the earliest on a tie), extended to the fullest form the citing
+ * text itself uses (see {@link fullestTitleInText}), with the group's form
+ * number, if any, added back as "(form HUD-50059)". Falls back to the first name as given
  * when every name was only a label ("Attachment No. 1").
  */
-export function canonicalName(names: readonly string[]): string {
+export function canonicalName(names: readonly string[], citingText = ""): string {
   let best = "";
   for (const name of names) {
     const base = displayBase(name);
     if (base.length > best.length) best = base;
   }
+  if (best.length > 0 && citingText.length > 0) best = fullestTitleInText(citingText, best);
   const forms = [...new Set(names.flatMap(formNumbers))].sort();
   const form = forms[0];
   if (best.length === 0) {
@@ -274,6 +276,52 @@ export function canonicalName(names: readonly string[]): string {
     return collapse(normaliseQuotes(names[0] ?? "")).replace(/(\w)'(\w)/g, "$1’$2");
   }
   return form ? `${best} (form ${displayFormNumber(form)})` : best;
+}
+
+/** Title-case words that start a sentence or name a party, never part of a document's title. */
+const NOT_TITLE_WORDS = new Set([
+  "the", "a", "an", "this", "that", "these", "those", "each", "any", "all", "such", "its", "their",
+  "our", "your", "his", "her", "tenant", "tenants", "landlord", "landlords", "lessee", "lessor",
+  "resident", "residents", "leaseholder", "owner", "see", "under", "per", "and", "or", "of", "in",
+]);
+const MAXIMUM_TITLE_EXTENSION = 3;
+
+/**
+ * The model may shorten a title ("University Student Code of Conduct") that
+ * the lease itself gives in full elsewhere ("Ohio University Student Code of
+ * Conduct"). Wherever the name appears in the citing text, this extends it
+ * left over the capitalised words that directly precede it on the same line
+ * (up to three, never across punctuation, a possessive, or a word such as
+ * "the" or "Tenant"), and returns the longest form found. The name the
+ * signer sees then comes from the lease, not from how one reply worded it.
+ */
+export function fullestTitleInText(text: string, name: string): string {
+  // A short generic name ("Lease Addendum") could be the tail of another
+  // document's title, so only a name of three words or more is extended.
+  if (nameWords(name).length < MINIMUM_CONTAINED_WORDS) return name;
+  const needle = collapse(normaliseQuotes(name)).toLowerCase();
+  let best = name;
+  for (const rawLine of normaliseQuotes(text).split("\n")) {
+    const line = collapse(rawLine);
+    const lower = line.toLowerCase();
+    for (let at = lower.indexOf(needle); at >= 0; at = lower.indexOf(needle, at + 1)) {
+      const before = line.slice(0, at);
+      if (before.length > 0 && !before.endsWith(" ")) continue;
+      const words = before.trimEnd().split(" ").filter((word) => word.length > 0);
+      const taken: string[] = [];
+      while (taken.length < MAXIMUM_TITLE_EXTENSION && words.length > 0) {
+        const word = words[words.length - 1];
+        const plain = word.toLowerCase();
+        if (!/^[A-Z][A-Za-z&-]*$/.test(word) || NOT_TITLE_WORDS.has(plain) || plain.split("-").some((part) => DISTINGUISHING.has(part))) break;
+        taken.unshift(word);
+        words.pop();
+      }
+      if (taken.length === 0) continue;
+      const candidate = `${taken.join(" ")} ${line.slice(at, at + needle.length)}`.replace(/(\w)'(\w)/g, "$1’$2");
+      if (candidate.length > best.length) best = candidate;
+    }
+  }
+  return best;
 }
 
 /** A short, stable slug for the id of a group, from its strongest key. */

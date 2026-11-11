@@ -116,6 +116,19 @@ describe("the name the signer sees", () => {
     expect(canonicalName(names)).toBe(canonicalName([...names].reverse()));
   });
 
+  it("uses the fullest form of the title the lease itself gives, whichever short form the reply used", () => {
+    const text = "If Tenant breaks the Riverside College Student Conduct Code, the lease may end.\nTenant shall follow the College Student Conduct Code.";
+    expect(canonicalName(["College Student Conduct Code"], text)).toBe("Riverside College Student Conduct Code");
+    expect(canonicalName(["Riverside College Student Conduct Code"], text)).toBe("Riverside College Student Conduct Code");
+  });
+
+  it("does not extend over a party, an article, punctuation, a distinguishing word or a short generic name", () => {
+    expect(canonicalName(["Building Rules and Regulations"], "Tenant Building Rules and Regulations apply.")).toBe("Building Rules and Regulations");
+    expect(canonicalName(["Unit Inspection Report"], "Attachment No. 2: Unit Inspection Report")).toBe("Unit Inspection Report");
+    expect(canonicalName(["Unit Inspection Report"], "See the Move-Out Unit Inspection Report.")).toBe("Unit Inspection Report");
+    expect(canonicalName(["Lease Addendum"], "Attachment No. 10: RAD PBRA Model Lease Addendum")).toBe("Lease Addendum");
+  });
+
   it("falls back to the label when nothing else names the document", () => {
     expect(canonicalName(["Attachment No. 4"])).toBe("Attachment No. 4");
     expect(canonicalName(["Form HUD-50059"])).toBe("Form HUD-50059");
