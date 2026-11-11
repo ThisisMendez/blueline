@@ -23,8 +23,10 @@ import type { RiskFlag } from "./types";
  */
 
 const PATTERNS: readonly RegExp[] = [
-  // "is illegal", "would likely be unenforceable", "may be void"
-  /\b(?:is|are|was|were|be|being|been|seems?|appears?|likely|probably|possibly)\s+(?:(?:not|likely|probably|possibly|generally|usually|clearly)\s+)?(?:legal|illegal|lawful|unlawful|enforceable|unenforceable|void|invalid|legally\s+valid|legally\s+binding)\b/i,
+  // A term judged legal or not: "this fee is likely unenforceable", "a clause
+  // like this would be illegal". The subject must be the term itself, so
+  // "even if you believed the use was lawful" is not a conclusion.
+  /\b(?:it|this|that|term|terms|clause|clauses|provision|provisions|fee|fees|charge|charges|penalty|penalties|waiver|waivers|lease|agreement|requirement|restriction|deduction|deductions)\b(?:\s+\w+){0,3}?\s+(?:is|are|would\s+be|could\s+be|may\s+be|might\s+be|will\s+be|seems|appears)\s+(?:to\s+be\s+)?(?:(?:not|likely|probably|possibly|generally|usually|clearly)\s+)?(?:legal|illegal|lawful|unlawful|enforceable|unenforceable|void|invalid|legally\s+valid|legally\s+binding)\b/i,
   /\bunenforceable\b/i,
   /\bagainst the law\b/i,
   /\b(?:violates?|breach(?:es)?|contrary to|prohibited by|permitted by|allowed by|required by)\s+(?:the\s+)?(?:\w+\s+){0,2}(?:law|laws|statute|statutes|regulations?|code)\b/i,
@@ -44,15 +46,35 @@ export interface LegalClaimHit {
   readonly match: string;
 }
 
-/** Legal-conclusion phrases in `text`, ignoring any the quoted lease sentence itself contains. */
-export function findLegalClaims(text: string, sourceSentence = ""): string[] {
+/**
+ * Proposed lease wording quoted inside a counter-offer. Drafting phrases such
+ * as "to the extent permitted by applicable law" belong in a lease and are
+ * not Blueline stating a legal conclusion, so quoted wording is set aside.
+ */
+const QUOTED_WORDING = /(?:^|[\s:(])(?:'[^']{12,}'|"[^"]{12,}"|\u201c[^\u201d]{12,}\u201d|\u2018[^\u2019]{12,}\u2019)/g;
+
+/**
+ * Legal-conclusion phrases in `text`, ignoring any the quoted lease sentence
+ * itself contains. With `ignoreQuotedWording`, proposed lease wording in
+ * quotes is set aside first.
+ */
+export function findLegalClaims(text: string, sourceSentence = "", ignoreQuotedWording = false): string[] {
   const source = sourceSentence.toLowerCase();
   // The one sanctioned mention of law: it states a limit, not a conclusion.
-  const checked = text.replace(/\blocal law may affect this\b/gi, "");
+  let checked = text.replace(/\blocal law may affect this\b/gi, "");
+  if (ignoreQuotedWording) checked = checked.replace(QUOTED_WORDING, " ");
   const hits: string[] = [];
   for (const pattern of PATTERNS) {
     const match = checked.match(pattern);
-    if (match && !source.includes(match[0].toLowerCase())) hits.push(match[0]);
+    if (!match || source.includes(match[0].toLowerCase())) continue;
+    // "any notice period required by law" points at whatever the law says
+    // without saying it, as leases do. That is a reference, not a conclusion.
+    const before = checked.slice(Math.max(0, (match.index ?? 0) - 40), match.index ?? 0);
+    if (/\b(?:any|whatever)\b(?:\s+\w+){0,4}\s*$/i.test(before)) continue;
+    // "after the legally required notice period": an attributive reference
+    // to a requirement, not a statement of what it is.
+    if (/^legally\s+required\b/i.test(match[0]) && /\b(?:the|a|an)\s+$/i.test(before)) continue;
+    hits.push(match[0]);
   }
   return hits;
 }
@@ -123,8 +145,12 @@ export interface LegalClaimOutcome {
   readonly legalClaims: { readonly repaired: number; readonly withheld: number };
 }
 
+function fieldHasClaim(field: FlagField, text: string, sourceSentence: string): boolean {
+  return findLegalClaims(text, sourceSentence, field === "counterOffer").length > 0;
+}
+
 function flagHasClaim(flag: RiskFlag): boolean {
-  return FLAG_FIELDS.some((field) => findLegalClaims(flag[field], flag.sourceSentence).length > 0);
+  return FLAG_FIELDS.some((field) => fieldHasClaim(field, flag[field], flag.sourceSentence));
 }
 
 /**
@@ -189,9 +215,9 @@ export async function enforceLegalBoundary(
     const next: { -readonly [K in keyof RiskFlag]: RiskFlag[K] } = { ...flag };
     for (const field of FLAG_FIELDS) {
       const original = flag[field];
-      if (findLegalClaims(original, flag.sourceSentence).length === 0) continue;
+      if (!fieldHasClaim(field, original, flag.sourceSentence)) continue;
       const rewritten = candidate?.[field];
-      if (rewritten && findLegalClaims(rewritten, flag.sourceSentence).length === 0) {
+      if (rewritten && !fieldHasClaim(field, rewritten, flag.sourceSentence)) {
         next[field] = rewritten;
         repaired += 1;
       } else {

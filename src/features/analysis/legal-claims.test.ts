@@ -32,6 +32,24 @@ describe("finding legal conclusions in generated text", () => {
     expect(findLegalClaims(text)).toHaveLength(0);
   });
 
+  it("doesn't treat a description of the signer's belief as a legal conclusion", () => {
+    expect(findLegalClaims("A third party sues over your content, even if you believed the use was lawful.")).toHaveLength(0);
+  });
+
+  it("sets aside proposed lease wording quoted in a counter-offer, but not Blueline's own claim beside it", () => {
+    const drafting = "Ask to change it to: 'Interest accrues at 1% per month or the maximum rate permitted by applicable law, whichever is lower.'";
+    expect(findLegalClaims(drafting, "", true)).toHaveLength(0);
+    expect(findLegalClaims(drafting)).not.toHaveLength(0);
+    expect(findLegalClaims(`${drafting} The landlord is required to accept this cap.`, "", true)).not.toHaveLength(0);
+  });
+
+  it("treats a pointer to whatever the law says as a reference, not a conclusion", () => {
+    expect(findLegalClaims("After any legally required notice, the operator can sell what's in the unit.")).toHaveLength(0);
+    expect(findLegalClaims("Ask for 30 days' written notice before any further notice period required by law.")).toHaveLength(0);
+    expect(findLegalClaims("Unpaid rent lets the operator, after the legally required notice period, sell the contents.")).toHaveLength(0);
+    expect(findLegalClaims("The landlord is legally required to give 30 days' notice.")).not.toHaveLength(0);
+  });
+
   it("ignores a phrase the quoted lease sentence itself uses", () => {
     const lease = "After the notice period the law requires, the Operator may sell the contents.";
     expect(findLegalClaims("After the notice period the law requires, your things can be sold.", lease)).toHaveLength(0);
