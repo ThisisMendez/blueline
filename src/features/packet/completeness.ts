@@ -1,4 +1,4 @@
-import { ModelError, type ModelClient } from "@/features/analysis/model/client";
+import type { ModelClient } from "@/features/analysis/model/client";
 import {
   COMPLETENESS_SCHEMA_NAME,
   completenessJsonSchema,
@@ -7,6 +7,7 @@ import {
   type ModelCompleteness,
 } from "@/features/analysis/model/completeness-schema";
 import type { AgreementKind } from "@/features/analysis/model/completeness-schema";
+import { completeStructured } from "@/features/analysis/model/structured";
 
 import {
   COMPLETENESS_SYSTEM_PROMPT,
@@ -14,28 +15,47 @@ import {
   buildCompletenessUserMessage,
 } from "./completeness-prompt";
 import { locateQuotation } from "./normalize";
+import {
+  canonicalName,
+  firstMention,
+  groupSameDocuments,
+  identityKeys,
+  identitySlug,
+} from "./reference-identity";
 import { findDocument, type Packet } from "./types";
 
 /**
  * The completeness gate (ADR 0005).
  *
- * A complete agreement is the lease and every document it references. This
- * module answers one question about a packet — is anything it names absent —
- * and it answers it before any review runs, because a partial review of an
- * incomplete agreement is the false reassurance the product exists to avoid.
+ * A complete agreement is the lease and every document it makes part of
+ * itself. This module answers one question about a packet — is any required
+ * document absent — and it answers it before any review runs, because a
+ * partial review of an incomplete agreement is the false reassurance the
+ * product exists to avoid.
  *
  * Nothing here produces a summary or a flag, and nothing here can. The gate's
  * two outcomes are separate types: a complete agreement carries only matched
  * references, and an incomplete one carries no analysis of any kind. The
  * blocked path never reaches the review pipeline, so there is no partial
  * review to suppress.
+ *
+ * Only documents the text requires can block. The model also reports
+ * documents attached "if any" and documents merely mentioned, so it has
+ * somewhere to put them; they are set aside here. Each required document is
+ * grounded in the sentence that requires it, verified against the signer's
+ * text, and then names of the same document are merged in code
+ * (reference-identity.ts), so the signer is asked for each document once,
+ * under one name, in the order the lease names them.
  */
 
-/** A document the agreement refers to, located in the text that refers to it. */
+/** A document the agreement requires, located in the text that requires it. */
 export interface DocumentReference {
-  /** Derived from the citation, so the same sentence always gets the same id. */
+  /**
+   * Derived from the citation and the document's identity, so the same
+   * sentence naming the same document always gets the same id.
+   */
   readonly id: string;
-  /** The referenced document's name, as the agreement states it. */
+  /** The referenced document's name, as the signer sees it. */
   readonly name: string;
   /** The supplied document whose text makes the reference. */
   readonly citingDocumentId: string;
@@ -88,7 +108,7 @@ export interface CompleteAgreement {
  */
 export interface IncompleteAgreement {
   readonly kind: "incomplete";
-  /** Named, with the sentence that names them, in the order the lease names them. */
+  /** Named, with the sentence that requires them, in the order the lease names them. One entry per document. */
   readonly missing: readonly DocumentReference[];
   /** References that were answered, so the signer can correct a wrong one. */
   readonly matches: readonly MatchedReference[];
@@ -137,7 +157,7 @@ export interface CompletenessCheckInput {
   readonly resolutions?: readonly ReferenceResolution[];
 }
 
-/** The id a reference keeps: derived from its citation, so it is stable. */
+/** The id of one citing sentence: where it sits in which document. */
 export function referenceId(
   citingDocumentId: string,
   citingStart: number,
@@ -146,8 +166,16 @@ export function referenceId(
   return `${citingDocumentId}#${citingStart}-${citingEnd}`;
 }
 
+/** Separates a reference id's citation from the identity of the document it names. */
+const IDENTITY_SEPARATOR = "~";
+
+/** One required reference as the model gave it, its sentence located. */
 interface LocatedReference {
-  readonly reference: DocumentReference;
+  readonly name: string;
+  readonly citingDocumentId: string;
+  readonly citingSentence: string;
+  readonly citingStart: number;
+  readonly citingEnd: number;
   /** What the model said answers it, unchecked. */
   readonly satisfiedByDocumentId: string | null;
 }
@@ -158,31 +186,20 @@ interface LocationResult {
   readonly unlocatable: readonly string[];
 }
 
-async function askModel(
-  model: ModelClient,
-  user: string,
-): Promise<ModelCompleteness> {
-  const raw = await model.complete({
-    system: COMPLETENESS_SYSTEM_PROMPT,
-    user,
-    schemaName: COMPLETENESS_SCHEMA_NAME,
-    jsonSchema: completenessJsonSchema,
-  });
-
-  const parsed = modelCompletenessSchema.safeParse(raw);
-  if (!parsed.success) {
-    throw new ModelError(
-      "unreadable",
-      `The completeness check did not match the expected shape: ${parsed.error.issues
-        .map((issue) => `${issue.path.join(".") || "(root)"} ${issue.message}`)
-        .join("; ")}`,
-    );
-  }
-  return parsed.data;
+/** One structured call: validated, and retried once if the reply is the wrong shape. */
+function askModel(model: ModelClient, user: string): Promise<ModelCompleteness> {
+  return completeStructured(
+    model,
+    { system: COMPLETENESS_SYSTEM_PROMPT, user, schemaName: COMPLETENESS_SCHEMA_NAME, jsonSchema: completenessJsonSchema },
+    modelCompletenessSchema,
+    "The completeness check",
+  );
 }
 
 /**
- * Locates each reference's sentence in the document it was attributed to.
+ * Locates the sentence of each required reference in the document it was
+ * attributed to. Conditional and merely mentioned documents are set aside
+ * before this point: they cannot block, so their sentences are not checked.
  *
  * The sentence the signer reads is cut from their own extracted text at the
  * recorded offsets, never copied from the model's reply — the same rule ADR
@@ -195,39 +212,123 @@ function locateReferences(
 ): LocationResult {
   const located: LocatedReference[] = [];
   const unlocatable: string[] = [];
-  const seen = new Set<string>();
 
   for (const candidate of candidates) {
+    if (candidate.requirement !== "required") continue;
+
     const document = findDocument(packet, candidate.citingDocumentId);
-    if (!document) {
+    const location = document ? locateQuotation(document.text, candidate.citingSentence) : null;
+    if (!document || !location) {
       unlocatable.push(candidate.citingSentence);
       continue;
     }
-
-    const location = locateQuotation(document.text, candidate.citingSentence);
-    if (!location) {
-      unlocatable.push(candidate.citingSentence);
-      continue;
-    }
-
-    const id = referenceId(document.id, location.start, location.end);
-    if (seen.has(id)) continue;
-    seen.add(id);
 
     located.push({
-      reference: {
-        id,
-        name: candidate.name,
-        citingDocumentId: document.id,
-        citingSentence: document.text.slice(location.start, location.end),
-        citingStart: location.start,
-        citingEnd: location.end,
-      },
+      name: candidate.name,
+      citingDocumentId: document.id,
+      citingSentence: document.text.slice(location.start, location.end),
+      citingStart: location.start,
+      citingEnd: location.end,
       satisfiedByDocumentId: candidate.satisfiedByDocumentId,
     });
   }
 
   return { located, unlocatable };
+}
+
+/** All the mentions of one document, merged. */
+interface ReferenceGroup {
+  readonly reference: DocumentReference;
+  /** Ids a signer may have used for this document on an earlier check. */
+  readonly knownIds: ReadonlySet<string>;
+  /** The identity slugs of every key this document carries. */
+  readonly slugs: ReadonlySet<string>;
+  /** Model proposals, in member order. */
+  readonly proposals: readonly (string | null)[];
+  /** Where the document is first named: packet position, then offset. */
+  readonly order: readonly [number, number];
+}
+
+/**
+ * Merges the mentions that name the same document into one reference, with
+ * one name, the earliest requiring sentence, and an id built from both.
+ */
+function consolidate(located: readonly LocatedReference[], packet: Packet): ReferenceGroup[] {
+  const position = (documentId: string) =>
+    packet.documents.findIndex((document) => document.id === documentId);
+
+  // Members in document order, so every rule below that takes "the first"
+  // takes the one the lease names first, whatever order the model used.
+  const ordered = [...located].sort(
+    (left, right) =>
+      position(left.citingDocumentId) - position(right.citingDocumentId) ||
+      left.citingStart - right.citingStart ||
+      left.citingEnd - right.citingEnd ||
+      (left.name < right.name ? -1 : left.name > right.name ? 1 : 0),
+  );
+
+  const groups = groupSameDocuments(ordered).map((indexes): ReferenceGroup => {
+    const members = indexes.map((index) => ordered[index]);
+    const first = members[0];
+    const keys = [...new Set(members.flatMap((member) => identityKeys(member)))];
+    const slug = identitySlug(keys);
+    const citation = referenceId(first.citingDocumentId, first.citingStart, first.citingEnd);
+
+    let order: [number, number] = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY];
+    for (const member of members) {
+      const text = findDocument(packet, member.citingDocumentId)?.text ?? "";
+      const mention = firstMention(text, member.name);
+      const candidate: [number, number] = [
+        position(member.citingDocumentId),
+        mention >= 0 ? mention : member.citingStart,
+      ];
+      if (candidate[0] < order[0] || (candidate[0] === order[0] && candidate[1] < order[1])) {
+        order = candidate;
+      }
+    }
+
+    return {
+      reference: {
+        id: `${citation}${IDENTITY_SEPARATOR}${slug}`,
+        name: canonicalName(members.map((member) => member.name)),
+        citingDocumentId: first.citingDocumentId,
+        citingSentence: first.citingSentence,
+        citingStart: first.citingStart,
+        citingEnd: first.citingEnd,
+      },
+      knownIds: new Set(members.map((member) =>
+        referenceId(member.citingDocumentId, member.citingStart, member.citingEnd))),
+      slugs: new Set(keys.map((key) => identitySlug([key]))),
+      proposals: members.map((member) => member.satisfiedByDocumentId),
+      order,
+    };
+  });
+
+  return groups.sort(
+    (left, right) =>
+      left.order[0] - right.order[0] ||
+      left.order[1] - right.order[1] ||
+      left.reference.citingStart - right.reference.citingStart ||
+      (left.reference.name < right.reference.name ? -1 : left.reference.name > right.reference.name ? 1 : 0),
+  );
+}
+
+/**
+ * The signer's answer for this document, if they gave one. Their answer was
+ * given against the id shown on an earlier check; the model may have cited a
+ * different sentence this time, so the document's identity also counts.
+ */
+function signerAnswer(
+  group: ReferenceGroup,
+  resolutions: readonly ReferenceResolution[],
+): ReferenceResolution | null {
+  for (const resolution of resolutions) {
+    if (resolution.referenceId === group.reference.id) return resolution;
+    const [citation, slug] = resolution.referenceId.split(IDENTITY_SEPARATOR);
+    // An id with no identity part names a sentence only; one with it names a document.
+    if (slug === undefined ? group.knownIds.has(citation) : group.slugs.has(slug)) return resolution;
+  }
+  return null;
 }
 
 /**
@@ -239,30 +340,32 @@ function locateReferences(
  * that made the reference — a lease does not satisfy its own fee schedule.
  */
 function matchFor(
-  located: LocatedReference,
+  group: ReferenceGroup,
   packet: Packet,
-  resolutions: ReadonlyMap<string, string | null>,
+  resolutions: readonly ReferenceResolution[],
 ): MatchedReference | null {
-  if (resolutions.has(located.reference.id)) {
-    const chosen = resolutions.get(located.reference.id) ?? null;
+  const citing = group.reference.citingDocumentId;
+  const answer = signerAnswer(group, resolutions);
+  if (answer) {
+    const chosen = answer.documentId;
     if (chosen === null) return null;
     // A document the packet does not hold is not an answer, whoever named it.
-    if (!findDocument(packet, chosen) || chosen === located.reference.citingDocumentId) return null;
-    return { reference: located.reference, documentId: chosen, matchedBy: "signer" };
+    if (!findDocument(packet, chosen) || chosen === citing) return null;
+    return { reference: group.reference, documentId: chosen, matchedBy: "signer" };
   }
 
-  const proposed = located.satisfiedByDocumentId;
-  if (proposed === null) return null;
-  if (proposed === located.reference.citingDocumentId) return null;
-  if (!findDocument(packet, proposed)) return null;
-
-  return { reference: located.reference, documentId: proposed, matchedBy: "model" };
+  for (const proposed of group.proposals) {
+    if (proposed === null || proposed === citing || !findDocument(packet, proposed)) continue;
+    return { reference: group.reference, documentId: proposed, matchedBy: "model" };
+  }
+  return null;
 }
 
 /**
- * Runs the gate: ask what the packet refers to, verify every citing sentence,
- * retry the ones that did not match exactly once, drop whatever still does
- * not match, then settle each surviving reference against the packet.
+ * Runs the gate: ask what the packet refers to, keep the required documents,
+ * verify every requiring sentence, retry the ones that did not match exactly
+ * once, merge the names of the same document, then settle each document
+ * against the packet.
  */
 export async function checkCompleteness({
   packet,
@@ -311,10 +414,10 @@ export async function checkCompleteness({
       return { kind: "unverified", unverifiedReferenceCount: secondPass.unlocatable.length };
     }
 
-    const alreadyHeld = new Set(located.map((entry) => entry.reference.id));
-    const recovered = secondPass.located.filter(
-      (entry) => !alreadyHeld.has(entry.reference.id),
-    );
+    const citationOf = (entry: LocatedReference) =>
+      `${referenceId(entry.citingDocumentId, entry.citingStart, entry.citingEnd)}|${entry.name}`;
+    const alreadyHeld = new Set(located.map(citationOf));
+    const recovered = secondPass.located.filter((entry) => !alreadyHeld.has(citationOf(entry)));
     located = [...located, ...recovered];
 
     droppedReferenceCount = Math.max(
@@ -326,17 +429,13 @@ export async function checkCompleteness({
     }
   }
 
-  const byReferenceId = new Map(
-    resolutions.map((resolution) => [resolution.referenceId, resolution.documentId]),
-  );
-
   const matches: MatchedReference[] = [];
   const missing: DocumentReference[] = [];
 
-  for (const entry of located) {
-    const match = matchFor(entry, packet, byReferenceId);
+  for (const group of consolidate(located, packet)) {
+    const match = matchFor(group, packet, resolutions);
     if (match) matches.push(match);
-    else missing.push(entry.reference);
+    else missing.push(group.reference);
   }
 
   if (missing.length === 0) {

@@ -18,6 +18,7 @@ import {
   type CandidateTopic,
   type ModelChecklist,
 } from "./model/checklist-schema";
+import { completeStructured } from "./model/structured";
 import type { CoverageChecklist, CoverageItem, FoundTopic } from "./types";
 import { locateCitation } from "./verify";
 
@@ -46,24 +47,14 @@ export interface CoverageChecklistInput {
   readonly model: ModelClient;
 }
 
-async function askModel(model: ModelClient, user: string): Promise<ModelChecklist> {
-  const raw = await model.complete({
-    system: CHECKLIST_SYSTEM_PROMPT,
-    user,
-    schemaName: CHECKLIST_SCHEMA_NAME,
-    jsonSchema: checklistJsonSchema,
-  });
-
-  const parsed = modelChecklistSchema.safeParse(raw);
-  if (!parsed.success) {
-    throw new ModelError(
-      "unreadable",
-      `The coverage checklist did not match the expected shape: ${parsed.error.issues
-        .map((issue) => `${issue.path.join(".") || "(root)"} ${issue.message}`)
-        .join("; ")}`,
-    );
-  }
-  return parsed.data;
+/** One structured call: validated, and retried once if the reply is the wrong shape. */
+function askModel(model: ModelClient, user: string): Promise<ModelChecklist> {
+  return completeStructured(
+    model,
+    { system: CHECKLIST_SYSTEM_PROMPT, user, schemaName: CHECKLIST_SCHEMA_NAME, jsonSchema: checklistJsonSchema },
+    modelChecklistSchema,
+    "The coverage checklist",
+  );
 }
 
 interface VerificationPass {

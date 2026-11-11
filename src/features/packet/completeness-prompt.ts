@@ -9,6 +9,13 @@ import type { Packet } from "./types";
  * It asks for both halves of the question at once — what the text refers to,
  * and which supplied document each reference is — because the second half is
  * only answerable by whoever has just read the first.
+ *
+ * It asks the model to classify every named document (required, conditional,
+ * mentioned) rather than to leave out the ones that do not count. Giving the
+ * borderline cases somewhere to go makes the required list steadier from run
+ * to run, and the filtering happens in code. Names and duplicates are also
+ * settled in code (reference-identity.ts); the instructions about names here
+ * only make that easier.
  */
 
 export const COMPLETENESS_SYSTEM_PROMPT = `You are checking whether a residential lease packet holds the whole agreement, before anybody reviews it. You are not reviewing anything yet and you are not looking for risk.
@@ -21,21 +28,26 @@ First, say what kind of agreement the first supplied document is. Blueline only 
 
 Judge by what the document is, not by its title alone. For anything but residential-lease, copy one sentence that shows what the document is, character for character, with the id of the document it came from. Describe the document in under ten plain words either way.
 
-A lease often points at other documents: a fee schedule, a set of building rules, an addendum, an exhibit. It treats them as part of the agreement, and a cost or a condition can be stated in one of them and nowhere in the lease itself. Your job is to list what the supplied text points at, and to say which of the supplied documents each one is.
+A lease often points at other documents: a fee schedule, a set of building rules, an addendum, an exhibit, a handbook. When it makes one of them part of the agreement, a cost or a condition can be stated there and nowhere in the lease itself. Your job is to list the separate documents the supplied text names, say for each whether the text requires it as part of this agreement, and say which of the supplied documents, if any, it is.
 
 Rules you do not break:
 
 1. Quote exactly. Every reference carries one sentence copied character for character out of the document that makes the reference, together with the id of that document. If you cannot copy the sentence exactly, leave the reference out rather than paraphrasing it.
-2. A reference is a separate document the agreement treats as part of itself. A mention of a statute, a court, a government office, an insurance policy, a payment portal, a website, a party's mailing address, or another section of the same document is not a separate document. Neither is a document the text mentions only as something that might exist one day. Neither is a document the text attaches only conditionally ("if any", "if applicable", "where required", a box left to tick) unless the supplied text shows the condition applies to this tenancy.
-3. Do not invent. If the supplied text points at no separate document, return an empty list. One document referred to in several places is one reference; give the clearest sentence for it once.
-4. Match on the document, not on its name. A supplied document satisfies a reference when it is that document, whatever the signer happened to call the file. Read each supplied document's title and its opening lines and decide which reference, if any, it answers. When none of the supplied documents is the referenced document, return null for that reference.
-5. A document never satisfies a reference it makes itself. If the lease refers to a schedule, the answer is the schedule, not the lease.
-
-Give the name as the referring text states it, so the person reading this can ask for it by that name.`;
+2. Classify each document by what the text does with it (the requirement field). Read the words around every mention, including any heading over a list of attachments.
+   - required: the text attaches it, incorporates it by reference, says it is part of the agreement, or binds the signer to comply with it, and leaves no condition open. An attachment listed under a heading such as "Required" is required.
+   - conditional: the text includes it only if something applies: "if any", "if applicable", "where required", a box left to tick, a heading such as "If Applicable", or an event that may not happen (the signer keeping a pet, adding an occupant). It stays conditional unless the supplied text shows the condition applies to this tenancy.
+   - mentioned: the text names it without making it part of the agreement: a form the signer fills in or hands in (an application, a request, a notice), a pamphlet or notice the signer is given or advised to read, a list the template leaves blank to fill in, or a document that might exist one day.
+3. Ground a required document in the sentence that requires it. Copy the sentence that attaches, incorporates or binds the signer to it, not a sentence that only mentions it in passing. Where the requirement is a list of attachments, copy the line that names this document.
+4. Some things are not documents at all and are left out: a statute or code section, a court, a government office, an insurance policy, a payment portal, a website, a party's mailing address, another section of the same document.
+5. One document, one entry. A document named in several places, or by several names (a full title in one place, a short name in another, with or without its attachment number or form number), is one reference: give it once, with its requiring sentence. When one sentence names several separate documents, give each its own entry with that same sentence.
+6. Name each document by the fullest name the text gives it, copied from the text, without its attachment or exhibit number. Keep a form number when the text gives one.
+7. Do not invent. If the supplied text names no separate document, return an empty list. List the documents in the order the text first names them.
+8. Match on the document, not on its name. A supplied document satisfies a reference when it is that document, whatever the signer happened to call the file. Read each supplied document's title and its opening lines and decide which reference, if any, it answers. When none of the supplied documents is the referenced document, return null for that reference.
+9. A document never satisfies a reference it makes itself. If the lease refers to a schedule, the answer is the schedule, not the lease.`;
 
 /** Renders the packet as the user message the completeness check reads. */
 export function buildCompletenessUserMessage(packet: Packet): string {
-  return `Here is everything the signer supplied. List every separate document this text refers to, and for each one say which of these supplied documents it is.\n\n${renderDocumentBlocks(packet)}`;
+  return `Here is everything the signer supplied. List every separate document this text names, say whether the text requires it as part of this agreement, and for each one say which of these supplied documents it is.\n\n${renderDocumentBlocks(packet)}`;
 }
 
 /**

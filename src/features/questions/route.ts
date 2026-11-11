@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ModelError, type ModelClient } from "@/features/analysis/model/client";
+import { completeStructured } from "@/features/analysis/model/structured";
 import { locateCitation } from "@/features/analysis/verify";
 import { checkCompleteness } from "@/features/packet/completeness";
 import { renderDocumentBlocks } from "@/features/packet/render";
@@ -37,25 +38,25 @@ export function createQuestionRoute(model: ModelClient) {
       if (completeness.kind === "unverified") return respond({ status: "unverified" });
       const user = `Question: ${JSON.stringify(parsed.data.question)}\n\n${renderDocumentBlocks(packet)}`;
       for (let attempt = 0; attempt < 2; attempt += 1) {
-        const output = await model.complete({
+        // Validated, and retried once if the reply is the wrong shape. That
+        // retry is separate from this loop, which retries unverified citations.
+        const answer = await completeStructured(model, {
           system: SYSTEM,
           user: user + (attempt ? "\nYour previous citations did not verify. Copy sentences from their named documents exactly, or return not-addressed if no text answers the question." : ""),
           schemaName: QUESTION_SCHEMA_NAME, jsonSchema: questionJsonSchema,
-        });
-        const answer = modelAnswerSchema.safeParse(output);
-        if (!answer.success) throw new ModelError("unreadable", "Question response did not match its schema.");
-        const needsLocalLaw = answer.data.needsLocalLaw || asksAboutLaw(parsed.data.question);
-        if (answer.data.status === "not-addressed") {
+        }, modelAnswerSchema, "The question answer");
+        const needsLocalLaw = answer.needsLocalLaw || asksAboutLaw(parsed.data.question);
+        if (answer.status === "not-addressed") {
           if (attempt > 0) throw new ModelError("verification-failed", "Question retry did not recover a verified answer.");
           return respond({ status: "not-addressed", needsLocalLaw });
         }
         const citations: AnswerCitation[] = [];
-        for (const source of answer.data.citations) {
+        for (const source of answer.citations) {
           const located = locateCitation(packet, source.sourceDocumentId, source.sourceSentence);
           if (!located) break;
           citations.push({ sourceDocumentId: located.document.id, sourceSentence: located.sentence, sourceStart: located.start, sourceEnd: located.end });
         }
-        if (citations.length === answer.data.citations.length) return respond({ status: "answered", citations, needsLocalLaw });
+        if (citations.length === answer.citations.length) return respond({ status: "answered", citations, needsLocalLaw });
       }
       throw new ModelError("verification-failed", "Question citations could not be verified.");
     } catch (error) {

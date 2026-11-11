@@ -49,6 +49,9 @@ const DOCUMENT_PATTERN =
 export const UNQUOTABLE_SENTENCE =
   "The Resident shall deliver a written weather report to the Landlord before the first day of each month.";
 
+/** A reply that matches none of the product's schemas. */
+export const MALFORMED_REPLY = Object.freeze({ unexpected: "This reply is not in the requested shape." });
+
 export type FixtureModelBehaviour =
   /** Every synthetically planted flag, quoted exactly. */
   | "correct"
@@ -92,6 +95,7 @@ interface ModelFlagPayload {
 
 interface ModelReferencePayload {
   name: string;
+  requirement: "required" | "conditional" | "mentioned";
   citingDocumentId: string;
   citingSentence: string;
   satisfiedByDocumentId: string | null;
@@ -171,6 +175,17 @@ export interface FixtureModelClientOptions {
    * when given, so a test can drive both a verified and an unverifiable
    * "not a lease" answer.
    */
+  /**
+   * Completeness: reference names the model reports as conditional ("if
+   * any"), so they are set aside rather than blocking the review.
+   */
+  readonly conditionalReferences?: readonly string[];
+  /**
+   * Any call: schema name to how many of the first calls asking that schema
+   * get a reply in the wrong shape ({@link MALFORMED_REPLY}), before the
+   * client answers properly. Drives the one shape retry in structured.ts.
+   */
+  readonly invalidReplies?: Readonly<Record<string, number>>;
   readonly agreement?: {
     readonly kind: "residential-lease" | "not-a-residential-lease" | "unclear";
     readonly description?: string;
@@ -194,6 +209,8 @@ export function createFixtureModelClient(
   const topicCitations = options.topicCitations ?? {};
   const inventedTopics = options.inventedTopics ?? [];
   const inconsistentFlagSentences = options.inconsistentFlagSentences ?? [];
+  const conditionalReferences = new Set(options.conditionalReferences ?? []);
+  const invalidReplies = options.invalidReplies ?? {};
   const requests: ModelRequest[] = [];
 
   function fixtureFor(document: PromptDocument): LoadedFixture | null {
@@ -267,6 +284,7 @@ export function createFixtureModelClient(
 
         payloads.push({
           name: reference.name,
+          requirement: conditionalReferences.has(reference.name) ? "conditional" : "required",
           citingDocumentId: document.id,
           citingSentence: unquotableReferences.has(reference.name)
             ? UNQUOTABLE_SENTENCE
@@ -389,6 +407,12 @@ export function createFixtureModelClient(
     },
     async complete(request: ModelRequest): Promise<unknown> {
       requests.push(request);
+
+      // A reply in the wrong shape, for the first N calls that ask this schema.
+      const asked = requests.filter((entry) => entry.schemaName === request.schemaName).length;
+      if (asked <= (invalidReplies[request.schemaName] ?? 0)) {
+        return MALFORMED_REPLY;
+      }
 
       if (request.schemaName === CONSISTENCY_SCHEMA_NAME) {
         const results = [...request.user.matchAll(CONSISTENCY_ITEM_PATTERN)].map((match) => {
