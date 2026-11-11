@@ -17,6 +17,7 @@
     "eval:gated": "tsx evals/gold-set/cli.ts",
     "eval:independent": "tsx evals/cli.ts",
     "eval:leases": "tsx evals/lease-corpus/run.ts",
+    "eval:legal": "tsx evals/legal-questions.ts",
     "label": "node evals/labels/server.mjs",
     "fixtures:pdf": "tsx tests/fixtures/make-pdfs.ts"
   },

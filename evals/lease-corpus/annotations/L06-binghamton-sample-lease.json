@@ -1,0 +1,11 @@
+{
+  "documentId": "L06-binghamton-sample-lease",
+  "sourceUrl": "https://www.binghamton.edu/occ/pdfs/lease.pdf",
+  "accessedOn": "2026-11-11",
+  "available": false,
+  "label": "intake record: not gold-standard, no labels yet",
+  "status": "unavailable",
+  "note": "404 Not Found on 2026-11-11. Internet Archive holds a copy of this URL (snapshot 2024-07-18). Proposed replacement, not used until approved.",
+  "proposedReplacement": "Internet Archive copy of the same URL",
+  "replacementApproved": false
+}

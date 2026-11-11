@@ -1,0 +1,48 @@
+{
+  "documentId": "L07-cu-boulder-grad-family-lease",
+  "sourceUrl": "https://www.colorado.edu/living/media/2787",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "intake record: not gold-standard, no labels yet",
+  "sha256Original": "2e99ff80bd7d53080f7e414a02e3a7e9051a8472c556a4b2180fc2b05e41bda4",
+  "sha256Text": "ad44f3f081c21621ead5ee2d0b2c7860bfe283430a73090f7ea0610aff0ee137",
+  "textIsDerived": false,
+  "jurisdiction": "Boulder, Colorado, USA",
+  "housingContext": "University-owned graduate and family housing",
+  "programRestrictions": "Eligibility tied to University of Colorado Boulder enrolment; university housing rules and handbook apply",
+  "documentType": "university housing lease template, 2026-2027 (unexecuted)",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "incomplete-as-supplied",
+    "observed": "Incorporates the Graduate & Family Housing Resident Handbook (and, in one run, an Occupant Agreement); not supplied.",
+    "needsHumanCheck": [
+      "Confirm the handbook is incorporated into the lease"
+    ]
+  },
+  "usageRights": "No licence statement found. University document, copyright presumed held by the University of Colorado. Internal evaluation only, kept locally, not redistributed; reuse terms not confirmed.",
+  "proposedSplit": "holdout-candidate",
+  "exposureToPromptWork": [
+    "Run through the product for the scope and completeness check only (Phase 2, 3); no prompt change was based on it."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}
