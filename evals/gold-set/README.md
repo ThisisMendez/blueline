@@ -79,6 +79,18 @@ These are separate measurements. Don't read one as another.
 - **End-to-end residential lease performance** needs real leases: the public lease corpus in `evals/lease-corpus/`.
 - **Human-reviewed accuracy and launch readiness** need the independently labelled, locked lease set (ticket 09). Nothing in this folder measures them.
 
+## Six-decision change reporting (2026-11-11)
+
+Two additions to the report. The original 26-risk benchmark and its denominators are unchanged.
+
+**Unilateral cases (decision 2).** Each run lists the six `unilateral-modification` cases with the gold label and the product's grade, then prints `Six unilateral cases High: n/6`. A missed case counts as not High. The gold set grades all six `critical`. Blueline has no Critical tier (severity is high, medium or low), so the best a product grade can do is High, and the report shows that gap: `gold critical graded High`. **Exact-band agreement** compares the product's grade with the gold set's own label (high = high, medium = moderate), so High on a critical clause is not exact. It prints next to the existing mapped agreement, which treats critical and high as the same band. The six cases are a visible gap, not a defect in the product.
+
+**Proposed label corrections (decision 4).** `label-corrections.json` lists the sentences in the three benign documents (clean-document, library-volunteer-agreement, swim-lesson-registration) that conflict with the owner's materiality standard in `PRD.md`: a term that forfeits money for a period or service the signer won't get, or property. Each entry records the document, the exact sentence (checked verbatim and unique by `tests/gold-set-eval.test.ts`), the original label, the corrected label, the standard and the reason. It is a proposal applying the owner's standard and is pending owner confirmation. The original labels in `corpus/` and `fixtures/` are not edited.
+
+The run's revised view splits flags on the benign documents into valid Low forfeiture flags (overlapping a corrected sentence) and false flags (everything else), and gives a clean-document count that tolerates valid forfeiture flags. The original clean-document count prints unchanged beside it.
+
+Frozen before any candidate run: `label-corrections.json` SHA-256 `707215fdab15f00596a353ae6403b7cf45c262fdf0fbd849094692ff383d4a72`. A test fails if the file changes without this line changing, and each run prints the hash it used.
+
 ## Runs
 
 | Started | Model | Result |

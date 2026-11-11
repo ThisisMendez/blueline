@@ -1,0 +1,38 @@
+{
+  "status": "PROPOSAL applying the owner's materiality standard. Pending owner confirmation. Not part of the original gold set.",
+  "note": "Original labels are preserved: corpus/ and fixtures/ are untouched and the original 26-risk benchmark is scored exactly as before. Only three documents are labelled benign (clean-document, library-volunteer-agreement, swim-lesson-registration). Every sentence in them was read against the standard. library-volunteer-agreement has no term that forfeits money, a service or property, so it has no correction. Sentences listed in the same document as ordinary payments (the $45 fee, the $120 fee, the fifteen-dollar refund for a cancelled lesson) are left as the gold set labels them. Freeze this file before scoring a candidate: its SHA-256 is recorded in README.md.",
+  "corrections": [
+    {
+      "document": "clean-document",
+      "sentence": "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out.",
+      "originalLabel": "benign: the document is labelled clean, so any flag on it is counted as a false alarm",
+      "correctedLabel": "valid low forfeiture: a flag here is correct under the standard",
+      "standard": "PRD.md materiality paragraph (Option B, 2026-11-11): a payment becomes a flag when the text adds a downside such as forfeiting money for a period or service the signer won't get; ordinary payments (no refund for a period already had or still usable) are not flags. Severity is judged separately, and a small, bounded forfeiture is Low.",
+      "reason": "The prepaid season fee is not refunded for the months left after the Plot Holder gives notice, so the money pays for a period the signer will not get. The Association's own notice triggers a pro-rata refund in the sentence before it, so the loss only falls on the signer's exit."
+    },
+    {
+      "document": "clean-document",
+      "sentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+      "originalLabel": "benign: the document is labelled clean, so any flag on it is counted as a false alarm",
+      "correctedLabel": "valid low forfeiture: a flag here is correct under the standard",
+      "standard": "PRD.md materiality paragraph (Option B, 2026-11-11): a payment becomes a flag when the text adds a downside such as forfeiting money for a period or service the signer won't get; ordinary payments (no refund for a period already had or still usable) are not flags. Severity is judged separately, and a small, bounded forfeiture is Low.",
+      "reason": "The signer forfeits property left on the plot after the deadline. The amount is small and the deadline is stated, which is why Low fits."
+    },
+    {
+      "document": "swim-lesson-registration",
+      "sentence": "A place given up later than that, and before the third lesson, is refunded at half the fee.",
+      "originalLabel": "benign: the document is labelled clean, so any flag on it is counted as a false alarm",
+      "correctedLabel": "valid low forfeiture: a flag here is correct under the standard",
+      "standard": "PRD.md materiality paragraph (Option B, 2026-11-11): a payment becomes a flag when the text adds a downside such as forfeiting money for a period or service the signer won't get; ordinary payments (no refund for a period already had or still usable) are not flags. Severity is judged separately, and a small, bounded forfeiture is Low.",
+      "reason": "Half of a fee paid in full up front is kept for lessons the signer will not attend. The amount is fixed and known from the page, so Low fits."
+    },
+    {
+      "document": "swim-lesson-registration",
+      "sentence": "After the third lesson no refund is made.",
+      "originalLabel": "benign: the document is labelled clean, so any flag on it is counted as a false alarm",
+      "correctedLabel": "valid low forfeiture: a flag here is correct under the standard",
+      "standard": "PRD.md materiality paragraph (Option B, 2026-11-11): a payment becomes a flag when the text adds a downside such as forfeiting money for a period or service the signer won't get; ordinary payments (no refund for a period already had or still usable) are not flags. Severity is judged separately, and a small, bounded forfeiture is Low.",
+      "reason": "The remaining prepaid lessons are forfeited once a place is given up after the third lesson. This is money for a service the signer will not get, so a flag is correct under the standard."
+    }
+  ]
+}
