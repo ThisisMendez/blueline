@@ -434,10 +434,11 @@ export function createFixtureModelClient(
           const expected = sidecar.qa.answerable.find((entry) => entry.question === question);
           if (expected) return {
             status: "answered",
+            needsLocalLaw: false,
             citations: [{ sourceDocumentId: document.id, sourceSentence: expected.expectedSourceSentence }],
           };
         }
-        return { status: "not-addressed", citations: [] };
+        return { status: "not-addressed", needsLocalLaw: false, citations: [] };
       }
 
       if (request.schemaName === RED_LINES_SCHEMA_NAME) {

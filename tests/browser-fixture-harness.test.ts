@@ -82,7 +82,7 @@ describe("test-only browser fixture transport", () => {
     const answered = await ask("How much notice does the landlord have to give before coming into my apartment?");
     expect(answered.status).toBe("answered");
     expect(answered.citations[0].sourceSentence).toBe(fixture.sidecar.qa.answerable[0].expectedSourceSentence);
-    expect(await ask("Does the lease say anything about renters insurance?")).toEqual({ status: "not-addressed" });
+    expect(await ask("Does the lease say anything about renters insurance?")).toEqual({ status: "not-addressed", needsLocalLaw: false });
     expect(network).not.toHaveBeenCalled();
   });
 
