@@ -41,5 +41,7 @@ export type QuestionOutcome =
   | { readonly status: "answered"; readonly citations: readonly AnswerCitation[] }
   | { readonly status: "not-addressed" }
   | { readonly status: "blocked"; readonly missing: readonly string[] }
+  | { readonly status: "out-of-scope" }
+  | { readonly status: "unverified" }
   | { readonly status: "failed"; readonly reason: string }
   | { readonly status: "rejected" };

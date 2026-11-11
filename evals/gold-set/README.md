@@ -70,6 +70,15 @@ The brief said to record these here instead of stopping.
 
 11. **`--ungated` mode** (`npm run eval`; `npm run eval:gated` is the run without it). This mode was added after the first working run, when 7 of 9 documents were blocked. Each document skips the completeness check and goes straight to `runGeneralReview`, the review stage the route calls once a packet is complete. The model client, the budget and the packet shape (one `pasted-lease` document) stay the same. A signer is never served this way, so the report header says UNGATED and the file name ends in `-ungated`. The ungated run is the only way this gold set yields a recall number without editing it, so since 2026-11-10 it is the default: `npm run eval`. Its numbers measure the review stage, not what a signer sees. The gated run (`npm run eval:gated`) remains the check on gating and on clean documents as a signer is served.
 
+## What each mode measures (since ticket 13)
+
+These are separate measurements. Don't read one as another.
+
+- **`npm run eval` (ungated): component-level clause detection.** The review stage on its own. The gold set's documents aren't leases, so a signer would never get these reviews.
+- **`npm run eval:gated`: end-to-end scope enforcement on the gold set.** Every gold-set document should now be stopped as out of scope. A review here is a scope failure.
+- **End-to-end residential lease performance** needs real leases: the public lease corpus in `evals/lease-corpus/`.
+- **Human-reviewed accuracy and launch readiness** need the independently labelled, locked lease set (ticket 09). Nothing in this folder measures them.
+
 ## Runs
 
 | Started | Model | Result |

@@ -26,6 +26,13 @@ describe("questions about a complete agreement", () => {
     expect(result.citations).toBeUndefined();
   });
 
+  it("answers no question about a packet that isn't a residential lease", async () => {
+    const model = createFixtureModelClient({ agreement: { kind: "not-a-residential-lease", evidenceSentence: lease.sidecar.qa.answerable[0].expectedSourceSentence } });
+    const response = await createQuestionRoute(model)(post(lease.sidecar.qa.answerable[0].question));
+    expect(await response.json()).toEqual({ status: "out-of-scope" });
+    expect(model.requests.filter((request) => request.schemaName === QUESTION_SCHEMA_NAME)).toHaveLength(0);
+  });
+
   it("rejects a client claim that its packet is complete", async () => {
     const response = await createQuestionRoute(createFixtureModelClient())(new Request("http://localhost/api/questions", {
       method: "POST", headers: { "Content-Type": "application/json" },

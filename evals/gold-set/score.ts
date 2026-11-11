@@ -67,6 +67,8 @@ export type DocumentRun =
       readonly returnedFlagsAllAttempts: number;
     }
   | { readonly documentId: string; readonly status: "blocked"; readonly missing: readonly string[] }
+  | { readonly documentId: string; readonly status: "out-of-scope"; readonly agreementKind: string; readonly description: string }
+  | { readonly documentId: string; readonly status: "unverified" }
   | { readonly documentId: string; readonly status: "failed"; readonly reason: string };
 
 export interface Rate {
@@ -106,6 +108,8 @@ export interface GoldReport {
     readonly total: number;
     readonly reviewed: string[];
     readonly blocked: { id: string; missing: readonly string[] }[];
+    readonly outOfScope: { id: string; agreementKind: string; description: string }[];
+    readonly unverified: string[];
     readonly failed: { id: string; reason: string }[];
   };
   readonly recall: Rate;
@@ -222,6 +226,8 @@ export function scoreGoldRun(goldSet: GoldSet, runs: readonly DocumentRun[]): Go
       total: goldSet.documents.length,
       reviewed: runs.filter((run) => run.status === "reviewed").map((run) => run.documentId),
       blocked: runs.flatMap((run) => (run.status === "blocked" ? [{ id: run.documentId, missing: run.missing }] : [])),
+      outOfScope: runs.flatMap((run) => (run.status === "out-of-scope" ? [{ id: run.documentId, agreementKind: run.agreementKind, description: run.description }] : [])),
+      unverified: runs.flatMap((run) => (run.status === "unverified" ? [run.documentId] : [])),
       failed: runs.flatMap((run) => (run.status === "failed" ? [{ id: run.documentId, reason: run.reason }] : [])),
     },
     recall: tally(scoped),
@@ -252,10 +258,12 @@ export function scoreGoldRun(goldSet: GoldSet, runs: readonly DocumentRun[]): Go
 export function renderGoldReport(report: GoldReport, header: readonly string[]): string {
   const lines = [...header, ""];
   const { documents } = report;
-  const excluded = documents.blocked.length + documents.failed.length;
+  const excluded = documents.blocked.length + documents.outOfScope.length + documents.unverified.length + documents.failed.length;
   lines.push(`Documents: ${documents.total} in manifest; ${documents.reviewed.length} reviewed; ${excluded} left out of every denominator.`);
   for (const entry of documents.failed) lines.push(`  left out, model call failed: ${entry.id} (${entry.reason})`);
   for (const entry of documents.blocked) lines.push(`  left out, blocked as incomplete: ${entry.id} (missing: ${entry.missing.join("; ")})`);
+  for (const entry of documents.outOfScope) lines.push(`  left out, blocked as out of scope (${entry.agreementKind}): ${entry.id} (${entry.description})`);
+  for (const id of documents.unverified) lines.push(`  left out, completeness could not be verified: ${id}`);
   lines.push("");
   lines.push(`Recall (in-scope planted clauses found): ${formatRate(report.recall)}`);
   for (const [type, value] of Object.entries(report.recallByType)) {

@@ -1,6 +1,8 @@
 import type {
   CompleteAgreement,
   IncompleteAgreement,
+  OutOfScopePacket,
+  UnverifiedCompleteness,
 } from "@/features/packet/completeness";
 import type { ExtractedDocument } from "@/features/packet/types";
 import type { ReviewRetention } from "@/features/library/store";
@@ -189,6 +191,26 @@ export type AnalysisOutcome =
       readonly documents: readonly ExtractedDocument[];
       /** What is missing, and the sentence in the agreement that names it. */
       readonly completeness: IncompleteAgreement;
+      readonly review?: never;
+      readonly summary?: never;
+      readonly riskFlags?: never;
+      readonly clean?: never;
+    }
+  | {
+      /** Not a residential lease, or the check couldn't tell (ADR 0014). */
+      readonly status: "out-of-scope";
+      readonly documents: readonly ExtractedDocument[];
+      readonly completeness: OutOfScopePacket;
+      readonly review?: never;
+      readonly summary?: never;
+      readonly riskFlags?: never;
+      readonly clean?: never;
+    }
+  | {
+      /** Whether the packet is complete couldn't be verified, so no review ran. */
+      readonly status: "unverified";
+      readonly documents: readonly ExtractedDocument[];
+      readonly completeness: UnverifiedCompleteness;
       readonly review?: never;
       readonly summary?: never;
       readonly riskFlags?: never;

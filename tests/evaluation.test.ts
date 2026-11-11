@@ -160,7 +160,7 @@ describe("independent evaluation report", () => {
       documents: [{ id: "pasted-lease", title: "Synthetic runner input", text: missingSentence }],
       adjudication: { ...corpus.cases[0].adjudication, seriousTerms: [], missingDocuments: ["Building rules"] },
     }] };
-    const records = await runCorpus(incomplete, { complete: async () => ({ references: [{
+    const records = await runCorpus(incomplete, { complete: async () => ({ agreement: { kind: "residential-lease", description: "a residential lease", evidenceDocumentId: null, evidenceSentence: null }, references: [{
       name: "Building rules", citingDocumentId: "pasted-lease", citingSentence: missingSentence, satisfiedByDocumentId: null,
     }] }) });
     expect(records.map(({ run, outcome }) => ({ run, outcome }))).toEqual([1, 2, 3].map((run) => ({

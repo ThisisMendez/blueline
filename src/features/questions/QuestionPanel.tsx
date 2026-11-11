@@ -62,6 +62,8 @@ export function QuestionPanel({ documents }: { readonly documents: readonly Extr
         ) : null}
         {outcome?.status === "not-addressed" ? <p>{NOT_ADDRESSED}</p> : null}
         {outcome?.status === "blocked" ? <p>Add the missing documents before asking: {outcome.missing.join(", ")}.</p> : null}
+        {outcome?.status === "out-of-scope" ? <p>We only answer questions about residential leases, and this packet doesn&apos;t look like one.</p> : null}
+        {outcome?.status === "unverified" ? <p>We couldn&apos;t confirm your packet is complete, so we haven&apos;t answered. Try again.</p> : null}
         {outcome?.status === "failed" ? <p role="alert">{FAILURE_COPY[outcome.reason] ?? FAILURE_COPY.unavailable}</p> : null}
         {outcome?.status === "rejected" ? <p role="alert">We could not read this question and packet. Reload the review and try again.</p> : null}
       </div>

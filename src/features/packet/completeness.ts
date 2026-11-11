@@ -6,6 +6,7 @@ import {
   type CandidateReference,
   type ModelCompleteness,
 } from "@/features/analysis/model/completeness-schema";
+import type { AgreementKind } from "@/features/analysis/model/completeness-schema";
 
 import {
   COMPLETENESS_SYSTEM_PROMPT,
@@ -94,7 +95,40 @@ export interface IncompleteAgreement {
   readonly droppedReferenceCount: number;
 }
 
-export type CompletenessCheck = CompleteAgreement | IncompleteAgreement;
+/**
+ * The packet is not a residential lease, or the check could not tell
+ * (ADR 0014). Analysis does not run.
+ */
+export interface OutOfScopePacket {
+  readonly kind: "out-of-scope";
+  readonly agreementKind: Exclude<AgreementKind, "residential-lease">;
+  /** What the document appears to be, in a few words. */
+  readonly description: string;
+  /** A sentence that shows what the document is, cut from the signer's text. Null when none could be verified. */
+  readonly evidence: {
+    readonly documentId: string;
+    readonly sentence: string;
+    readonly start: number;
+    readonly end: number;
+  } | null;
+}
+
+/**
+ * The agreement refers to documents whose citing sentences could not be
+ * located even after a retry, so whether the packet is complete is unknown.
+ * Analysis does not run: an unverified packet is never presented as complete.
+ */
+export interface UnverifiedCompleteness {
+  readonly kind: "unverified";
+  /** How many references could not be located. */
+  readonly unverifiedReferenceCount: number;
+}
+
+export type CompletenessCheck =
+  | CompleteAgreement
+  | IncompleteAgreement
+  | OutOfScopePacket
+  | UnverifiedCompleteness;
 
 export interface CompletenessCheckInput {
   readonly packet: Packet;
@@ -236,6 +270,32 @@ export async function checkCompleteness({
   resolutions = [],
 }: CompletenessCheckInput): Promise<CompletenessCheck> {
   const first = await askModel(model, buildCompletenessUserMessage(packet));
+
+  // ADR 0014: only residential leases are reviewed. A "not a lease" answer
+  // must show a sentence from the signer's own text; without one it is
+  // reported as unclear rather than as a confident judgment.
+  if (first.agreement.kind !== "residential-lease") {
+    const evidenceDocument = first.agreement.evidenceDocumentId
+      ? findDocument(packet, first.agreement.evidenceDocumentId)
+      : undefined;
+    const location = evidenceDocument && first.agreement.evidenceSentence
+      ? locateQuotation(evidenceDocument.text, first.agreement.evidenceSentence)
+      : null;
+    return {
+      kind: "out-of-scope",
+      agreementKind: location ? first.agreement.kind : "unclear",
+      description: first.agreement.description,
+      evidence: evidenceDocument && location
+        ? {
+            documentId: evidenceDocument.id,
+            sentence: evidenceDocument.text.slice(location.start, location.end),
+            start: location.start,
+            end: location.end,
+          }
+        : null,
+    };
+  }
+
   const firstPass = locateReferences(first.references, packet);
 
   let located = [...firstPass.located];
@@ -248,7 +308,7 @@ export async function checkCompleteness({
     );
     const secondPass = locateReferences(retry.references, packet);
     if (secondPass.unlocatable.length > 0) {
-      throw new ModelError("verification-failed", "The document references could not be verified.");
+      return { kind: "unverified", unverifiedReferenceCount: secondPass.unlocatable.length };
     }
 
     const alreadyHeld = new Set(located.map((entry) => entry.reference.id));
@@ -262,7 +322,7 @@ export async function checkCompleteness({
       firstPass.unlocatable.length - recovered.length,
     );
     if (droppedReferenceCount > 0) {
-      throw new ModelError("verification-failed", "The completeness retry left unverified document references.");
+      return { kind: "unverified", unverifiedReferenceCount: droppedReferenceCount };
     }
   }
 

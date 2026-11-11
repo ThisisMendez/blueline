@@ -69,6 +69,10 @@ async function main() {
       if (!live) assert.equal(id, "referencing-lease");
       continue;
     }
+    if (outcome.status === "out-of-scope" || outcome.status === "unverified") {
+      // Every smoke fixture is a complete residential lease packet.
+      throw new Error(`Smoke failed: a lease fixture came back ${outcome.status}`);
+    }
     assert.equal(outcome.persisted, false);
     assert.equal(outcome.reviewId, null);
     console.log(`Verified flags: ${outcome.review.riskFlags.length}; dropped flags: ${outcome.review.droppedFlagCount}; clean: ${outcome.review.clean}`);

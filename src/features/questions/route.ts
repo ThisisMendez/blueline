@@ -33,6 +33,8 @@ export function createQuestionRoute(model: ModelClient) {
       if (completeness.kind === "incomplete") {
         return respond({ status: "blocked", missing: completeness.missing.map((item) => item.name) });
       }
+      if (completeness.kind === "out-of-scope") return respond({ status: "out-of-scope" });
+      if (completeness.kind === "unverified") return respond({ status: "unverified" });
       const user = `Question: ${JSON.stringify(parsed.data.question)}\n\n${renderDocumentBlocks(packet)}`;
       for (let attempt = 0; attempt < 2; attempt += 1) {
         const output = await model.complete({

@@ -14,9 +14,35 @@ import { z } from "zod";
 
 export const COMPLETENESS_SCHEMA_NAME = "blueline_packet_completeness";
 
+export const AGREEMENT_KINDS = ["residential-lease", "not-a-residential-lease", "unclear"] as const;
+export type AgreementKind = (typeof AGREEMENT_KINDS)[number];
+
 export const completenessJsonSchema: Record<string, unknown> = {
   type: "object",
   properties: {
+    agreement: {
+      type: "object",
+      description:
+        "What kind of agreement the first supplied document is. Blueline reviews residential leases only (ADR 0014).",
+      properties: {
+        kind: { type: "string", enum: [...AGREEMENT_KINDS] },
+        description: {
+          type: "string",
+          description: "What the document is, in under ten plain words, for example 'a lease for an apartment'.",
+        },
+        evidenceDocumentId: {
+          type: ["string", "null"],
+          description: "The id of the document the evidence sentence is copied from, or null for a residential lease.",
+        },
+        evidenceSentence: {
+          type: ["string", "null"],
+          description:
+            "For anything but a residential lease, one sentence that shows what the document is, copied character for character. Null for a residential lease.",
+        },
+      },
+      required: ["kind", "description", "evidenceDocumentId", "evidenceSentence"],
+      additionalProperties: false,
+    },
     references: {
       type: "array",
       description:
@@ -54,7 +80,7 @@ export const completenessJsonSchema: Record<string, unknown> = {
       },
     },
   },
-  required: ["references"],
+  required: ["agreement", "references"],
   additionalProperties: false,
 };
 
@@ -65,7 +91,15 @@ export const modelReferenceSchema = z.object({
   satisfiedByDocumentId: z.string().trim().min(1).nullable(),
 });
 
+export const modelAgreementSchema = z.object({
+  kind: z.enum(AGREEMENT_KINDS),
+  description: z.string().trim().min(1),
+  evidenceDocumentId: z.string().trim().min(1).nullable(),
+  evidenceSentence: z.string().trim().min(1).nullable(),
+});
+
 export const modelCompletenessSchema = z.object({
+  agreement: modelAgreementSchema,
   references: z.array(modelReferenceSchema),
 });
 

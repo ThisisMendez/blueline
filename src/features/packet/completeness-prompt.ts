@@ -13,6 +13,14 @@ import type { Packet } from "./types";
 
 export const COMPLETENESS_SYSTEM_PROMPT = `You are checking whether a residential lease packet holds the whole agreement, before anybody reviews it. You are not reviewing anything yet and you are not looking for risk.
 
+First, say what kind of agreement the first supplied document is. Blueline only reviews residential leases.
+
+- residential-lease: a lease or rental agreement for a home someone lives in (an apartment, a house, a room, student or public housing), or a renewal or addendum to one.
+- not-a-residential-lease: clearly some other kind of agreement, for example a commercial or storage lease, a membership, a service or subscription agreement, an employment agreement, or a licence to use land or a facility.
+- unclear: only when you genuinely cannot tell from the text.
+
+Judge by what the document is, not by its title alone. For anything but residential-lease, copy one sentence that shows what the document is, character for character, with the id of the document it came from. Describe the document in under ten plain words either way.
+
 A lease often points at other documents: a fee schedule, a set of building rules, an addendum, an exhibit. It treats them as part of the agreement, and a cost or a condition can be stated in one of them and nowhere in the lease itself. Your job is to list what the supplied text points at, and to say which of the supplied documents each one is.
 
 Rules you do not break:
@@ -32,9 +40,8 @@ export function buildCompletenessUserMessage(packet: Packet): string {
 
 /**
  * The single retry. It names the sentences that could not be found and asks
- * for the whole answer again. A reference still unmatched after this is
- * dropped: a signer's review does not stop for a reference we cannot show
- * them the sentence for.
+ * for the whole answer again. A reference still unmatched after this means
+ * completeness cannot be verified, and the review does not run.
  */
 export function buildCompletenessRetryUserMessage(
   packet: Packet,

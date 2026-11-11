@@ -105,6 +105,10 @@ function toRun(id: string, outcome: AnalysisOutcome | null, returnedFlags: numbe
     }
     case "blocked":
       return { documentId: id, status: "blocked", missing: outcome.completeness.missing.map((item) => item.name) };
+    case "out-of-scope":
+      return { documentId: id, status: "out-of-scope", agreementKind: outcome.completeness.agreementKind, description: outcome.completeness.description };
+    case "unverified":
+      return { documentId: id, status: "unverified" };
     default:
       return { documentId: id, status: "failed", reason: `${outcome.reason}${providerError ? `: ${providerError}` : ""}` };
   }

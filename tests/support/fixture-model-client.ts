@@ -165,6 +165,17 @@ export interface FixtureModelClientOptions {
    * depending on the pipeline's flag ranking or ordering.
    */
   readonly inconsistentFlagSentences?: readonly string[];
+  /**
+   * Completeness: what the model says the packet is. Defaults to a
+   * residential lease. `evidenceSentence` is quoted from the first document
+   * when given, so a test can drive both a verified and an unverifiable
+   * "not a lease" answer.
+   */
+  readonly agreement?: {
+    readonly kind: "residential-lease" | "not-a-residential-lease" | "unclear";
+    readonly description?: string;
+    readonly evidenceSentence?: string;
+  };
 }
 
 /** Matches one rendered item from buildConsistencyUserMessage. */
@@ -398,7 +409,16 @@ export function createFixtureModelClient(
       const documents = identify(request.user);
 
       if (request.schemaName === COMPLETENESS_SCHEMA_NAME) {
-        return { references: referencesIn(documents) };
+        const agreement = options.agreement ?? { kind: "residential-lease" as const };
+        return {
+          agreement: {
+            kind: agreement.kind,
+            description: agreement.description ?? "a residential lease",
+            evidenceDocumentId: agreement.evidenceSentence ? documents[0]?.id ?? null : null,
+            evidenceSentence: agreement.evidenceSentence ?? null,
+          },
+          references: referencesIn(documents),
+        };
       }
 
       if (request.schemaName === CHECKLIST_SCHEMA_NAME) {
