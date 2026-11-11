@@ -1,0 +1,86 @@
+Gold-set eval, redline-v1 v1
+Started: 2026-11-11T18:22:31.490Z
+Model: z-ai/glm-5.3-flash
+Pipeline: UNGATED. The completeness check was skipped and each document went straight to runGeneralReview. This is not how a signer is served.
+
+Documents: 9 in manifest; 2 reviewed; 7 left out of every denominator.
+  left out, model call failed: saas-subscription (rate-limited: Provider returned error)
+  left out, model call failed: offer-letter (rate-limited: Provider returned error)
+  left out, model call failed: storage-unit-rental (rate-limited: Provider returned error)
+  left out, model call failed: phone-plan-terms (rate-limited: Provider returned error)
+  left out, model call failed: internship-agreement (rate-limited: Provider returned error)
+  left out, model call failed: library-volunteer-agreement (rate-limited: Provider returned error)
+  left out, model call failed: swim-lesson-registration (rate-limited: Provider returned error)
+
+Recall (in-scope planted clauses found): 5/6 (83.3%)
+  in scope     arbitration-and-class-action-waiver: 1/1 (100.0%)
+  in scope     fee-escalators-and-late-fees: 2/2 (100.0%)
+  in scope     auto-renewal: 1/2 (50.0%)
+  in scope     unilateral-modification: 1/1 (100.0%)
+  out of scope non-compete: 1/1 (100.0%)
+  out of scope limitation-of-liability: 1/1 (100.0%)
+  out of scope indemnification: 1/1 (100.0%)
+Out-of-scope planted clauses flagged anyway (information only, never a miss): 3/3 (100.0%)
+Named the right type: not measurable. Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval.
+
+Recall by characters in the planted sentence (in-scope only):
+  has at least one: 2/2 (100.0%)
+  has none: 3/4 (75.0%)
+  curly quote or apostrophe: 0/0 (n/a)
+  non-breaking space: 0/0 (n/a)
+  fi or fl ligature: 1/1 (100.0%)
+  em dash: 0/0 (n/a)
+  two spaces in a row: 1/1 (100.0%)
+
+Groundedness (delivered flags quoted verbatim / all flags the model returned, delivered + dropped): 15/15 (100.0%)
+  raw flags across every model attempt, retries included: 15
+
+Clean documents with no flags: 0/1 (0.0%); flags on clean documents: 2
+  clean-document: 2 flag(s)
+Flags on planted documents that matched no planted clause: 5
+Flags on an unusual-but-harmless sentence: 0
+
+Planted clauses:
+  FOUND adhesion-contract P-01 auto-renewal
+  FOUND adhesion-contract P-02 fee-escalators-and-late-fees [two spaces in a row]
+  FOUND adhesion-contract P-03 fee-escalators-and-late-fees
+  FOUND adhesion-contract P-04 unilateral-modification
+  FOUND adhesion-contract P-05 limitation-of-liability (out of scope) [curly quote or apostrophe, non-breaking space, em dash]
+  FOUND adhesion-contract P-06 indemnification (out of scope) [fi or fl ligature]
+  MISS  adhesion-contract P-07 auto-renewal
+  FOUND adhesion-contract P-08 non-compete (out of scope) [fi or fl ligature]
+  FOUND adhesion-contract P-09 arbitration-and-class-action-waiver [fi or fl ligature]
+
+Flags:
+  [high] adhesion-contract type=none (product names no type) matched=P-01 (auto-renewal) verbatim=yes
+    "At the end of the initial term, and at the end of each term thereafter, your membership renews automatically for a further twelve (12) month term at the then-current rate."
+  [high] adhesion-contract type=none (product names no type) matched=no verbatim=yes
+    "To stop a renewal you must deliver written notice of cancellation to the Member Services desk no later than three (3) days before the renewal date."
+  [high] adhesion-contract type=none (product names no type) matched=no verbatim=yes
+    "A membership that has been suspended, frozen or placed on medical hold continues to renew on its original schedule."
+  [high] adhesion-contract type=none (product names no type) matched=P-04 (unilateral-modification) verbatim=yes
+    "Meridian may amend the Club Rules, the Schedule of Fees, the hours of operation, the class timetable and the terms of this Agreement at any time by posting the amended version at the club or on the Meridian website, and the amended version applies to you from the date it is posted."
+  [high] adhesion-contract type=none (product names no type) matched=P-05 (limitation-of-liability) verbatim=yes
+    "Meridian’s total liability to you for any claim arising out of or relating to this Agreement, your membership or your use of any facility — whether the claim is framed in contract, in negligence or otherwise — will not exceed the total dues and fees you paid to Meridian in the twelve (12) months immediately before the event giving rise to the claim."
+  [high] adhesion-contract type=none (product names no type) matched=P-06 (indemnification) verbatim=yes
+    "You will indemnify, defend and hold harmless Meridian and its ofﬁcers, employees, instructors and contractors against any claim, demand, loss, liability or expense, including reasonable legal fees, that is brought by a third party and arises out of your use of the facilities, your conduct on club premises, the conduct of a guest you bring, or any service you provide to another member."
+  [high] adhesion-contract type=none (product names no type) matched=P-08 (non-compete) verbatim=yes
+    "For twelve (12) months after your Program candidacy ends for any reason, you will not teach, coach or deliver group ﬁtness instruction or personal training, whether as an employee, as a contractor or on your own account, at any facility within ﬁfteen (15) miles of a Meridian location at which you taught or trained."
+  [high] adhesion-contract type=none (product names no type) matched=P-09 (arbitration-and-class-action-waiver) verbatim=yes
+    "Any dispute, claim or controversy between you and Meridian arising out of or relating to this Agreement, your membership or the Program will be resolved by ﬁnal and binding arbitration administered by a nationally recognised arbitration provider under its consumer arbitration rules, and you and Meridian each waive any right to a trial by jury and any right to bring or participate in a class, collective or representative action."
+  [medium] adhesion-contract type=none (product names no type) matched=no verbatim=yes
+    "Access is by keycard or through the application, and you are responsible for every entry made with your keycard or your account."
+  [medium] adhesion-contract type=none (product names no type) matched=P-02 (fee-escalators-and-late-fees) verbatim=yes
+    "Meridian may adjust dues once in any twelve (12) month period by the greater of six percent (6%)  or the increase in the Consumer Price Index for All Urban Consumers over the preceding twelve months, on thirty (30) days notice to the email address on your account."
+  [medium] adhesion-contract type=none (product names no type) matched=P-03 (fee-escalators-and-late-fees) verbatim=yes
+    "Dues not received within ten (10) days of the draw date incur the late charge set out in the Schedule of Fees then in effect, which is posted at the Member Services desk and on the Meridian website and forms part of this Agreement."
+  [medium] adhesion-contract type=none (product names no type) matched=no verbatim=yes
+    "Candidates are expected to complete sixty (60) supervised teaching hours in each Program year, and a candidate who falls short may be held back a year at Meridian’s discretion."
+  [medium] adhesion-contract type=none (product names no type) matched=no verbatim=yes
+    "You may end your Program enrolment by notifying the Program ofﬁce in writing at least ninety (90) days before the anniversary date, in which case no further tuition is charged and your candidacy closes at the end of the Program year then running."
+  [medium] clean-document type=none (product names no type) matched=no verbatim=yes
+    "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out."
+  [low] clean-document type=none (product names no type) matched=no verbatim=yes
+    "Anything left after 15 December becomes the Association’s to keep or to clear."
+
+A model wrote this gold set. These numbers are an upper bound and never a promise to a reader.

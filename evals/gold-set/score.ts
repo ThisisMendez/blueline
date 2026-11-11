@@ -16,7 +16,7 @@ import type { GoldClauseType, GoldDocument, GoldSet, PlantedClause } from "./cor
 export const CLAUSE_TYPE_MAPPING: Readonly<Record<GoldClauseType, string | null>> = {
   "arbitration-and-class-action-waiver": "Waivers of dispute rights, including forced arbitration",
   "fee-escalators-and-late-fees": "Early termination, reassignment, or penalty fees (late fees); a consequential rent change (escalators)",
-  "auto-renewal": "Any other term with a plausible, material downside: renewal at the then-current rate is a consequential rent change and an early-exit cost",
+  "auto-renewal": "Automatic renewal or extension (a named red line since ticket 12)",
   "unilateral-modification": "Any other term with a plausible, material downside: a power to rewrite the terms, fees included, is a consequential rent change",
   "non-compete": null,
   "limitation-of-liability": null,

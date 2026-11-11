@@ -1,0 +1,197 @@
+{
+  "corpus": "redline-v1",
+  "version": 1,
+  "startedAt": "2026-11-11T18:24:09.263Z",
+  "model": "z-ai/glm-5.3-flash",
+  "ungated": true,
+  "runs": [
+    {
+      "documentId": "adhesion-contract",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "clean-document",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "saas-subscription",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "offer-letter",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "storage-unit-rental",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "phone-plan-terms",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "internship-agreement",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "library-volunteer-agreement",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "swim-lesson-registration",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    }
+  ],
+  "report": {
+    "documents": {
+      "total": 9,
+      "reviewed": [],
+      "blocked": [],
+      "failed": [
+        {
+          "id": "adhesion-contract",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "clean-document",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "saas-subscription",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "offer-letter",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "storage-unit-rental",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "phone-plan-terms",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "internship-agreement",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "library-volunteer-agreement",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "swim-lesson-registration",
+          "reason": "rate-limited: Provider returned error"
+        }
+      ]
+    },
+    "recall": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByType": {
+      "arbitration-and-class-action-waiver": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "fee-escalators-and-late-fees": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "auto-renewal": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "unilateral-modification": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "non-compete": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "limitation-of-liability": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "indemnification": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      }
+    },
+    "outOfScopeFound": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByCharacters": {
+      "withAny": {
+        "count": 0,
+        "total": 0
+      },
+      "withNone": {
+        "count": 0,
+        "total": 0
+      },
+      "byClass": {
+        "curly quote or apostrophe": {
+          "count": 0,
+          "total": 0
+        },
+        "non-breaking space": {
+          "count": 0,
+          "total": 0
+        },
+        "fi or fl ligature": {
+          "count": 0,
+          "total": 0
+        },
+        "em dash": {
+          "count": 0,
+          "total": 0
+        },
+        "two spaces in a row": {
+          "count": 0,
+          "total": 0
+        }
+      }
+    },
+    "typeNamedCorrectly": {
+      "measurable": false,
+      "reason": "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval."
+    },
+    "groundedness": {
+      "count": 0,
+      "total": 0,
+      "returnedFlagsAllAttempts": 0
+    },
+    "cleanDocuments": {
+      "documentsWithNoFlags": {
+        "count": 0,
+        "total": 0
+      },
+      "flagsOnCleanDocuments": 0,
+      "perDocument": []
+    },
+    "unmatchedFlagsOnPlantedDocuments": 0,
+    "flagsOnUnusualButHarmless": 0,
+    "planted": [],
+    "flags": []
+  }
+}

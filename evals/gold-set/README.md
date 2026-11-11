@@ -19,7 +19,7 @@ Blueline's clause names are the rows of the "My red lines" table in `PRD.md`. Th
 |---|---|---|
 | `arbitration-and-class-action-waiver` | Waivers of dispute rights, including forced arbitration | Yes |
 | `fee-escalators-and-late-fees` | Early termination, reassignment, or penalty fees (late fees), and the consequential rent change named under "any other term" (escalators) | Yes |
-| `auto-renewal` | Any other term with a plausible, material downside: renewal at the then-current rate is a consequential rent change and an early-exit cost | Yes |
+| `auto-renewal` | Automatic renewal or extension (named in PRD.md since ticket 12; before that, counted under "any other term") | Yes |
 | `unilateral-modification` | Any other term with a plausible, material downside: a power to rewrite the terms, fees included, is a consequential rent change | Yes |
 | `non-compete` | Not named | No, out of scope |
 | `limitation-of-liability` | Not named | No, out of scope |
