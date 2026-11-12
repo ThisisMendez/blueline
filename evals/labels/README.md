@@ -2,6 +2,16 @@
 
 A page for labelling ten flags from the newest gold-set run by hand. The labels are the owner's. Nothing in this folder labels a flag, suggests a label or comments on one.
 
+## Six-part batches
+
+The same page also labels a judge batch with the six-part reviewer guide:
+
+```sh
+npm run label -- --batch evals/judge/batch-2
+```
+
+In that mode it records the guide's six verdicts, an overall PASS/FAIL and a rationale for each flag, plus a pseudonymous reviewer id. It shows the reviewer guide and the overall rule instead of the PRD sections, and saves to `<batch>/verdicts.json`. Once `<batch>/verdicts.lock.json` exists (`evals/judge/lock-verdicts.ts`), the page is read only and the server refuses saves. Nothing is pre-selected. `page.test.ts` checks both modes. See `evals/judge/README.md`.
+
 ## Open the page again
 
 ```sh

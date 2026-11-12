@@ -20,9 +20,10 @@
     ]
   },
   "usageRights": "No licence statement for the lease text found on the page; the page carries a general Ohio University copyright notice. Internal evaluation only, kept locally, not redistributed; reuse terms not confirmed.",
-  "proposedSplit": "holdout-candidate",
+  "proposedSplit": "development",
   "exposureToPromptWork": [
-    "Run through the product for the scope and completeness check only (Phase 2, 3); no prompt change was based on it."
+    "Run through the product for the scope and completeness check only (Phase 2, 3); no prompt change was based on it.",
+    "Moved to development on 2026-11-11 (coordination-2026-11-11.md): decision 3 needs repeat runs on all five public templates."
   ],
   "requiresHumanReview": true,
   "reviews": [

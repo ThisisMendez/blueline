@@ -1,0 +1,66 @@
+{
+  "lock": "blueline-real-lease-holdout",
+  "lockedOn": "2026-11-11",
+  "lockedBy": "evaluation workstream (decision 1), before any tuning by the rubric/prompt and completeness workstreams",
+  "ownerConfirmed": false,
+  "ownerConfirmedOn": null,
+  "note": "Membership was locked by the evaluation workstream and still needs the owner's confirmation, including the L05 replacement (a different document) and the usage terms, which nobody qualified has confirmed. Until confirmed, freezing labels is refused. Nobody may tune the product against these documents, and no product, judge or model output may be generated for them before their adjudicated labels are frozen.",
+  "documents": [
+    {
+      "id": "H02-nycha-pact-lease",
+      "replaces": "L02-nycha-pact-lease",
+      "sourceUrl": "https://www.nyc.gov/assets/nycha/downloads/pdf/pactlease-english.pdf",
+      "version": "Internet Archive snapshot 20251207015333",
+      "sha256Original": "b5353220a8e21458564777ec9e659d0d3420692ae4d61a58e986e7e227849883",
+      "sha256Text": "dfd7afd8949c877dc9d7f85247f2e43276d8535ed35397a59e53b17819c7bff0"
+    },
+    {
+      "id": "H04-hud-ha-sample-lease",
+      "replaces": "L04-hud-ha-sample-lease",
+      "sourceUrl": "https://www.hud.gov/sites/documents/DOC_11065.PDF",
+      "version": "Internet Archive snapshot 20241002074526",
+      "sha256Original": "9f2855cfea888fd74e60b644788d6ba9ed693bb87bb54ccc042b49053629d5fa",
+      "sha256Text": "f80a95186bde6833b5c77b12971390978d1c0c45ddc9fbeb0f797b2b6f5df8e1"
+    },
+    {
+      "id": "H05-puget-sound-sample-lease",
+      "replaces": "L05-umass-sample-lease",
+      "sourceUrl": "https://www.pugetsound.edu/sites/default/files/file/1888_OCSSsamplelease_0.pdf",
+      "version": "Live file, Last-Modified 2021-12-01T08:26:16Z, byte-identical to Internet Archive snapshot 20220423110824",
+      "sha256Original": "260a21aeb7973aef43260aaa715d1173dc4d184e70a4ee30fae1d1b0967efa00",
+      "sha256Text": "444b1593dfb806fdf3745b1a90905264af5595f91ccb18a4065b47362c32a5fa"
+    },
+    {
+      "id": "H06-binghamton-sample-lease",
+      "replaces": "L06-binghamton-sample-lease",
+      "sourceUrl": "https://www.binghamton.edu/occ/pdfs/lease.pdf",
+      "version": "Internet Archive snapshot 20240718235351",
+      "sha256Original": "b43dc472140dc04ecc17fbac5b525195da45d1c2a0e828fbad9951a0b3cffef9",
+      "sha256Text": "352072106efce25eac3effd2ec4090a4ead5ec1bb24331df16de369197f06245"
+    },
+    {
+      "id": "H09-penn-state-altoona-sample-lease",
+      "replaces": "L09-penn-state-altoona-sample-lease",
+      "sourceUrl": "https://altoona.psu.edu/offices-divisions/student-affairs/off-campus-living/sample-lease-rental-agreement",
+      "version": "Internet Archive snapshot 20260210004301",
+      "sha256Original": "297190ed1dca6cf80d73c51589a8d0299fcc18061e082d0bdc02e9e824810eca",
+      "sha256Text": "250512517736e60f6163bc0057d54bdb415cca79b1a2e606eb64a7a3b4cfe9ca"
+    }
+  ],
+  "duplicateCheck": {
+    "method": "npx tsx evals/holdout/check-duplicates.ts: identical SHA-256, or eight-word shingle containment of 0.5 or more either way, counts as a duplicate; 0.1 or more is reported as related. Thresholds set before looking at results.",
+    "comparedWith": [
+      "development leases L01, L03, L07, L08, L10 (extracted text)",
+      "gold set: 7 corpus documents and 2 fixtures",
+      "each other holdout document"
+    ],
+    "highestOverlap": {
+      "H02-nycha-pact-lease": 0.011,
+      "H04-hud-ha-sample-lease": 0.005,
+      "H05-puget-sound-sample-lease": 0.003,
+      "H06-binghamton-sample-lease": 0.084,
+      "H09-penn-state-altoona-sample-lease": 0.084
+    },
+    "duplicatesFound": 0
+  }
+}

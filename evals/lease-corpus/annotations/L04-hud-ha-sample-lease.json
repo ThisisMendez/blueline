@@ -6,6 +6,6 @@
   "label": "intake record: not gold-standard, no labels yet",
   "status": "unavailable",
   "note": "404 Not Found on 2026-11-11. Internet Archive holds a copy of this URL (snapshot 2024-10-02). Proposed replacement, not used until approved.",
-  "proposedReplacement": "Internet Archive copy of the same URL",
+  "proposedReplacement": "H04-hud-ha-sample-lease in evals/holdout/: Internet Archive snapshot 20241002074526 of the same URL. Fetched under decision 1 on 2026-11-11 and held out; membership locked by the evaluation workstream, pending the owner's confirmation.",
   "replacementApproved": false
 }

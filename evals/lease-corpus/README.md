@@ -16,17 +16,19 @@ Each annotation record carries the SHA-256 of the original file and of the extra
 | ID | Source | Available | Type | Completeness as supplied | Proposed split |
 |---|---|---|---|---|---|
 | L01 | Philadelphia Fair Lease | yes (PDF) | model template | unclear; extraction may miss form fields | development |
-| L02 | NYCHA PACT Residential Lease | **no** (404) | | | replacement needs approval |
+| L02 | NYCHA PACT Residential Lease | **no** (404) | | | replaced in the holdout by H02 (archive copy) |
 | L03 | HUD-90105-A Model Lease for Subsidized Programs | yes (PDF) | federal form | incomplete: 3 required attachments | development |
-| L04 | HUD Housing Authority Sample Lease | **no** (404) | | | replacement needs approval |
-| L05 | UMass Sample Lease | **no** (403, no archive copy) | | | replacement needs approval |
-| L06 | Binghamton University Sample Lease | **no** (404) | | | replacement needs approval |
-| L07 | CU Boulder Graduate & Family Housing Lease 2026-27 | yes (PDF) | university template | incomplete: resident handbook | holdout candidate |
+| L04 | HUD Housing Authority Sample Lease | **no** (404) | | | replaced in the holdout by H04 (archive copy) |
+| L05 | UMass Sample Lease | **no** (403, no archive copy) | | | replaced in the holdout by H05 (a different university's sample lease) |
+| L06 | Binghamton University Sample Lease | **no** (404) | | | replaced in the holdout by H06 (archive copy) |
+| L07 | CU Boulder Graduate & Family Housing Lease 2026-27 | yes (PDF) | university template | incomplete: resident handbook | development |
 | L08 | Maine AG Model Residential Lease (lease only) | yes (Word, derived text) | state model template | complete | development |
-| L09 | Penn State Altoona Sample Lease | **no** (403) | | | replacement needs approval |
-| L10 | Ohio University Ecohouse Sample Lease | yes (web page, derived text) | partial excerpt | partial; application and code of conduct not supplied | holdout candidate |
+| L09 | Penn State Altoona Sample Lease | **no** (403) | | | replaced in the holdout by H09 (archive copy) |
+| L10 | Ohio University Ecohouse Sample Lease | yes (web page, derived text) | partial excerpt | partial; application and code of conduct not supplied | development |
 
-Every available document is a **template or sample, not an executed lease**. Internet Archive copies exist for L02, L04, L06 and L09 at the same URLs. They are proposed replacements and were not used: the owner decides. L05 needs a manual download or a different source.
+Every available document is a **template or sample, not an executed lease**.
+
+The five unavailable sources were replaced under decision 1 (2026-11-11) and the replacements form the **real-lease holdout** in `evals/holdout/`, with their own manifest, records and lock. They are not in this folder's manifest, so `npm run eval:leases` can't run them. L02, L04, L06 and L09 were replaced by Internet Archive copies of the same URLs; L05 by a different university's sample lease, because UMass's file still returns 403 and has no archive copy. The owner still has to confirm the lock and the L05 substitute.
 
 **Usage rights.** No document carries a licence statement. HUD-90105-A is a U.S. federal form. The rest are published by a state agency, a city initiative or universities for public reading. All are treated as internal-evaluation-only, kept locally and not redistributed. Their reuse terms have **not** been confirmed by anyone qualified to confirm them.
 
@@ -38,12 +40,12 @@ Every available document is a **template or sample, not an executed lease**. Int
 | End-to-end scope enforcement | `npm run eval:gated` | Every gold-set (non-lease) document is stopped | Lease quality |
 | End-to-end on real leases | `npm run eval:leases` | Scope false blocks, completeness blocks, and what the review returns on real lease text | Whether the flags are right (unlabelled) |
 | Legal-question handling | `npm run eval:legal` | Q&A notes local-law questions, answers what the lease says, and returns no prose | Whether the quoted sentences are the best answer |
-| Human-reviewed accuracy | not built yet | Needs adjudicated labels from this corpus | |
+| Human-reviewed accuracy on real leases | `npx tsx evals/holdout/run.ts` (refuses until labels are frozen) | Recall, false flags and clean-lease false alarms on the holdout, against frozen adjudicated labels | Anything yet: not measured, no labels exist |
 | Launch readiness | ticket 09 | Needs a locked, independently labelled set | |
 
 ## How the labels get made
 
-1. **Two independent reviewers** label each document using `evals/reviewer-guide.md` (v2). Each fills their own `reviews` slot in `annotations/<id>.json`, with a pseudonymous `reviewerId`; real identities and consent stay in private storage.
+1. **Two independent reviewers** label each document using `evals/reviewer-guide.md` (v2), each in their own private review file (`calibration/README.md` has the steps), with a pseudonymous `reviewerId`. Real identities and consent stay in private storage. Neither sees the other's file until both are done.
 2. **Before seeing any model output.** Reviewers must not open `runs/` or run the product on a document before finishing it, and they confirm that with `completedBeforeSeeingModelOutput: true`.
 3. For each sentence that matters, a reviewer records:
    - the exact quote, copied from `text/<id>.txt`
@@ -64,6 +66,14 @@ Every available document is a **template or sample, not an executed lease**. Int
 
 ## Development and holdout
 
-- **Development (L01, L03, L08):** each was used while changing the product. L03 led to the conditional-attachment rule and L08 to the Q&A legal-question fix, so they can't be held out.
-- **Holdout candidates (L07, L10):** only their scope and completeness results have been seen; no change was based on them. An unseen replacement for any unavailable source would also be a holdout candidate.
-- A holdout set is **locked** by someone outside prompt work, who sets `proposedSplit` to `holdout-locked` and keeps the labels away from whoever edits prompts. After that, nobody tunes the product against those documents.
+- **Development: L01, L03, L07, L08, L10 and the synthetic gold set.** These may be used for tuning and repeat runs.
+  - L01, L03 and L08 were each used while changing the product: L03 led to the conditional-attachment rule, and L08 to the Q&A legal-question fix.
+  - L07 and L10 were holdout candidates, and moved to development on 2026-11-11 because decision 3 needs repeat runs on all five public templates (`.scratch/lease-review/coordination-2026-11-11.md`).
+- **Holdout: H02, H04, H05, H06, H09** in `evals/holdout/`. Locked by the evaluation workstream before tuning; the owner's confirmation is pending. See `evals/holdout/README.md`.
+- **Calibration batch:** L08 and part of L01, for reviewers to practise on before the holdout (`calibration/README.md`).
+
+## Local-only files for reviewers
+
+Worksheets, reviewers' own label files and adjudicated records quote the leases, so they live in `evals/lease-corpus/private/` (gitignored by `.gitignore` here). Whether adjudicated development labels are later copied into the committed `annotations/` records is the owner's call, because the repository is public. `validate.ts` checks `private/labels/` as well as `annotations/` when it exists.
+
+`extract.ts --corpus evals/holdout` extracts the holdout from its own manifest into `evals/holdout/text/`.

@@ -39,6 +39,12 @@ const reviewSchema = z.strictObject({
 const availableRecordSchema = z.strictObject({
   documentId: z.string(),
   sourceUrl: z.string().url(),
+  /** Where the bytes actually came from when it isn't sourceUrl (an archive snapshot). */
+  retrievedFrom: z.string().url().optional(),
+  /** Which version of the source was taken: a snapshot timestamp, or the live file's Last-Modified. */
+  sourceVersion: z.string().optional(),
+  /** The unavailable record this one replaces (holdout replacements only). */
+  replaces: z.string().optional(),
   accessedOn: z.string(),
   available: z.literal(true),
   label: z.string(),

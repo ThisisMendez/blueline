@@ -1,0 +1,53 @@
+{
+  "documentId": "H09-penn-state-altoona-sample-lease",
+  "sourceUrl": "https://altoona.psu.edu/offices-divisions/student-affairs/off-campus-living/sample-lease-rental-agreement",
+  "retrievedFrom": "http://web.archive.org/web/20260210004301id_/https://altoona.psu.edu/offices-divisions/student-affairs/off-campus-living/sample-lease-rental-agreement",
+  "sourceVersion": "Internet Archive snapshot 20260210004301 of the web page",
+  "replaces": "L09-penn-state-altoona-sample-lease",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "holdout intake record: not gold-standard, no labels yet",
+  "sha256Original": "297190ed1dca6cf80d73c51589a8d0299fcc18061e082d0bdc02e9e824810eca",
+  "sha256Text": "250512517736e60f6163bc0057d54bdb415cca79b1a2e606eb64a7a3b4cfe9ca",
+  "textIsDerived": true,
+  "jurisdiction": "Pennsylvania, USA",
+  "housingContext": "Private-market off-campus rental (sample published on a university off-campus living page)",
+  "programRestrictions": "None stated",
+  "documentType": "university sample lease template on a web page (unexecuted, with bracketed blanks and one pair of alternative clauses)",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "incomplete-as-supplied",
+    "observed": "Read by the evaluation workstream, not the product. The lease says a move-in checklist is attached; it is not on the page. Text is a derived copy cut from the HTML between two fixed markers.",
+    "needsHumanCheck": [
+      "Confirm the move-in checklist is the only missing document",
+      "Decide how the two alternative term clauses are labelled",
+      "Check the cut against the page"
+    ]
+  },
+  "usageRights": "No licence statement found. Published by a university on a public web page. Internal evaluation only, kept locally, not redistributed; reuse terms not confirmed by anyone qualified to confirm them.",
+  "proposedSplit": "holdout-locked",
+  "exposureToPromptWork": [
+    "None. Fetched by the evaluation workstream on 2026-11-11, after the holdout exclusion list was set. No product, judge or model has been run on it, and its text has not been shared with prompt or completeness work."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}

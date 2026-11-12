@@ -1,0 +1,51 @@
+{
+  "documentId": "H06-binghamton-sample-lease",
+  "sourceUrl": "https://www.binghamton.edu/occ/pdfs/lease.pdf",
+  "retrievedFrom": "http://web.archive.org/web/20240718235351id_/https://www.binghamton.edu/occ/pdfs/lease.pdf",
+  "sourceVersion": "Internet Archive snapshot 20240718235351 (no revision date in the document)",
+  "replaces": "L06-binghamton-sample-lease",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "holdout intake record: not gold-standard, no labels yet",
+  "sha256Original": "b43dc472140dc04ecc17fbac5b525195da45d1c2a0e828fbad9951a0b3cffef9",
+  "sha256Text": "352072106efce25eac3effd2ec4090a4ead5ec1bb24331df16de369197f06245",
+  "textIsDerived": false,
+  "jurisdiction": "Binghamton, New York, USA",
+  "housingContext": "Private-market off-campus rental (sample published by a university off-campus college office)",
+  "programRestrictions": "None stated",
+  "documentType": "university sample lease template (unexecuted, with blanks)",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "complete-as-supplied",
+    "observed": "Read by the evaluation workstream, not the product. No document is made part of the lease; a damage checklist is recommended in a note but not referenced as attached.",
+    "needsHumanCheck": [
+      "Confirm no referenced document is missing"
+    ]
+  },
+  "usageRights": "No licence statement found. Published by a university for students to use as a sample. Internal evaluation only, kept locally, not redistributed; reuse terms not confirmed by anyone qualified to confirm them.",
+  "proposedSplit": "holdout-locked",
+  "exposureToPromptWork": [
+    "None. Fetched by the evaluation workstream on 2026-11-11, after the holdout exclusion list was set. No product, judge or model has been run on it, and its text has not been shared with prompt or completeness work."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}

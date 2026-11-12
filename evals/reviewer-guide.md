@@ -89,3 +89,22 @@ PRD.md's "My red lines" sets the bands. High: a large or open-ended loss, or a w
 ## Recording a verdict
 
 For each flag, record the six verdicts and one sentence of rationale. Mark an item **borderline** rather than forcing it. Two reviewers work separately and don't see each other's verdicts, or any Blueline output for the documents they label, until both have finished. Disagreements go to adjudication (see `evals/lease-corpus/README.md`).
+
+## When you're also asked for an overall verdict
+
+Judge batches (`evals/judge/`) ask for one overall PASS or FAIL after the six verdicts, so a person and the rubric judge can be compared. The rule is the same one the judge gets (`evals/judge/rubric-v2.md`). It's proposed, and the owner confirms it before relabelling starts.
+
+FAIL when any of these is true:
+
+- the quote isn't in the document
+- the consequence is incorrect
+- the clause is ordinary or a harmless oddity
+- the flag guesses at missing information
+
+Otherwise PASS.
+
+- A severity verdict doesn't decide it on its own.
+- For a consequence that's only partly right, or a clause that's borderline, decide which way the flag falls and say why in your rationale.
+- In a batch drawn from the gold set, which holds no leases, record scope as usual, then give the overall verdict as if the document were a lease.
+
+Don't decide the overall verdict first and fit the six to it.
