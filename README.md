@@ -1,5 +1,7 @@
 # Blueline Redline
 
+Production: https://blueline-khaki-eta.vercel.app
+
 Residential lease review with exact source citations. It reads the lease text only: it does not check terms against local law or judge enforceability (see ADR 0014). The existing Next.js application lives in `src/app/`; feature code lives in `src/features/`.
 
 ## Run locally
@@ -29,6 +31,17 @@ policy and model quality before inviting people to submit real leases. The
 OpenRouter free quota is shared by every visitor, and a review can use several
 model calls. See [the endpoint's policy](https://openrouter.ai/liquid/lfm-2.5-2.6b:free)
 and [OpenRouter's free quota](https://openrouter.ai/collections/free-models).
+
+## Production settings
+
+Production needs these four settings. Each is set on Vercel (production environment) and in `.env.local` for local work. Values are never committed.
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `OPENROUTER_API_KEY`
+- `OPENROUTER_MODEL`
+
+`OPENROUTER_PROVIDER` is optional here. The production model id doesn't end in `:free`, so calls go to Fireworks by default.
 
 ## Verify
 
