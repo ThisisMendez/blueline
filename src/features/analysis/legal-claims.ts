@@ -1,4 +1,6 @@
 import { ModelError, type ModelClient } from "./model/client";
+import { modelLegalRepairSchema } from "./model/legal-repair-schema";
+import { completeStructured } from "./model/structured";
 import type { RiskFlag } from "./types";
 
 /**
@@ -129,15 +131,6 @@ interface RepairReply {
   readonly items: readonly { index: number; consequence: string; triggeringCondition: string; counterOffer: string; residualRisk: string }[];
 }
 
-function isRepairReply(value: unknown): value is RepairReply {
-  if (!value || typeof value !== "object") return false;
-  const reply = value as Record<string, unknown>;
-  return (reply.summary === null || typeof reply.summary === "string") && Array.isArray(reply.items)
-    && reply.items.every((item) => item && typeof item === "object"
-      && typeof (item as Record<string, unknown>).index === "number"
-      && FLAG_FIELDS.every((field) => typeof (item as Record<string, unknown>)[field] === "string"));
-}
-
 export interface LegalClaimOutcome {
   readonly summary: string;
   readonly riskFlags: readonly RiskFlag[];
@@ -170,7 +163,7 @@ export async function enforceLegalBoundary(
 
   let reply: RepairReply | null = null;
   try {
-    const raw = await model.complete({
+    reply = await completeStructured(model, {
       system: REPAIR_SYSTEM_PROMPT,
       user: JSON.stringify({
         summary: summaryHit ? summary : null,
@@ -185,8 +178,7 @@ export async function enforceLegalBoundary(
       }),
       schemaName: LEGAL_REPAIR_SCHEMA_NAME,
       jsonSchema: legalRepairJsonSchema,
-    });
-    reply = isRepairReply(raw) ? raw : null;
+    }, modelLegalRepairSchema, "The legal repair");
   } catch (error) {
     // A repair that can't run is a failed repair, not a failed review: the
     // texts are withheld below and the flags stay.

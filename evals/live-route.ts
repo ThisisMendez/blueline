@@ -14,12 +14,16 @@ import type { AnalysisOutcome } from "../src/features/analysis/types";
 export async function runDocument(text: string, title: string, ungated: boolean): Promise<{ outcome: AnalysisOutcome | null; returnedFlags: number; providerError: string | null }> {
   const client = new OpenRouterModelClient({ timeoutMs: 30_000 });
   let calls = 0;
+  let shapeRetries = 0;
   let returnedFlags = 0;
   let providerError: string | null = null;
   const started = Date.now();
   const model: ModelClient = {
     async complete(request) {
-      if (++calls > 7 || Date.now() - started > 120_000) throw new Error("Live smoke budget exceeded.");
+      // A retry after a malformed reply (structured.ts, ticket 22) has its own
+      // allowance, so a recovered reply can't push a document over 7 calls.
+      const overBudget = request.retryAfterInvalidReply ? ++shapeRetries > 2 : ++calls > 7;
+      if (overBudget || Date.now() - started > 150_000) throw new Error("Live smoke budget exceeded.");
       let result: unknown;
       try {
         result = await client.complete(request);

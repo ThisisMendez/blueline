@@ -3,6 +3,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { runDocument } from "../live-route";
+import { emptyReplyValidationTally, observeReplyValidation, recordReplyValidation } from "../../src/features/analysis/model/structured";
 import type { AnalysisOutcome } from "../../src/features/analysis/types";
 import { loadGoldSet } from "./corpus";
 import { loadLabelOverlay, overlayProblems } from "./label-overlay";
@@ -65,12 +66,20 @@ async function main() {
   const problems = overlayProblems(goldSet, overlay);
   if (problems.length) throw new Error(`label-corrections.json does not check out:\n${problems.join("\n")}`);
   const runs: DocumentRun[] = [];
+  // Malformed-reply counts (ticket 22): first-pass validation failures, retry recoveries, still invalid.
+  const replies = emptyReplyValidationTally();
   for (const document of goldSet.documents) {
+    const tally = emptyReplyValidationTally();
+    const stop = observeReplyValidation((event) => { recordReplyValidation(tally, event); recordReplyValidation(replies, event); });
     const { outcome, returnedFlags, providerError } = await runDocument(document.text, document.title, ungated);
+    stop();
     const run = toRun(document.id, outcome, returnedFlags, providerError);
-    console.log(`${document.id}: ${run.status}${run.status === "reviewed" ? `, ${run.flags.length} flag(s), ${run.droppedFlagCount} dropped` : ""}`);
+    const replyNote = tally.firstPassFailures > 0 ? `  [replies: ${tally.firstPassFailures} first-pass invalid, ${tally.recovered} recovered]` : "";
+    console.log(`${document.id}: ${run.status}${run.status === "reviewed" ? `, ${run.flags.length} flag(s), ${run.droppedFlagCount} dropped` : ""}${replyNote}`);
     runs.push(run);
   }
+  const unreadable = runs.filter((run) => run.status === "failed" && /unreadable/.test(run.reason)).length;
+  const replyLine = `Malformed replies: ${replies.firstPassFailures} first-pass invalid, ${replies.recovered} recovered by retry, ${replies.unrecovered} still invalid; model-unreadable: ${unreadable}/${runs.length} documents`;
   const report = scoreGoldRun(goldSet, runs, overlay);
   const header = [
     `Gold-set eval, ${goldSet.corpus} v${goldSet.version}`,
@@ -80,6 +89,7 @@ async function main() {
     ungated
       ? "Pipeline: UNGATED. The completeness check was skipped and each document went straight to runGeneralReview. This is not how a signer is served."
       : "Pipeline: the analysis route as npm run smoke -- --live wires it (anonymous, not persisted).",
+    replyLine,
   ];
   const text = renderGoldReport(report, header);
   mkdirSync(RUNS_DIR, { recursive: true });
