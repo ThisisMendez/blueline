@@ -1,0 +1,371 @@
+{
+  "corpus": "redline-v1",
+  "version": 1,
+  "startedAt": "2026-11-11T23:23:21.507Z",
+  "model": "z-ai/glm-5.3-flash",
+  "ungated": true,
+  "labelOverlaySha256": "707215fdab15f00596a353ae6403b7cf45c262fdf0fbd849094692ff383d4a72",
+  "runs": [
+    {
+      "documentId": "adhesion-contract",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "clean-document",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out.",
+          "sourceStart": 3081,
+          "sourceEnd": 3219,
+          "consequence": "If the signer ends the licence early, they lose the whole $45 fee for the remaining months, even though they will not be using the plot for that time; they may still harvest what is ready during the notice period."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+          "sourceStart": 3470,
+          "sourceEnd": 3548,
+          "consequence": "Any of the signer's belongings left on the plot after 15 December 2027 — canes, netting, frames or anything else — becomes the Association's property to keep or throw away, with no compensation."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 2
+    },
+    {
+      "documentId": "saas-subscription",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "offer-letter",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "storage-unit-rental",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "phone-plan-terms",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "internship-agreement",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "library-volunteer-agreement",
+      "status": "reviewed",
+      "flags": [],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 0
+    },
+    {
+      "documentId": "swim-lesson-registration",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "A place given up later than that, and before the third lesson, is refunded at half the fee.",
+          "sourceStart": 1960,
+          "sourceEnd": 2051,
+          "consequence": "If the signer gives up the place after the seven-day deadline but before the third lesson, half the $120 fee — sixty dollars — is kept by the Centre for lessons not yet delivered."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "After the third lesson no refund is made.",
+          "sourceStart": 2052,
+          "sourceEnd": 2093,
+          "consequence": "If the signer gives up the place after the third lesson, the entire $120 fee is kept by the Centre, including for lessons the child will not attend."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 2
+    }
+  ],
+  "report": {
+    "documents": {
+      "total": 9,
+      "reviewed": [
+        "clean-document",
+        "library-volunteer-agreement",
+        "swim-lesson-registration"
+      ],
+      "blocked": [],
+      "outOfScope": [],
+      "unverified": [],
+      "failed": [
+        {
+          "id": "adhesion-contract",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "saas-subscription",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "offer-letter",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "storage-unit-rental",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "phone-plan-terms",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "internship-agreement",
+          "reason": "unreadable: The model returned no content."
+        }
+      ]
+    },
+    "legalClaims": {
+      "repaired": 0,
+      "withheld": 0
+    },
+    "recall": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByType": {
+      "arbitration-and-class-action-waiver": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "fee-escalators-and-late-fees": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "auto-renewal": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "unilateral-modification": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "non-compete": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "limitation-of-liability": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "indemnification": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      }
+    },
+    "outOfScopeFound": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByCharacters": {
+      "withAny": {
+        "count": 0,
+        "total": 0
+      },
+      "withNone": {
+        "count": 0,
+        "total": 0
+      },
+      "byClass": {
+        "curly quote or apostrophe": {
+          "count": 0,
+          "total": 0
+        },
+        "non-breaking space": {
+          "count": 0,
+          "total": 0
+        },
+        "fi or fl ligature": {
+          "count": 0,
+          "total": 0
+        },
+        "em dash": {
+          "count": 0,
+          "total": 0
+        },
+        "two spaces in a row": {
+          "count": 0,
+          "total": 0
+        }
+      }
+    },
+    "typeNamedCorrectly": {
+      "measurable": false,
+      "reason": "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval."
+    },
+    "groundedness": {
+      "count": 4,
+      "total": 4,
+      "returnedFlagsAllAttempts": 4
+    },
+    "severity": {
+      "agree": {
+        "count": 0,
+        "total": 0
+      },
+      "under": 0,
+      "over": 0
+    },
+    "unilateral": {
+      "cases": [],
+      "highCount": {
+        "count": 0,
+        "total": 0
+      },
+      "exactBand": {
+        "count": 0,
+        "total": 0
+      },
+      "goldCriticalGradedHigh": {
+        "count": 0,
+        "total": 0
+      }
+    },
+    "severityExact": {
+      "agree": {
+        "count": 0,
+        "total": 0
+      },
+      "byGoldBand": {}
+    },
+    "revisedClean": {
+      "validForfeitureFlags": 4,
+      "validForfeitureSeverities": [
+        "low",
+        "low",
+        "low",
+        "low"
+      ],
+      "falseFlags": 0,
+      "documentsWithNoFalseFlags": {
+        "count": 3,
+        "total": 3
+      },
+      "correctedSentencesFlagged": {
+        "count": 4,
+        "total": 4
+      },
+      "perDocument": [
+        {
+          "id": "clean-document",
+          "validForfeiture": 2,
+          "falseFlags": 0
+        },
+        {
+          "id": "library-volunteer-agreement",
+          "validForfeiture": 0,
+          "falseFlags": 0
+        },
+        {
+          "id": "swim-lesson-registration",
+          "validForfeiture": 2,
+          "falseFlags": 0
+        }
+      ]
+    },
+    "cleanDocuments": {
+      "documentsWithNoFlags": {
+        "count": 1,
+        "total": 3
+      },
+      "flagsOnCleanDocuments": 4,
+      "perDocument": [
+        {
+          "id": "clean-document",
+          "flags": 2
+        },
+        {
+          "id": "library-volunteer-agreement",
+          "flags": 0
+        },
+        {
+          "id": "swim-lesson-registration",
+          "flags": 2
+        }
+      ]
+    },
+    "unmatchedFlagsOnPlantedDocuments": 0,
+    "flagsOnUnusualButHarmless": 0,
+    "planted": [],
+    "flags": [
+      {
+        "document": "clean-document",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "clean-document",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "swim-lesson-registration",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "A place given up later than that, and before the third lesson, is refunded at half the fee.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "swim-lesson-registration",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "After the third lesson no refund is made.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      }
+    ]
+  }
+}

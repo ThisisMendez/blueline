@@ -1,0 +1,889 @@
+{
+  "corpus": "redline-v1",
+  "version": 1,
+  "startedAt": "2026-11-11T22:55:57.897Z",
+  "model": "z-ai/glm-5.3-flash",
+  "ungated": true,
+  "labelOverlaySha256": "707215fdab15f00596a353ae6403b7cf45c262fdf0fbd849094692ff383d4a72",
+  "runs": [
+    {
+      "documentId": "adhesion-contract",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "clean-document",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "saas-subscription",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "We may revise the fee for any plan, and a revised fee applies to you from the start of the first Billing Period that begins more than thirty (30) days after we send notice of the revision to the email address on your account.",
+          "sourceStart": 1113,
+          "sourceEnd": 1338,
+          "consequence": "Northwind can raise the price of the signer's plan without the signer's agreement, with no cap on the increase; the new fee applies from the first Billing Period starting more than 30 days after an email notice, and the only way to avoid paying it is to cancel."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "On an annual plan the deadline to cancel is the day that falls thirty (30) days before the anniversary of the date you first subscribed, and where no cancellation is received by that day the term extends by a further twelve (12) months at the annual fee then in effect.",
+          "sourceStart": 2424,
+          "sourceEnd": 2693,
+          "consequence": "On an annual plan, missing the cancellation deadline — the day thirty days before the subscription anniversary — automatically commits the signer to another full twelve-month term at whatever the annual fee is at that time, with no fresh signature required."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "We may amend these terms, the pricing page and the Fee Schedule at any time, an amended version takes effect when we post it at northwindstudio.example/terms, and your continued use of the service after it is posted is your acceptance of the amended version.",
+          "sourceStart": 2722,
+          "sourceEnd": 2980,
+          "consequence": "Northwind can change any term of the agreement — including the pricing page and the Fee Schedule that sets charges like the reactivation fee — at any time, and the changes bind the signer simply because they kept using the service after the new version was posted on a website."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "You will indemnify and hold Northwind harmless from any claim brought by a third party that relates to content you uploaded, exported or published through the service, including a claim that the content infringes a copyright, a trade mark or a right of privacy, and you will pay our reasonable legal costs of defending such a claim.",
+          "sourceStart": 3961,
+          "sourceEnd": 4293,
+          "consequence": "The signer must pay for Northwind's defence of any third-party claim connected to content they uploaded, exported or published — including copyright, trade mark or privacy claims — an obligation with no stated cap that could exceed anything they paid for the service."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Where a payment is not collected on its due date, interest accrues on the unpaid amount at one and one half percent (1.5%) per month from the due date until payment is received, and an account suspended for non-payment is subject to the reactivation charge published in the Fee Schedule on the Northwind support site.",
+          "sourceStart": 1340,
+          "sourceEnd": 1657,
+          "consequence": "A missed or failed payment accrues interest at 1.5% per month (18% per year) with no stated cap, and once the account is suspended for non-payment the signer also owes a reactivation charge whose amount is set in a Fee Schedule on Northwind's support site rather than in this document."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Where availability in a calendar month falls below that figure, your remedy is the service credit set out in the Service Credit Policy and nothing further.",
+          "sourceStart": 3214,
+          "sourceEnd": 3369,
+          "consequence": "If the service underperforms, the signer's only remedy is a service credit whose amount is set in a separate Service Credit Policy not included in this document, and they give up any other remedy for the downtime."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Northwind’s aggregate liability to you for every claim relating to the service, whether framed in contract, in tort, in warranty or otherwise — and including any claim arising from lost work, lost revenue or a failed export — will not exceed the amount you actually paid us under Section 2 for the Billing Period in which the claim arose.",
+          "sourceStart": 3371,
+          "sourceEnd": 3709,
+          "consequence": "If the service fails — including losing the signer's work, revenue or a failed export — the most Northwind can ever owe is the amount paid in the single Billing Period in which the claim arose, which on a monthly plan could be one month's fee however large the loss."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Any dispute between you and Northwind arising out of these terms or out of your use of the service will be settled by binding arbitration before a single arbitrator under the consumer rules of a recognised arbitration body, and you agree to bring any claim only in your individual capacity and not as a plaintiff or class member in any purported class, collective or representative proceeding.",
+          "sourceStart": 4715,
+          "sourceEnd": 5108,
+          "consequence": "The signer gives up the right to sue Northwind in court (except in small claims court) and to join a class, collective or representative action, so a serious problem affecting many users could only be pursued as a single arbitration with the award final and no appeal route described."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Your subscription continues from one Billing Period into the next without further action by either of us, and we bill the plan fee then in effect on the first day of each new Billing Period.",
+          "sourceStart": 1895,
+          "sourceEnd": 2085,
+          "consequence": "The subscription rolls over automatically into each new Billing Period without the signer doing anything, and the fee then in effect is billed on the first day of the new period — it does not end on its own, so the signer must actively cancel to stop charges."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "A cancellation made on or after the first day of a Billing Period takes effect at the end of that Billing Period, and the fee already collected for it is not refunded.",
+          "sourceStart": 2255,
+          "sourceEnd": 2422,
+          "consequence": "If the signer cancels on or after the first day of a Billing Period, they pay for that entire period but cannot use or stop the charge for it — the fee already collected is kept by Northwind."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 10
+    },
+    {
+      "documentId": "offer-letter",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "storage-unit-rental",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "phone-plan-terms",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Service on a twelve month promotional plan renews for a further twelve month term at the end of the term then running, at the standard rate for the plan rather than at the promotional rate, unless you tell us to stop the renewal before the last day of the current term.",
+          "sourceStart": 1681,
+          "sourceEnd": 1950,
+          "consequence": "A twelve-month promotional plan automatically renews for another twelve-month term at the standard rate rather than the promotional rate unless the signer tells Cascade to stop the renewal before the last day of the current term — missing that deadline commits the signer to a further year at a higher, unstated rate."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Cancelling a promotional plan before the end of its term does not cancel a device instalment plan, and the unpaid instalment balance becomes due in full on your next bill.",
+          "sourceStart": 1952,
+          "sourceEnd": 2123,
+          "consequence": "Cancelling a promotional plan before the end of its term leaves the device instalment plan intact and makes the entire unpaid instalment balance due in full on the next bill — an amount that could be most of the device's cost, due at once."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Cascade may change any term of this Agreement, any charge, and any feature of your rate plan, and the change takes effect on the date stated in the notice we give you, which may be given on a bill, by message to your device, or by email.",
+          "sourceStart": 2155,
+          "sourceEnd": 2392,
+          "consequence": "Cascade can unilaterally change any term of the agreement, any charge, and any feature of the rate plan, and the change takes effect on a date stated in a notice that may arrive on a bill, by device message, or by email. The only stated limit is a 30-day window to cancel a line without an early termination charge when a change materially increases the monthly recurring charge."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Continuing to use the service after the effective date of a change accepts the change.",
+          "sourceStart": 2394,
+          "sourceEnd": 2480,
+          "consequence": "The signer is treated as accepting any unilateral change simply by continuing to use the service after its effective date, without signing anything or actively agreeing."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "You and Cascade agree that any dispute arising out of or relating to this Agreement, the service or any device will be resolved by individual binding arbitration administered by a nationally recognised arbitration provider under its consumer rules, and both of us give up the right to a jury trial and the right to bring or join a class, collective or representative action.",
+          "sourceStart": 3525,
+          "sourceEnd": 3899,
+          "consequence": "The signer gives up the right to a jury trial and the right to bring or join a class, collective or representative action; any dispute must go to individual binding arbitration. This removes court and group-action routes for contesting serious problems, such as a pattern of overcharging affecting many customers. The signer can reject this provision by writing to Cascade Mobile LLC, Dispute Notices, 1200 Willowbank Avenue, within thirty (30) days of activating service, without affecting service or rates."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Your bill includes a Regulatory Cost Recovery Charge and an Administrative Charge, neither of which is a tax or a charge required by any government, and Cascade may introduce, increase or remove either charge on notice given with the bill in which the change ﬁrst appears.",
+          "sourceStart": 970,
+          "sourceEnd": 1242,
+          "consequence": "The bill carries a Regulatory Cost Recovery Charge and an Administrative Charge that are carrier revenue charges, not government taxes, and Cascade can introduce, increase or remove either on notice given with the bill in which the change first appears — so these charges can grow with no cap stated in the agreement."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "An amount not paid by the due date shown on the bill incurs a late payment charge of the greater of five dollars ($5.00) or one and one half percent of the unpaid balance, applied each bill period until the balance is paid, and a restored line incurs the restoral charge shown in the Rate and Charge Guide.",
+          "sourceStart": 1244,
+          "sourceEnd": 1550,
+          "consequence": "An unpaid balance incurs a late charge of the greater of $5.00 or 1.5% of the unpaid balance applied every bill period until paid — a charge that compounds as the balance sits — and restoring a suspended line incurs a restoral charge whose amount is set in the Rate and Charge Guide, which was not provided with this agreement."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Cascade’s entire liability to you for any claim relating to the service, a device, or this Agreement, whether the claim is made in contract, in negligence, in warranty or under any statute, is limited to the service charges applied to the affected line during the bill period in which the claim arose, and Cascade is not liable for lost profits, lost data, or any indirect or consequential loss.",
+          "sourceStart": 2670,
+          "sourceEnd": 3065,
+          "consequence": "Cascade's total liability for any claim about the service, a device, or the agreement — including negligence and statutory claims — is capped at one bill period's service charges for the affected line, and the signer cannot recover lost profits, lost data, or any indirect or consequential loss, however large the actual harm."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "You will indemnify and hold Cascade harmless from any claim, loss or expense, including reasonable legal fees, arising out of your use of the service, out of anything sent from or stored on your device, out of the use of your line by anyone you allow to use it, and out of any charge incurred on your account.",
+          "sourceStart": 3187,
+          "sourceEnd": 3496,
+          "consequence": "The signer must cover any claim, loss or expense — including Cascade's reasonable legal fees — arising out of their use of the service, anything sent from or stored on the device, use of the line by anyone they allow to use it, and any charge incurred on the account. This is open-ended: there is no cap on the amount and it covers claims the signer did not personally cause, such as another person's use of their line."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Charges accrue to the end of the bill period in which you cancel, and a part bill period is not prorated.",
+          "sourceStart": 4229,
+          "sourceEnd": 4334,
+          "consequence": "When the signer cancels, charges continue to the end of the bill period and the partial period is not prorated, so they pay for days of service they will not use — up to nearly a full month's charges after they stop using the line."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 10
+    },
+    {
+      "documentId": "internship-agreement",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "library-volunteer-agreement",
+      "status": "reviewed",
+      "flags": [],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 0
+    },
+    {
+      "documentId": "swim-lesson-registration",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "After the third lesson no refund is made.",
+          "sourceStart": 2052,
+          "sourceEnd": 2093,
+          "consequence": "If the signer gives up the place after the third lesson, the entire $120 fee is kept by the Centre, even for lessons the child will not attend."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 1
+    }
+  ],
+  "report": {
+    "documents": {
+      "total": 9,
+      "reviewed": [
+        "saas-subscription",
+        "phone-plan-terms",
+        "library-volunteer-agreement",
+        "swim-lesson-registration"
+      ],
+      "blocked": [],
+      "outOfScope": [],
+      "unverified": [],
+      "failed": [
+        {
+          "id": "adhesion-contract",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "clean-document",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "offer-letter",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "storage-unit-rental",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "internship-agreement",
+          "reason": "unreadable: The model returned no content."
+        }
+      ]
+    },
+    "legalClaims": {
+      "repaired": 0,
+      "withheld": 0
+    },
+    "recall": {
+      "count": 11,
+      "total": 11
+    },
+    "recallByType": {
+      "arbitration-and-class-action-waiver": {
+        "count": 2,
+        "total": 2,
+        "inScope": true
+      },
+      "fee-escalators-and-late-fees": {
+        "count": 4,
+        "total": 4,
+        "inScope": true
+      },
+      "auto-renewal": {
+        "count": 3,
+        "total": 3,
+        "inScope": true
+      },
+      "unilateral-modification": {
+        "count": 2,
+        "total": 2,
+        "inScope": true
+      },
+      "non-compete": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "limitation-of-liability": {
+        "count": 2,
+        "total": 2,
+        "inScope": false
+      },
+      "indemnification": {
+        "count": 2,
+        "total": 2,
+        "inScope": false
+      }
+    },
+    "outOfScopeFound": {
+      "count": 4,
+      "total": 4
+    },
+    "recallByCharacters": {
+      "withAny": {
+        "count": 2,
+        "total": 2
+      },
+      "withNone": {
+        "count": 9,
+        "total": 9
+      },
+      "byClass": {
+        "curly quote or apostrophe": {
+          "count": 0,
+          "total": 0
+        },
+        "non-breaking space": {
+          "count": 1,
+          "total": 1
+        },
+        "fi or fl ligature": {
+          "count": 1,
+          "total": 1
+        },
+        "em dash": {
+          "count": 0,
+          "total": 0
+        },
+        "two spaces in a row": {
+          "count": 0,
+          "total": 0
+        }
+      }
+    },
+    "typeNamedCorrectly": {
+      "measurable": false,
+      "reason": "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval."
+    },
+    "groundedness": {
+      "count": 21,
+      "total": 21,
+      "returnedFlagsAllAttempts": 21
+    },
+    "severity": {
+      "agree": {
+        "count": 7,
+        "total": 11
+      },
+      "under": 2,
+      "over": 2
+    },
+    "unilateral": {
+      "cases": [
+        {
+          "document": "saas-subscription",
+          "id": "P-05",
+          "goldBand": "critical",
+          "found": true,
+          "foundSeverity": "high"
+        },
+        {
+          "document": "phone-plan-terms",
+          "id": "P-04",
+          "goldBand": "critical",
+          "found": true,
+          "foundSeverity": "high"
+        }
+      ],
+      "highCount": {
+        "count": 2,
+        "total": 2
+      },
+      "exactBand": {
+        "count": 0,
+        "total": 2
+      },
+      "goldCriticalGradedHigh": {
+        "count": 2,
+        "total": 2
+      }
+    },
+    "severityExact": {
+      "agree": {
+        "count": 4,
+        "total": 11
+      },
+      "byGoldBand": {
+        "critical": {
+          "count": 0,
+          "total": 4
+        },
+        "high": {
+          "count": 1,
+          "total": 2
+        },
+        "moderate": {
+          "count": 3,
+          "total": 5
+        }
+      }
+    },
+    "revisedClean": {
+      "validForfeitureFlags": 1,
+      "validForfeitureSeverities": [
+        "low"
+      ],
+      "falseFlags": 0,
+      "documentsWithNoFalseFlags": {
+        "count": 2,
+        "total": 2
+      },
+      "correctedSentencesFlagged": {
+        "count": 1,
+        "total": 2
+      },
+      "perDocument": [
+        {
+          "id": "library-volunteer-agreement",
+          "validForfeiture": 0,
+          "falseFlags": 0
+        },
+        {
+          "id": "swim-lesson-registration",
+          "validForfeiture": 1,
+          "falseFlags": 0
+        }
+      ]
+    },
+    "cleanDocuments": {
+      "documentsWithNoFlags": {
+        "count": 1,
+        "total": 2
+      },
+      "flagsOnCleanDocuments": 1,
+      "perDocument": [
+        {
+          "id": "library-volunteer-agreement",
+          "flags": 0
+        },
+        {
+          "id": "swim-lesson-registration",
+          "flags": 1
+        }
+      ]
+    },
+    "unmatchedFlagsOnPlantedDocuments": 5,
+    "flagsOnUnusualButHarmless": 0,
+    "planted": [
+      {
+        "document": "saas-subscription",
+        "id": "P-01",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [
+          "non-breaking space"
+        ],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-02",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-03",
+        "clauseType": "auto-renewal",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "low"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-04",
+        "clauseType": "auto-renewal",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-05",
+        "clauseType": "unilateral-modification",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "critical",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-06",
+        "clauseType": "limitation-of-liability",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [
+          "curly quote or apostrophe",
+          "em dash"
+        ],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-07",
+        "clauseType": "indemnification",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-08",
+        "clauseType": "arbitration-and-class-action-waiver",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "critical",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "phone-plan-terms",
+        "id": "P-01",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [
+          "fi or fl ligature"
+        ],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "phone-plan-terms",
+        "id": "P-02",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "phone-plan-terms",
+        "id": "P-03",
+        "clauseType": "auto-renewal",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "phone-plan-terms",
+        "id": "P-04",
+        "clauseType": "unilateral-modification",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "critical",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "phone-plan-terms",
+        "id": "P-05",
+        "clauseType": "limitation-of-liability",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [
+          "curly quote or apostrophe"
+        ],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "phone-plan-terms",
+        "id": "P-06",
+        "clauseType": "indemnification",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "phone-plan-terms",
+        "id": "P-07",
+        "clauseType": "arbitration-and-class-action-waiver",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "critical",
+        "foundSeverity": "high"
+      }
+    ],
+    "flags": [
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "We may revise the fee for any plan, and a revised fee applies to you from the start of the first Billing Period that begins more than thirty (30) days after we send notice of the revision to the email address on your account.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-01",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "On an annual plan the deadline to cancel is the day that falls thirty (30) days before the anniversary of the date you first subscribed, and where no cancellation is received by that day the term extends by a further twelve (12) months at the annual fee then in effect.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-04",
+        "matchedPlantedType": "auto-renewal",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "We may amend these terms, the pricing page and the Fee Schedule at any time, an amended version takes effect when we post it at northwindstudio.example/terms, and your continued use of the service after it is posted is your acceptance of the amended version.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-05",
+        "matchedPlantedType": "unilateral-modification",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "You will indemnify and hold Northwind harmless from any claim brought by a third party that relates to content you uploaded, exported or published through the service, including a claim that the content infringes a copyright, a trade mark or a right of privacy, and you will pay our reasonable legal costs of defending such a claim.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-07",
+        "matchedPlantedType": "indemnification",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Where a payment is not collected on its due date, interest accrues on the unpaid amount at one and one half percent (1.5%) per month from the due date until payment is received, and an account suspended for non-payment is subject to the reactivation charge published in the Fee Schedule on the Northwind support site.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-02",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Where availability in a calendar month falls below that figure, your remedy is the service credit set out in the Service Credit Policy and nothing further.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Northwind’s aggregate liability to you for every claim relating to the service, whether framed in contract, in tort, in warranty or otherwise — and including any claim arising from lost work, lost revenue or a failed export — will not exceed the amount you actually paid us under Section 2 for the Billing Period in which the claim arose.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-06",
+        "matchedPlantedType": "limitation-of-liability",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Any dispute between you and Northwind arising out of these terms or out of your use of the service will be settled by binding arbitration before a single arbitrator under the consumer rules of a recognised arbitration body, and you agree to bring any claim only in your individual capacity and not as a plaintiff or class member in any purported class, collective or representative proceeding.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-08",
+        "matchedPlantedType": "arbitration-and-class-action-waiver",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Your subscription continues from one Billing Period into the next without further action by either of us, and we bill the plan fee then in effect on the first day of each new Billing Period.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-03",
+        "matchedPlantedType": "auto-renewal",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "A cancellation made on or after the first day of a Billing Period takes effect at the end of that Billing Period, and the fee already collected for it is not refunded.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "Service on a twelve month promotional plan renews for a further twelve month term at the end of the term then running, at the standard rate for the plan rather than at the promotional rate, unless you tell us to stop the renewal before the last day of the current term.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-03",
+        "matchedPlantedType": "auto-renewal",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "Cancelling a promotional plan before the end of its term does not cancel a device instalment plan, and the unpaid instalment balance becomes due in full on your next bill.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "Cascade may change any term of this Agreement, any charge, and any feature of your rate plan, and the change takes effect on the date stated in the notice we give you, which may be given on a bill, by message to your device, or by email.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-04",
+        "matchedPlantedType": "unilateral-modification",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "Continuing to use the service after the effective date of a change accepts the change.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "You and Cascade agree that any dispute arising out of or relating to this Agreement, the service or any device will be resolved by individual binding arbitration administered by a nationally recognised arbitration provider under its consumer rules, and both of us give up the right to a jury trial and the right to bring or join a class, collective or representative action.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-07",
+        "matchedPlantedType": "arbitration-and-class-action-waiver",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Your bill includes a Regulatory Cost Recovery Charge and an Administrative Charge, neither of which is a tax or a charge required by any government, and Cascade may introduce, increase or remove either charge on notice given with the bill in which the change ﬁrst appears.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-01",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "An amount not paid by the due date shown on the bill incurs a late payment charge of the greater of five dollars ($5.00) or one and one half percent of the unpaid balance, applied each bill period until the balance is paid, and a restored line incurs the restoral charge shown in the Rate and Charge Guide.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-02",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Cascade’s entire liability to you for any claim relating to the service, a device, or this Agreement, whether the claim is made in contract, in negligence, in warranty or under any statute, is limited to the service charges applied to the affected line during the bill period in which the claim arose, and Cascade is not liable for lost profits, lost data, or any indirect or consequential loss.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-05",
+        "matchedPlantedType": "limitation-of-liability",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "You will indemnify and hold Cascade harmless from any claim, loss or expense, including reasonable legal fees, arising out of your use of the service, out of anything sent from or stored on your device, out of the use of your line by anyone you allow to use it, and out of any charge incurred on your account.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-06",
+        "matchedPlantedType": "indemnification",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "phone-plan-terms",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Charges accrue to the end of the bill period in which you cancel, and a part bill period is not prorated.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "swim-lesson-registration",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "After the third lesson no refund is made.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      }
+    ]
+  }
+}

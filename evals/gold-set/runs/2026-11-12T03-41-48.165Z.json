@@ -1,0 +1,266 @@
+{
+  "corpus": "redline-v1",
+  "version": 1,
+  "startedAt": "2026-11-12T03:41:48.165Z",
+  "model": "z-ai/glm-5.3-flash",
+  "ungated": false,
+  "labelOverlaySha256": "707215fdab15f00596a353ae6403b7cf45c262fdf0fbd849094692ff383d4a72",
+  "runs": [
+    {
+      "documentId": "adhesion-contract",
+      "status": "out-of-scope",
+      "agreementKind": "not-a-residential-lease",
+      "description": "Gym membership and instructor certification agreement, not a lease."
+    },
+    {
+      "documentId": "clean-document",
+      "status": "out-of-scope",
+      "agreementKind": "not-a-residential-lease",
+      "description": "Annual community garden plot licence, not housing"
+    },
+    {
+      "documentId": "saas-subscription",
+      "status": "out-of-scope",
+      "agreementKind": "not-a-residential-lease",
+      "description": "Subscription terms for a hosted design tool"
+    },
+    {
+      "documentId": "offer-letter",
+      "status": "out-of-scope",
+      "agreementKind": "not-a-residential-lease",
+      "description": "Employment offer letter, not a residential lease"
+    },
+    {
+      "documentId": "storage-unit-rental",
+      "status": "out-of-scope",
+      "agreementKind": "not-a-residential-lease",
+      "description": "Self-storage unit rental agreement, not residential."
+    },
+    {
+      "documentId": "phone-plan-terms",
+      "status": "out-of-scope",
+      "agreementKind": "not-a-residential-lease",
+      "description": "Wireless phone service agreement, not a lease."
+    },
+    {
+      "documentId": "internship-agreement",
+      "status": "out-of-scope",
+      "agreementKind": "not-a-residential-lease",
+      "description": "A law firm summer analyst programme agreement"
+    },
+    {
+      "documentId": "library-volunteer-agreement",
+      "status": "out-of-scope",
+      "agreementKind": "not-a-residential-lease",
+      "description": "A volunteer agreement with a public library."
+    },
+    {
+      "documentId": "swim-lesson-registration",
+      "status": "out-of-scope",
+      "agreementKind": "not-a-residential-lease",
+      "description": "Swim lesson registration for a child's classes"
+    }
+  ],
+  "report": {
+    "documents": {
+      "total": 9,
+      "reviewed": [],
+      "blocked": [],
+      "outOfScope": [
+        {
+          "id": "adhesion-contract",
+          "agreementKind": "not-a-residential-lease",
+          "description": "Gym membership and instructor certification agreement, not a lease."
+        },
+        {
+          "id": "clean-document",
+          "agreementKind": "not-a-residential-lease",
+          "description": "Annual community garden plot licence, not housing"
+        },
+        {
+          "id": "saas-subscription",
+          "agreementKind": "not-a-residential-lease",
+          "description": "Subscription terms for a hosted design tool"
+        },
+        {
+          "id": "offer-letter",
+          "agreementKind": "not-a-residential-lease",
+          "description": "Employment offer letter, not a residential lease"
+        },
+        {
+          "id": "storage-unit-rental",
+          "agreementKind": "not-a-residential-lease",
+          "description": "Self-storage unit rental agreement, not residential."
+        },
+        {
+          "id": "phone-plan-terms",
+          "agreementKind": "not-a-residential-lease",
+          "description": "Wireless phone service agreement, not a lease."
+        },
+        {
+          "id": "internship-agreement",
+          "agreementKind": "not-a-residential-lease",
+          "description": "A law firm summer analyst programme agreement"
+        },
+        {
+          "id": "library-volunteer-agreement",
+          "agreementKind": "not-a-residential-lease",
+          "description": "A volunteer agreement with a public library."
+        },
+        {
+          "id": "swim-lesson-registration",
+          "agreementKind": "not-a-residential-lease",
+          "description": "Swim lesson registration for a child's classes"
+        }
+      ],
+      "unverified": [],
+      "failed": []
+    },
+    "legalClaims": {
+      "repaired": 0,
+      "withheld": 0
+    },
+    "recall": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByType": {
+      "arbitration-and-class-action-waiver": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "fee-escalators-and-late-fees": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "auto-renewal": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "unilateral-modification": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "non-compete": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "limitation-of-liability": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "indemnification": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      }
+    },
+    "outOfScopeFound": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByCharacters": {
+      "withAny": {
+        "count": 0,
+        "total": 0
+      },
+      "withNone": {
+        "count": 0,
+        "total": 0
+      },
+      "byClass": {
+        "curly quote or apostrophe": {
+          "count": 0,
+          "total": 0
+        },
+        "non-breaking space": {
+          "count": 0,
+          "total": 0
+        },
+        "fi or fl ligature": {
+          "count": 0,
+          "total": 0
+        },
+        "em dash": {
+          "count": 0,
+          "total": 0
+        },
+        "two spaces in a row": {
+          "count": 0,
+          "total": 0
+        }
+      }
+    },
+    "typeNamedCorrectly": {
+      "measurable": false,
+      "reason": "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval."
+    },
+    "groundedness": {
+      "count": 0,
+      "total": 0,
+      "returnedFlagsAllAttempts": 0
+    },
+    "severity": {
+      "agree": {
+        "count": 0,
+        "total": 0
+      },
+      "under": 0,
+      "over": 0
+    },
+    "unilateral": {
+      "cases": [],
+      "highCount": {
+        "count": 0,
+        "total": 0
+      },
+      "exactBand": {
+        "count": 0,
+        "total": 0
+      },
+      "goldCriticalGradedHigh": {
+        "count": 0,
+        "total": 0
+      }
+    },
+    "severityExact": {
+      "agree": {
+        "count": 0,
+        "total": 0
+      },
+      "byGoldBand": {}
+    },
+    "revisedClean": {
+      "validForfeitureFlags": 0,
+      "validForfeitureSeverities": [],
+      "falseFlags": 0,
+      "documentsWithNoFalseFlags": {
+        "count": 0,
+        "total": 0
+      },
+      "correctedSentencesFlagged": {
+        "count": 0,
+        "total": 0
+      },
+      "perDocument": []
+    },
+    "cleanDocuments": {
+      "documentsWithNoFlags": {
+        "count": 0,
+        "total": 0
+      },
+      "flagsOnCleanDocuments": 0,
+      "perDocument": []
+    },
+    "unmatchedFlagsOnPlantedDocuments": 0,
+    "flagsOnUnusualButHarmless": 0,
+    "planted": [],
+    "flags": []
+  }
+}
