@@ -1,0 +1,574 @@
+{
+  "corpus": "redline-v1",
+  "version": 1,
+  "startedAt": "2026-11-11T18:22:31.490Z",
+  "model": "z-ai/glm-5.3-flash",
+  "ungated": true,
+  "runs": [
+    {
+      "documentId": "adhesion-contract",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "At the end of the initial term, and at the end of each term thereafter, your membership renews automatically for a further twelve (12) month term at the then-current rate.",
+          "sourceStart": 1463,
+          "sourceEnd": 1634,
+          "consequence": "Your membership continues automatically into successive 12-month terms without a fresh signature, at a rate that may have increased, unless you cancel in writing at least 3 days before the renewal date."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "To stop a renewal you must deliver written notice of cancellation to the Member Services desk no later than three (3) days before the renewal date.",
+          "sourceStart": 1635,
+          "sourceEnd": 1782,
+          "consequence": "Missing the 3-day notice deadline commits you to a further full 12-month term at the then-current rate, and a late notice locks in the entire following term's dues as well."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "A membership that has been suspended, frozen or placed on medical hold continues to renew on its original schedule.",
+          "sourceStart": 1927,
+          "sourceEnd": 2042,
+          "consequence": "A suspended, frozen or medically held membership still renews into a new 12-month term, so dues for that term remain payable even if you could not use the club."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Meridian may amend the Club Rules, the Schedule of Fees, the hours of operation, the class timetable and the terms of this Agreement at any time by posting the amended version at the club or on the Meridian website, and the amended version applies to you from the date it is posted.",
+          "sourceStart": 3600,
+          "sourceEnd": 3882,
+          "consequence": "Meridian can change the fees, rules, hours and even the terms of this agreement at any time, and the changes bind you from the date they are posted, with no notice requirement and no chance to cancel without triggering the renewal/termination consequences."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Meridian’s total liability to you for any claim arising out of or relating to this Agreement, your membership or your use of any facility — whether the claim is framed in contract, in negligence or otherwise — will not exceed the total dues and fees you paid to Meridian in the twelve (12) months immediately before the event giving rise to the claim.",
+          "sourceStart": 4890,
+          "sourceEnd": 5241,
+          "consequence": "Your total recovery from Meridian for any claim — including negligence — is capped at 12 months of dues and fees, and you cannot recover for lost property, lost income or consequential losses."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "You will indemnify, defend and hold harmless Meridian and its ofﬁcers, employees, instructors and contractors against any claim, demand, loss, liability or expense, including reasonable legal fees, that is brought by a third party and arises out of your use of the facilities, your conduct on club premises, the conduct of a guest you bring, or any service you provide to another member.",
+          "sourceStart": 5263,
+          "sourceEnd": 5650,
+          "consequence": "You could be required to pay Meridian's legal fees and any third-party claim arising from your ordinary use of the gym, your conduct on the premises, a guest's conduct, or informal help you give another member, with Meridian choosing the lawyer and controlling settlement."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "For twelve (12) months after your Program candidacy ends for any reason, you will not teach, coach or deliver group ﬁtness instruction or personal training, whether as an employee, as a contractor or on your own account, at any facility within ﬁfteen (15) miles of a Meridian location at which you taught or trained.",
+          "sourceStart": 6826,
+          "sourceEnd": 7142,
+          "consequence": "For a year after your Program candidacy ends — even if Meridian ends it — you cannot teach or coach fitness or personal training within 15 miles of any Meridian location where you taught or trained, and you cannot solicit Meridian members, which could block your livelihood in that area."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Any dispute, claim or controversy between you and Meridian arising out of or relating to this Agreement, your membership or the Program will be resolved by ﬁnal and binding arbitration administered by a nationally recognised arbitration provider under its consumer arbitration rules, and you and Meridian each waive any right to a trial by jury and any right to bring or participate in a class, collective or representative action.",
+          "sourceStart": 8017,
+          "sourceEnd": 8448,
+          "consequence": "You give up the right to a jury trial and to bring or join a class action against Meridian; disputes of any size go to a single arbitrator whose award is final."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Access is by keycard or through the application, and you are responsible for every entry made with your keycard or your account.",
+          "sourceStart": 838,
+          "sourceEnd": 966,
+          "consequence": "You are responsible for every entry made with your keycard or account, so a lost or stolen keycard or account compromise could leave you liable for access or charges you did not make."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Meridian may adjust dues once in any twelve (12) month period by the greater of six percent (6%)  or the increase in the Consumer Price Index for All Urban Consumers over the preceding twelve months, on thirty (30) days notice to the email address on your account.",
+          "sourceStart": 2348,
+          "sourceEnd": 2612,
+          "consequence": "Meridian can raise your dues once in any 12-month period by the greater of 6% or CPI on 30 days' email notice, and you remain bound to pay the higher rate for the rest of your term."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Dues not received within ten (10) days of the draw date incur the late charge set out in the Schedule of Fees then in effect, which is posted at the Member Services desk and on the Meridian website and forms part of this Agreement.",
+          "sourceStart": 2613,
+          "sourceEnd": 2844,
+          "consequence": "Late payments incur charges set in a Schedule of Fees that is not printed in this agreement and can be changed by posting, so the amount you would owe is not fixed in the document you sign."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Candidates are expected to complete sixty (60) supervised teaching hours in each Program year, and a candidate who falls short may be held back a year at Meridian’s discretion.",
+          "sourceStart": 6120,
+          "sourceEnd": 6296,
+          "consequence": "If you fall short of 60 supervised teaching hours in a Program year, Meridian can hold you back a year at its sole discretion, extending the time before certification and the period of your obligations under the Program terms."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "You may end your Program enrolment by notifying the Program ofﬁce in writing at least ninety (90) days before the anniversary date, in which case no further tuition is charged and your candidacy closes at the end of the Program year then running.",
+          "sourceStart": 6398,
+          "sourceEnd": 6644,
+          "consequence": "Program tuition auto-renews each year at the then-current rate unless you give written notice at least 90 days before the anniversary date, so missing the window commits you to another year of tuition."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "returnedFlagsAllAttempts": 13
+    },
+    {
+      "documentId": "clean-document",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out.",
+          "sourceStart": 3081,
+          "sourceEnd": 3219,
+          "consequence": "If the plot holder ends the licence early, the entire $45 fee is forfeited with no refund, even if most of the season remains."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+          "sourceStart": 3470,
+          "sourceEnd": 3548,
+          "consequence": "Anything the plot holder leaves on the plot after 15 December 2027 — including personal equipment like canes, netting and frames — becomes the Association's property to keep or dispose of."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "returnedFlagsAllAttempts": 2
+    },
+    {
+      "documentId": "saas-subscription",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "offer-letter",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "storage-unit-rental",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "phone-plan-terms",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "internship-agreement",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "library-volunteer-agreement",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    },
+    {
+      "documentId": "swim-lesson-registration",
+      "status": "failed",
+      "reason": "rate-limited: Provider returned error"
+    }
+  ],
+  "report": {
+    "documents": {
+      "total": 9,
+      "reviewed": [
+        "adhesion-contract",
+        "clean-document"
+      ],
+      "blocked": [],
+      "failed": [
+        {
+          "id": "saas-subscription",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "offer-letter",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "storage-unit-rental",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "phone-plan-terms",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "internship-agreement",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "library-volunteer-agreement",
+          "reason": "rate-limited: Provider returned error"
+        },
+        {
+          "id": "swim-lesson-registration",
+          "reason": "rate-limited: Provider returned error"
+        }
+      ]
+    },
+    "recall": {
+      "count": 5,
+      "total": 6
+    },
+    "recallByType": {
+      "arbitration-and-class-action-waiver": {
+        "count": 1,
+        "total": 1,
+        "inScope": true
+      },
+      "fee-escalators-and-late-fees": {
+        "count": 2,
+        "total": 2,
+        "inScope": true
+      },
+      "auto-renewal": {
+        "count": 1,
+        "total": 2,
+        "inScope": true
+      },
+      "unilateral-modification": {
+        "count": 1,
+        "total": 1,
+        "inScope": true
+      },
+      "non-compete": {
+        "count": 1,
+        "total": 1,
+        "inScope": false
+      },
+      "limitation-of-liability": {
+        "count": 1,
+        "total": 1,
+        "inScope": false
+      },
+      "indemnification": {
+        "count": 1,
+        "total": 1,
+        "inScope": false
+      }
+    },
+    "outOfScopeFound": {
+      "count": 3,
+      "total": 3
+    },
+    "recallByCharacters": {
+      "withAny": {
+        "count": 2,
+        "total": 2
+      },
+      "withNone": {
+        "count": 3,
+        "total": 4
+      },
+      "byClass": {
+        "curly quote or apostrophe": {
+          "count": 0,
+          "total": 0
+        },
+        "non-breaking space": {
+          "count": 0,
+          "total": 0
+        },
+        "fi or fl ligature": {
+          "count": 1,
+          "total": 1
+        },
+        "em dash": {
+          "count": 0,
+          "total": 0
+        },
+        "two spaces in a row": {
+          "count": 1,
+          "total": 1
+        }
+      }
+    },
+    "typeNamedCorrectly": {
+      "measurable": false,
+      "reason": "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval."
+    },
+    "groundedness": {
+      "count": 15,
+      "total": 15,
+      "returnedFlagsAllAttempts": 15
+    },
+    "cleanDocuments": {
+      "documentsWithNoFlags": {
+        "count": 0,
+        "total": 1
+      },
+      "flagsOnCleanDocuments": 2,
+      "perDocument": [
+        {
+          "id": "clean-document",
+          "flags": 2
+        }
+      ]
+    },
+    "unmatchedFlagsOnPlantedDocuments": 5,
+    "flagsOnUnusualButHarmless": 0,
+    "planted": [
+      {
+        "document": "adhesion-contract",
+        "id": "P-01",
+        "clauseType": "auto-renewal",
+        "inScope": true,
+        "found": true,
+        "characterClasses": []
+      },
+      {
+        "document": "adhesion-contract",
+        "id": "P-02",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [
+          "two spaces in a row"
+        ]
+      },
+      {
+        "document": "adhesion-contract",
+        "id": "P-03",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": []
+      },
+      {
+        "document": "adhesion-contract",
+        "id": "P-04",
+        "clauseType": "unilateral-modification",
+        "inScope": true,
+        "found": true,
+        "characterClasses": []
+      },
+      {
+        "document": "adhesion-contract",
+        "id": "P-05",
+        "clauseType": "limitation-of-liability",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [
+          "curly quote or apostrophe",
+          "non-breaking space",
+          "em dash"
+        ]
+      },
+      {
+        "document": "adhesion-contract",
+        "id": "P-06",
+        "clauseType": "indemnification",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [
+          "fi or fl ligature"
+        ]
+      },
+      {
+        "document": "adhesion-contract",
+        "id": "P-07",
+        "clauseType": "auto-renewal",
+        "inScope": true,
+        "found": false,
+        "characterClasses": []
+      },
+      {
+        "document": "adhesion-contract",
+        "id": "P-08",
+        "clauseType": "non-compete",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [
+          "fi or fl ligature"
+        ]
+      },
+      {
+        "document": "adhesion-contract",
+        "id": "P-09",
+        "clauseType": "arbitration-and-class-action-waiver",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [
+          "fi or fl ligature"
+        ]
+      }
+    ],
+    "flags": [
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "At the end of the initial term, and at the end of each term thereafter, your membership renews automatically for a further twelve (12) month term at the then-current rate.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-01",
+        "matchedPlantedType": "auto-renewal",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "To stop a renewal you must deliver written notice of cancellation to the Member Services desk no later than three (3) days before the renewal date.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "A membership that has been suspended, frozen or placed on medical hold continues to renew on its original schedule.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "Meridian may amend the Club Rules, the Schedule of Fees, the hours of operation, the class timetable and the terms of this Agreement at any time by posting the amended version at the club or on the Meridian website, and the amended version applies to you from the date it is posted.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-04",
+        "matchedPlantedType": "unilateral-modification",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "Meridian’s total liability to you for any claim arising out of or relating to this Agreement, your membership or your use of any facility — whether the claim is framed in contract, in negligence or otherwise — will not exceed the total dues and fees you paid to Meridian in the twelve (12) months immediately before the event giving rise to the claim.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-05",
+        "matchedPlantedType": "limitation-of-liability",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "You will indemnify, defend and hold harmless Meridian and its ofﬁcers, employees, instructors and contractors against any claim, demand, loss, liability or expense, including reasonable legal fees, that is brought by a third party and arises out of your use of the facilities, your conduct on club premises, the conduct of a guest you bring, or any service you provide to another member.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-06",
+        "matchedPlantedType": "indemnification",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "For twelve (12) months after your Program candidacy ends for any reason, you will not teach, coach or deliver group ﬁtness instruction or personal training, whether as an employee, as a contractor or on your own account, at any facility within ﬁfteen (15) miles of a Meridian location at which you taught or trained.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-08",
+        "matchedPlantedType": "non-compete",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "Any dispute, claim or controversy between you and Meridian arising out of or relating to this Agreement, your membership or the Program will be resolved by ﬁnal and binding arbitration administered by a nationally recognised arbitration provider under its consumer arbitration rules, and you and Meridian each waive any right to a trial by jury and any right to bring or participate in a class, collective or representative action.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-09",
+        "matchedPlantedType": "arbitration-and-class-action-waiver",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Access is by keycard or through the application, and you are responsible for every entry made with your keycard or your account.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Meridian may adjust dues once in any twelve (12) month period by the greater of six percent (6%)  or the increase in the Consumer Price Index for All Urban Consumers over the preceding twelve months, on thirty (30) days notice to the email address on your account.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-02",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Dues not received within ten (10) days of the draw date incur the late charge set out in the Schedule of Fees then in effect, which is posted at the Member Services desk and on the Meridian website and forms part of this Agreement.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-03",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Candidates are expected to complete sixty (60) supervised teaching hours in each Program year, and a candidate who falls short may be held back a year at Meridian’s discretion.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "adhesion-contract",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "You may end your Program enrolment by notifying the Program ofﬁce in writing at least ninety (90) days before the anniversary date, in which case no further tuition is charged and your candidacy closes at the end of the Program year then running.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "clean-document",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "clean-document",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      }
+    ]
+  }
+}

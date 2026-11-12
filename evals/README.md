@@ -2,7 +2,7 @@
 
 The independent corpus and its adjudications have not been supplied. Ticket 09 remains pending. `tests/evaluation.test.ts` uses synthetic inputs to verify the scorer and runner; its invented reviewer identifiers are test data and provide no independent evidence.
 
-Run `npx tsx evals/cli.ts` to produce a prerequisite report under `evals/runs/`. It exits 2 while evidence is missing. Reports are ignored by Git; attach a reviewed, sanitized report deliberately when release evidence is available.
+Run `npm run eval:independent` (or `npx tsx evals/cli.ts`) to produce a prerequisite report under `evals/runs/`. It exits 2 while evidence is missing. Reports are ignored by Git; attach a reviewed, sanitized report deliberately when release evidence is available. `npm run eval` runs the gold-set regression check (ticket 11) instead, which is not independent evidence; see `evals/gold-set/README.md`.
 
 ## Prepare the corpus
 
@@ -21,7 +21,7 @@ Every labeled sentence must appear verbatim in its identified source document. T
 
 ## Run and review
 
-Load `OPENROUTER_API_KEY` and `OPENROUTER_MODEL` into the restricted runner's environment. The CLI uses the product OpenRouter client and its configured Fireworks-only routing, required parameters, structured response schemas and low reasoning effort. It neither chooses a model nor changes provider settings.
+Load `OPENROUTER_API_KEY` and `OPENROUTER_MODEL` into the restricted runner's environment. The CLI uses the product OpenRouter client and its configured provider, required parameters, structured response schemas and low reasoning effort. Set `OPENROUTER_PROVIDER` to use a provider other than the Fireworks default. A free model requires an explicit provider. The CLI neither chooses a model nor changes provider settings.
 
 ```sh
 npx tsx evals/cli.ts --corpus /restricted/release-corpus.json --live --revision COMMIT_OR_BUILD_ID --private-output /restricted/runs

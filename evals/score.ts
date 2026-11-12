@@ -36,6 +36,8 @@ const outcomeSchema = z.discriminatedUnion("status", [
   z.object({ status: z.literal("blocked"), completeness: z.object({
     missing: z.array(z.object({ name: z.string() })),
   }), review: z.never().optional(), summary: z.never().optional(), riskFlags: z.never().optional() }),
+  z.object({ status: z.literal("out-of-scope"), completeness: z.object({ agreementKind: z.string() }) }),
+  z.object({ status: z.literal("unverified") }),
   z.object({ status: z.literal("failed"), reason: z.string() }),
   z.object({ status: z.literal("rejected"), reason: z.string() }),
 ]);
@@ -129,6 +131,9 @@ export function scoreEvaluation(corpusInput: unknown, recordsInput: unknown): Ev
       if (outcome.status === "failed" || outcome.status === "rejected") {
         pending.push(`${prefix}: ${outcome.status} (${outcome.reason})`); continue;
       }
+      // Every corpus case is a residential lease packet, so a scope block is a false block.
+      if (outcome.status === "out-of-scope") { reasons.push(`${prefix}: residential lease was blocked as out of scope (${outcome.completeness.agreementKind})`); continue; }
+      if (outcome.status === "unverified") { pending.push(`${prefix}: completeness could not be verified`); continue; }
       if (entry.category === "incomplete") {
         if (outcome.status !== "blocked") reasons.push(`${prefix}: incomplete packet received a review`);
         else if (adjudicated && adjudication.missingDocuments.some((name) => !outcome.completeness.missing.some((missing) => missing.name === name))) {

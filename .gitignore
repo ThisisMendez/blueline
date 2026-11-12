@@ -154,3 +154,8 @@ temp/
 .impeccable/review/
 .impeccable/hook.cache.json
 .impeccable/mocks/
+
+# ---- Third-party lease sources: local only, never committed (public repo) ----
+evals/lease-corpus/sources/
+evals/lease-corpus/text/
+evals/lease-corpus/runs/

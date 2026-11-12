@@ -1,0 +1,140 @@
+{
+  "corpus": "blueline-public-lease-corpus",
+  "version": 1,
+  "status": "intake",
+  "whatThisIs": "Publicly available residential lease documents gathered for evaluation. Not gold-standard labels. Sources and extracted text are kept locally and never committed, because the repository is public.",
+  "documents": [
+    {
+      "id": "L01-philadelphia-fair-lease",
+      "title": "Philadelphia Fair Lease (model lease, fillable form)",
+      "sourceUrl": "https://philadelphiafairlease.org/wp-content/uploads/2023/11/Model_Lease_Fillable_Form_111523.pdf",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "original.pdf",
+      "originalFormat": "pdf",
+      "extraction": {
+        "method": "pdf"
+      },
+      "accessNote": ""
+    },
+    {
+      "id": "L02-nycha-pact-lease",
+      "title": "NYCHA PACT Residential Lease",
+      "sourceUrl": "https://www.nyc.gov/assets/nycha/downloads/pdf/pactlease-english.pdf",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 404,
+      "available": false,
+      "original": null,
+      "originalFormat": null,
+      "extraction": null,
+      "accessNote": "404 Not Found on 2026-11-11. Internet Archive holds a copy of this URL (snapshot 2025-12-07). Proposed replacement, not used until approved."
+    },
+    {
+      "id": "L03-hud-family-model-lease",
+      "title": "HUD Model Lease for Subsidized Programs (form HUD-90105a)",
+      "sourceUrl": "https://www.hud.gov/sites/dfiles/OCHCO/documents/90105a.pdf",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "original.pdf",
+      "originalFormat": "pdf",
+      "extraction": {
+        "method": "pdf"
+      },
+      "accessNote": ""
+    },
+    {
+      "id": "L04-hud-ha-sample-lease",
+      "title": "HUD Housing Authority Sample Lease",
+      "sourceUrl": "https://www.hud.gov/sites/documents/DOC_11065.PDF",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 404,
+      "available": false,
+      "original": null,
+      "originalFormat": null,
+      "extraction": null,
+      "accessNote": "404 Not Found on 2026-11-11. Internet Archive holds a copy of this URL (snapshot 2024-10-02). Proposed replacement, not used until approved."
+    },
+    {
+      "id": "L05-umass-sample-lease",
+      "title": "University of Massachusetts Sample Lease",
+      "sourceUrl": "https://cdn.offcampusimages.com/public/resource/yh4w0mq9fxprdg5tczqnubrtcau_lml5ftvyycaluwc.pdf",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 403,
+      "available": false,
+      "original": null,
+      "originalFormat": null,
+      "extraction": null,
+      "accessNote": "403 Forbidden on 2026-11-11, also with a browser user agent. No Internet Archive snapshot. Needs a manual download by the owner or a replacement."
+    },
+    {
+      "id": "L06-binghamton-sample-lease",
+      "title": "Binghamton University Sample Lease",
+      "sourceUrl": "https://www.binghamton.edu/occ/pdfs/lease.pdf",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 404,
+      "available": false,
+      "original": null,
+      "originalFormat": null,
+      "extraction": null,
+      "accessNote": "404 Not Found on 2026-11-11. Internet Archive holds a copy of this URL (snapshot 2024-07-18). Proposed replacement, not used until approved."
+    },
+    {
+      "id": "L07-cu-boulder-grad-family-lease",
+      "title": "University of Colorado Boulder Graduate and Family Housing Lease",
+      "sourceUrl": "https://www.colorado.edu/living/media/2787",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "original.bin",
+      "originalFormat": "pdf",
+      "extraction": {
+        "method": "pdf"
+      },
+      "accessNote": "Served as application/pdf from a /media/ URL."
+    },
+    {
+      "id": "L08-maine-ag-model-lease",
+      "title": "Maine Attorney General Model Residential Lease (lease only)",
+      "sourceUrl": "https://www.maine.gov/ag/consumer-protection/consumer-help-topics/housing/model-residential-lease",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "original-lease-only.docx",
+      "originalFormat": "docx",
+      "extraction": {
+        "method": "docx-textutil"
+      },
+      "accessNote": "The page returned 403 to a plain client and 200 to a browser user agent. The lease is a Word file linked from the page (CLG 16- Model Residential Lease, lease only.docx); the version with guidance is kept beside it. Text is a derived copy (macOS textutil)."
+    },
+    {
+      "id": "L09-penn-state-altoona-sample-lease",
+      "title": "Penn State Altoona Sample Lease / Rental Agreement",
+      "sourceUrl": "https://altoona.psu.edu/offices-divisions/student-affairs/off-campus-living/sample-lease-rental-agreement",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 403,
+      "available": false,
+      "original": null,
+      "originalFormat": null,
+      "extraction": null,
+      "accessNote": "403 Forbidden on 2026-11-11, also with a browser user agent. Internet Archive holds a copy of this URL (snapshot 2026-02-10). Proposed replacement, not used until approved."
+    },
+    {
+      "id": "L10-ohio-u-ecohouse-lease",
+      "title": "Ohio University Ecohouse Sample Lease (web page)",
+      "sourceUrl": "https://www.ohio.edu/ecohouse/lease",
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "page.html",
+      "originalFormat": "html",
+      "extraction": {
+        "method": "html-cut",
+        "start": "Sample Lease (subject to change)",
+        "end": "\nExplore\nApply"
+      },
+      "accessNote": "The lease is inline on a page about Ecohouse expectations, under 'Sample Lease (subject to change)'. Text is a derived copy cut from the page."
+    }
+  ]
+}

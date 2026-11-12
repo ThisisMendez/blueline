@@ -1,0 +1,292 @@
+{
+  "corpus": "redline-v1",
+  "version": 1,
+  "startedAt": "2026-11-03T17:00:55.202Z",
+  "model": "z-ai/glm-5.3-flash",
+  "runs": [
+    {
+      "documentId": "adhesion-contract",
+      "status": "blocked",
+      "missing": [
+        "Schedule of Fees",
+        "Club Rules"
+      ]
+    },
+    {
+      "documentId": "clean-document",
+      "status": "blocked",
+      "missing": [
+        "site rules"
+      ]
+    },
+    {
+      "documentId": "saas-subscription",
+      "status": "blocked",
+      "missing": [
+        "Fee Schedule",
+        "Service Credit Policy"
+      ]
+    },
+    {
+      "documentId": "offer-letter",
+      "status": "blocked",
+      "missing": [
+        "Ardent Employee Handbook",
+        "Employee Confidential Information and Invention Assignment Agreement",
+        "Exhibit B"
+      ]
+    },
+    {
+      "documentId": "storage-unit-rental",
+      "status": "blocked",
+      "missing": [
+        "Unit Schedule",
+        "Schedule of Charges",
+        "the rules posted in the office"
+      ]
+    },
+    {
+      "documentId": "phone-plan-terms",
+      "status": "blocked",
+      "missing": [
+        "Service Summary",
+        "Rate and Charge Guide"
+      ]
+    },
+    {
+      "documentId": "internship-agreement",
+      "status": "blocked",
+      "missing": [
+        "Programme Schedule",
+        "Programme Handbook",
+        "the Firm's Information Security Policy",
+        "Restricted List"
+      ]
+    },
+    {
+      "documentId": "library-volunteer-agreement",
+      "status": "reviewed",
+      "flags": [],
+      "droppedFlagCount": 0,
+      "returnedFlagsAllAttempts": 0
+    },
+    {
+      "documentId": "swim-lesson-registration",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "After the third lesson no refund is made.",
+          "sourceStart": 2052,
+          "sourceEnd": 2093,
+          "consequence": "If the signer withdraws after the third lesson, the entire $120 fee is lost, and withdrawing between the first and third lessons loses half the fee."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Two or more missed lessons in a row may be carried into the following session at no charge, on the Centre's agreement.",
+          "sourceStart": 1735,
+          "sourceEnd": 1853,
+          "consequence": "If the child misses two or more lessons in a row, the signer has no guaranteed remedy: the make-up depends on a free place existing, and carrying lessons into the next session happens only if the Centre agrees."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "returnedFlagsAllAttempts": 2
+    }
+  ],
+  "report": {
+    "documents": {
+      "total": 9,
+      "reviewed": [
+        "library-volunteer-agreement",
+        "swim-lesson-registration"
+      ],
+      "blocked": [
+        {
+          "id": "adhesion-contract",
+          "missing": [
+            "Schedule of Fees",
+            "Club Rules"
+          ]
+        },
+        {
+          "id": "clean-document",
+          "missing": [
+            "site rules"
+          ]
+        },
+        {
+          "id": "saas-subscription",
+          "missing": [
+            "Fee Schedule",
+            "Service Credit Policy"
+          ]
+        },
+        {
+          "id": "offer-letter",
+          "missing": [
+            "Ardent Employee Handbook",
+            "Employee Confidential Information and Invention Assignment Agreement",
+            "Exhibit B"
+          ]
+        },
+        {
+          "id": "storage-unit-rental",
+          "missing": [
+            "Unit Schedule",
+            "Schedule of Charges",
+            "the rules posted in the office"
+          ]
+        },
+        {
+          "id": "phone-plan-terms",
+          "missing": [
+            "Service Summary",
+            "Rate and Charge Guide"
+          ]
+        },
+        {
+          "id": "internship-agreement",
+          "missing": [
+            "Programme Schedule",
+            "Programme Handbook",
+            "the Firm's Information Security Policy",
+            "Restricted List"
+          ]
+        }
+      ],
+      "failed": []
+    },
+    "recall": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByType": {
+      "arbitration-and-class-action-waiver": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "fee-escalators-and-late-fees": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "auto-renewal": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "unilateral-modification": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "non-compete": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "limitation-of-liability": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "indemnification": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      }
+    },
+    "outOfScopeFound": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByCharacters": {
+      "withAny": {
+        "count": 0,
+        "total": 0
+      },
+      "withNone": {
+        "count": 0,
+        "total": 0
+      },
+      "byClass": {
+        "curly quote or apostrophe": {
+          "count": 0,
+          "total": 0
+        },
+        "non-breaking space": {
+          "count": 0,
+          "total": 0
+        },
+        "fi or fl ligature": {
+          "count": 0,
+          "total": 0
+        },
+        "em dash": {
+          "count": 0,
+          "total": 0
+        },
+        "two spaces in a row": {
+          "count": 0,
+          "total": 0
+        }
+      }
+    },
+    "typeNamedCorrectly": {
+      "measurable": false,
+      "reason": "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval."
+    },
+    "groundedness": {
+      "count": 2,
+      "total": 2,
+      "returnedFlagsAllAttempts": 2
+    },
+    "cleanDocuments": {
+      "documentsWithNoFlags": {
+        "count": 1,
+        "total": 2
+      },
+      "flagsOnCleanDocuments": 2,
+      "perDocument": [
+        {
+          "id": "library-volunteer-agreement",
+          "flags": 0
+        },
+        {
+          "id": "swim-lesson-registration",
+          "flags": 2
+        }
+      ]
+    },
+    "unmatchedFlagsOnPlantedDocuments": 0,
+    "flagsOnUnusualButHarmless": 0,
+    "planted": [],
+    "flags": [
+      {
+        "document": "swim-lesson-registration",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "After the third lesson no refund is made.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "swim-lesson-registration",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Two or more missed lessons in a row may be carried into the following session at no charge, on the Centre's agreement.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+Gold-set eval, redline-v1 v1
+Started: 2026-11-11T18:24:09.263Z
+Model: z-ai/glm-5.3-flash
+Pipeline: UNGATED. The completeness check was skipped and each document went straight to runGeneralReview. This is not how a signer is served.
+
+Documents: 9 in manifest; 0 reviewed; 9 left out of every denominator.
+  left out, model call failed: adhesion-contract (rate-limited: Provider returned error)
+  left out, model call failed: clean-document (rate-limited: Provider returned error)
+  left out, model call failed: saas-subscription (rate-limited: Provider returned error)
+  left out, model call failed: offer-letter (rate-limited: Provider returned error)
+  left out, model call failed: storage-unit-rental (rate-limited: Provider returned error)
+  left out, model call failed: phone-plan-terms (rate-limited: Provider returned error)
+  left out, model call failed: internship-agreement (rate-limited: Provider returned error)
+  left out, model call failed: library-volunteer-agreement (rate-limited: Provider returned error)
+  left out, model call failed: swim-lesson-registration (rate-limited: Provider returned error)
+
+Recall (in-scope planted clauses found): 0/0 (n/a)
+  in scope     arbitration-and-class-action-waiver: 0/0 (n/a)
+  in scope     fee-escalators-and-late-fees: 0/0 (n/a)
+  in scope     auto-renewal: 0/0 (n/a)
+  in scope     unilateral-modification: 0/0 (n/a)
+  out of scope non-compete: 0/0 (n/a)
+  out of scope limitation-of-liability: 0/0 (n/a)
+  out of scope indemnification: 0/0 (n/a)
+Out-of-scope planted clauses flagged anyway (information only, never a miss): 0/0 (n/a)
+Named the right type: not measurable. Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval.
+
+Recall by characters in the planted sentence (in-scope only):
+  has at least one: 0/0 (n/a)
+  has none: 0/0 (n/a)
+  curly quote or apostrophe: 0/0 (n/a)
+  non-breaking space: 0/0 (n/a)
+  fi or fl ligature: 0/0 (n/a)
+  em dash: 0/0 (n/a)
+  two spaces in a row: 0/0 (n/a)
+
+Groundedness (delivered flags quoted verbatim / all flags the model returned, delivered + dropped): 0/0 (n/a)
+  raw flags across every model attempt, retries included: 0
+
+Clean documents with no flags: 0/0 (n/a); flags on clean documents: 0
+Flags on planted documents that matched no planted clause: 0
+Flags on an unusual-but-harmless sentence: 0
+
+Planted clauses:
+
+Flags:
+
+A model wrote this gold set. These numbers are an upper bound and never a promise to a reader.

@@ -1,7 +1,8 @@
 "use client";
 
 import type {
-  CompletenessCheck,
+  CompleteAgreement,
+  IncompleteAgreement,
   DocumentReference,
 } from "@/features/packet/completeness";
 import type { ExtractedDocument } from "@/features/packet/types";
@@ -17,7 +18,7 @@ interface LedgerEntry {
 
 /** One list of every reference, missing ones first, each with its answer. */
 function ledgerEntries(
-  completeness: CompletenessCheck,
+  completeness: CompleteAgreement | IncompleteAgreement,
   choices: ReferenceChoices,
 ): LedgerEntry[] {
   const missing = completeness.kind === "incomplete" ? completeness.missing : [];
@@ -38,7 +39,7 @@ function ledgerEntries(
 }
 
 export interface ReferenceLedgerProps {
-  readonly completeness: CompletenessCheck;
+  readonly completeness: CompleteAgreement | IncompleteAgreement;
   readonly documents: readonly ExtractedDocument[];
   readonly choices: ReferenceChoices;
   readonly onChoose: (referenceId: string, documentId: string | null) => void;

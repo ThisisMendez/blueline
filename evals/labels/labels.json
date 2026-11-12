@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "run": "evals/gold-set/runs/2026-11-10T19-09-14.532Z-ungated.json",
+  "flags": {
+    "1": {
+      "label": "PASS",
+      "note": "Missing the three-day cancellation deadline commits the member to another 12 months of dues, creating a clear, material financial downside.",
+      "labelledAt": "2026-11-10T19:36:21.911Z",
+      "history": []
+    },
+    "2": {
+      "label": "PASS",
+      "note": "Reason: The optional certification program renews annually at the then-current tuition unless the member gives 90 days’ written notice, creating a plausible financial obligation if the deadline is missed.",
+      "labelledAt": "2026-11-10T19:36:59.335Z",
+      "history": []
+    },
+    "3": {
+      "label": "PASS",
+      "note": "If the plot holder cancels early, they forfeit prepaid fees for the unused portion of the season, creating a real financial downside, even if the amount may be small.",
+      "labelledAt": "2026-11-10T19:37:36.889Z",
+      "history": []
+    },
+    "4": {
+      "label": "PASS",
+      "note": "The firm can terminate the fixed-term internship for any reason with only one week's notice, potentially costing the participant expected income and the opportunity to complete the program.",
+      "labelledAt": "2026-11-10T19:38:09.499Z",
+      "history": []
+    },
+    "5": {
+      "label": "PASS",
+      "note": "The indefinite confidentiality obligation restricts the analyst’s ability to disclose client information or retain work materials even after the internship ends, creating a lasting professional limitation.",
+      "labelledAt": "2026-11-10T19:38:42.622Z",
+      "history": []
+    },
+    "6": {
+      "label": "PASS",
+      "note": "Resigning or being terminated for cause within 12 months triggers repayment of the full $15,000 signing bonus within 30 days, creating a substantial financial obligation.",
+      "labelledAt": "2026-11-10T19:39:12.939Z",
+      "history": []
+    },
+    "7": {
+      "label": "PASS",
+      "note": "Canceling a promotional plan early accelerates the entire unpaid device balance into the next bill, creating a potentially substantial and immediate financial obligation.",
+      "labelledAt": "2026-11-10T19:39:47.789Z",
+      "history": []
+    },
+    "8": {
+      "label": "PASS",
+      "note": "Missing the cancellation deadline results in another monthly charge that cannot be refunded, creating a real financial downside.",
+      "labelledAt": "2026-11-10T19:40:11.257Z",
+      "history": []
+    },
+    "9": {
+      "label": "PASS",
+      "note": "The occupant must maintain insurance covering the full value of stored property or bear the financial risk of loss, creating a potentially substantial financial downside.",
+      "labelledAt": "2026-11-10T19:40:44.922Z",
+      "history": []
+    },
+    "10": {
+      "label": "PASS",
+      "note": "Canceling within seven days of the first lesson reduces the refund to 50%, and canceling after the third lesson forfeits the entire fee, creating a clear financial downside.",
+      "labelledAt": "2026-11-10T19:44:46.105Z",
+      "history": []
+    }
+  },
+  "reflection": "I started by judging whether a clause could cost someone something. After reviewing all 10 flags, I realized I need to distinguish between a real financial or contractual downside and how serious that downside actually is. A flag can be accurate without deserving a medium or high severity rating. I also learned that the condition triggering the consequence matters, not just the consequence itself. All 10 passed my initial test, but that suggests my criteria may be too broad. Going forward, I'll evaluate accuracy, materiality, severity, and whether the document is within Blueline's scope separately.",
+  "updatedAt": "2026-11-10T20:02:18.269Z",
+  "reflectionHistory": [
+    {
+      "reflection": "All 10 clauses contain a plausible downside, but that does not establish that Blueline's flags are correct.\n\nWe evaluated the contractual language, not Blueline's actual explanations or highlighted sentences. Also, all 10 documents are outside Blueline's residential-lease scope. My recommendation: Separate risk accuracy from product behavior. Otherwise, this exercise could produce a misleading 100% pass rate while missing over-warning, inaccurate explanations, and failures to reject non-lease documents.",
+      "replacedAt": "2026-11-10T20:02:18.269Z"
+    }
+  ]
+}

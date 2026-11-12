@@ -1,0 +1,83 @@
+{
+  "corpus": "blueline-real-lease-holdout",
+  "version": 1,
+  "status": "locked-pending-owner-confirmation",
+  "whatThisIs": "Five public residential leases that replace the unavailable sources L02, L04, L05, L06 and L09 (decision 1). Holdout only: no product, judge or model run on them before their adjudicated labels are frozen, and no prompt or completeness work may read them. Kept apart from evals/lease-corpus/manifest.json so `npm run eval:leases` can never pick them up. Sources and text are local only (evals/holdout/.gitignore).",
+  "documents": [
+    {
+      "id": "H02-nycha-pact-lease",
+      "replaces": "L02-nycha-pact-lease",
+      "title": "NYCHA PACT Residential Lease (sample, revised June 2025)",
+      "sourceUrl": "https://www.nyc.gov/assets/nycha/downloads/pdf/pactlease-english.pdf",
+      "retrievedFrom": "http://web.archive.org/web/20251207015333id_/https://www.nyc.gov/assets/nycha/downloads/pdf/pactlease-english.pdf",
+      "version": { "kind": "internet-archive-snapshot", "timestamp": "20251207015333" },
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "original.pdf",
+      "originalFormat": "pdf",
+      "extraction": { "method": "pdf" },
+      "accessNote": "The live URL returned 404 on 2026-11-11. Fetched the raw bytes of the Internet Archive snapshot of the same URL (id_ form, so the archive adds nothing)."
+    },
+    {
+      "id": "H04-hud-ha-sample-lease",
+      "replaces": "L04-hud-ha-sample-lease",
+      "title": "HUD Housing Authority Sample Lease (public housing, Parts I and II)",
+      "sourceUrl": "https://www.hud.gov/sites/documents/DOC_11065.PDF",
+      "retrievedFrom": "http://web.archive.org/web/20241002074526id_/https://www.hud.gov/sites/documents/DOC_11065.PDF",
+      "version": { "kind": "internet-archive-snapshot", "timestamp": "20241002074526" },
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "original.pdf",
+      "originalFormat": "pdf",
+      "extraction": { "method": "pdf" },
+      "accessNote": "The live URL returned 404 on 2026-11-11. Fetched the raw bytes of the Internet Archive snapshot of the same URL."
+    },
+    {
+      "id": "H05-puget-sound-sample-lease",
+      "replaces": "L05-umass-sample-lease",
+      "title": "University of Puget Sound Sample Off-Campus Housing Lease between Students and Landlords",
+      "sourceUrl": "https://www.pugetsound.edu/sites/default/files/file/1888_OCSSsamplelease_0.pdf",
+      "retrievedFrom": "https://www.pugetsound.edu/sites/default/files/file/1888_OCSSsamplelease_0.pdf",
+      "version": { "kind": "live-file", "lastModified": "Wed, 01 Dec 2021 08:26:16 GMT", "etag": "W/\"61a731a8-4f2d\"", "sameBytesAsSnapshot": "20220423110824" },
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "original.pdf",
+      "originalFormat": "pdf",
+      "extraction": { "method": "pdf" },
+      "accessNote": "A different document, not the UMass lease. UMass's CDN still returns 403 for its sample lease and for its two other sample agreements, and has no archive copy. This is the same kind of document: a university off-campus student services office's sample lease for a private landlord renting to students. The live file is byte-identical to the Internet Archive snapshot of 2022-04-23. See evals/holdout/README.md for the candidates rejected."
+    },
+    {
+      "id": "H06-binghamton-sample-lease",
+      "replaces": "L06-binghamton-sample-lease",
+      "title": "Binghamton University Off Campus College Sample Lease",
+      "sourceUrl": "https://www.binghamton.edu/occ/pdfs/lease.pdf",
+      "retrievedFrom": "http://web.archive.org/web/20240718235351id_/https://www.binghamton.edu/occ/pdfs/lease.pdf",
+      "version": { "kind": "internet-archive-snapshot", "timestamp": "20240718235351" },
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "original.pdf",
+      "originalFormat": "pdf",
+      "extraction": { "method": "pdf" },
+      "accessNote": "The live URL returned 404 on 2026-11-11. Fetched the raw bytes of the Internet Archive snapshot of the same URL."
+    },
+    {
+      "id": "H09-penn-state-altoona-sample-lease",
+      "replaces": "L09-penn-state-altoona-sample-lease",
+      "title": "Penn State Altoona Sample Lease or Rental Agreement (web page)",
+      "sourceUrl": "https://altoona.psu.edu/offices-divisions/student-affairs/off-campus-living/sample-lease-rental-agreement",
+      "retrievedFrom": "http://web.archive.org/web/20260210004301id_/https://altoona.psu.edu/offices-divisions/student-affairs/off-campus-living/sample-lease-rental-agreement",
+      "version": { "kind": "internet-archive-snapshot", "timestamp": "20260210004301" },
+      "accessedOn": "2026-11-11",
+      "httpStatus": 200,
+      "available": true,
+      "original": "page.html",
+      "originalFormat": "html",
+      "extraction": { "method": "html-cut", "start": "By this agreement made at", "end": "\nIn This Section" },
+      "accessNote": "The live page returned 403 on 2026-11-11. Fetched the raw HTML of the Internet Archive snapshot. The lease is inline on the page; the text is a derived copy cut between two fixed markers."
+    }
+  ]
+}

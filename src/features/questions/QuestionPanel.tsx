@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import type { ExtractedDocument } from "@/features/packet/types";
-import { NOT_ADDRESSED, type QuestionOutcome } from "./contract";
+import { LOCAL_LAW_NOTE, NOT_ADDRESSED, type QuestionOutcome } from "./contract";
 
 const FAILURE_COPY: Record<string, string> = {
   "not-configured": "Questions are unavailable because the review service is not configured.",
@@ -49,6 +49,9 @@ export function QuestionPanel({ documents }: { readonly documents: readonly Extr
       </form>
       <div aria-live="polite" aria-busy={pending} className="mt-5 font-[family-name:var(--font-body)] text-base leading-relaxed">
         {pending ? <p>Checking the complete agreement for an answer.</p> : null}
+        {(outcome?.status === "answered" || outcome?.status === "not-addressed") && outcome.needsLocalLaw ? (
+          <p className="mb-4 border-l-2 border-[var(--color-navy)] pl-4">{LOCAL_LAW_NOTE}</p>
+        ) : null}
         {outcome?.status === "answered" ? (
           <div className="flex flex-col gap-4">
             <p className="font-semibold">For “{submitted}”, the agreement says:</p>
@@ -62,6 +65,8 @@ export function QuestionPanel({ documents }: { readonly documents: readonly Extr
         ) : null}
         {outcome?.status === "not-addressed" ? <p>{NOT_ADDRESSED}</p> : null}
         {outcome?.status === "blocked" ? <p>Add the missing documents before asking: {outcome.missing.join(", ")}.</p> : null}
+        {outcome?.status === "out-of-scope" ? <p>We only answer questions about residential leases, and this packet doesn&apos;t look like one.</p> : null}
+        {outcome?.status === "unverified" ? <p>We couldn&apos;t confirm your packet is complete, so we haven&apos;t answered. Try again.</p> : null}
         {outcome?.status === "failed" ? <p role="alert">{FAILURE_COPY[outcome.reason] ?? FAILURE_COPY.unavailable}</p> : null}
         {outcome?.status === "rejected" ? <p role="alert">We could not read this question and packet. Reload the review and try again.</p> : null}
       </div>

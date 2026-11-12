@@ -61,6 +61,34 @@ export function normalizeText(text: string): string {
   return normalizeWithOffsets(text).value;
 }
 
+const PUNCTUATION_FOLD: Readonly<Record<string, string>> = {
+  "‘": "'", "’": "'", "ʼ": "'", "“": '"', "”": '"', "–": "-", "—": "-", "‐": "-", "‑": "-",
+};
+
+/**
+ * Typographic quotes and dashes as their plain forms, one character for one
+ * character, so an offset into the folded text is an offset into the
+ * original.
+ */
+export function foldPunctuation(text: string): string {
+  return text.replace(/[‘’ʼ“”–—‐‑]/g, (character) => PUNCTUATION_FOLD[character]);
+}
+
+/**
+ * {@link locateQuotation}, but a curly quote and a straight one (or a dash
+ * and a hyphen) count as the same character. Only the completeness gate uses
+ * this, to find the sentence that requires a document when a reply typed
+ * "Owner's" for the lease's "Owner’s". It never touches risk-flag citations,
+ * and what the signer reads is still cut from their own text at the returned
+ * offsets, so no wording they can't find is ever shown.
+ */
+export function locateQuotationFoldingPunctuation(
+  text: string,
+  quotation: string,
+): TextLocation | null {
+  return locateQuotation(foldPunctuation(text), foldPunctuation(quotation));
+}
+
 /** A located quotation, in character offsets into the *original* text. */
 export interface TextLocation {
   readonly start: number;

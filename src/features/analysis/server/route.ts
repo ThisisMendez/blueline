@@ -170,6 +170,17 @@ export function createAnalysisRoute(
       return Response.json(outcome, { status: 200 });
     }
 
+    // ADR 0014: a packet that isn't a residential lease, or whose
+    // completeness can't be verified, is never reviewed.
+    if (completeness.kind === "out-of-scope") {
+      const outcome: AnalysisOutcome = { status: "out-of-scope", documents: packet.documents, completeness };
+      return Response.json(outcome, { status: 200 });
+    }
+    if (completeness.kind === "unverified") {
+      const outcome: AnalysisOutcome = { status: "unverified", documents: packet.documents, completeness };
+      return Response.json(outcome, { status: 200 });
+    }
+
     let review;
     try {
       review = await runGeneralReview({ packet, model: dependencies.model });

@@ -5,17 +5,20 @@ import { useActionState } from "react";
 import { sendSignInLinkAction } from "../actions";
 import { initialSignInState, type SignInState } from "../sign-in-state";
 
+const ERROR_MESSAGE = {
+  "invalid-email": "That address doesn't look complete. Check it and send again.",
+  unconfigured: "Accounts aren't running on this deployment, so there is no link to send.",
+  "email-rate-limited": "Too many sign-in emails have gone out for now. Wait a while, then send again.",
+  error: "The link didn't go out. Try again in a moment.",
+};
+
 function Message({ state }: { state: SignInState }) {
   if (state.status === "idle") return null;
 
   const text =
     state.status === "sent"
       ? `Link sent to ${state.email}. Open it on this device to sign in.`
-      : state.status === "invalid-email"
-        ? "That address doesn't look complete. Check it and send again."
-        : state.status === "unconfigured"
-          ? "Accounts aren't running on this deployment, so there is no link to send."
-          : "The link didn't go out. Try again in a moment.";
+      : ERROR_MESSAGE[state.status];
 
   return (
     <p

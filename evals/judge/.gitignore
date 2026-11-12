@@ -1,0 +1,3 @@
+# Why each judge-batch flag was picked stays private until the human
+# verdicts are locked, so the reviewer is not primed.
+private/

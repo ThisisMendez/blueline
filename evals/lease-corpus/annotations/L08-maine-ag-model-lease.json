@@ -1,0 +1,49 @@
+{
+  "documentId": "L08-maine-ag-model-lease",
+  "sourceUrl": "https://www.maine.gov/ag/consumer-protection/consumer-help-topics/housing/model-residential-lease",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "intake record: not gold-standard, no labels yet",
+  "sha256Original": "8849655fe7b0d89105f8d1997bd0376b9a85e455f2fa4ea1bd90d3aaf3060d81",
+  "sha256Text": "2f55f570964efe2f93b88547147d7722cb07de6fb28a5d64255fd5cdc5bcbdca",
+  "textIsDerived": true,
+  "jurisdiction": "Maine, USA",
+  "housingContext": "Private-market residential tenancy (model lease published by the Maine Attorney General)",
+  "programRestrictions": "None stated",
+  "documentType": "state model lease template, lease-only version (unexecuted, with blanks)",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "complete-as-supplied",
+    "observed": "The product reviewed it in every run. Derived from a Word file; tabs and bullet characters from the conversion are in the text.",
+    "needsHumanCheck": [
+      "Confirm no referenced document is missing",
+      "Check the Word-to-text conversion against the original"
+    ]
+  },
+  "usageRights": "No licence statement found. Published by a state agency for public use. Internal evaluation only, kept locally, not redistributed; reuse terms not confirmed.",
+  "proposedSplit": "development",
+  "exposureToPromptWork": [
+    "Used to fix the Q&A instruction for legal questions (Phase 3), so it must not be used as holdout."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}

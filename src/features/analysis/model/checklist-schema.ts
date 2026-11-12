@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { CHECKLIST_TOPIC_IDS, COVERAGE_CHECKLIST } from "../checklist";
+import { nullableText } from "./fields";
 
 /**
  * What the model is asked to return when Blueline checks the complete
@@ -65,8 +66,9 @@ export const checklistJsonSchema: Record<string, unknown> = {
 export const modelChecklistTopicSchema = z.object({
   topicId: z.string().trim().min(1),
   status: z.enum(["found", "not-found"]),
-  sourceDocumentId: z.string().trim().min(1).nullable(),
-  sourceSentence: z.string().trim().min(1).nullable(),
+  // An empty string here means "nothing found", the same as null.
+  sourceDocumentId: nullableText(),
+  sourceSentence: nullableText(),
 }).superRefine((topic, context) => {
   const cited = topic.sourceDocumentId !== null && topic.sourceSentence !== null;
   const absent = topic.sourceDocumentId === null && topic.sourceSentence === null;

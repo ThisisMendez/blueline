@@ -1,0 +1,49 @@
+{
+  "documentId": "L10-ohio-u-ecohouse-lease",
+  "sourceUrl": "https://www.ohio.edu/ecohouse/lease",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "intake record: not gold-standard, no labels yet",
+  "sha256Original": "68a3c33c7b3e82a382d6bf614d305aa450f3fa46c9374e46ad48e1ac05572d8a",
+  "sha256Text": "4d50bfec940c745c7e31177b9bdcfd373e3d4493a1dba9cb797726a494b156d2",
+  "textIsDerived": true,
+  "jurisdiction": "Athens, Ohio, USA",
+  "housingContext": "University-owned student house (OHIO Ecohouse sustainability living-learning program)",
+  "programRestrictions": "Open to eligible Ohio University students accepted to the Ecohouse program; Student Code of Conduct and program duties apply",
+  "documentType": "sample lease excerpt on a web page ('Sample Lease (subject to change)')",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "partial-excerpt",
+    "observed": "The page shows part of the lease: it starts mid-agreement, without parties, rent or term, and points to a separate 'Ecohouse Contract 2025-26' page. It incorporates the lease application and the Student Code of Conduct; neither is supplied.",
+    "needsHumanCheck": [
+      "Decide whether a partial excerpt belongs in the corpus at all, or only as an incomplete-packet case"
+    ]
+  },
+  "usageRights": "No licence statement for the lease text found on the page; the page carries a general Ohio University copyright notice. Internal evaluation only, kept locally, not redistributed; reuse terms not confirmed.",
+  "proposedSplit": "development",
+  "exposureToPromptWork": [
+    "Run through the product for the scope and completeness check only (Phase 2, 3); no prompt change was based on it.",
+    "Moved to development on 2026-11-11 (coordination-2026-11-11.md): decision 3 needs repeat runs on all five public templates."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "documentId": "L01-philadelphia-fair-lease",
+  "sourceUrl": "https://philadelphiafairlease.org/wp-content/uploads/2023/11/Model_Lease_Fillable_Form_111523.pdf",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "intake record: not gold-standard, no labels yet",
+  "sha256Original": "2f9ad44fd606fc168eb8765835615eeba24ada5cd3c5bdc1db441f7d48dd4590",
+  "sha256Text": "3791380891497b19d4fb07d50e896197772185c32276819263b59ef36518a769",
+  "textIsDerived": false,
+  "jurisdiction": "Philadelphia, Pennsylvania, USA",
+  "housingContext": "Private-market residential tenancy (model lease from the Philadelphia Fair Lease initiative)",
+  "programRestrictions": "None stated",
+  "documentType": "model lease template (fillable form, unexecuted)",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "unclear-as-supplied",
+    "observed": "Product runs named different missing documents on different runs (a list of addenda; a lead-pipe information pamphlet). Extracted text starts mid-page and is about 7,000 characters, so fillable-form fields and some page content may not be in the PDF's text layer.",
+    "needsHumanCheck": [
+      "Compare the extracted text with the PDF page by page",
+      "Decide which referenced items are genuinely part of the agreement"
+    ]
+  },
+  "usageRights": "No licence or reuse statement found in the document. Published for public use as a model lease. Treated as internal-evaluation-only, kept locally, not redistributed; reuse terms not confirmed.",
+  "proposedSplit": "development",
+  "exposureToPromptWork": [
+    "Run through the product during Phase 2 and 3 checks (completeness and review outputs seen)."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}

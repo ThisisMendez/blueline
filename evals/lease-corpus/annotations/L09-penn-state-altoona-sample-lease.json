@@ -1,0 +1,11 @@
+{
+  "documentId": "L09-penn-state-altoona-sample-lease",
+  "sourceUrl": "https://altoona.psu.edu/offices-divisions/student-affairs/off-campus-living/sample-lease-rental-agreement",
+  "accessedOn": "2026-11-11",
+  "available": false,
+  "label": "intake record: not gold-standard, no labels yet",
+  "status": "unavailable",
+  "note": "403 Forbidden on 2026-11-11, also with a browser user agent. Internet Archive holds a copy of this URL (snapshot 2026-02-10). Proposed replacement, not used until approved.",
+  "proposedReplacement": "H09-penn-state-altoona-sample-lease in evals/holdout/: Internet Archive snapshot 20260210004301 of the same URL. Fetched under decision 1 on 2026-11-11 and held out; membership locked by the evaluation workstream, pending the owner's confirmation.",
+  "replacementApproved": false
+}

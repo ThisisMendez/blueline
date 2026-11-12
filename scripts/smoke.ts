@@ -23,12 +23,16 @@ async function main() {
     const fixture = loadFixture(id);
     const client = live ? new OpenRouterModelClient({ timeoutMs: 30_000 }) : createFixtureModelClient();
     let calls = 0;
+    let shapeRetries = 0;
     let returnedFlags = 0;
     let providerError: string | null = null;
     const started = Date.now();
     const model: ModelClient = {
       async complete(request) {
-        if (++calls > 6 || Date.now() - started > 120_000) throw new Error("Live smoke budget exceeded.");
+        // A retry after a malformed reply (structured.ts, ticket 22) has its own
+      // allowance, so a recovered reply can't push a document over 7 calls.
+      const overBudget = request.retryAfterInvalidReply ? ++shapeRetries > 2 : ++calls > 7;
+      if (overBudget || Date.now() - started > 150_000) throw new Error("Live smoke budget exceeded.");
         let result: unknown;
         try {
           result = await client.complete(request);
@@ -68,6 +72,10 @@ async function main() {
       console.log(`Verified flags: 0; dropped flags: 0; missing: ${outcome.completeness.missing.map(item => item.name).join(", ")}`);
       if (!live) assert.equal(id, "referencing-lease");
       continue;
+    }
+    if (outcome.status === "out-of-scope" || outcome.status === "unverified") {
+      // Every smoke fixture is a complete residential lease packet.
+      throw new Error(`Smoke failed: a lease fixture came back ${outcome.status}`);
     }
     assert.equal(outcome.persisted, false);
     assert.equal(outcome.reviewId, null);

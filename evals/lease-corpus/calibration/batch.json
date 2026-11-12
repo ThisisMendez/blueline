@@ -1,0 +1,19 @@
+{
+  "batch": "calibration-1",
+  "createdOn": "2026-11-11",
+  "purpose": "A small batch from development documents only, for two reviewers to apply evals/reviewer-guide.md independently and an adjudicator to resolve their differences before anyone labels the holdout. Nothing here is a label.",
+  "documents": [
+    {
+      "documentId": "L08-maine-ag-model-lease",
+      "sha256Text": "2f55f570964efe2f93b88547147d7722cb07de6fb28a5d64255fd5cdc5bcbdca",
+      "scope": { "kind": "whole", "start": 0, "end": 8815 },
+      "why": "Short, complete as supplied, and a state model lease: a fair first document."
+    },
+    {
+      "documentId": "L01-philadelphia-fair-lease",
+      "sha256Text": "3791380891497b19d4fb07d50e896197772185c32276819263b59ef36518a769",
+      "scope": { "kind": "range", "start": 0, "end": 2225, "lines": "1-49" },
+      "why": "Part only: the first 49 lines of the extracted text (entry, security deposit, end of lease, early termination, good-cause eviction). The extraction scrambles this form's columns, so the part tests whether reviewers can label text that reads out of order. Chosen by position in the file, not by what it contains."
+    }
+  ]
+}

@@ -48,6 +48,9 @@ export async function sendSignInLinkAction(
     },
   });
 
+  if (error?.code === "over_email_send_rate_limit") {
+    return { status: "email-rate-limited" };
+  }
   if (error) return { status: "error" };
   return { status: "sent", email };
 }

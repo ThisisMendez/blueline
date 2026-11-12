@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "roboto",
+        "createdAt": "2026-11-10T19:21:06.436Z",
+        "reason": "User asked for system fonts only in the labelling page brief; Roboto is part of the system font stack (Android), not a loaded font"
+      }
+    ]
+  }
+}

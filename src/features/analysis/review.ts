@@ -1,6 +1,7 @@
 import type { Packet } from "@/features/packet/types";
 
 import { checkResidualRiskConsistency } from "./consistency";
+import { enforceLegalBoundary } from "./legal-claims";
 import { runCoverageChecklist } from "./coverage";
 import { ModelError, type ModelClient } from "./model/client";
 import {
@@ -9,6 +10,7 @@ import {
   modelAnalysisSchema,
   type ModelAnalysis,
 } from "./model/schema";
+import { completeStructured } from "./model/structured";
 import {
   ANALYSIS_SYSTEM_PROMPT,
   buildAnalysisUserMessage,
@@ -22,24 +24,14 @@ export interface GeneralReviewInput {
   readonly model: ModelClient;
 }
 
-async function askModel(model: ModelClient, user: string): Promise<ModelAnalysis> {
-  const raw = await model.complete({
-    system: ANALYSIS_SYSTEM_PROMPT,
-    user,
-    schemaName: ANALYSIS_SCHEMA_NAME,
-    jsonSchema: analysisJsonSchema,
-  });
-
-  const parsed = modelAnalysisSchema.safeParse(raw);
-  if (!parsed.success) {
-    throw new ModelError(
-      "unreadable",
-      `The analysis did not match the expected shape: ${parsed.error.issues
-        .map((issue) => `${issue.path.join(".") || "(root)"} ${issue.message}`)
-        .join("; ")}`,
-    );
-  }
-  return parsed.data;
+/** One structured call: validated, and retried once if the reply is the wrong shape. */
+function askModel(model: ModelClient, user: string): Promise<ModelAnalysis> {
+  return completeStructured(
+    model,
+    { system: ANALYSIS_SYSTEM_PROMPT, user, schemaName: ANALYSIS_SCHEMA_NAME, jsonSchema: analysisJsonSchema },
+    modelAnalysisSchema,
+    "The analysis",
+  );
 }
 
 /**
@@ -118,17 +110,21 @@ export async function runGeneralReview({
   const coverage = await runCoverageChecklist({ packet, model });
 
   const ranked = rankFlags(flags);
-  const riskFlags = await checkResidualRiskConsistency(ranked, model);
+  // ADR 0014: no generated text states a legal conclusion. Repaired once,
+  // withheld if it still does; the flags themselves always stay.
+  const bounded = await enforceLegalBoundary(first.summary, ranked, model);
+  const riskFlags = await checkResidualRiskConsistency(bounded.riskFlags, model);
   // Absences do not make a review dirty. A lease can be silent on repairs
   // and still carry nothing that would cost the signer.
   const clean = riskFlags.length === 0;
 
   return {
-    summary: first.summary,
+    summary: bounded.summary,
     riskFlags,
     coverage,
     clean,
     cleanStatement: clean ? CLEAN_REVIEW_STATEMENT : null,
     droppedFlagCount,
+    legalClaims: bounded.legalClaims,
   };
 }

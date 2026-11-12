@@ -1,0 +1,123 @@
+Gold-set eval, redline-v1 v1
+Started: 2026-11-11T22:55:57.897Z
+Model: z-ai/glm-5.3-flash
+Label overlay: label-corrections.json, SHA-256 707215fdab15f00596a353ae6403b7cf45c262fdf0fbd849094692ff383d4a72 (proposal pending owner confirmation; original labels unchanged)
+Pipeline: UNGATED. The completeness check was skipped and each document went straight to runGeneralReview. This is not how a signer is served.
+
+Documents: 9 in manifest; 4 reviewed; 5 left out of every denominator.
+  left out, model call failed: adhesion-contract (unreadable: The model returned no content.)
+  left out, model call failed: clean-document (unreadable: The model returned no content.)
+  left out, model call failed: offer-letter (unreadable: The model returned no content.)
+  left out, model call failed: storage-unit-rental (unreadable: The model returned no content.)
+  left out, model call failed: internship-agreement (unreadable: The model returned no content.)
+
+Legal-conclusion texts (ticket 14): 0 repaired, 0 withheld
+Recall (in-scope planted clauses found): 11/11 (100.0%)
+  in scope     arbitration-and-class-action-waiver: 2/2 (100.0%)
+  in scope     fee-escalators-and-late-fees: 4/4 (100.0%)
+  in scope     auto-renewal: 3/3 (100.0%)
+  in scope     unilateral-modification: 2/2 (100.0%)
+  out of scope non-compete: 0/0 (n/a)
+  out of scope limitation-of-liability: 2/2 (100.0%)
+  out of scope indemnification: 2/2 (100.0%)
+Out-of-scope planted clauses flagged anyway (information only, never a miss): 4/4 (100.0%)
+Named the right type: not measurable. Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval.
+
+Recall by characters in the planted sentence (in-scope only):
+  has at least one: 2/2 (100.0%)
+  has none: 9/9 (100.0%)
+  curly quote or apostrophe: 0/0 (n/a)
+  non-breaking space: 1/1 (100.0%)
+  fi or fl ligature: 1/1 (100.0%)
+  em dash: 0/0 (n/a)
+  two spaces in a row: 0/0 (n/a)
+
+Severity agreement (found in-scope clauses whose most severe flag matches the gold band; critical and high = high, moderate = medium): 7/11 (63.6%); graded lower: 2; graded higher: 2
+Exact-band agreement (gold's own labels: product high = high, medium = moderate; High on a critical clause is not exact): 4/11 (36.4%)
+  gold critical: 0/4 (0.0%) exact
+  gold high: 1/2 (50.0%) exact
+  gold moderate: 3/5 (60.0%) exact
+
+Unilateral-modification cases (decision 2; gold grades them critical, Blueline has no Critical tier):
+  saas-subscription P-05: gold critical, product high
+  phone-plan-terms P-04: gold critical, product high
+Six unilateral cases High: 2/2
+  gold critical graded High (the Critical gap, not an exact band): 2/2 (100.0%); exact band among found: 0/2 (0.0%)
+
+Groundedness (delivered flags quoted verbatim / all flags the model returned, delivered + dropped): 21/21 (100.0%)
+  raw flags across every model attempt, retries included: 21
+
+Clean documents with no flags: 1/2 (50.0%); flags on clean documents: 1
+  library-volunteer-agreement: 0 flag(s)
+  swim-lesson-registration: 1 flag(s)
+Revised clean-document view (proposed label corrections applied; PROPOSAL pending owner confirmation, the original view above is unchanged):
+  valid Low forfeiture flags (overlap a corrected sentence): 1 [low]
+  false flags (everything else on the clean documents): 0
+  clean documents with no false flag: 2/2 (100.0%); corrected sentences flagged: 1/2 (50.0%)
+  library-volunteer-agreement: 0 valid forfeiture, 0 false
+  swim-lesson-registration: 1 valid forfeiture, 0 false
+Flags on planted documents that matched no planted clause: 5
+Flags on an unusual-but-harmless sentence: 0
+
+Planted clauses:
+  FOUND saas-subscription P-01 fee-escalators-and-late-fees [non-breaking space]
+  FOUND saas-subscription P-02 fee-escalators-and-late-fees
+  FOUND saas-subscription P-03 auto-renewal
+  FOUND saas-subscription P-04 auto-renewal
+  FOUND saas-subscription P-05 unilateral-modification
+  FOUND saas-subscription P-06 limitation-of-liability (out of scope) [curly quote or apostrophe, em dash]
+  FOUND saas-subscription P-07 indemnification (out of scope)
+  FOUND saas-subscription P-08 arbitration-and-class-action-waiver
+  FOUND phone-plan-terms P-01 fee-escalators-and-late-fees [fi or fl ligature]
+  FOUND phone-plan-terms P-02 fee-escalators-and-late-fees
+  FOUND phone-plan-terms P-03 auto-renewal
+  FOUND phone-plan-terms P-04 unilateral-modification
+  FOUND phone-plan-terms P-05 limitation-of-liability (out of scope) [curly quote or apostrophe]
+  FOUND phone-plan-terms P-06 indemnification (out of scope)
+  FOUND phone-plan-terms P-07 arbitration-and-class-action-waiver
+
+Flags:
+  [high] saas-subscription type=none (product names no type) matched=P-01 (fee-escalators-and-late-fees) verbatim=yes
+    "We may revise the fee for any plan, and a revised fee applies to you from the start of the first Billing Period that begins more than thirty (30) days after we send notice of the revision to the email address on your account."
+  [high] saas-subscription type=none (product names no type) matched=P-04 (auto-renewal) verbatim=yes
+    "On an annual plan the deadline to cancel is the day that falls thirty (30) days before the anniversary of the date you first subscribed, and where no cancellation is received by that day the term extends by a further twelve (12) months at the annual fee then in effect."
+  [high] saas-subscription type=none (product names no type) matched=P-05 (unilateral-modification) verbatim=yes
+    "We may amend these terms, the pricing page and the Fee Schedule at any time, an amended version takes effect when we post it at northwindstudio.example/terms, and your continued use of the service after it is posted is your acceptance of the amended version."
+  [high] saas-subscription type=none (product names no type) matched=P-07 (indemnification) verbatim=yes
+    "You will indemnify and hold Northwind harmless from any claim brought by a third party that relates to content you uploaded, exported or published through the service, including a claim that the content infringes a copyright, a trade mark or a right of privacy, and you will pay our reasonable legal costs of defending such a claim."
+  [medium] saas-subscription type=none (product names no type) matched=P-02 (fee-escalators-and-late-fees) verbatim=yes
+    "Where a payment is not collected on its due date, interest accrues on the unpaid amount at one and one half percent (1.5%) per month from the due date until payment is received, and an account suspended for non-payment is subject to the reactivation charge published in the Fee Schedule on the Northwind support site."
+  [medium] saas-subscription type=none (product names no type) matched=no verbatim=yes
+    "Where availability in a calendar month falls below that figure, your remedy is the service credit set out in the Service Credit Policy and nothing further."
+  [medium] saas-subscription type=none (product names no type) matched=P-06 (limitation-of-liability) verbatim=yes
+    "Northwind’s aggregate liability to you for every claim relating to the service, whether framed in contract, in tort, in warranty or otherwise — and including any claim arising from lost work, lost revenue or a failed export — will not exceed the amount you actually paid us under Section 2 for the Billing Period in which the claim arose."
+  [medium] saas-subscription type=none (product names no type) matched=P-08 (arbitration-and-class-action-waiver) verbatim=yes
+    "Any dispute between you and Northwind arising out of these terms or out of your use of the service will be settled by binding arbitration before a single arbitrator under the consumer rules of a recognised arbitration body, and you agree to bring any claim only in your individual capacity and not as a plaintiff or class member in any purported class, collective or representative proceeding."
+  [low] saas-subscription type=none (product names no type) matched=P-03 (auto-renewal) verbatim=yes
+    "Your subscription continues from one Billing Period into the next without further action by either of us, and we bill the plan fee then in effect on the first day of each new Billing Period."
+  [low] saas-subscription type=none (product names no type) matched=no verbatim=yes
+    "A cancellation made on or after the first day of a Billing Period takes effect at the end of that Billing Period, and the fee already collected for it is not refunded."
+  [high] phone-plan-terms type=none (product names no type) matched=P-03 (auto-renewal) verbatim=yes
+    "Service on a twelve month promotional plan renews for a further twelve month term at the end of the term then running, at the standard rate for the plan rather than at the promotional rate, unless you tell us to stop the renewal before the last day of the current term."
+  [high] phone-plan-terms type=none (product names no type) matched=no verbatim=yes
+    "Cancelling a promotional plan before the end of its term does not cancel a device instalment plan, and the unpaid instalment balance becomes due in full on your next bill."
+  [high] phone-plan-terms type=none (product names no type) matched=P-04 (unilateral-modification) verbatim=yes
+    "Cascade may change any term of this Agreement, any charge, and any feature of your rate plan, and the change takes effect on the date stated in the notice we give you, which may be given on a bill, by message to your device, or by email."
+  [high] phone-plan-terms type=none (product names no type) matched=no verbatim=yes
+    "Continuing to use the service after the effective date of a change accepts the change."
+  [high] phone-plan-terms type=none (product names no type) matched=P-07 (arbitration-and-class-action-waiver) verbatim=yes
+    "You and Cascade agree that any dispute arising out of or relating to this Agreement, the service or any device will be resolved by individual binding arbitration administered by a nationally recognised arbitration provider under its consumer rules, and both of us give up the right to a jury trial and the right to bring or join a class, collective or representative action."
+  [medium] phone-plan-terms type=none (product names no type) matched=P-01 (fee-escalators-and-late-fees) verbatim=yes
+    "Your bill includes a Regulatory Cost Recovery Charge and an Administrative Charge, neither of which is a tax or a charge required by any government, and Cascade may introduce, increase or remove either charge on notice given with the bill in which the change ﬁrst appears."
+  [medium] phone-plan-terms type=none (product names no type) matched=P-02 (fee-escalators-and-late-fees) verbatim=yes
+    "An amount not paid by the due date shown on the bill incurs a late payment charge of the greater of five dollars ($5.00) or one and one half percent of the unpaid balance, applied each bill period until the balance is paid, and a restored line incurs the restoral charge shown in the Rate and Charge Guide."
+  [medium] phone-plan-terms type=none (product names no type) matched=P-05 (limitation-of-liability) verbatim=yes
+    "Cascade’s entire liability to you for any claim relating to the service, a device, or this Agreement, whether the claim is made in contract, in negligence, in warranty or under any statute, is limited to the service charges applied to the affected line during the bill period in which the claim arose, and Cascade is not liable for lost profits, lost data, or any indirect or consequential loss."
+  [medium] phone-plan-terms type=none (product names no type) matched=P-06 (indemnification) verbatim=yes
+    "You will indemnify and hold Cascade harmless from any claim, loss or expense, including reasonable legal fees, arising out of your use of the service, out of anything sent from or stored on your device, out of the use of your line by anyone you allow to use it, and out of any charge incurred on your account."
+  [low] phone-plan-terms type=none (product names no type) matched=no verbatim=yes
+    "Charges accrue to the end of the bill period in which you cancel, and a part bill period is not prorated."
+  [low] swim-lesson-registration type=none (product names no type) matched=no verbatim=yes
+    "After the third lesson no refund is made."
+
+A model wrote this gold set. These numbers are an upper bound and never a promise to a reader.

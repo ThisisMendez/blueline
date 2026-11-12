@@ -1,0 +1,327 @@
+{
+  "corpus": "redline-v1",
+  "version": 1,
+  "startedAt": "2026-11-10T18:48:58.588Z",
+  "model": "z-ai/glm-5.3-flash",
+  "ungated": false,
+  "runs": [
+    {
+      "documentId": "adhesion-contract",
+      "status": "blocked",
+      "missing": [
+        "Schedule of Fees",
+        "Club Rules"
+      ]
+    },
+    {
+      "documentId": "clean-document",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out.",
+          "sourceStart": 3081,
+          "sourceEnd": 3219,
+          "consequence": "The plot holder loses the entire $45 season fee if they end the licence early, even though the Association must refund proportionally when it ends the licence."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+          "sourceStart": 3470,
+          "sourceEnd": 3548,
+          "consequence": "Any of the plot holder's belongings left on the plot after 15 December 2027 — canes, netting, frames, tools — become the Association's property to keep or dispose of, with no compensation."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "returnedFlagsAllAttempts": 2
+    },
+    {
+      "documentId": "saas-subscription",
+      "status": "blocked",
+      "missing": [
+        "Fee Schedule",
+        "Service Credit Policy"
+      ]
+    },
+    {
+      "documentId": "offer-letter",
+      "status": "blocked",
+      "missing": [
+        "Ardent Employee Handbook",
+        "Employee Confidential Information and Invention Assignment Agreement",
+        "Exhibit B"
+      ]
+    },
+    {
+      "documentId": "storage-unit-rental",
+      "status": "blocked",
+      "missing": [
+        "Unit Schedule",
+        "Schedule of Charges",
+        "the rules posted in the office"
+      ]
+    },
+    {
+      "documentId": "phone-plan-terms",
+      "status": "blocked",
+      "missing": [
+        "Service Summary",
+        "Rate and Charge Guide"
+      ]
+    },
+    {
+      "documentId": "internship-agreement",
+      "status": "blocked",
+      "missing": [
+        "Programme Schedule",
+        "Programme Handbook"
+      ]
+    },
+    {
+      "documentId": "library-volunteer-agreement",
+      "status": "reviewed",
+      "flags": [],
+      "droppedFlagCount": 0,
+      "returnedFlagsAllAttempts": 0
+    },
+    {
+      "documentId": "swim-lesson-registration",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "After the third lesson no refund is made.",
+          "sourceStart": 2052,
+          "sourceEnd": 2093,
+          "consequence": "If the signer withdraws after the third lesson, they lose the entire $120 fee, and withdrawing between the first and third lessons costs half the fee."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Two or more missed lessons in a row may be carried into the following session at no charge, on the Centre's agreement.",
+          "sourceStart": 1735,
+          "sourceEnd": 1853,
+          "consequence": "A child who misses two or more lessons in a row only gets to carry them into the next session if the Centre agrees, so the paid-for lessons could be lost entirely."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "returnedFlagsAllAttempts": 2
+    }
+  ],
+  "report": {
+    "documents": {
+      "total": 9,
+      "reviewed": [
+        "clean-document",
+        "library-volunteer-agreement",
+        "swim-lesson-registration"
+      ],
+      "blocked": [
+        {
+          "id": "adhesion-contract",
+          "missing": [
+            "Schedule of Fees",
+            "Club Rules"
+          ]
+        },
+        {
+          "id": "saas-subscription",
+          "missing": [
+            "Fee Schedule",
+            "Service Credit Policy"
+          ]
+        },
+        {
+          "id": "offer-letter",
+          "missing": [
+            "Ardent Employee Handbook",
+            "Employee Confidential Information and Invention Assignment Agreement",
+            "Exhibit B"
+          ]
+        },
+        {
+          "id": "storage-unit-rental",
+          "missing": [
+            "Unit Schedule",
+            "Schedule of Charges",
+            "the rules posted in the office"
+          ]
+        },
+        {
+          "id": "phone-plan-terms",
+          "missing": [
+            "Service Summary",
+            "Rate and Charge Guide"
+          ]
+        },
+        {
+          "id": "internship-agreement",
+          "missing": [
+            "Programme Schedule",
+            "Programme Handbook"
+          ]
+        }
+      ],
+      "failed": []
+    },
+    "recall": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByType": {
+      "arbitration-and-class-action-waiver": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "fee-escalators-and-late-fees": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "auto-renewal": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "unilateral-modification": {
+        "count": 0,
+        "total": 0,
+        "inScope": true
+      },
+      "non-compete": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "limitation-of-liability": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "indemnification": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      }
+    },
+    "outOfScopeFound": {
+      "count": 0,
+      "total": 0
+    },
+    "recallByCharacters": {
+      "withAny": {
+        "count": 0,
+        "total": 0
+      },
+      "withNone": {
+        "count": 0,
+        "total": 0
+      },
+      "byClass": {
+        "curly quote or apostrophe": {
+          "count": 0,
+          "total": 0
+        },
+        "non-breaking space": {
+          "count": 0,
+          "total": 0
+        },
+        "fi or fl ligature": {
+          "count": 0,
+          "total": 0
+        },
+        "em dash": {
+          "count": 0,
+          "total": 0
+        },
+        "two spaces in a row": {
+          "count": 0,
+          "total": 0
+        }
+      }
+    },
+    "typeNamedCorrectly": {
+      "measurable": false,
+      "reason": "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval."
+    },
+    "groundedness": {
+      "count": 4,
+      "total": 4,
+      "returnedFlagsAllAttempts": 4
+    },
+    "cleanDocuments": {
+      "documentsWithNoFlags": {
+        "count": 1,
+        "total": 3
+      },
+      "flagsOnCleanDocuments": 4,
+      "perDocument": [
+        {
+          "id": "clean-document",
+          "flags": 2
+        },
+        {
+          "id": "library-volunteer-agreement",
+          "flags": 0
+        },
+        {
+          "id": "swim-lesson-registration",
+          "flags": 2
+        }
+      ]
+    },
+    "unmatchedFlagsOnPlantedDocuments": 0,
+    "flagsOnUnusualButHarmless": 0,
+    "planted": [],
+    "flags": [
+      {
+        "document": "clean-document",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "clean-document",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "swim-lesson-registration",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "After the third lesson no refund is made.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "swim-lesson-registration",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Two or more missed lessons in a row may be carried into the following session at no charge, on the Centre's agreement.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      }
+    ]
+  }
+}

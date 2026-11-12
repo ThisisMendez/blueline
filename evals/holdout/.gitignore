@@ -1,0 +1,8 @@
+# Holdout lease files and anything derived from them stay on this machine.
+# The repository is public, and these are third-party documents that must
+# also stay out of sight of prompt and completeness work.
+sources/
+text/
+private/
+runs/
+worksheets/

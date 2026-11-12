@@ -13,7 +13,14 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "smoke": "tsx scripts/smoke.ts",
-    "eval": "tsx evals/cli.ts",
+    "eval": "tsx evals/gold-set/cli.ts --ungated",
+    "eval:gated": "tsx evals/gold-set/cli.ts",
+    "eval:independent": "tsx evals/cli.ts",
+    "eval:leases": "tsx evals/lease-corpus/run.ts",
+    "eval:legal": "tsx evals/legal-questions.ts",
+    "eval:holdout": "tsx evals/holdout/run.ts",
+    "eval:judge": "tsx evals/judge/run-judge.ts",
+    "label": "node evals/labels/server.mjs",
     "fixtures:pdf": "tsx tests/fixtures/make-pdfs.ts"
   },
   "dependencies": {

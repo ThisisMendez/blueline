@@ -1,0 +1,72 @@
+Gold-set eval, redline-v1 v1
+Started: 2026-11-11T23:23:21.507Z
+Model: z-ai/glm-5.3-flash
+Label overlay: label-corrections.json, SHA-256 707215fdab15f00596a353ae6403b7cf45c262fdf0fbd849094692ff383d4a72 (proposal pending owner confirmation; original labels unchanged)
+Pipeline: UNGATED. The completeness check was skipped and each document went straight to runGeneralReview. This is not how a signer is served.
+
+Documents: 9 in manifest; 3 reviewed; 6 left out of every denominator.
+  left out, model call failed: adhesion-contract (unreadable: The model returned no content.)
+  left out, model call failed: saas-subscription (unreadable: The model returned no content.)
+  left out, model call failed: offer-letter (unreadable: The model returned no content.)
+  left out, model call failed: storage-unit-rental (unreadable: The model returned no content.)
+  left out, model call failed: phone-plan-terms (unreadable: The model returned no content.)
+  left out, model call failed: internship-agreement (unreadable: The model returned no content.)
+
+Legal-conclusion texts (ticket 14): 0 repaired, 0 withheld
+Recall (in-scope planted clauses found): 0/0 (n/a)
+  in scope     arbitration-and-class-action-waiver: 0/0 (n/a)
+  in scope     fee-escalators-and-late-fees: 0/0 (n/a)
+  in scope     auto-renewal: 0/0 (n/a)
+  in scope     unilateral-modification: 0/0 (n/a)
+  out of scope non-compete: 0/0 (n/a)
+  out of scope limitation-of-liability: 0/0 (n/a)
+  out of scope indemnification: 0/0 (n/a)
+Out-of-scope planted clauses flagged anyway (information only, never a miss): 0/0 (n/a)
+Named the right type: not measurable. Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval.
+
+Recall by characters in the planted sentence (in-scope only):
+  has at least one: 0/0 (n/a)
+  has none: 0/0 (n/a)
+  curly quote or apostrophe: 0/0 (n/a)
+  non-breaking space: 0/0 (n/a)
+  fi or fl ligature: 0/0 (n/a)
+  em dash: 0/0 (n/a)
+  two spaces in a row: 0/0 (n/a)
+
+Severity agreement (found in-scope clauses whose most severe flag matches the gold band; critical and high = high, moderate = medium): 0/0 (n/a); graded lower: 0; graded higher: 0
+Exact-band agreement (gold's own labels: product high = high, medium = moderate; High on a critical clause is not exact): 0/0 (n/a)
+
+Unilateral-modification cases (decision 2; gold grades them critical, Blueline has no Critical tier):
+Six unilateral cases High: 0/0
+  gold critical graded High (the Critical gap, not an exact band): 0/0 (n/a); exact band among found: 0/0 (n/a)
+
+Groundedness (delivered flags quoted verbatim / all flags the model returned, delivered + dropped): 4/4 (100.0%)
+  raw flags across every model attempt, retries included: 4
+
+Clean documents with no flags: 1/3 (33.3%); flags on clean documents: 4
+  clean-document: 2 flag(s)
+  library-volunteer-agreement: 0 flag(s)
+  swim-lesson-registration: 2 flag(s)
+Revised clean-document view (proposed label corrections applied; PROPOSAL pending owner confirmation, the original view above is unchanged):
+  valid Low forfeiture flags (overlap a corrected sentence): 4 [low, low, low, low]
+  false flags (everything else on the clean documents): 0
+  clean documents with no false flag: 3/3 (100.0%); corrected sentences flagged: 4/4 (100.0%)
+  clean-document: 2 valid forfeiture, 0 false
+  library-volunteer-agreement: 0 valid forfeiture, 0 false
+  swim-lesson-registration: 2 valid forfeiture, 0 false
+Flags on planted documents that matched no planted clause: 0
+Flags on an unusual-but-harmless sentence: 0
+
+Planted clauses:
+
+Flags:
+  [low] clean-document type=none (product names no type) matched=no verbatim=yes
+    "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out."
+  [low] clean-document type=none (product names no type) matched=no verbatim=yes
+    "Anything left after 15 December becomes the Association’s to keep or to clear."
+  [low] swim-lesson-registration type=none (product names no type) matched=no verbatim=yes
+    "A place given up later than that, and before the third lesson, is refunded at half the fee."
+  [low] swim-lesson-registration type=none (product names no type) matched=no verbatim=yes
+    "After the third lesson no refund is made."
+
+A model wrote this gold set. These numbers are an upper bound and never a promise to a reader.

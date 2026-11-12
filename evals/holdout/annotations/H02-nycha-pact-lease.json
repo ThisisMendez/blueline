@@ -1,0 +1,52 @@
+{
+  "documentId": "H02-nycha-pact-lease",
+  "sourceUrl": "https://www.nyc.gov/assets/nycha/downloads/pdf/pactlease-english.pdf",
+  "retrievedFrom": "http://web.archive.org/web/20251207015333id_/https://www.nyc.gov/assets/nycha/downloads/pdf/pactlease-english.pdf",
+  "sourceVersion": "Internet Archive snapshot 20251207015333; the document calls itself the sample PACT resident lease revised June 2025",
+  "replaces": "L02-nycha-pact-lease",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "holdout intake record: not gold-standard, no labels yet",
+  "sha256Original": "b5353220a8e21458564777ec9e659d0d3420692ae4d61a58e986e7e227849883",
+  "sha256Text": "dfd7afd8949c877dc9d7f85247f2e43276d8535ed35397a59e53b17819c7bff0",
+  "textIsDerived": false,
+  "jurisdiction": "New York City, New York, USA",
+  "housingContext": "Subsidised housing: NYCHA public housing converting to Project-Based Section 8 under PACT; private PACT partner as landlord",
+  "programRestrictions": "Project-Based Section 8 (PACT/RAD conversion); offered to existing NYCHA public housing households",
+  "documentType": "public agency sample lease (unexecuted, with blanks), preceded by a one-page cover letter",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "incomplete-as-supplied",
+    "observed": "Read by the evaluation workstream, not the product. The lease names riders that are attached to and part of it (its riders paragraph lists several, including HUD tenancy addenda and a state rider); none is in the file. It also refers to House Rules provided separately. A cover letter precedes the lease itself.",
+    "needsHumanCheck": [
+      "Confirm which riders and the House Rules are missing",
+      "Decide whether the cover letter counts as part of the document to review"
+    ]
+  },
+  "usageRights": "No licence statement found. Published by a city housing authority as a sample for residents. Internal evaluation only, kept locally, not redistributed; reuse terms not confirmed by anyone qualified to confirm them.",
+  "proposedSplit": "holdout-locked",
+  "exposureToPromptWork": [
+    "None. Fetched by the evaluation workstream on 2026-11-11, after the holdout exclusion list was set. No product, judge or model has been run on it, and its text has not been shared with prompt or completeness work."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}

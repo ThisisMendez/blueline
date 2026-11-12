@@ -1,0 +1,48 @@
+{
+  "documentId": "L03-hud-family-model-lease",
+  "sourceUrl": "https://www.hud.gov/sites/dfiles/OCHCO/documents/90105a.pdf",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "intake record: not gold-standard, no labels yet",
+  "sha256Original": "41d71c7796efa5e9c5d7a3ca7269e8dd8bc22cc3e001e7173b95228391dea5b7",
+  "sha256Text": "a101d9b6af00c6e87fc5694f37a05792d5d4da38c349c320ff65b4053c3dfc34",
+  "textIsDerived": false,
+  "jurisdiction": "United States (federal form; used nationwide)",
+  "housingContext": "HUD-subsidized multifamily housing",
+  "programRestrictions": "For HUD subsidized programs only; tenancy and rent rules are set by federal program requirements, so many terms are program-mandated",
+  "documentType": "federal model lease form HUD-90105-A (unexecuted)",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "incomplete-as-supplied",
+    "observed": "The lease makes three attachments part of itself (owner's certification HUD-50059, unit inspection report, VAWA lease addendum HUD-91067); they aren't supplied. Other addenda are conditional.",
+    "needsHumanCheck": [
+      "Confirm which attachments are required versus conditional"
+    ]
+  },
+  "usageRights": "U.S. federal government form; works of the U.S. government are generally not subject to U.S. copyright. Kept locally for internal evaluation; confirm before any redistribution.",
+  "proposedSplit": "development",
+  "exposureToPromptWork": [
+    "Motivated the completeness rule on conditional attachments (Phase 2), so it must not be used as holdout."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}

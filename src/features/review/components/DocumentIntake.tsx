@@ -15,6 +15,8 @@ import type {
 import type {
   CompleteAgreement,
   IncompleteAgreement,
+  OutOfScopePacket,
+  UnverifiedCompleteness,
 } from "@/features/packet/completeness";
 import { extractPdfText, type PdfExtraction } from "@/features/packet/extract/pdf";
 import {
@@ -23,6 +25,7 @@ import {
 } from "@/features/packet/types";
 
 import { BlockedPacket } from "./BlockedPacket";
+import { StoppedPacket } from "./StoppedPacket";
 import { DocumentSlot, type FileState } from "./DocumentSlot";
 import { ReferenceLedger, type ReferenceChoices } from "./ReferenceLedger";
 import { ReviewResult } from "./ReviewResult";
@@ -86,6 +89,10 @@ type Phase =
       readonly reviewId: string | null;
       readonly retention: ReviewRetention | null;
       readonly persistenceFailed: boolean;
+    }
+  | {
+      readonly kind: "stopped";
+      readonly completeness: OutOfScopePacket | UnverifiedCompleteness;
     }
   | { readonly kind: "problem"; readonly message: string };
 
@@ -232,6 +239,11 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
         return;
       }
 
+      if (outcome.status === "out-of-scope" || outcome.status === "unverified") {
+        setPhase({ kind: "stopped", completeness: outcome.completeness });
+        return;
+      }
+
       if (outcome.status === "reviewed") {
         setPhase({
           kind: "reviewed",
@@ -347,6 +359,8 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
           </p>
         ) : null}
       </div>
+
+      {phase.kind === "stopped" ? <StoppedPacket completeness={phase.completeness} /> : null}
 
       {phase.kind === "blocked" ? (
         <BlockedPacket

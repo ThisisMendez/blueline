@@ -8,6 +8,21 @@ import { ModelError, type ModelClient, type ModelRequest } from "./client";
  * The model id is whatever `OPENROUTER_MODEL` holds. There is no default and
  * no fallback: a missing variable is a configuration error the operator has
  * to see, not something to paper over with a guess.
+ *
+ * Structured output: every request carries `response_format` of type
+ * `json_schema` with `strict: true`, and is pinned to Fireworks with
+ * `require_parameters: true` and no fallbacks, so it is only served by an
+ * endpoint that supports schema-constrained output (OpenRouter lists
+ * Fireworks as supporting `response_format` and `structured_outputs` for the
+ * configured model; checked 2026-11-11). Strict decoding constrains the JSON
+ * shape, not every rule zod checks afterwards (one answer per checklist
+ * topic, citation fields that agree with a status), so replies are still
+ * validated and retried once in structured.ts.
+ *
+ * Repeatability: `temperature: 0` is the only sampling control sent. `seed`
+ * would be the next lever, but Fireworks does not list it for this model, and
+ * with `require_parameters: true` an unsupported parameter makes the request
+ * unroutable rather than ignored.
  */
 
 const ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
@@ -59,6 +74,11 @@ export class OpenRouterModelClient implements ModelClient {
     // still boots and still reports the problem in one place.
     const apiKey = requireEnv("OPENROUTER_API_KEY");
     const model = requireEnv("OPENROUTER_MODEL");
+    const free = model.endsWith(":free");
+    const provider = process.env.OPENROUTER_PROVIDER?.trim() || (free ? "" : "fireworks");
+    if (!provider) {
+      throw new ModelError("not-configured", "OPENROUTER_PROVIDER is required for a free model.");
+    }
 
     const headers: Record<string, string> = {
       Authorization: `Bearer ${apiKey}`,
@@ -88,9 +108,10 @@ export class OpenRouterModelClient implements ModelClient {
             },
           },
           provider: {
-            order: ["fireworks"],
+            only: [provider],
             allow_fallbacks: false,
             require_parameters: true,
+            ...(free ? { max_price: { prompt: 0, completion: 0, request: 0 } } : {}),
           },
           reasoning: { effort: "low" },
           temperature: 0,

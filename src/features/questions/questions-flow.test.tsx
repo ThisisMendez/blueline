@@ -7,7 +7,7 @@ import { loadFixture } from "~tests/fixtures/index";
 import { createFixtureModelClient } from "~tests/support/fixture-model-client";
 import { installRouteFetch } from "~tests/support/route-fetch";
 import { createQuestionRoute } from "./route";
-import { NOT_ADDRESSED } from "./contract";
+import { LOCAL_LAW_NOTE, NOT_ADDRESSED } from "./contract";
 
 let restore = () => {};
 afterEach(() => { restore(); cleanup(); });
@@ -36,5 +36,12 @@ describe("asking questions after an anonymous review", () => {
     await user.click(screen.getByRole("button", { name: "Ask about this agreement" }));
     expect(await within(section).findByText(NOT_ADDRESSED)).toBeInTheDocument();
     expect(within(section).queryByText(lease.sidecar.qa.answerable[0].expectedSourceSentence)).toBeNull();
+    expect(within(section).queryByText(LOCAL_LAW_NOTE)).toBeNull();
+
+    // ADR 0014: a question about legality gets the lease's answer plus the local-law note, never a verdict.
+    await user.clear(question);
+    await user.type(question, "Is it legal for the landlord to keep my whole deposit?");
+    await user.click(screen.getByRole("button", { name: "Ask about this agreement" }));
+    expect(await within(section).findByText(LOCAL_LAW_NOTE)).toBeInTheDocument();
   });
 });

@@ -1,0 +1,11 @@
+{
+  "documentId": "L05-umass-sample-lease",
+  "sourceUrl": "https://cdn.offcampusimages.com/public/resource/yh4w0mq9fxprdg5tczqnubrtcau_lml5ftvyycaluwc.pdf",
+  "accessedOn": "2026-11-11",
+  "available": false,
+  "label": "intake record: not gold-standard, no labels yet",
+  "status": "unavailable",
+  "note": "403 Forbidden on 2026-11-11, also with a browser user agent. No Internet Archive snapshot. Needs a manual download by the owner or a replacement.",
+  "proposedReplacement": "H05-puget-sound-sample-lease in evals/holdout/: a different document of the same kind, University of Puget Sound's sample off-campus lease (UMass's file and its two other samples still return 403 and have no archive copy). Fetched under decision 1 on 2026-11-11 and held out; membership locked by the evaluation workstream, pending the owner's confirmation.",
+  "replacementApproved": false
+}

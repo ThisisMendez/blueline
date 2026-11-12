@@ -414,7 +414,7 @@ describe("a lease that points at nothing", () => {
 });
 
 describe("a reference whose sentence cannot be found", () => {
-  it("fails verification after one retry without issuing a partial review", async () => {
+  it("says completeness can't be verified after one retry, without issuing a partial review", async () => {
     useModel({ unquotableReferences: ["Pet Addendum"] });
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
@@ -423,7 +423,7 @@ describe("a reference whose sentence cannot be found", () => {
     await submit(user);
 
     expect(
-      await screen.findByText(/couldn't verify the answer against your document/i),
+      await screen.findByRole("heading", { name: "We couldn't confirm your packet is complete" }),
     ).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: BLOCKED_HEADING })).toBeNull();
 
@@ -431,7 +431,11 @@ describe("a reference whose sentence cannot be found", () => {
     expect(model.completenessRequests).toHaveLength(2);
 
     const outcome = outcomes[0];
-    expect(outcome).toEqual({ status: "failed", reason: "model-verification-failed" });
+    expect(outcome).toEqual({
+      status: "unverified",
+      documents: expect.any(Array),
+      completeness: { kind: "unverified", unverifiedReferenceCount: 1 },
+    });
     expect(model.analysisRequests).toHaveLength(0);
     expect(store.size).toBe(0);
     expect(screen.queryByRole("heading", { name: REVIEW_HEADING })).toBeNull();
@@ -519,5 +523,41 @@ describe("a match the signer disagrees with", () => {
     );
     expect(within(blocked).getByText("Pet Addendum")).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: REVIEW_HEADING })).toBeNull();
+  }, 30_000);
+});
+
+describe("a packet that isn't a residential lease (ADR 0014)", () => {
+  it("stops before any review, shows what it looks like, and quotes the signer's own sentence", async () => {
+    const evidence = referencingLease.sidecar.plantedFlags[0].sourceSentence;
+    useModel({ agreement: { kind: "not-a-residential-lease", description: "A gym membership agreement", evidenceSentence: evidence } });
+    const user = userEvent.setup();
+    renderScreen(await ReviewPage());
+
+    await buildPacket(user, ["fee-schedule", "pet-addendum"]);
+    await submit(user);
+
+    expect(await screen.findByRole("heading", { name: "This doesn't look like a residential lease" })).toBeInTheDocument();
+    expect(screen.getByText(/It reads\s+like a gym membership agreement\./)).toBeInTheDocument();
+    expect(screen.getByText(evidence)).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: REVIEW_HEADING })).toBeNull();
+    expect(outcomes[0].status).toBe("out-of-scope");
+    expect(model.analysisRequests).toHaveLength(0);
+    expect(store.size).toBe(0);
+  }, 30_000);
+
+  it("reports unclear, not a confident judgment, when the model can't quote a sentence for it", async () => {
+    useModel({ agreement: { kind: "not-a-residential-lease", description: "Something else", evidenceSentence: "A sentence that is in no document at all." } });
+    const user = userEvent.setup();
+    renderScreen(await ReviewPage());
+
+    await buildPacket(user, ["fee-schedule", "pet-addendum"]);
+    await submit(user);
+
+    expect(await screen.findByRole("heading", { name: "We couldn't tell whether this is a residential lease" })).toBeInTheDocument();
+    const outcome = outcomes[0];
+    expect(outcome.status).toBe("out-of-scope");
+    if (outcome.status !== "out-of-scope") return;
+    expect(outcome.completeness).toMatchObject({ agreementKind: "unclear", evidence: null });
+    expect(model.analysisRequests).toHaveLength(0);
   }, 30_000);
 });

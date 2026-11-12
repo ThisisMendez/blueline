@@ -1,0 +1,52 @@
+{
+  "documentId": "H04-hud-ha-sample-lease",
+  "sourceUrl": "https://www.hud.gov/sites/documents/DOC_11065.PDF",
+  "retrievedFrom": "http://web.archive.org/web/20241002074526id_/https://www.hud.gov/sites/documents/DOC_11065.PDF",
+  "sourceVersion": "Internet Archive snapshot 20241002074526 (no revision date in the document)",
+  "replaces": "L04-hud-ha-sample-lease",
+  "accessedOn": "2026-11-11",
+  "available": true,
+  "label": "holdout intake record: not gold-standard, no labels yet",
+  "sha256Original": "9f2855cfea888fd74e60b644788d6ba9ed693bb87bb54ccc042b49053629d5fa",
+  "sha256Text": "f80a95186bde6833b5c77b12971390978d1c0c45ddc9fbeb0f797b2b6f5df8e1",
+  "textIsDerived": false,
+  "jurisdiction": "USA (federal public housing rules; the housing authority is left blank)",
+  "housingContext": "Public housing let by a local housing authority",
+  "programRestrictions": "Public housing; household composition and income verified by the authority",
+  "documentType": "federal agency sample lease in two parts: terms and conditions, and a sample lease contract (unexecuted, with blanks)",
+  "isTemplateNotExecutedLease": true,
+  "completeness": {
+    "status": "incomplete-as-supplied",
+    "observed": "Read by the evaluation workstream, not the product. Both parts are present. Its attachments list (housekeeping standards, maintenance charges, pet policy, grievance procedure, lead-paint information) and a posted schedule of maintenance charges are referenced but not in the file.",
+    "needsHumanCheck": [
+      "Confirm which referenced attachments are missing",
+      "Check that the extracted text covers every page of the PDF"
+    ]
+  },
+  "usageRights": "No licence statement found. A U.S. federal agency sample document. Internal evaluation only, kept locally, not redistributed; reuse terms not confirmed by anyone qualified to confirm them.",
+  "proposedSplit": "holdout-locked",
+  "exposureToPromptWork": [
+    "None. Fetched by the evaluation workstream on 2026-11-11, after the holdout exclusion list was set. No product, judge or model has been run on it, and its text has not been shared with prompt or completeness work."
+  ],
+  "requiresHumanReview": true,
+  "reviews": [
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    },
+    {
+      "reviewerId": null,
+      "completedBeforeSeeingModelOutput": null,
+      "completedOn": null,
+      "items": []
+    }
+  ],
+  "adjudication": {
+    "status": "not-started",
+    "adjudicatorId": null,
+    "resolvedItems": [],
+    "notes": null
+  }
+}

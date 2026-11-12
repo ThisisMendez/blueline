@@ -1,0 +1,59 @@
+{
+  "run": 1,
+  "judgedAt": "2026-11-10T19:58:39.298Z",
+  "judge": "fresh Claude Code general-purpose subagent, no tools, no files; prompt held only the rubric and the ten flags (number, document, clause type, severity, quoted sentence, paragraph)",
+  "flagsFile": "evals/labels/flags.json",
+  "rubric": "# Judging rubric\n\nYou are judging flags from Blueline, a product that reads an agreement and flags terms that could cost the person signing it. Each flag quotes one sentence from the agreement. Judge each flag PASS or FAIL against this rubric alone.\n\n## The rule\n\nPASS if the quoted sentence really is the kind of clause the flag names and really costs the reader something. Otherwise FAIL.\n\nJudge the quoted sentence, read in its paragraph. Do not judge:\n\n- the severity the flag gives. Severity is not part of the rule.\n- whether the quote is copied correctly. That is already checked.\n- whether the agreement is the kind of document Blueline is meant for.\n- whether a term is legally valid or enforceable.\n\n## The kinds of clause Blueline flags\n\nFrom PRD.md, \"My red lines\":\n\n> These are Blueline's initial flag priorities, not the signer's personal red lines. Severity depends on the consequence in the particular agreement, not on how rare the clause sounds or whether the model guesses it is enforceable.\n\n| Clause to inspect | Why it matters |\n| --- | --- |\n| Deposit forfeiture or broad deductions | The signer may lose money they expect to recover when moving out. |\n| Early termination, reassignment, or penalty fees | A move or change in circumstances can become much more expensive than the advertised rent. |\n| Waivers of dispute rights, including forced arbitration where the text says so | A renter may learn only during a dispute that the agreement narrows the route for challenging the landlord. The analysis describes the document's terms; it does not declare whether a waiver is legally valid. |\n| Any other term with a plausible, material downside | A closed list would miss a consequential rent change, repair obligation, access term, or other case-specific harm. The research is thinner for several of these categories, so the explanation must rest on the actual lease text. |\n\nFor \"any other term\": \"do not flag it just for being uncommon.\"\n\n**When the flag names no clause type:** judge the first half of the rule by asking whether the sentence fits one of the four kinds above. \"Any other term with a plausible, material downside\" counts as a kind. *[Proposed: your notes don't settle this. Edit or delete.]*\n\nFrom PRD.md, \"What good looks like\":\n\n> a clean lease must not acquire an invented problem\n\n> a plausible warning that turns out harmless is acceptable but must be counted as a false alarm\n\n> Reviewers should be able to tell from each uncertain flag what event would make the risk real, rather than receiving either a vague hedge or a certain prediction.\n\n## What \"costs the reader something\" means\n\nA sentence costs the reader something when it creates a real downside the reader could plausibly face. Any of these counts:\n\n- **A financial downside:** money the reader must pay, money they forfeit, a payment that can't be refunded, or a balance that falls due sooner than expected.\n- **A financial obligation:** a new or continuing duty to pay, such as another term of charges or a repayment.\n- **A risk moved onto the reader:** the reader bears a loss, or must insure against one, that would otherwise not be theirs.\n- **Lost expected income or opportunity:** something the reader expected to get from the agreement can be taken away.\n- **A lasting limitation:** a restriction on what the reader may do that continues after the agreement ends.\n\n## Edge cases\n\n1. **A small cost still counts.** A real financial downside passes even if the amount may be small.\n2. **A conditional cost counts when the condition is plausible.** If the cost only arrives when the reader misses a deadline, cancels, leaves early or is let go, it still counts, as long as that event could plausibly happen.\n3. **An optional part still counts.** A cost tied to an optional part of the agreement counts for a reader who takes that part.\n4. **The other side's power counts when the reader bears the effect.** A term letting the other party end, change or withhold something passes when it would cost the reader money, income or an opportunity.\n5. **Costs need not be money.** A lasting professional or practical limitation counts.\n6. **A downside that is only possible is not enough.** The reader must plausibly face it, and it must be material. An unusual sentence with no real cost fails.\n",
+  "verdicts": [
+    {
+      "number": 1,
+      "verdict": "PASS",
+      "reason": "A cancellation notice that arrives late locks the member into another full term of dues, which is a financial obligation they could plausibly face by missing a three-day deadline."
+    },
+    {
+      "number": 2,
+      "verdict": "PASS",
+      "reason": "Because tuition is billed every year, a candidate held back a year would plausibly pay for an extra year, and that cost counts for a reader who takes the optional Program."
+    },
+    {
+      "number": 3,
+      "verdict": "PASS",
+      "reason": "A Plot Holder who gives notice loses the rest of the season's fee, while the Association refunds it when it ends the licence, so this is a real forfeit even if the amount is small."
+    },
+    {
+      "number": 4,
+      "verdict": "PASS",
+      "reason": "The Firm can end the fixed-term Programme for any reason on one week's notice, so the Analyst loses income and opportunity they expected from it."
+    },
+    {
+      "number": 5,
+      "verdict": "PASS",
+      "reason": "The confidentiality and no-copy duty has no end date, which makes it a lasting limitation that continues after the Programme ends."
+    },
+    {
+      "number": 6,
+      "verdict": "PASS",
+      "reason": "Resigning or being let go for cause in the first year means repaying the full $15,000 signing payment, a plausible and material financial obligation."
+    },
+    {
+      "number": 7,
+      "verdict": "PASS",
+      "reason": "Cancelling early makes the unpaid device balance due in full on the next bill, so a balance falls due much sooner than expected."
+    },
+    {
+      "number": 8,
+      "verdict": "FAIL",
+      "reason": "The subscriber keeps the service until the end of the period already paid for and is not charged for another one, so no material cost is shown."
+    },
+    {
+      "number": 9,
+      "verdict": "PASS",
+      "reason": "The Occupant carries the risk of loss to stored property and must insure it, which moves a risk onto the reader that they would not otherwise bear."
+    },
+    {
+      "number": 10,
+      "verdict": "PASS",
+      "reason": "Giving up a place late forfeits half the fee or all of it, a plausible financial loss."
+    }
+  ]
+}
