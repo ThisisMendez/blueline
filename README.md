@@ -1,5 +1,7 @@
 # Blueline Redline
 
+Production: https://blueline-khaki-eta.vercel.app
+
 Residential lease review with exact source citations. The existing Next.js application lives in `src/app/`; feature code lives in `src/features/`.
 
 ## Run locally
@@ -9,6 +11,15 @@ Use Node 24 and npm. Run `npm ci`, copy `.env.example` to `.env.local`, fill in 
 The app starts without credentials and explains unavailable services. Real analysis requires `OPENROUTER_API_KEY` and `OPENROUTER_MODEL`. Calls require the Fireworks provider, low reasoning and structured JSON, with no provider fallback. An incompatible configuration returns an error.
 
 Anonymous analysis works with or without configured Supabase and is never saved by Blueline. Only the library and personal red lines require an account. Model processing still sends extracted text to the configured external provider; this application makes no claim about that provider's retention policy.
+
+## Production settings
+
+Production needs these four settings. Each is set on Vercel (production environment) and in `.env.local` for local work. Values are never committed.
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `OPENROUTER_API_KEY`
+- `OPENROUTER_MODEL`
 
 ## Verify
 
