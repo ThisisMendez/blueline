@@ -1,0 +1,191 @@
+{
+  "batch": "batch-2",
+  "form": "six-part",
+  "title": "Failure-enriched judge batch",
+  "createdOn": "2026-11-11",
+  "source": "Flags from four ungated gold-set runs (development material only). The gold-set documents aren't leases; see evals/judge/README.md for how to treat scope.",
+  "model": "z-ai/glm-5.3-flash",
+  "selectionSha256": "ca7354dc6516facb96636f53a9f04503cc5d2c719cbcbcbdc0d4b6c38ae01b86",
+  "flags": [
+    {
+      "number": 1,
+      "key": "e26c521d5c8d1d34",
+      "document": "adhesion-contract",
+      "documentTitle": "MERIDIAN ATHLETIC CLUB — MEMBER SERVICES AND INSTRUCTOR CERTIFICATION AGREEMENT",
+      "severity": "low",
+      "quotedSentence": "Access is by keycard or through the application, and you are responsible for every entry made with your keycard or your account.",
+      "consequence": "The signer is responsible for every entry made with their keycard or account, so any unauthorised or mistaken use of their card or account is billed or held against them.",
+      "paragraph": "Meridian grants you a personal, non-transferable licence to use the facilities at the home location shown on your enrolment form during that location’s posted hours. Posted hours vary by season and on public holidays, and the current hours for each location are shown in the Meridian mobile application. Access is by keycard or through the application, and you are responsible for every entry made with your keycard or your account. You agree to keep the contact details, billing details and emergency contact on your account current, and to tell Member Services in writing of any change within ten (10) days. Guest privileges are issued at Meridian’s discretion, are limited to four (4) visits per guest in any calendar year, and a guest is bound by the Club Rules while on club premises."
+    },
+    {
+      "number": 2,
+      "key": "bf3d40d5ea01cd31",
+      "document": "adhesion-contract",
+      "documentTitle": "MERIDIAN ATHLETIC CLUB — MEMBER SERVICES AND INSTRUCTOR CERTIFICATION AGREEMENT",
+      "severity": "high",
+      "quotedSentence": "At the end of the initial term, and at the end of each term thereafter, your membership renews automatically for a further twelve (12) month term at the then-current rate.",
+      "consequence": "The agreement renews automatically for successive 12-month terms at the then-current rate without a fresh signature, and a suspended, frozen or medically held membership still renews on the original schedule.",
+      "paragraph": "Your initial membership term is twelve (12) months, beginning on the Commencement Date shown on your enrolment form. At the end of the initial term, and at the end of each term thereafter, your membership renews automatically for a further twelve (12) month term at the then-current rate. To stop a renewal you must deliver written notice of cancellation to the Member Services desk no later than three (3) days before the renewal date. Notice delivered after that day takes effect at the end of the term that follows, and the dues for the intervening term remain payable in full. A membership that has been suspended, frozen or placed on medical hold continues to renew on its original schedule."
+    },
+    {
+      "number": 3,
+      "key": "9007af36841baa35",
+      "document": "internship-agreement",
+      "documentTitle": "LOWELL AND KERR LLP: SUMMER ANALYST PROGRAMME AGREEMENT",
+      "severity": "low",
+      "quotedSentence": "An item not returned within five working days is charged at the replacement cost shown in the Programme Handbook.",
+      "consequence": "Equipment not returned within five working days is charged at the replacement cost listed in the Programme Handbook, a document the signer has not been given, so the amount is unknown at signing.",
+      "paragraph": "The laptop, the security token and the building pass issued to the Analyst remain the property of the Firm and are returned on the last day of the Programme. An item not returned within five working days is charged at the replacement cost shown in the Programme Handbook."
+    },
+    {
+      "number": 4,
+      "key": "6cb285e4477ebb5d",
+      "document": "internship-agreement",
+      "documentTitle": "LOWELL AND KERR LLP: SUMMER ANALYST PROGRAMME AGREEMENT",
+      "severity": "high",
+      "quotedSentence": "The Firm may amend the Programme Handbook, the assessment structure, the teaching schedule and the terms of this Agreement at any time by issuing a revised version to the Analyst by email, and the revised version applies from the date of that email.",
+      "consequence": "The Firm can change the Handbook, the assessments, the teaching schedule and even the terms of this Agreement itself at any time by email, and the change takes effect immediately from the date of the email, so terms the Analyst agreed to can be replaced without their consent.",
+      "paragraph": "The Firm may amend the Programme Handbook, the assessment structure, the teaching schedule and the terms of this Agreement at any time by issuing a revised version to the Analyst by email, and the revised version applies from the date of that email."
+    },
+    {
+      "number": 5,
+      "key": "1a2e66f63f2022cd",
+      "document": "adhesion-contract",
+      "documentTitle": "MERIDIAN ATHLETIC CLUB — MEMBER SERVICES AND INSTRUCTOR CERTIFICATION AGREEMENT",
+      "severity": "low",
+      "quotedSentence": "You authorise Meridian to draw all dues, tuition and charges from the payment method on your account until this Agreement has ended and your balance is nil.",
+      "consequence": "The signer authorises Meridian to keep drawing all dues, tuition and charges from their payment method until the agreement has ended and the balance is nil, so the payment mandate outlasts any single billing period.",
+      "paragraph": "You authorise Meridian to draw all dues, tuition and charges from the payment method on your account until this Agreement has ended and your balance is nil."
+    },
+    {
+      "number": 6,
+      "key": "f895de76e92b9d98",
+      "document": "swim-lesson-registration",
+      "documentTitle": "BRIARFIELD AQUATIC CENTRE: LEARN TO SWIM REGISTRATION",
+      "severity": "low",
+      "quotedSentence": "A place given up later than that, and before the third lesson, is refunded at half the fee.",
+      "consequence": "Withdrawing between the seven-day deadline and the third lesson returns only $60 of the $120 fee, so the family loses half the fee for a place given up before most lessons have happened.",
+      "paragraph": "A place given up more than seven days before the first lesson is refunded in full. A place given up later than that, and before the third lesson, is refunded at half the fee. After the third lesson no refund is made."
+    },
+    {
+      "number": 7,
+      "key": "f6a4780a19a21228",
+      "document": "saas-subscription",
+      "documentTitle": "NORTHWIND STUDIO: SUBSCRIBER TERMS OF SERVICE",
+      "severity": "low",
+      "quotedSentence": "You may not share your credentials with anyone else, and an account we believe is being used by more than one person may be suspended while we ask you about it.",
+      "consequence": "If Northwind suspends the account because it believes more than one person is using it, the signer loses access to the editor, asset library and exports while Northwind investigates, with no stated time limit or compensation.",
+      "paragraph": "You may install the desktop companion on up to three devices you control. You may not share your credentials with anyone else, and an account we believe is being used by more than one person may be suspended while we ask you about it."
+    },
+    {
+      "number": 8,
+      "key": "7808131f702d60f5",
+      "document": "internship-agreement",
+      "documentTitle": "LOWELL AND KERR LLP: SUMMER ANALYST PROGRAMME AGREEMENT",
+      "severity": "medium",
+      "quotedSentence": "This obligation has no end date.",
+      "consequence": "The confidentiality obligation never expires, so the Analyst is exposed to the indemnity in Section 6 for any breach of it for the rest of their life, with no time limit on that financial exposure.",
+      "paragraph": "The Analyst will keep confidential every client name, model, memorandum and data set the Analyst sees during the Programme, and will not retain a copy of any of it after the Programme ends. This obligation has no end date."
+    },
+    {
+      "number": 9,
+      "key": "9168db06fc13d2a1",
+      "document": "phone-plan-terms",
+      "documentTitle": "CASCADE MOBILE: CONSUMER SERVICE AGREEMENT",
+      "severity": "low",
+      "quotedSentence": "Service on a monthly plan has no fixed term and continues from bill period to bill period until cancelled.",
+      "consequence": "On a monthly plan the service continues from bill period to bill period until cancelled and does not end on its own, so the signer keeps being billed unless they actively cancel by calling or through the account portal.",
+      "paragraph": "Service on a monthly plan has no fixed term and continues from bill period to bill period until cancelled."
+    },
+    {
+      "number": 10,
+      "key": "a23d27207bdbc2aa",
+      "document": "offer-letter",
+      "documentTitle": "ARDENT BIOSCIENCES INC: OFFER OF EMPLOYMENT",
+      "severity": "medium",
+      "quotedSentence": "Ardent may introduce, withdraw, interpret or amend any policy, handbook provision, benefit plan or term of employment described in this letter at any time and without your agreement, and the version in force on the Ardent intranet governs from the date it is published there.",
+      "consequence": "The company can change or withdraw any policy, benefit or term described in the offer at any time without the signer's agreement, so the benefits and terms as written are not locked in for as long as the signer works there.",
+      "paragraph": "Ardent may introduce, withdraw, interpret or amend any policy, handbook provision, benefit plan or term of employment described in this letter at any time and without your agreement, and the version in force on the Ardent intranet governs from the date it is published there."
+    },
+    {
+      "number": 11,
+      "key": "65e00c92d1f70947",
+      "document": "offer-letter",
+      "documentTitle": "ARDENT BIOSCIENCES INC: OFFER OF EMPLOYMENT",
+      "severity": "medium",
+      "quotedSentence": "Bonus awards are discretionary in amount and in whether they are made at all, and an award is paid only if you are employed on the payment date.",
+      "consequence": "The bonus is entirely discretionary — Ardent can decide both whether to pay anything and how much — and the signer receives nothing if not employed on the payment date, so a year of work could end with no bonus if the signer leaves (or is let go) just before payment.",
+      "paragraph": "You are eligible for the annual discretionary bonus scheme at a target of twelve percent of base salary. Bonus awards are discretionary in amount and in whether they are made at all, and an award is paid only if you are employed on the payment date."
+    },
+    {
+      "number": 12,
+      "key": "1201076ebe821300",
+      "document": "swim-lesson-registration",
+      "documentTitle": "BRIARFIELD AQUATIC CENTRE: LEARN TO SWIM REGISTRATION",
+      "severity": "medium",
+      "quotedSentence": "After the third lesson no refund is made.",
+      "consequence": "If the family withdraws after the third lesson, the entire $120 fee is kept by the Centre, even for the remaining lessons the child will not attend.",
+      "paragraph": "A place given up more than seven days before the first lesson is refunded in full. A place given up later than that, and before the third lesson, is refunded at half the fee. After the third lesson no refund is made."
+    },
+    {
+      "number": 13,
+      "key": "eeac10e5b01fbd5c",
+      "document": "phone-plan-terms",
+      "documentTitle": "CASCADE MOBILE: CONSUMER SERVICE AGREEMENT",
+      "severity": "low",
+      "quotedSentence": "Data speeds on an unlimited plan may be reduced after you use the monthly priority allowance shown on your Service Summary, and reduced speeds continue until the next bill period starts.",
+      "consequence": "On an unlimited plan, data speeds are reduced after the monthly priority allowance is used, and the reduced speed lasts until the next bill period, so heavy use in a month means slower service for the rest of that cycle.",
+      "paragraph": "Data speeds on an unlimited plan may be reduced after you use the monthly priority allowance shown on your Service Summary, and reduced speeds continue until the next bill period starts."
+    },
+    {
+      "number": 14,
+      "key": "64d87680e6a253c5",
+      "document": "clean-document",
+      "documentTitle": "FENWICK ROAD COMMUNITY GARDEN: ANNUAL PLOT LICENCE",
+      "severity": "low",
+      "quotedSentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+      "consequence": "Any canes, netting, frames or other belongings still on the plot after 15 December 2027 are permanently lost to the Association, which may keep or dispose of them.",
+      "paragraph": "By 30 November the Plot Holder clears away canes, netting, frames and anything else brought onto the plot, and leaves perennial plantings in place for the next holder unless the plot secretary agrees they may be lifted. Anything left after 15 December becomes the Association’s to keep or to clear."
+    },
+    {
+      "number": 15,
+      "key": "15c2bfe42ed78a49",
+      "document": "saas-subscription",
+      "documentTitle": "NORTHWIND STUDIO: SUBSCRIBER TERMS OF SERVICE",
+      "severity": "low",
+      "quotedSentence": "Your subscription continues from one Billing Period into the next without further action by either of us, and we bill the plan fee then in effect on the first day of each new Billing Period.",
+      "consequence": "The subscription rolls over automatically into each new Billing Period without any fresh action, and the signer must actively cancel by the day before the period ends (monthly) or 30 days before the anniversary (annual) to stop it.",
+      "paragraph": "Your subscription continues from one Billing Period into the next without further action by either of us, and we bill the plan fee then in effect on the first day of each new Billing Period."
+    },
+    {
+      "number": 16,
+      "key": "2c97ed455d55ec66",
+      "document": "storage-unit-rental",
+      "documentTitle": "HARBOUR ROAD SELF STORAGE: UNIT RENTAL AGREEMENT",
+      "severity": "low",
+      "quotedSentence": "After the initial term this Agreement continues on a month to month basis, each month renewing on the first day of the month without notice from either party, until it is ended as Section 8 describes.",
+      "consequence": "The agreement renews itself month to month without any fresh signature, so it will not end on its own; the occupant must give written notice at least ten days before the end of a month to stop it, and rent for the month of move-out is not refunded.",
+      "paragraph": "After the initial term this Agreement continues on a month to month basis, each month renewing on the first day of the month without notice from either party, until it is ended as Section 8 describes."
+    },
+    {
+      "number": 17,
+      "key": "474acf81e1b3faba",
+      "document": "phone-plan-terms",
+      "documentTitle": "CASCADE MOBILE: CONSUMER SERVICE AGREEMENT",
+      "severity": "high",
+      "quotedSentence": "Service on a twelve month promotional plan renews for a further twelve month term at the end of the term then running, at the standard rate for the plan rather than at the promotional rate, unless you tell us to stop the renewal before the last day of the current term.",
+      "consequence": "A twelve-month promotional plan renews automatically for another twelve-month term at the standard rate rather than the promotional rate, so the signer could pay a higher rate for a full year unless they cancel the renewal before the last day of the current term.",
+      "paragraph": "Service on a twelve month promotional plan renews for a further twelve month term at the end of the term then running, at the standard rate for the plan rather than at the promotional rate, unless you tell us to stop the renewal before the last day of the current term."
+    },
+    {
+      "number": 18,
+      "key": "2cf041db63cfd40c",
+      "document": "offer-letter",
+      "documentTitle": "ARDENT BIOSCIENCES INC: OFFER OF EMPLOYMENT",
+      "severity": "medium",
+      "quotedSentence": "On or before your start date you will sign the Employee Confidential Information and Invention Assignment Agreement enclosed with this letter.",
+      "consequence": "The signer must sign a separate Confidential Information and Invention Assignment Agreement before starting, and its obligations continue after employment ends; the text of that agreement is not in this document, so its terms cannot be reviewed here.",
+      "paragraph": "On or before your start date you will sign the Employee Confidential Information and Invention Assignment Agreement enclosed with this letter. It survives the end of your employment."
+    }
+  ]
+}

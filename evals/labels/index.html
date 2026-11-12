@@ -117,6 +117,14 @@
   .banner p { margin: 0 0 8px; }
   .banner .hint { color: inherit; }
   .result { font-size: 1.05rem; font-weight: 600; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; margin: 6px 0 10px; user-select: all; -webkit-user-select: all; }
+  .six { display: grid; gap: 12px; margin-bottom: 14px; }
+  .six fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px 10px; margin: 0; }
+  .six legend { font-weight: 600; font-size: 0.93rem; padding: 0 4px; }
+  .six .q { color: var(--muted); font-size: 0.85rem; margin: 0 0 6px; }
+  .six label { display: inline-flex; align-items: center; gap: 4px; margin: 2px 14px 2px 0; font-size: 0.93rem; cursor: pointer; }
+  .consequence { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 0 0 16px; }
+  .consequence strong { display: block; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+  input[type="text"] { font: inherit; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
   [hidden] { display: none !important; }
   kbd { font: inherit; font-size: 0.8rem; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
 </style>
@@ -138,7 +146,16 @@
   </details>
 
   <div class="card rule">
-    <p><strong>The rule.</strong> PASS if the quoted sentence really is the kind of clause the flag names and really costs the reader something. Otherwise FAIL.</p>
+    <p id="rule-text"><strong>The rule.</strong> PASS if the quoted sentence really is the kind of clause the flag names and really costs the reader something. Otherwise FAIL.</p>
+  </div>
+
+  <div class="banner" id="locked" hidden>
+    <p><strong>These verdicts are locked.</strong> The page shows them read only; nothing you change here is saved.</p>
+  </div>
+
+  <div class="card" id="reviewer-row" hidden>
+    <label class="field" for="reviewer-id">Your reviewer id (pseudonymous, for example R1)</label>
+    <input type="text" id="reviewer-id" autocomplete="off" spellcheck="false">
   </div>
 
   <div class="status-row">
@@ -155,12 +172,15 @@
       <dt>Severity</dt><dd id="f-severity"></dd>
     </dl>
     <p class="paragraph" id="f-paragraph"></p>
+    <p class="consequence" id="f-consequence" hidden></p>
 
+    <div class="six" id="six" hidden></div>
+    <label class="field" id="choices-label" hidden>Overall verdict</label>
     <div class="choices" role="group" aria-label="Label">
       <button class="choice" type="button" data-label="PASS" aria-pressed="false">PASS</button>
       <button class="choice" type="button" data-label="FAIL" aria-pressed="false">FAIL</button>
     </div>
-    <label class="field" for="note">One sentence on why</label>
+    <label class="field" for="note" id="note-label">One sentence on why</label>
     <textarea id="note" rows="2"></textarea>
     <div class="history" id="history" hidden></div>
 
@@ -172,10 +192,10 @@
   </section>
 
   <section class="card" id="finish" hidden>
-    <label class="field" for="reflection">What changed in how I judge</label>
+    <label class="field" for="reflection" id="reflection-label">What changed in how I judge</label>
     <textarea id="reflection" rows="4"></textarea>
     <div id="result-wrap" hidden>
-      <p class="hint" style="margin:14px 0 0">All ten have a label and a note. Copy this into the chat:</p>
+      <p class="hint" style="margin:14px 0 0" id="result-intro">All ten have a label and a note. Copy this into the chat:</p>
       <div class="result" id="result"></div>
       <button class="btn primary" type="button" id="copy-result">Copy line</button>
       <span class="hint" id="copy-result-done"></span>
@@ -187,22 +207,44 @@
 <script>
 (function () {
   "use strict";
+  // Two modes. The ten-flag page (labels.json): one PASS/FAIL and a note per flag.
+  // A six-part batch (npm run label -- --batch <dir>): the six verdicts from
+  // evals/reviewer-guide.md, an overall PASS/FAIL and a rationale per flag.
+  // The page never suggests, pre-fills or computes a verdict.
+  var DIMENSIONS = [
+    { key: "quotation", name: "1. Exact quotation", q: "Is the quoted sentence in the document, character for character?", values: ["yes", "no"] },
+    { key: "scope", name: "2. Scope", q: "Is the document a residential lease, or a document a residential lease makes part of itself?", values: ["in scope", "out of scope", "can't tell"] },
+    { key: "consequence", name: "3. Consequence", q: "Does the flag describe what the clause does, and when it would matter, without adding facts or a legal conclusion?", values: ["correct", "incorrect", "partly"] },
+    { key: "materiality", name: "4. Materiality", q: "Does the clause create a meaningful downside beyond an ordinary payment?", values: ["material", "ordinary", "harmless oddity", "borderline"] },
+    { key: "severity", name: "5. Severity", q: "If material, is the severity right?", values: ["right", "too high", "too low", "not applicable"] },
+    { key: "missingInformation", name: "6. Missing information", q: "Where the clause depends on a blank or a document not supplied, does the flag say so instead of guessing?", values: ["handled", "guessed", "not applicable"] }
+  ];
   var STORE_KEY = "blueline-flag-labels-v1";
+  var sixPart = false;
+  var locked = false;
+  var LABEL = "label", NOTE = "note", TIME = "labelledAt";
   var flags = [];
+  var batchName = null;
   var state = null;
   var index = 0;
   var online = true;
   var saveTimer = null;
-  var pingTimer = null;
 
   function $(id) { return document.getElementById(id); }
   function now() { return new Date().toISOString(); }
 
+  function emptyEntry() {
+    if (!sixPart) return { label: null, note: "", labelledAt: null, history: [] };
+    var verdicts = {};
+    DIMENSIONS.forEach(function (d) { verdicts[d.key] = null; });
+    return { verdicts: verdicts, overall: null, rationale: "", updatedAt: null, history: [] };
+  }
+
   function emptyState() {
-    var s = { version: 1, run: null, flags: {}, reflection: "", updatedAt: null };
-    flags.forEach(function (f) {
-      s.flags[String(f.number)] = { label: null, note: "", labelledAt: null, history: [] };
-    });
+    var s = sixPart
+      ? { version: 2, batch: batchName, reviewerId: "", flags: {}, reflection: "", updatedAt: null }
+      : { version: 1, run: null, flags: {}, reflection: "", updatedAt: null };
+    flags.forEach(function (f) { s.flags[String(f.number)] = emptyEntry(); });
     return s;
   }
 
@@ -210,11 +252,20 @@
     if (!s || typeof s !== "object" || typeof s.flags !== "object") return null;
     flags.forEach(function (f) {
       var k = String(f.number);
-      if (!s.flags[k]) s.flags[k] = { label: null, note: "", labelledAt: null, history: [] };
-      if (!Array.isArray(s.flags[k].history)) s.flags[k].history = [];
-      if (typeof s.flags[k].note !== "string") s.flags[k].note = "";
+      if (!s.flags[k]) s.flags[k] = emptyEntry();
+      var e = s.flags[k];
+      if (!Array.isArray(e.history)) e.history = [];
+      if (typeof e[NOTE] !== "string") e[NOTE] = "";
+      if (sixPart) {
+        if (!e.verdicts || typeof e.verdicts !== "object") e.verdicts = {};
+        DIMENSIONS.forEach(function (d) { if (e.verdicts[d.key] === undefined) e.verdicts[d.key] = null; });
+        if (e.overall === undefined) e.overall = null;
+        if (e.updatedAt === undefined) e.updatedAt = null;
+      }
     });
     if (typeof s.reflection !== "string") s.reflection = "";
+    if (sixPart && typeof s.reviewerId !== "string") s.reviewerId = "";
+    if (sixPart) { s.version = 2; s.batch = batchName; }
     return s;
   }
 
@@ -222,6 +273,7 @@
     try { return fillMissing(JSON.parse(localStorage.getItem(STORE_KEY))); } catch (e) { return null; }
   }
   function writeLocal() {
+    if (locked) return;
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* browser storage unavailable */ }
   }
 
@@ -232,20 +284,24 @@
 
   function saveNow() {
     clearTimeout(saveTimer);
+    if (locked) return Promise.resolve();
     writeLocal();
     var body = JSON.stringify(state);
+    var file = sixPart ? "verdicts.json" : "labels.json";
     return fetch("/labels.json", { method: "PUT", headers: { "Content-Type": "application/json" }, body: body })
       .then(function (r) {
+        if (r.status === 423) { setLocked(); return; }
         if (!r.ok) throw new Error("save failed");
         setOnline(true);
-        $("saved").textContent = "Saved to labels.json at " + new Date().toLocaleTimeString();
+        $("saved").textContent = "Saved to " + file + " at " + new Date().toLocaleTimeString();
       })
       .catch(function () {
         setOnline(false);
-        $("saved").textContent = "Not saved to labels.json. Kept in this browser.";
+        $("saved").textContent = "Not saved to " + file + ". Kept in this browser.";
       });
   }
   function saveSoon() {
+    if (locked) return;
     state.updatedAt = now();
     writeLocal();
     clearTimeout(saveTimer);
@@ -262,7 +318,14 @@
       .catch(function () { setOnline(false); });
   }
 
-  // Minimal Markdown for the two PRD sections: paragraphs, tables, lists, bold, code.
+  function setLocked() {
+    locked = true;
+    $("locked").hidden = false;
+    $("saved").textContent = "";
+    Array.prototype.forEach.call(document.querySelectorAll("#flag input, #flag textarea, .choice, #reviewer-id, #reflection"), function (el) { el.disabled = true; });
+  }
+
+  // Minimal Markdown for the panel: paragraphs, tables, lists, headings, bold, code.
   function escapeHtml(s) {
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
@@ -288,13 +351,19 @@
       if (/^\s*[-*] /.test(lines[0])) {
         return "<ul>" + lines.map(function (l) { return "<li>" + inline(l.replace(/^\s*[-*] /, "")) + "</li>"; }).join("") + "</ul>";
       }
-      if (/^###? /.test(lines[0])) return "<h3>" + inline(lines[0].replace(/^#+ /, "")) + "</h3>";
+      if (/^###? /.test(lines[0])) return "<h3>" + inline(lines[0].replace(/^#+ /, "")) + "</h3>" + (lines.length > 1 ? "<p>" + inline(lines.slice(1).join("\n")) + "</p>" : "");
       return "<p>" + inline(block) + "</p>";
     }).join("");
   }
 
+  // A flag is done when it has its label (and, for a six-part batch, all six verdicts).
+  function isDone(entry) {
+    if (!entry[LABEL]) return false;
+    if (!sixPart) return true;
+    return DIMENSIONS.every(function (d) { return entry.verdicts[d.key]; });
+  }
   function labelledCount() {
-    return flags.filter(function (f) { return state.flags[String(f.number)].label; }).length;
+    return flags.filter(function (f) { return isDone(state.flags[String(f.number)]); }).length;
   }
   function changesOfMind() {
     return flags.reduce(function (n, f) { return n + state.flags[String(f.number)].history.length; }, 0);
@@ -318,16 +387,54 @@
     p.appendChild(document.createTextNode(f.paragraph.slice(at + f.quotedSentence.length)));
   }
 
+  function renderSix(entry) {
+    var wrap = $("six");
+    wrap.textContent = "";
+    DIMENSIONS.forEach(function (d) {
+      var fs = document.createElement("fieldset");
+      var lg = document.createElement("legend");
+      lg.textContent = d.name;
+      fs.appendChild(lg);
+      var q = document.createElement("p");
+      q.className = "q";
+      q.textContent = d.q;
+      fs.appendChild(q);
+      d.values.forEach(function (v) {
+        var label = document.createElement("label");
+        var input = document.createElement("input");
+        input.type = "radio";
+        input.name = "dim-" + d.key;
+        input.value = v;
+        input.checked = entry.verdicts[d.key] === v;
+        input.disabled = locked;
+        input.addEventListener("change", function () {
+          entry.verdicts[d.key] = v;
+          entry.updatedAt = now();
+          state.updatedAt = now();
+          renderDots();
+          renderFinish();
+          $("progress").textContent = labelledCount() + " of " + flags.length + " done";
+          saveNow();
+        });
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(v));
+        fs.appendChild(label);
+      });
+      wrap.appendChild(fs);
+    });
+  }
+
   function renderDots() {
     var wrap = $("dots");
     wrap.textContent = "";
     flags.forEach(function (f, i) {
       var b = document.createElement("button");
       var entry = state.flags[String(f.number)];
+      var label = isDone(entry) ? entry[LABEL] : null;
       b.type = "button";
-      b.className = "dot" + (i === index ? " current" : "") + (entry.label === "PASS" ? " pass" : entry.label === "FAIL" ? " fail" : "");
+      b.className = "dot" + (i === index ? " current" : "") + (label === "PASS" ? " pass" : label === "FAIL" ? " fail" : "");
       b.textContent = String(f.number);
-      b.setAttribute("aria-label", "Flag " + f.number + (entry.label ? ", labelled " + entry.label : ", not labelled"));
+      b.setAttribute("aria-label", "Flag " + f.number + (label ? ", done, " + label : ", not done"));
       b.addEventListener("click", function () { go(i); });
       wrap.appendChild(b);
     });
@@ -337,11 +444,12 @@
     var h = $("history");
     if (!entry.history.length) { h.hidden = true; h.textContent = ""; return; }
     h.hidden = false;
-    h.textContent = "Earlier labels on this flag:";
+    h.textContent = "Earlier overall verdicts on this flag:";
     var ul = document.createElement("ul");
     entry.history.forEach(function (old) {
       var li = document.createElement("li");
-      li.textContent = old.label + (old.note ? " (“" + old.note + "”)" : "") + ", changed " + new Date(old.changedAt).toLocaleString();
+      var note = old[NOTE];
+      li.textContent = old[LABEL] + (note ? " (“" + note + "”)" : "") + ", changed " + new Date(old.changedAt).toLocaleString();
       ul.appendChild(li);
     });
     h.appendChild(ul);
@@ -351,19 +459,25 @@
     var done = labelledCount();
     var all = done === flags.length;
     $("finish").hidden = !(all || index === flags.length - 1);
-    var missingNotes = flags.filter(function (f) { return !state.flags[String(f.number)].note.trim(); }).map(function (f) { return f.number; });
-    var ready = all && missingNotes.length === 0;
+    var missingNotes = flags.filter(function (f) { return !state.flags[String(f.number)][NOTE].trim(); }).map(function (f) { return f.number; });
+    var missingReviewer = sixPart && !state.reviewerId.trim();
+    var ready = all && missingNotes.length === 0 && !missingReviewer;
     $("result-wrap").hidden = !ready;
     if (ready) {
-      var pass = flags.filter(function (f) { return state.flags[String(f.number)].label === "PASS"; }).length;
-      $("result").textContent = pass + " PASS, " + (flags.length - pass) + " FAIL, " + mindPhrase(changesOfMind());
+      var pass = flags.filter(function (f) { return state.flags[String(f.number)][LABEL] === "PASS"; }).length;
+      $("result").textContent = sixPart
+        ? "npx tsx evals/judge/lock-verdicts.ts " + (batchDirHint || "<batch folder>")
+        : pass + " PASS, " + (flags.length - pass) + " FAIL, " + mindPhrase(changesOfMind());
       $("result-missing").textContent = "";
     } else if (!all) {
-      $("result-missing").textContent = (flags.length - done) + " flag" + (flags.length - done === 1 ? "" : "s") + " still need a label.";
+      $("result-missing").textContent = (flags.length - done) + " flag" + (flags.length - done === 1 ? "" : "s") + (sixPart ? " still need all six verdicts and an overall verdict." : " still need a label.");
+    } else if (missingNotes.length) {
+      $("result-missing").textContent = "Still need " + (sixPart ? "a rationale" : "a note") + ": flag" + (missingNotes.length === 1 ? " " : "s ") + missingNotes.join(", ") + ".";
     } else {
-      $("result-missing").textContent = "Still need a note: flag" + (missingNotes.length === 1 ? " " : "s ") + missingNotes.join(", ") + ".";
+      $("result-missing").textContent = "Still need your reviewer id, at the top of the page.";
     }
   }
+  var batchDirHint = null;
 
   function render() {
     var f = flags[index];
@@ -373,14 +487,23 @@
     $("f-type").textContent = f.clauseType ? f.clauseType : "None named. Blueline's flags carry no clause type.";
     $("f-severity").textContent = f.severity;
     renderParagraph(f);
+    if (sixPart) {
+      var c = $("f-consequence");
+      c.textContent = "";
+      var strong = document.createElement("strong");
+      strong.textContent = "What Blueline says this clause does";
+      c.appendChild(strong);
+      c.appendChild(document.createTextNode(f.consequence || ""));
+      renderSix(entry);
+    }
     Array.prototype.forEach.call(document.querySelectorAll(".choice"), function (b) {
-      b.setAttribute("aria-pressed", String(entry.label === b.getAttribute("data-label")));
+      b.setAttribute("aria-pressed", String(entry[LABEL] === b.getAttribute("data-label")));
     });
-    if (document.activeElement !== $("note")) $("note").value = entry.note;
+    if (document.activeElement !== $("note")) $("note").value = entry[NOTE];
     renderHistory(entry);
     $("prev").disabled = index === 0;
     $("next").disabled = index === flags.length - 1;
-    $("progress").textContent = labelledCount() + " of " + flags.length + " labelled";
+    $("progress").textContent = labelledCount() + " of " + flags.length + (sixPart ? " done" : " labelled");
     if (document.activeElement !== $("reflection")) $("reflection").value = state.reflection;
     renderDots();
     renderFinish();
@@ -389,18 +512,23 @@
   function go(i) {
     if (i < 0 || i >= flags.length) return;
     index = i;
-    $("note").value = state.flags[String(flags[index].number)].note;
+    $("note").value = state.flags[String(flags[index].number)][NOTE];
     render();
   }
 
   function setLabel(label) {
+    if (locked) return;
     var entry = state.flags[String(flags[index].number)];
-    if (entry.label === label) return;
-    if (entry.label) {
-      entry.history.push({ label: entry.label, note: entry.note, labelledAt: entry.labelledAt, changedAt: now() });
+    if (entry[LABEL] === label) return;
+    if (entry[LABEL]) {
+      var old = { changedAt: now() };
+      old[LABEL] = entry[LABEL];
+      old[NOTE] = entry[NOTE];
+      old[TIME] = entry[TIME];
+      entry.history.push(old);
     }
-    entry.label = label;
-    entry.labelledAt = now();
+    entry[LABEL] = label;
+    entry[TIME] = now();
     state.updatedAt = now();
     render();
     saveNow();
@@ -430,13 +558,16 @@
       b.addEventListener("click", function () { setLabel(b.getAttribute("data-label")); });
     });
     $("note").addEventListener("input", function () {
-      state.flags[String(flags[index].number)].note = $("note").value;
+      if (locked) return;
+      state.flags[String(flags[index].number)][NOTE] = $("note").value;
       saveSoon();
       renderFinish();
     });
     $("note").addEventListener("blur", saveNow);
-    $("reflection").addEventListener("input", function () { state.reflection = $("reflection").value; saveSoon(); });
+    $("reflection").addEventListener("input", function () { if (!locked) { state.reflection = $("reflection").value; saveSoon(); } });
     $("reflection").addEventListener("blur", saveNow);
+    $("reviewer-id").addEventListener("input", function () { if (!locked) { state.reviewerId = $("reviewer-id").value.trim(); saveSoon(); renderFinish(); } });
+    $("reviewer-id").addEventListener("blur", saveNow);
     $("prev").addEventListener("click", function () { go(index - 1); });
     $("next").addEventListener("click", function () { go(index + 1); });
     document.addEventListener("keydown", function (e) {
@@ -450,35 +581,59 @@
     window.addEventListener("beforeunload", function () { writeLocal(); });
   }
 
-  function start(flagData, serverLabels, prd) {
+  function setUpSixPart(flagData) {
+    sixPart = true;
+    LABEL = "overall"; NOTE = "rationale"; TIME = "updatedAt";
+    batchName = flagData.batch;
+    batchDirHint = "evals/judge/" + flagData.batch;
+    STORE_KEY = "blueline-six-part-" + flagData.batch;
+    document.title = "Flag verdicts";
+    document.querySelector("h1").textContent = flagData.title || "Flag verdicts";
+    document.querySelector("#prd-panel summary").textContent = "The overall verdict, and the reviewer guide";
+    $("rule-text").innerHTML = "<strong>For each flag:</strong> give all six verdicts from the reviewer guide, each on its own, then the overall verdict and one sentence on why. Use the overall rule in the panel above. Don't open the gold-set runs, the gold-set sidecars or evals/judge/private/ until your verdicts are locked.";
+    $("reviewer-row").hidden = false;
+    $("f-consequence").hidden = false;
+    $("six").hidden = false;
+    $("choices-label").hidden = false;
+    $("note-label").textContent = "One sentence on why (overall verdict)";
+    $("reflection-label").textContent = "Anything in the guide that was unclear (optional)";
+    $("result-intro").textContent = "Every flag is done. When you're sure, lock your verdicts so the judge can be run against them:";
+    $("copy-result").textContent = "Copy command";
+  }
+
+  function start(flagData, serverLabels, prd, status) {
     flags = flagData.flags;
-    $("source").textContent = "Ten flags from the run started " + new Date(flagData.runStartedAt).toLocaleString() +
-      " (" + flagData.model + (flagData.ungated ? ", ungated" : "") + ").";
+    if (flagData.form === "six-part") setUpSixPart(flagData);
+    $("source").textContent = sixPart
+      ? flags.length + " flags in " + flagData.batch + " (" + (flagData.model || "model not recorded") + "). " + (flagData.source || "")
+      : "Ten flags from the run started " + new Date(flagData.runStartedAt).toLocaleString() + " (" + flagData.model + (flagData.ungated ? ", ungated" : "") + ").";
 
     var fromServer = fillMissing(serverLabels);
-    var fromBrowser = readLocal();
+    var fromBrowser = status && status.locked ? null : readLocal();
     if (fromServer && fromBrowser && fromBrowser.updatedAt && (!fromServer.updatedAt || fromBrowser.updatedAt > fromServer.updatedAt)) {
       state = fromBrowser; // the browser kept changes the server never received
     } else {
       state = fromServer || fromBrowser || emptyState();
     }
-    state.run = flagData.run;
+    if (!sixPart) state.run = flagData.run;
+    if (sixPart) $("reviewer-id").value = state.reviewerId;
 
     if (prd) {
       $("prd").innerHTML = prd.map(function (s) {
-        return "<h2>" + escapeHtml(s.title) + "</h2>" + (s.markdown === null ? "<p><em>This section wasn't found in PRD.md.</em></p>" : renderMarkdown(s.markdown));
+        return "<h2>" + escapeHtml(s.title) + "</h2>" + (s.markdown === null ? "<p><em>This section wasn't found.</em></p>" : renderMarkdown(s.markdown));
       }).join("");
     } else {
-      $("prd").textContent = "Couldn't load PRD.md.";
+      $("prd").textContent = "Couldn't load the reference text.";
     }
 
-    var firstOpen = flags.findIndex(function (f) { return !state.flags[String(f.number)].label; });
+    var firstOpen = flags.findIndex(function (f) { return !isDone(state.flags[String(f.number)]); });
     index = firstOpen === -1 ? 0 : firstOpen;
     wire();
+    if (status && status.locked) setLocked();
     render();
     writeLocal();
-    if (fromBrowser && state === fromBrowser && serverLabels !== undefined) saveNow();
-    pingTimer = setInterval(ping, 5000);
+    if (!locked && fromBrowser && state === fromBrowser && serverLabels !== undefined) saveNow();
+    setInterval(ping, 5000);
   }
 
   function getJson(url) {
@@ -488,10 +643,15 @@
     });
   }
 
-  Promise.all([getJson("/flags.json"), getJson("/labels.json").catch(function () { return undefined; }), getJson("/prd.json").catch(function () { return null; })])
+  Promise.all([
+    getJson("/flags.json"),
+    getJson("/labels.json").catch(function () { return undefined; }),
+    getJson("/prd.json").catch(function () { return null; }),
+    getJson("/status.json").catch(function () { return null; })
+  ])
     .then(function (res) {
       if (res[1] === undefined) setOnline(false);
-      start(res[0], res[1], res[2]);
+      start(res[0], res[1], res[2], res[3]);
     })
     .catch(function () {
       $("source").textContent = "Couldn't load the flags. Start the server with npm run label and reload this page.";
