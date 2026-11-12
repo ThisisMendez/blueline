@@ -144,7 +144,7 @@ export function SpecimenHero() {
         </svg>
       )}
 
-      <div className="grid gap-x-10 gap-y-8 p-6 sm:p-10 md:grid-cols-[1.6fr_1fr] md:p-12">
+      <div className="grid gap-x-10 gap-y-4 p-4 sm:p-5 md:grid-cols-[1.6fr_1fr] md:p-6">
         <div>
           <h3
             id="sample-report-heading"
@@ -153,7 +153,7 @@ export function SpecimenHero() {
             Example lease clause
           </h3>
 
-          <blockquote className="mt-5 font-[family-name:var(--font-body)] text-xl leading-relaxed text-[var(--color-navy-ink)] sm:text-2xl">
+          <blockquote className="mt-2 font-[family-name:var(--font-body)] text-xl leading-relaxed text-[var(--color-navy-ink)] sm:text-2xl">
             &ldquo;If the tenant moves out early, the tenant must{" "}
             <mark
               ref={mark1Ref}
@@ -175,12 +175,12 @@ export function SpecimenHero() {
             .&rdquo;
           </blockquote>
 
-          <p className="mt-5 font-[family-name:var(--font-data)] text-xs text-[var(--color-navy)]">
+          <p className="mt-2 font-[family-name:var(--font-data)] text-xs text-[var(--color-navy)]">
             Sample lease, Section 8(c)
           </p>
         </div>
 
-        <div className="flex flex-col gap-6 md:pt-9">
+        <div className="flex flex-col gap-3 md:pt-5">
           <div id="specimen-note-1" ref={label1Ref}>
             <span className="inline-block bg-[var(--color-red-ink)] px-2 py-1 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-paper)]">
               Severity: High
@@ -203,7 +203,7 @@ export function SpecimenHero() {
         </div>
       </div>
 
-      <div className="flex border-t-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-6 py-5 sm:justify-end sm:px-10 md:px-12">
+      <div className="flex border-t-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-4 py-2 sm:justify-end sm:px-5 md:px-6">
         <Link
           href="/sign-in"
           className="inline-flex items-center justify-center bg-[var(--color-navy)] px-6 py-3 text-center font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)]"
