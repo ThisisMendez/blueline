@@ -23,9 +23,9 @@ export function BrandHero() {
         <p className="mt-5 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.16em] text-[var(--color-navy)]">
           Residential lease review
         </p>
-        <h2 className="mt-3 font-[family-name:var(--font-display)] text-5xl font-extrabold uppercase leading-[0.86] tracking-[-0.06em] text-[var(--color-navy-ink)] sm:text-7xl md:text-8xl">
+        <h1 className="mt-3 font-[family-name:var(--font-display)] text-5xl font-extrabold uppercase leading-[0.86] tracking-[-0.06em] text-[var(--color-navy-ink)] sm:text-7xl md:text-8xl">
           Blueline <span className="text-[var(--color-red)]">Redline</span>
-        </h2>
+        </h1>
         <p className="mt-5 font-[family-name:var(--font-data)] text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-navy)] sm:text-base">
           Read the terms. Make your mark.
         </p>
@@ -33,12 +33,20 @@ export function BrandHero() {
           We read your lease and show what it could cost you. We don&apos;t
           check it against local law.
         </p>
-        <Link
-          href="/sign-in"
-          className="mt-7 inline-flex items-center gap-4 bg-[var(--color-navy)] px-7 py-3.5 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)]"
-        >
-          Review a lease <span aria-hidden="true">→</span>
-        </Link>
+        <div className="mt-7 flex flex-wrap justify-center gap-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide">
+          <Link
+            href="/review"
+            className="inline-flex items-center gap-3 border-2 border-[var(--color-navy)] bg-[var(--color-navy)] px-5 py-3 text-[var(--color-paper)] transition-colors hover:border-[var(--color-navy-ink)] hover:bg-[var(--color-navy-ink)]"
+          >
+            Analyze Lease <span aria-hidden="true">→</span>
+          </Link>
+          <a
+            href="#sample-report"
+            className="inline-flex items-center border-2 border-[var(--color-navy)] px-5 py-3 text-[var(--color-navy)] transition-colors hover:bg-[var(--color-paper-deep)]"
+          >
+            See Sample Report
+          </a>
+        </div>
       </div>
     </section>
   );

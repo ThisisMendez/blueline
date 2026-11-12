@@ -1,7 +1,6 @@
 import { BelowFold } from "@/features/landing/components/BelowFold";
 import { BrandHero } from "@/features/landing/components/BrandHero";
 import { Footer } from "@/features/landing/components/Footer";
-import { LeaseGallery } from "@/features/landing/components/LeaseGallery";
 import { Nav } from "@/features/landing/components/Nav";
 import { ReviewToolbar } from "@/features/landing/components/ReviewToolbar";
 import { SpecimenHero } from "@/features/landing/components/SpecimenHero";
@@ -11,33 +10,39 @@ export default function Home() {
     <>
       <Nav />
       <main id="main" className="flex-1">
-        <h1 className="visually-hidden">
-          Blueline Redline reads a residential lease and shows you the exact
-          sentence behind every risk it flags.
-        </h1>
         <BrandHero />
 
-        <section className="px-6 pt-14 pb-10 sm:px-10 sm:pt-16 md:pt-20">
+        <section
+          id="how-it-works"
+          tabIndex={-1}
+          aria-labelledby="how-it-works-heading"
+          className="scroll-mt-6 px-6 pt-14 pb-14 sm:px-10 md:pt-16 md:pb-20"
+        >
           <div className="mx-auto max-w-6xl">
+            <div className="mb-8 max-w-2xl">
+              <h2
+                id="how-it-works-heading"
+                className="font-[family-name:var(--font-display)] text-3xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-4xl"
+              >
+                How It Works
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-[var(--color-navy-ink)]">
+                Paste your lease or upload a PDF with selectable text. We show
+                the exact words we flag, why they matter, and what you could
+                ask to change.
+              </p>
+            </div>
             <SpecimenHero />
-            <p className="mx-auto mt-8 max-w-2xl text-center font-[family-name:var(--font-body)] text-lg leading-relaxed text-[var(--color-navy-ink)]/85 sm:text-xl">
-              This is what a risky sentence looks like once Blueline Redline
-              finds it. It reads your whole lease the same way.
-            </p>
           </div>
         </section>
 
-        <section className="px-6 pb-12 sm:px-10 md:pb-16">
-          <ReviewToolbar />
-        </section>
-
-        <section className="px-6 pb-20 sm:px-10 md:pb-28">
-          <LeaseGallery />
-        </section>
-
-        <section className="px-6 pb-20 sm:px-10 md:pb-28">
+        <div className="px-6 pb-14 sm:px-10 md:pb-20">
           <BelowFold />
-        </section>
+        </div>
+
+        <div className="px-6 pb-14 sm:px-10 md:pb-20">
+          <ReviewToolbar />
+        </div>
       </main>
       <Footer />
     </>

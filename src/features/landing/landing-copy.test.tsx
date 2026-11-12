@@ -20,16 +20,10 @@ describe("landing page capability boundary", () => {
   });
 
   it("calls the coverage checklist topics, not protections", () => {
-    // BelowFold animates on scroll; jsdom has neither API.
-    window.matchMedia ??= ((query: string) => ({
-      matches: true, media: query, onchange: null,
-      addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {}, dispatchEvent: () => false,
-    })) as unknown as typeof window.matchMedia;
-    globalThis.IntersectionObserver ??= class {
-      observe() {} unobserve() {} disconnect() {} takeRecords() { return []; }
-    } as unknown as typeof IntersectionObserver;
     const { container } = render(<BelowFold />);
-    expect(container.textContent).toMatch(/six topics/);
+    const checklist = screen.getByRole("region", { name: "What We Check" });
+    expect(checklist).toHaveTextContent(/six topics/);
+    expect(checklist.querySelectorAll("li")).toHaveLength(6);
     expect(container.textContent).not.toMatch(/protections/);
   });
 });

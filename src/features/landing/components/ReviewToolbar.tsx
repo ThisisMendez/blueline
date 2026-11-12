@@ -14,9 +14,6 @@ export function ReviewToolbar() {
     >
       <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
         <div className="shrink-0 lg:border-r lg:border-[var(--color-navy)] lg:pr-8">
-          <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-red-ink)]">
-            First version
-          </p>
           <h2
             id="review-toolbar-heading"
             className="mt-1 font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-[var(--color-navy-ink)] sm:text-4xl"
@@ -43,9 +40,6 @@ export function ReviewToolbar() {
           ))}
         </ul>
       </div>
-      <p className="mt-5 border-t border-[var(--color-navy)] pt-3 font-[family-name:var(--font-data)] text-[10px] uppercase tracking-[0.14em] text-[var(--color-navy)]/75">
-        Blueline Redline / exact source sentences / clearer signing decisions
-      </p>
     </section>
   );
 }

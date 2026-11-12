@@ -17,7 +17,7 @@ function pathBetween(a: Point, b: Point): string {
  * card enters view. Demo content — labeled as such in the source note.
  */
 export function SpecimenHero() {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLElement>(null);
   const mark1Ref = useRef<HTMLElement>(null);
   const mark2Ref = useRef<HTMLElement>(null);
   const label1Ref = useRef<HTMLDivElement>(null);
@@ -111,9 +111,12 @@ export function SpecimenHero() {
   }, [showLines]);
 
   return (
-    <div
+    <section
       ref={cardRef}
-      className={`relative border-2 border-[var(--color-navy)] bg-[var(--color-paper)] shadow-[0_28px_54px_-24px_rgba(18,59,93,0.5),0_10px_22px_-14px_rgba(18,59,93,0.35)] ${
+      id="sample-report"
+      tabIndex={-1}
+      aria-labelledby="sample-report-heading"
+      className={`relative scroll-mt-6 border-2 border-[var(--color-navy)] bg-[var(--color-paper)] shadow-[0_28px_54px_-24px_rgba(18,59,93,0.5),0_10px_22px_-14px_rgba(18,59,93,0.35)] ${
         inView ? "specimen-in-view" : ""
       }`}
     >
@@ -143,72 +146,71 @@ export function SpecimenHero() {
 
       <div className="grid gap-x-10 gap-y-8 p-6 sm:p-10 md:grid-cols-[1.6fr_1fr] md:p-12">
         <div>
-          <p className="font-[family-name:var(--font-data)] text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-navy)]">
-            Specimen — Early Termination Clause
-          </p>
+          <h3
+            id="sample-report-heading"
+            className="font-[family-name:var(--font-data)] text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-navy)]"
+          >
+            Example lease clause
+          </h3>
 
-          <p className="mt-5 font-[family-name:var(--font-body)] text-xl leading-relaxed text-[var(--color-navy-ink)] sm:text-2xl">
-            &ldquo;Tenant shall be liable for{" "}
+          <blockquote className="mt-5 font-[family-name:var(--font-body)] text-xl leading-relaxed text-[var(--color-navy-ink)] sm:text-2xl">
+            &ldquo;If the tenant moves out early, the tenant must{" "}
             <mark
               ref={mark1Ref}
               tabIndex={0}
               aria-describedby="specimen-note-1"
               className="cited-mark"
             >
-              the full remaining balance of rent due under this Lease
+              pay rent through the end of the lease
             </mark>{" "}
-            if Tenant vacates prior to the expiration date,{" "}
+            even if{" "}
             <mark
               ref={mark2Ref}
               tabIndex={0}
               aria-describedby="specimen-note-2"
               className="cited-mark"
             >
-              regardless of whether Landlord re-rents the unit
+              the landlord rents the unit to someone else
             </mark>
             .&rdquo;
-          </p>
+          </blockquote>
 
           <p className="mt-5 font-[family-name:var(--font-data)] text-xs text-[var(--color-navy)]">
-            Source: sample lease, Section 8(c) — demonstration text, not a real
-            agreement.
+            Sample lease, Section 8(c)
           </p>
         </div>
 
         <div className="flex flex-col gap-6 md:pt-9">
-          <div id="specimen-note-1" ref={label1Ref} className="badge-in">
+          <div id="specimen-note-1" ref={label1Ref}>
             <span className="inline-block bg-[var(--color-red-ink)] px-2 py-1 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-paper)]">
               Severity: High
             </span>
             <p className="mt-2 font-[family-name:var(--font-body)] text-sm leading-snug text-[var(--color-navy-ink)]">
-              You could owe rent for months you don&apos;t live there. By this
-              clause, a new tenant moving in doesn&apos;t reduce what you owe.
+              Say you leave with three months left. The lease says you still
+              owe three months of rent.
             </p>
           </div>
 
-          <div id="specimen-note-2" ref={label2Ref} className="badge-in">
+          <div id="specimen-note-2" ref={label2Ref}>
             <span className="inline-block border-2 border-[var(--color-navy)] px-2 py-1 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
               Matters if
             </span>
             <p className="mt-2 font-[family-name:var(--font-body)] text-sm leading-snug text-[var(--color-navy-ink)]">
-              Your situation could change before the lease ends: a job move, a
-              health issue, a roommate falling through.
+              You need to move early. The lease says you still have to pay
+              even if someone else moves in.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 border-t-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-6 py-6 sm:px-10 sm:py-7 md:flex-row md:items-center md:justify-between md:px-12">
-        <p className="font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
-          Specimen 1 of 1. Yours is next.
-        </p>
+      <div className="flex border-t-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-6 py-5 sm:justify-end sm:px-10 md:px-12">
         <Link
           href="/sign-in"
-          className="inline-flex items-center justify-center bg-[var(--color-navy)] px-6 py-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)]"
+          className="inline-flex items-center justify-center bg-[var(--color-navy)] px-6 py-3 text-center font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)]"
         >
-          Sign in and try it on your lease
+          Sign In and Try It on Your Lease
         </Link>
       </div>
-    </div>
+    </section>
   );
 }

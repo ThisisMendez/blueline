@@ -1,91 +1,68 @@
-import { InView } from "./InView";
+import { CHECKLIST_TOPIC_IDS, type ChecklistTopicId } from "@/features/analysis/checklist";
 
-/**
- * Three more specimen plates, each demonstrating one more capability the
- * hero didn't — coverage checklist, counter-offer, and document-grounded
- * Q&A plus red lines. Deliberately varied in scale and layout so the page
- * doesn't repeat the hero's card as a template three times.
- */
+const topicLabels = {
+  "deposit-deductions-and-return": "Deposit returns and deductions",
+  "early-exit-costs": "Costs of leaving early",
+  "rent-changes": "Rent changes",
+  repairs: "Repairs and maintenance",
+  "access-to-the-home": "When the landlord can enter",
+  "dispute-routes": "How disputes are handled",
+} satisfies Record<ChecklistTopicId, string>;
+
 export function BelowFold() {
   return (
-    <div className="flex flex-col gap-20 md:gap-28">
-      {/* Coverage checklist: not-found items are explicitly NOT risk flags */}
-      <InView className="mx-auto grid w-full max-w-4xl gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-start">
+    <div className="mx-auto flex max-w-6xl flex-col gap-14 md:gap-20">
+      <section
+        id="features"
+        tabIndex={-1}
+        aria-labelledby="features-heading"
+        className="grid scroll-mt-6 gap-6 border-y-2 border-[var(--color-navy)] py-8 md:grid-cols-[1fr_1.5fr] md:items-start md:gap-10"
+      >
         <div>
-          <h2 className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl">
-            Absence gets reported too, separately from risk.
+          <h2
+            id="features-heading"
+            className="font-[family-name:var(--font-display)] text-3xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-4xl"
+          >
+            What We Check
           </h2>
-          <p className="mt-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]/85">
-            Blueline Redline checks your complete agreement against a
-            published list of six topics: deposit return, early-exit
-            costs, rent changes, repairs, access, and dispute routes. The same
-            six for every lease. Anything your document doesn&apos;t state gets
-            reported apart from the risk flags, because there is no sentence to
-            quote for it.
+          <p className="mt-3 text-base leading-relaxed text-[var(--color-navy-ink)]">
+            We look for these six topics in your lease. If a topic is missing,
+            your report marks it as &ldquo;Not found&rdquo; in the checklist.
           </p>
         </div>
-        <ul className="flex flex-col gap-3 border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-6">
-          <li className="flex items-baseline gap-3 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
-            <span aria-hidden="true" className="text-[var(--color-navy)]">
-              ✓
-            </span>
-            Deposit deductions and return — stated in Section 6
-          </li>
-          <li className="flex items-baseline gap-3 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
-            <span aria-hidden="true" className="text-[var(--color-navy)]">
-              ✓
-            </span>
-            Repairs and maintenance — stated in Section 11
-          </li>
-          <li className="flex flex-col gap-1 border-2 border-dashed border-[var(--color-navy)] px-3 py-2">
-            <span className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
-              Not found
-            </span>
-            <span className="font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
-              Dispute routes — not stated anywhere in the packet you gave us
-            </span>
-          </li>
+        <ul className="grid list-disc gap-x-8 gap-y-3 border border-[var(--color-navy)] bg-[var(--color-paper-deep)] py-5 pr-5 pl-9 text-base text-[var(--color-navy-ink)] marker:text-[var(--color-navy)] sm:grid-cols-2 sm:gap-y-4">
+          {CHECKLIST_TOPIC_IDS.map((id) => (
+            <li key={id}>{topicLabels[id]}</li>
+          ))}
         </ul>
-      </InView>
+      </section>
 
-      {/* Counter-offer: current clause -> proposed edit, residual risk shown */}
-      <InView className="mx-auto w-full max-w-3xl">
-        <h2 className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl">
-          Every flag opens onto a proposed edit.
+      <section aria-labelledby="proposed-edits-heading" className="mx-auto w-full max-w-4xl">
+        <h2
+          id="proposed-edits-heading"
+          className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl"
+        >
+          A Suggested Edit for Each Flag
         </h2>
-        <p className="mt-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]/85">
-          A plausible compromise a landlord might actually accept, with
-          whatever risk would still remain if they said yes.
+        <p className="mt-3 text-base leading-relaxed text-[var(--color-navy-ink)]">
+          See what you could ask your landlord to change.
         </p>
-
-        <div className="mt-8 flex flex-col gap-4">
-          <div className="border-2 border-[var(--color-navy)] bg-[var(--color-paper)] p-5">
-            <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
-              1 · As written
-            </p>
-            <p className="mt-2 font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)]">
-              &ldquo;...liable for the full remaining balance of rent...
-              regardless of whether Landlord re-rents the unit.&rdquo;
-            </p>
-          </div>
-          <div className="border-2 border-[var(--color-navy)] bg-[var(--color-paper)] p-5 shadow-[0_24px_46px_-22px_rgba(18,59,93,0.5),0_8px_18px_-12px_rgba(18,59,93,0.32)] sm:ml-8">
-            <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
-              2 · Proposed edit
-            </p>
-            <p className="mt-2 font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)]">
-              &ldquo;...liable for rent only until Landlord re-rents the unit
-              or the lease term ends, whichever comes first.&rdquo;
-            </p>
-            <p className="mt-3 border-t border-[var(--color-navy)]/30 pt-3 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]/75">
-              Residual risk: you would still owe rent until the unit is
-              re-rented or the lease ends.
-            </p>
-          </div>
+        <div className="mt-5 border-l-4 border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-5 sm:p-6">
+          <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
+            Suggested wording for leaving early
+          </p>
+          <blockquote className="mt-2 text-base leading-relaxed text-[var(--color-navy-ink)]">
+            &ldquo;If the tenant moves out early, rent is due until a new
+            tenant starts paying rent or the lease ends, whichever comes
+            first.&rdquo;
+          </blockquote>
+          <p className="mt-3 border-t border-[var(--color-navy)]/30 pt-3 text-sm text-[var(--color-navy-ink)]">
+            You could still owe rent while the unit is empty.
+          </p>
         </div>
-      </InView>
+      </section>
 
-      {/* Q&A + red lines */}
-      <InView className="mx-auto grid w-full max-w-4xl gap-8 md:grid-cols-2">
+      <div className="mx-auto grid w-full max-w-4xl gap-6 md:grid-cols-2">
         <div className="border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-6">
           <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
             Ask the document
@@ -114,10 +91,10 @@ export function BelowFold() {
             <span className="inline-block bg-[var(--color-red-ink)] px-1.5 py-0.5 font-[family-name:var(--font-data)] text-xs font-bold uppercase text-[var(--color-paper)]">
               Preference match
             </span>{" "}
-            — the early-termination clause above conflicts with this.
+            — the example clause could make it costly to leave early.
           </p>
         </div>
-      </InView>
+      </div>
     </div>
   );
 }
