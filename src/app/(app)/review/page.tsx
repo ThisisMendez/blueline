@@ -46,6 +46,11 @@ export default async function ReviewPage() {
           read only what you give us. We don&apos;t check it against local
           law, so a term we describe may be limited by rules where you live.
         </p>
+        <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--color-navy-ink)]">
+          When you submit, we send the document names and text to an AI provider.
+          The provider may keep them or use them for training, so remove personal
+          details such as names and account numbers first.
+        </p>
       </div>
 
       {accounts.kind === "unconfigured" ? <AccountsNotice /> : !signedIn ? (

@@ -6,9 +6,29 @@ Residential lease review with exact source citations. It reads the lease text on
 
 Use Node 24 and npm. Run `npm ci`, copy `.env.example` to `.env.local`, fill in the OpenRouter key and model, then run `npm run dev`. Open `http://localhost:3000` or go directly to `/review`.
 
-The app starts without credentials and explains unavailable services. Real analysis requires `OPENROUTER_API_KEY` and `OPENROUTER_MODEL`. Calls require the Fireworks provider, low reasoning and structured JSON, with no provider fallback. An incompatible configuration returns an error.
+The app starts without credentials and explains unavailable services. Real analysis requires `OPENROUTER_API_KEY` and `OPENROUTER_MODEL`. Paid models default to Fireworks. Set `OPENROUTER_PROVIDER` to select another provider. A `:free` model requires an explicit provider and uses zero token and request price caps. Calls still require low reasoning and strict structured JSON, with no provider fallback. An incompatible configuration returns an error.
 
 Anonymous analysis works with or without configured Supabase and is never saved by Blueline. Only the library and personal red lines require an account. Model processing still sends extracted text to the configured external provider; this application makes no claim about that provider's retention policy.
+
+## Test an anonymous deployment on Vercel Hobby
+
+Import this repository into a personal Hobby project with the Next.js preset,
+Node.js 24.x and Fluid Compute. Leave the Supabase variables blank to run without
+accounts or saved reviews. Set the OpenRouter key as a server-only environment
+variable, then set the model and provider for the target deployment. Vercel
+assigns a `.vercel.app` address. Open `/review` there and test a selectable-text
+PDF from `tests/fixtures/`. The browser extracts the PDF text before submitting
+the review; no file storage service is needed.
+
+For a synthetic smoke test, `OPENROUTER_MODEL=liquid/lfm-2.5-2.6b:free` and
+`OPENROUTER_PROVIDER=liquid` completed a review from a PDF in Chrome. This model
+missed a planted serious term and missed the answer to a question the lease
+addresses. Its free endpoint may use prompts and outputs for training.
+Use this configuration for synthetic testing. Validate the endpoint's data
+policy and model quality before inviting people to submit real leases. The
+OpenRouter free quota is shared by every visitor, and a review can use several
+model calls. See [the endpoint's policy](https://openrouter.ai/liquid/lfm-2.5-2.6b:free)
+and [OpenRouter's free quota](https://openrouter.ai/collections/free-models).
 
 ## Verify
 
@@ -36,7 +56,11 @@ The default 250 ms delay per model request makes loading states visible; set `BL
 
 Provide `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` for an existing Supabase project. Ordered schema migrations are tracked under `supabase/migrations/`. This build does not create a hosted project or apply remote migrations. SQL and deployed row-level security need separate verification before relying on account persistence.
 
-Email sign-in uses `/auth/confirm`. Configure the Supabase site URL and redirect allowlist for your deployment, and use a token-hash email template pointing at `/auth/confirm?token_hash={{ .TokenHash }}&type=email`. Do not commit private lease text, environment files, database dumps or credentials.
+Email sign-in uses `/auth/confirm`. In Supabase Authentication → URL Configuration, set the Site URL to your app's default origin and allow its callback URL. For a local-only setup, use `http://localhost:3000` as the Site URL and allow `http://localhost:3000/auth/confirm` (an existing `http://localhost:3000/**` entry also covers it).
+
+The default Supabase email template works with the app. Request the link from Blueline's sign-in form and open it in the same browser profile so the callback can exchange the returned PKCE code using the verifier cookie. A custom email template can still send users to `/auth/confirm?token_hash={{ .TokenHash }}&type=email`. To check that sign-in created a session, verify that `/review` shows **Sign out** after following the link, then reload and check again.
+
+Do not commit private lease text, environment files, database dumps or credentials.
 
 ### Retention deployment gate
 
