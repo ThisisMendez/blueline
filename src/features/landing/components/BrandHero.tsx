@@ -30,8 +30,7 @@ export function BrandHero() {
           Read the terms. Make your mark.
         </p>
         <p className="mt-2 max-w-md font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          We read your lease and show what it could cost you. We don&apos;t
-          check it against local law.
+          We read your lease and show what it could cost you.
         </p>
         <div className="mt-4 flex flex-wrap justify-center gap-x-3 gap-y-2 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide">
           <Link

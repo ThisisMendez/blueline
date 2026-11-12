@@ -31,6 +31,9 @@ export default function Home() {
                 the exact words we flag, why they matter, and what you could
                 ask to change.
               </p>
+              <p className="mt-2 text-base leading-relaxed text-[var(--color-navy-ink)]">
+                We&apos;re adding the option to review as a renter or landlord.
+              </p>
             </div>
             <SpecimenHero />
           </div>

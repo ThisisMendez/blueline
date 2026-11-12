@@ -5,13 +5,10 @@ import { BelowFold } from "./components/BelowFold";
 import { BrandHero } from "./components/BrandHero";
 import { FieldNotes } from "./components/FieldNotes";
 
-// Layer 1 boundary: the landing page says Blueline reads the lease text and
-// does not check it against local law, and never calls the checklist topics
-// "protections", which reads as legal protection.
 describe("landing page capability boundary", () => {
-  it("says the review does not check the lease against local law", () => {
+  it("describes the lease review in terms of possible costs", () => {
     render(<BrandHero />);
-    expect(screen.getByText(/don't\s+check it against local law/)).toBeInTheDocument();
+    expect(screen.getByText("We read your lease and show what it could cost you.")).toBeInTheDocument();
   });
 
   it("lists a local-law check among what the product isn't", () => {
