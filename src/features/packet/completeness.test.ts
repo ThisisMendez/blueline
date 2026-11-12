@@ -105,6 +105,27 @@ describe("the missing-document list", () => {
     expect(missingNames(second)).toEqual(EXPECTED);
   });
 
+  it("finds a requiring sentence quoted with straight quotes for the lease's curly ones, and shows the lease's own text", async () => {
+    const curly = "The Resident’s Guide — Harbor View is incorporated into this Lease.";
+    const lease: Packet = { documents: [{ id: "pasted-lease", title: "Lease", text: `Harbor View lease.\n${curly}` }] };
+    const model = modelAnswering([
+      { name: "Resident's Guide", requirement: "required", citingSentence: "The Resident's Guide - Harbor View is incorporated into this Lease." },
+    ]);
+    const result = await checkCompleteness({ packet: lease, model });
+    expect(model.calls).toBe(1);
+    expect(result.kind).toBe("incomplete");
+    if (result.kind !== "incomplete") return;
+    expect(result.missing[0].citingSentence).toBe(curly);
+  });
+
+  it("still treats a sentence that is not in the lease as unverified", async () => {
+    const model = modelAnswering([
+      { name: "Harbor View Resident Handbook", requirement: "required", citingSentence: "The Resident must read the Handbook twice." },
+    ]);
+    await expect(checkCompleteness({ packet, model })).resolves.toEqual({ kind: "unverified", unverifiedReferenceCount: 1 });
+    expect(model.calls).toBe(2);
+  });
+
   it("does not block on a conditional or merely mentioned document", async () => {
     const result = await checkCompleteness({
       packet,

@@ -14,7 +14,7 @@ import {
   buildCompletenessRetryUserMessage,
   buildCompletenessUserMessage,
 } from "./completeness-prompt";
-import { locateQuotation } from "./normalize";
+import { locateQuotation, locateQuotationFoldingPunctuation } from "./normalize";
 import {
   canonicalName,
   firstMention,
@@ -217,7 +217,12 @@ function locateReferences(
     if (candidate.requirement !== "required") continue;
 
     const document = findDocument(packet, candidate.citingDocumentId);
-    const location = document ? locateQuotation(document.text, candidate.citingSentence) : null;
+    // A reply that types a straight quote for the lease's curly one still points
+    // at the same sentence; the sentence shown is cut from the lease either way.
+    const location = document
+      ? locateQuotation(document.text, candidate.citingSentence) ??
+        locateQuotationFoldingPunctuation(document.text, candidate.citingSentence)
+      : null;
     if (!document || !location) {
       unlocatable.push(candidate.citingSentence);
       continue;
