@@ -8,8 +8,8 @@ import type { AnalysisRouteDependencies } from "./route";
  * Production wiring for the analysis route.
  *
  * Every dependency that touches configuration is a function, resolved inside
- * the request. Constructing the OpenRouter client reads nothing; the two
- * environment variables are read when a call is actually made, and a Supabase
+ * the request. Constructing the OpenRouter client reads nothing; its model
+ * settings are read when a call is actually made, and a Supabase
  * client is only built when both of its variables are present. That is why
  * the app boots with none of them set.
  */

@@ -74,6 +74,11 @@ export class OpenRouterModelClient implements ModelClient {
     // still boots and still reports the problem in one place.
     const apiKey = requireEnv("OPENROUTER_API_KEY");
     const model = requireEnv("OPENROUTER_MODEL");
+    const free = model.endsWith(":free");
+    const provider = process.env.OPENROUTER_PROVIDER?.trim() || (free ? "" : "fireworks");
+    if (!provider) {
+      throw new ModelError("not-configured", "OPENROUTER_PROVIDER is required for a free model.");
+    }
 
     const headers: Record<string, string> = {
       Authorization: `Bearer ${apiKey}`,
@@ -103,9 +108,10 @@ export class OpenRouterModelClient implements ModelClient {
             },
           },
           provider: {
-            order: ["fireworks"],
+            only: [provider],
             allow_fallbacks: false,
             require_parameters: true,
+            ...(free ? { max_price: { prompt: 0, completion: 0, request: 0 } } : {}),
           },
           reasoning: { effort: "low" },
           temperature: 0,
