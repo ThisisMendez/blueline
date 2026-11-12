@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { runDocument } from "../live-route";
 import type { AnalysisOutcome } from "../../src/features/analysis/types";
 import { loadGoldSet } from "./corpus";
+import { loadLabelOverlay, overlayProblems } from "./label-overlay";
 import { renderGoldReport, scoreGoldRun, type DocumentRun } from "./score";
 
 /**
@@ -60,6 +61,9 @@ async function main() {
   const ungated = process.argv.includes("--ungated");
   const startedAt = new Date();
   const goldSet = loadGoldSet();
+  const { overlay, sha256: overlaySha256 } = loadLabelOverlay();
+  const problems = overlayProblems(goldSet, overlay);
+  if (problems.length) throw new Error(`label-corrections.json does not check out:\n${problems.join("\n")}`);
   const runs: DocumentRun[] = [];
   for (const document of goldSet.documents) {
     const { outcome, returnedFlags, providerError } = await runDocument(document.text, document.title, ungated);
@@ -67,11 +71,12 @@ async function main() {
     console.log(`${document.id}: ${run.status}${run.status === "reviewed" ? `, ${run.flags.length} flag(s), ${run.droppedFlagCount} dropped` : ""}`);
     runs.push(run);
   }
-  const report = scoreGoldRun(goldSet, runs);
+  const report = scoreGoldRun(goldSet, runs, overlay);
   const header = [
     `Gold-set eval, ${goldSet.corpus} v${goldSet.version}`,
     `Started: ${startedAt.toISOString()}`,
     `Model: ${process.env.OPENROUTER_MODEL}`,
+    `Label overlay: label-corrections.json, SHA-256 ${overlaySha256} (proposal pending owner confirmation; original labels unchanged)`,
     ungated
       ? "Pipeline: UNGATED. The completeness check was skipped and each document went straight to runGeneralReview. This is not how a signer is served."
       : "Pipeline: the analysis route as npm run smoke -- --live wires it (anonymous, not persisted).",
@@ -86,6 +91,7 @@ async function main() {
     startedAt: startedAt.toISOString(),
     model: process.env.OPENROUTER_MODEL,
     ungated,
+    labelOverlaySha256: overlaySha256,
     runs: runs.map((run) => (run.status === "reviewed" ? { ...run, reviewedText: undefined } : run)),
     report,
   }, null, 2)}\n`);

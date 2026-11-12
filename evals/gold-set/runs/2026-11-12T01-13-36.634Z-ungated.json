@@ -1,0 +1,930 @@
+{
+  "corpus": "redline-v1",
+  "version": 1,
+  "startedAt": "2026-11-12T01:13:36.634Z",
+  "model": "z-ai/glm-5.3-flash",
+  "ungated": true,
+  "labelOverlaySha256": "707215fdab15f00596a353ae6403b7cf45c262fdf0fbd849094692ff383d4a72",
+  "runs": [
+    {
+      "documentId": "adhesion-contract",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "clean-document",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out.",
+          "sourceStart": 3081,
+          "sourceEnd": 3219,
+          "consequence": "If the plot holder ends the licence early, they lose the unused portion of the $45 season fee, up to the full amount if they leave early in the season, while the association would refund proportionally if it ended the licence instead."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+          "sourceStart": 3470,
+          "sourceEnd": 3548,
+          "consequence": "Any canes, netting, frames, tools or other belongings not cleared from the plot by 15 December 2027 become the association's property, to keep or dispose of, with no compensation to the plot holder."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 2
+    },
+    {
+      "documentId": "saas-subscription",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "We may revise the fee for any plan, and a revised fee applies to you from the start of the first Billing Period that begins more than thirty (30) days after we send notice of the revision to the email address on your account.",
+          "sourceStart": 1113,
+          "sourceEnd": 1338,
+          "consequence": "Northwind can raise the price of the signer's plan with 30 days' email notice, and the new fee applies from the next Billing Period; the clause states no cap on the increase and gives no stated right to cancel without that increase applying."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "On an annual plan the deadline to cancel is the day that falls thirty (30) days before the anniversary of the date you first subscribed, and where no cancellation is received by that day the term extends by a further twelve (12) months at the annual fee then in effect.",
+          "sourceStart": 2424,
+          "sourceEnd": 2693,
+          "consequence": "On an annual plan, missing the cancellation deadline — the day thirty days before the subscription anniversary — automatically commits the signer to another full twelve-month term at whatever the annual fee then is, which could be higher than what they paid."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "We may amend these terms, the pricing page and the Fee Schedule at any time, an amended version takes effect when we post it at northwindstudio.example/terms, and your continued use of the service after it is posted is your acceptance of the amended version.",
+          "sourceStart": 2722,
+          "sourceEnd": 2980,
+          "consequence": "Northwind can change any term of the agreement, the pricing and the Fee Schedule at any time, and the changes take effect simply by being posted to a webpage, with the signer deemed to have accepted them by continuing to use the service; the clause names no limits on what can be changed."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "You will indemnify and hold Northwind harmless from any claim brought by a third party that relates to content you uploaded, exported or published through the service, including a claim that the content infringes a copyright, a trade mark or a right of privacy, and you will pay our reasonable legal costs of defending such a claim.",
+          "sourceStart": 3961,
+          "sourceEnd": 4293,
+          "consequence": "The signer must pay for Northwind's defence of any third-party claim connected to content they uploaded, exported or published — including claims of copyright, trade mark or privacy infringement — with no cap stated on the legal costs they must cover, which is open-ended exposure."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Where a payment is not collected on its due date, interest accrues on the unpaid amount at one and one half percent (1.5%) per month from the due date until payment is received, and an account suspended for non-payment is subject to the reactivation charge published in the Fee Schedule on the Northwind support site.",
+          "sourceStart": 1340,
+          "sourceEnd": 1657,
+          "consequence": "If a payment is not collected on time, interest of 1.5% per month accrues on the unpaid amount until paid, and a suspended account can be charged a reactivation fee whose amount is set in a Fee Schedule the signer has not been given, so the figure is unknown here."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Where availability in a calendar month falls below that figure, your remedy is the service credit set out in the Service Credit Policy and nothing further.",
+          "sourceStart": 3214,
+          "sourceEnd": 3369,
+          "consequence": "If the service underperforms, the signer's only remedy is the service credit described in a separate Service Credit Policy not included in this document — the signer cannot pursue any other remedy for downtime, including losses from failed exports or lost work caused by unavailability."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Northwind’s aggregate liability to you for every claim relating to the service, whether framed in contract, in tort, in warranty or otherwise — and including any claim arising from lost work, lost revenue or a failed export — will not exceed the amount you actually paid us under Section 2 for the Billing Period in which the claim arose.",
+          "sourceStart": 3371,
+          "sourceEnd": 3709,
+          "consequence": "Northwind's total liability for anything related to the service — including lost work, lost revenue or a failed export — is capped at the amount the signer paid for the single Billing Period in which the claim arose, so a month of work lost to a failure could be worth no more than one month's fee."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Any dispute between you and Northwind arising out of these terms or out of your use of the service will be settled by binding arbitration before a single arbitrator under the consumer rules of a recognised arbitration body, and you agree to bring any claim only in your individual capacity and not as a plaintiff or class member in any purported class, collective or representative proceeding.",
+          "sourceStart": 4715,
+          "sourceEnd": 5108,
+          "consequence": "The signer gives up the right to sue Northwind in court (except in small claims court) and to take part in any class, collective or representative proceeding; disputes must go to individual binding arbitration with a final award, which narrows how the signer could contest a serious problem and limits recovery to their own claim alone."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "We may suspend or close an account that has not paid, that has breached Section 1, or that is being used to store content we are required by law to remove.",
+          "sourceStart": 5488,
+          "sourceEnd": 5643,
+          "consequence": "If Northwind closes the signer's account, the signer keeps no money for the unused part of the Billing Period unless the closure was for a reason outside the listed ones — so a closure for an alleged Section 1 breach or a claimed legal-removal requirement leaves the signer without a refund for service they will not receive."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Your subscription continues from one Billing Period into the next without further action by either of us, and we bill the plan fee then in effect on the first day of each new Billing Period.",
+          "sourceStart": 1895,
+          "sourceEnd": 2085,
+          "consequence": "The subscription rolls over automatically into each new Billing Period and the signer is billed the then-current fee on the first day of each period; it does not end on its own, and on a monthly plan the signer must cancel by the day before the period ends to stop the next charge."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "A cancellation made on or after the first day of a Billing Period takes effect at the end of that Billing Period, and the fee already collected for it is not refunded.",
+          "sourceStart": 2255,
+          "sourceEnd": 2422,
+          "consequence": "If the signer cancels on or after the first day of a Billing Period, the fee already collected for that whole period is kept by Northwind even though the signer will not have the service for the rest of it."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 11
+    },
+    {
+      "documentId": "offer-letter",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "storage-unit-rental",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "The Operator's total liability to the Occupant for any loss of or damage to stored property, however caused, including loss or damage caused by the Operator's own negligence, is limited to five thousand dollars ($5,000) unless the Occupant has declared a higher value on the Unit Schedule and paid the corresponding value protection fee.",
+          "sourceStart": 2181,
+          "sourceEnd": 2518,
+          "consequence": "The signer must maintain insurance on everything stored, for its full value, and produce proof on request; if they do not, they bear the entire risk of loss themselves, and the Operator's own liability for any loss or damage — including damage the Operator's negligence causes — is capped at $5,000 unless the signer declared a higher value and paid a value protection fee."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "The Occupant will indemnify, defend and hold the Operator harmless from every claim, demand, loss, cost and expense, including reasonable attorney fees, brought by any person and arising out of the Occupant's use of the unit or the premises, the property stored in the unit, or the acts of anyone the Occupant allows on to the premises.",
+          "sourceStart": 2543,
+          "sourceEnd": 2879,
+          "consequence": "The signer must cover the Operator's legal costs, including attorney fees, for any claim by any person connected to the signer's use of the unit, the stored property, or anyone the signer lets onto the premises — an open-ended obligation with no dollar limit."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Gate hours, the rules posted in the office, and the terms of this Agreement may be changed by the Operator on notice posted at the facility and sent to the Occupant's last known email address, and the changed version applies to the Occupant from the first day of the month after it is posted.",
+          "sourceStart": 2911,
+          "sourceEnd": 3203,
+          "consequence": "The Operator can unilaterally change the agreement's terms, the posted rules, and gate hours by posting notice and emailing it, with the changes binding on the signer from the first day of the following month — no signer agreement, no cap on what can be changed, and no stated right to leave without penalty."
+        },
+        {
+          "severity": "high",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Where rent or any charge is unpaid, the Operator has a lien on all property stored in the unit and may deny the Occupant access, overlock the unit, and after the notice period the law requires, sell the contents and apply the proceeds to what is owed.",
+          "sourceStart": 3425,
+          "sourceEnd": 3676,
+          "consequence": "If rent or any charge goes unpaid, the Operator holds a lien over everything in the unit, can lock the signer out, and after the required notice period can sell the signer's stored property and keep the proceeds to cover what is owed — putting the signer's belongings at risk over an unpaid balance of any size."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "The Operator may increase the monthly rent on not less than thirty (30) days written notice to the Occupant, and the increased rent is due on the first rent day falling after the notice period ends.",
+          "sourceStart": 1402,
+          "sourceEnd": 1600,
+          "consequence": "The Operator can raise the monthly rent on 30 days' written notice with no stated cap on the size of the increase, and the signer's only way to avoid the higher rent is to end the agreement."
+        },
+        {
+          "severity": "medium",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Rent not received by the sixth day of the month incurs the late charge shown in the Schedule of Charges posted in the ofﬁce and on the Harbour Road website, and each further notice the Operator is required to send about an unpaid balance incurs the administration charge shown in the same schedule.",
+          "sourceStart": 1602,
+          "sourceEnd": 1900,
+          "consequence": "Late-payment charges and per-notice administration charges are not stated in the agreement itself; they sit in a Schedule of Charges the signer must find in the office or on a website, so the signer cannot see from this document what a late month or a notice about unpaid rent will cost, and each additional notice adds another charge."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "After the initial term this Agreement continues on a month to month basis, each month renewing on the first day of the month without notice from either party, until it is ended as Section 8 describes.",
+          "sourceStart": 994,
+          "sourceEnd": 1194,
+          "consequence": "The agreement renews itself month to month automatically with no action from the signer, so it never ends on its own; the signer must give written notice at least ten days before the end of a month to stop owing rent."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "Rent already paid for the month in which the Occupant moves out is not refunded.",
+          "sourceStart": 3934,
+          "sourceEnd": 4014,
+          "consequence": "If the signer moves out partway through a month, they lose the rent they already paid for the rest of that month — a small, bounded forfeiture with no refund."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 8
+    },
+    {
+      "documentId": "phone-plan-terms",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "internship-agreement",
+      "status": "failed",
+      "reason": "unreadable: The model returned no content."
+    },
+    {
+      "documentId": "library-volunteer-agreement",
+      "status": "reviewed",
+      "flags": [],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 0
+    },
+    {
+      "documentId": "swim-lesson-registration",
+      "status": "reviewed",
+      "flags": [
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "A place given up later than that, and before the third lesson, is refunded at half the fee.",
+          "sourceStart": 1960,
+          "sourceEnd": 2051,
+          "consequence": "If the signer gives up the place after the seven-day deadline but before the third lesson, they lose half the $120 fee ($60) for lessons that have not yet been taught."
+        },
+        {
+          "severity": "low",
+          "sourceDocumentId": "pasted-lease",
+          "sourceSentence": "After the third lesson no refund is made.",
+          "sourceStart": 2052,
+          "sourceEnd": 2093,
+          "consequence": "If the signer gives up the place after the third lesson has happened, they lose the entire $120 fee for the remaining lessons they will not receive."
+        }
+      ],
+      "droppedFlagCount": 0,
+      "legalClaims": {
+        "repaired": 0,
+        "withheld": 0
+      },
+      "returnedFlagsAllAttempts": 2
+    }
+  ],
+  "report": {
+    "documents": {
+      "total": 9,
+      "reviewed": [
+        "clean-document",
+        "saas-subscription",
+        "storage-unit-rental",
+        "library-volunteer-agreement",
+        "swim-lesson-registration"
+      ],
+      "blocked": [],
+      "outOfScope": [],
+      "unverified": [],
+      "failed": [
+        {
+          "id": "adhesion-contract",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "offer-letter",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "phone-plan-terms",
+          "reason": "unreadable: The model returned no content."
+        },
+        {
+          "id": "internship-agreement",
+          "reason": "unreadable: The model returned no content."
+        }
+      ]
+    },
+    "legalClaims": {
+      "repaired": 0,
+      "withheld": 0
+    },
+    "recall": {
+      "count": 10,
+      "total": 10
+    },
+    "recallByType": {
+      "arbitration-and-class-action-waiver": {
+        "count": 1,
+        "total": 1,
+        "inScope": true
+      },
+      "fee-escalators-and-late-fees": {
+        "count": 4,
+        "total": 4,
+        "inScope": true
+      },
+      "auto-renewal": {
+        "count": 3,
+        "total": 3,
+        "inScope": true
+      },
+      "unilateral-modification": {
+        "count": 2,
+        "total": 2,
+        "inScope": true
+      },
+      "non-compete": {
+        "count": 0,
+        "total": 0,
+        "inScope": false
+      },
+      "limitation-of-liability": {
+        "count": 2,
+        "total": 2,
+        "inScope": false
+      },
+      "indemnification": {
+        "count": 2,
+        "total": 2,
+        "inScope": false
+      }
+    },
+    "outOfScopeFound": {
+      "count": 4,
+      "total": 4
+    },
+    "recallByCharacters": {
+      "withAny": {
+        "count": 2,
+        "total": 2
+      },
+      "withNone": {
+        "count": 8,
+        "total": 8
+      },
+      "byClass": {
+        "curly quote or apostrophe": {
+          "count": 0,
+          "total": 0
+        },
+        "non-breaking space": {
+          "count": 1,
+          "total": 1
+        },
+        "fi or fl ligature": {
+          "count": 1,
+          "total": 1
+        },
+        "em dash": {
+          "count": 0,
+          "total": 0
+        },
+        "two spaces in a row": {
+          "count": 0,
+          "total": 0
+        }
+      }
+    },
+    "typeNamedCorrectly": {
+      "measurable": false,
+      "reason": "Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval."
+    },
+    "groundedness": {
+      "count": 23,
+      "total": 23,
+      "returnedFlagsAllAttempts": 23
+    },
+    "severity": {
+      "agree": {
+        "count": 5,
+        "total": 10
+      },
+      "under": 3,
+      "over": 2
+    },
+    "unilateral": {
+      "cases": [
+        {
+          "document": "saas-subscription",
+          "id": "P-05",
+          "goldBand": "critical",
+          "found": true,
+          "foundSeverity": "high"
+        },
+        {
+          "document": "storage-unit-rental",
+          "id": "P-06",
+          "goldBand": "critical",
+          "found": true,
+          "foundSeverity": "high"
+        }
+      ],
+      "highCount": {
+        "count": 2,
+        "total": 2
+      },
+      "exactBand": {
+        "count": 0,
+        "total": 2
+      },
+      "goldCriticalGradedHigh": {
+        "count": 2,
+        "total": 2
+      }
+    },
+    "severityExact": {
+      "agree": {
+        "count": 3,
+        "total": 10
+      },
+      "byGoldBand": {
+        "critical": {
+          "count": 0,
+          "total": 3
+        },
+        "high": {
+          "count": 0,
+          "total": 2
+        },
+        "moderate": {
+          "count": 3,
+          "total": 5
+        }
+      }
+    },
+    "revisedClean": {
+      "validForfeitureFlags": 4,
+      "validForfeitureSeverities": [
+        "low",
+        "low",
+        "low",
+        "low"
+      ],
+      "falseFlags": 0,
+      "documentsWithNoFalseFlags": {
+        "count": 3,
+        "total": 3
+      },
+      "correctedSentencesFlagged": {
+        "count": 4,
+        "total": 4
+      },
+      "perDocument": [
+        {
+          "id": "clean-document",
+          "validForfeiture": 2,
+          "falseFlags": 0
+        },
+        {
+          "id": "library-volunteer-agreement",
+          "validForfeiture": 0,
+          "falseFlags": 0
+        },
+        {
+          "id": "swim-lesson-registration",
+          "validForfeiture": 2,
+          "falseFlags": 0
+        }
+      ]
+    },
+    "cleanDocuments": {
+      "documentsWithNoFlags": {
+        "count": 1,
+        "total": 3
+      },
+      "flagsOnCleanDocuments": 4,
+      "perDocument": [
+        {
+          "id": "clean-document",
+          "flags": 2
+        },
+        {
+          "id": "library-volunteer-agreement",
+          "flags": 0
+        },
+        {
+          "id": "swim-lesson-registration",
+          "flags": 2
+        }
+      ]
+    },
+    "unmatchedFlagsOnPlantedDocuments": 5,
+    "flagsOnUnusualButHarmless": 0,
+    "planted": [
+      {
+        "document": "saas-subscription",
+        "id": "P-01",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [
+          "non-breaking space"
+        ],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-02",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-03",
+        "clauseType": "auto-renewal",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "low"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-04",
+        "clauseType": "auto-renewal",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-05",
+        "clauseType": "unilateral-modification",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "critical",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-06",
+        "clauseType": "limitation-of-liability",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [
+          "curly quote or apostrophe",
+          "em dash"
+        ],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-07",
+        "clauseType": "indemnification",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "saas-subscription",
+        "id": "P-08",
+        "clauseType": "arbitration-and-class-action-waiver",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "critical",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "storage-unit-rental",
+        "id": "P-01",
+        "clauseType": "auto-renewal",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "low"
+      },
+      {
+        "document": "storage-unit-rental",
+        "id": "P-02",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "storage-unit-rental",
+        "id": "P-03",
+        "clauseType": "fee-escalators-and-late-fees",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [
+          "fi or fl ligature"
+        ],
+        "expectedSeverity": "medium",
+        "goldBand": "moderate",
+        "foundSeverity": "medium"
+      },
+      {
+        "document": "storage-unit-rental",
+        "id": "P-04",
+        "clauseType": "limitation-of-liability",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "storage-unit-rental",
+        "id": "P-05",
+        "clauseType": "indemnification",
+        "inScope": false,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "high",
+        "foundSeverity": "high"
+      },
+      {
+        "document": "storage-unit-rental",
+        "id": "P-06",
+        "clauseType": "unilateral-modification",
+        "inScope": true,
+        "found": true,
+        "characterClasses": [],
+        "expectedSeverity": "high",
+        "goldBand": "critical",
+        "foundSeverity": "high"
+      }
+    ],
+    "flags": [
+      {
+        "document": "clean-document",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Where the Plot Holder gives notice, no refund is due, and the Plot Holder may harvest whatever is ready before the notice period runs out.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "clean-document",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Anything left after 15 December becomes the Association’s to keep or to clear.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "We may revise the fee for any plan, and a revised fee applies to you from the start of the first Billing Period that begins more than thirty (30) days after we send notice of the revision to the email address on your account.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-01",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "On an annual plan the deadline to cancel is the day that falls thirty (30) days before the anniversary of the date you first subscribed, and where no cancellation is received by that day the term extends by a further twelve (12) months at the annual fee then in effect.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-04",
+        "matchedPlantedType": "auto-renewal",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "We may amend these terms, the pricing page and the Fee Schedule at any time, an amended version takes effect when we post it at northwindstudio.example/terms, and your continued use of the service after it is posted is your acceptance of the amended version.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-05",
+        "matchedPlantedType": "unilateral-modification",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "You will indemnify and hold Northwind harmless from any claim brought by a third party that relates to content you uploaded, exported or published through the service, including a claim that the content infringes a copyright, a trade mark or a right of privacy, and you will pay our reasonable legal costs of defending such a claim.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-07",
+        "matchedPlantedType": "indemnification",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Where a payment is not collected on its due date, interest accrues on the unpaid amount at one and one half percent (1.5%) per month from the due date until payment is received, and an account suspended for non-payment is subject to the reactivation charge published in the Fee Schedule on the Northwind support site.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-02",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Where availability in a calendar month falls below that figure, your remedy is the service credit set out in the Service Credit Policy and nothing further.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Northwind’s aggregate liability to you for every claim relating to the service, whether framed in contract, in tort, in warranty or otherwise — and including any claim arising from lost work, lost revenue or a failed export — will not exceed the amount you actually paid us under Section 2 for the Billing Period in which the claim arose.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-06",
+        "matchedPlantedType": "limitation-of-liability",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Any dispute between you and Northwind arising out of these terms or out of your use of the service will be settled by binding arbitration before a single arbitrator under the consumer rules of a recognised arbitration body, and you agree to bring any claim only in your individual capacity and not as a plaintiff or class member in any purported class, collective or representative proceeding.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-08",
+        "matchedPlantedType": "arbitration-and-class-action-waiver",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "We may suspend or close an account that has not paid, that has breached Section 1, or that is being used to store content we are required by law to remove.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Your subscription continues from one Billing Period into the next without further action by either of us, and we bill the plan fee then in effect on the first day of each new Billing Period.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-03",
+        "matchedPlantedType": "auto-renewal",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "saas-subscription",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "A cancellation made on or after the first day of a Billing Period takes effect at the end of that Billing Period, and the fee already collected for it is not refunded.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "storage-unit-rental",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "The Operator's total liability to the Occupant for any loss of or damage to stored property, however caused, including loss or damage caused by the Operator's own negligence, is limited to five thousand dollars ($5,000) unless the Occupant has declared a higher value on the Unit Schedule and paid the corresponding value protection fee.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-04",
+        "matchedPlantedType": "limitation-of-liability",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "storage-unit-rental",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "The Occupant will indemnify, defend and hold the Operator harmless from every claim, demand, loss, cost and expense, including reasonable attorney fees, brought by any person and arising out of the Occupant's use of the unit or the premises, the property stored in the unit, or the acts of anyone the Occupant allows on to the premises.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-05",
+        "matchedPlantedType": "indemnification",
+        "matchedPlantedInScope": false,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "storage-unit-rental",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "Gate hours, the rules posted in the office, and the terms of this Agreement may be changed by the Operator on notice posted at the facility and sent to the Occupant's last known email address, and the changed version applies to the Occupant from the first day of the month after it is posted.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-06",
+        "matchedPlantedType": "unilateral-modification",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "storage-unit-rental",
+        "clauseType": null,
+        "severity": "high",
+        "quotedSentence": "Where rent or any charge is unpaid, the Operator has a lien on all property stored in the unit and may deny the Occupant access, overlock the unit, and after the notice period the law requires, sell the contents and apply the proceeds to what is owed.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "storage-unit-rental",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "The Operator may increase the monthly rent on not less than thirty (30) days written notice to the Occupant, and the increased rent is due on the first rent day falling after the notice period ends.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-02",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "storage-unit-rental",
+        "clauseType": null,
+        "severity": "medium",
+        "quotedSentence": "Rent not received by the sixth day of the month incurs the late charge shown in the Schedule of Charges posted in the ofﬁce and on the Harbour Road website, and each further notice the Operator is required to send about an unpaid balance incurs the administration charge shown in the same schedule.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-03",
+        "matchedPlantedType": "fee-escalators-and-late-fees",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "storage-unit-rental",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "After the initial term this Agreement continues on a month to month basis, each month renewing on the first day of the month without notice from either party, until it is ended as Section 8 describes.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": "P-01",
+        "matchedPlantedType": "auto-renewal",
+        "matchedPlantedInScope": true,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "storage-unit-rental",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "Rent already paid for the month in which the Occupant moves out is not refunded.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "swim-lesson-registration",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "A place given up later than that, and before the third lesson, is refunded at half the fee.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      },
+      {
+        "document": "swim-lesson-registration",
+        "clauseType": null,
+        "severity": "low",
+        "quotedSentence": "After the third lesson no refund is made.",
+        "verbatimInDocument": true,
+        "matchedPlantedClause": null,
+        "matchedPlantedType": null,
+        "matchedPlantedInScope": null,
+        "hitsUnusualButHarmless": false
+      }
+    ]
+  }
+}
