@@ -1,0 +1,253 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - text: Transparent Pricing · No gimmicks. No hidden fees.
+    - heading "Simple Pricing. No Hidden Fees." [level=1]
+    - paragraph: We built a tool that detects junk fees. We'd be hypocrites to charge any.
+    - text: Starter Free
+    - paragraph: For renters who want a quick sanity check before signing.
+    - paragraph: Top 5 flags only — full report available with Pro.
+    - list:
+      - listitem:
+        - img
+        - text: Lease Health Score (A–F)
+      - listitem:
+        - img
+        - text: Up to 5 flagged clauses
+      - listitem:
+        - img
+        - text: Plain-English explanations
+      - listitem:
+        - img
+        - text: State law selection (all 50 states)
+      - listitem:
+        - img
+        - text: Zero lease document storage
+      - listitem:
+        - img
+        - text: Full clause-by-clause report
+      - listitem:
+        - img
+        - text: Negotiation templates
+      - listitem:
+        - img
+        - text: PDF / email report export
+      - listitem:
+        - img
+        - text: Statute reference links
+    - link "Analyze My Lease — Free":
+      - /url: /analyze
+    - text: Most Popular
+    - img
+    - text: Pro $7.99 /month Cancel anytime
+    - paragraph: The complete picture before you sign anything.
+    - list:
+      - listitem:
+        - img
+        - text: "Everything in Free, plus:"
+      - listitem:
+        - img
+        - text: Unlimited lease analyses
+      - listitem:
+        - img
+        - text: Full negotiation templates for every flag
+      - listitem:
+        - img
+        - text: PDF report — printable, shareable
+      - listitem:
+        - img
+        - text: Statute reference links
+      - listitem:
+        - img
+        - text: Severity scoring per clause
+      - listitem:
+        - img
+        - text: Email report delivery
+      - listitem:
+        - img
+        - text: Priority AI processing (< 30s)
+      - listitem:
+        - img
+        - text: Lease comparison (draft vs. revised)
+    - button "Get Pro — $7.99/mo":
+      - img
+      - text: Get Pro — $7.99/mo
+      - img
+    - paragraph: 🛡️ Not satisfied? 48-hr money-back guarantee.
+    - img
+    - text: Premium $12.99 /month Cancel anytime
+    - paragraph: For renters managing multiple properties or high-value leases.
+    - list:
+      - listitem:
+        - img
+        - text: "Everything in Pro, plus:"
+      - listitem:
+        - img
+        - text: Multi-property dashboard
+      - listitem:
+        - img
+        - text: Co-tenant access (share reports)
+      - listitem:
+        - img
+        - text: Priority support
+      - listitem:
+        - img
+        - text: Deposit Shield (coming soon)
+    - button "Get Premium — $12.99/mo":
+      - img
+      - text: Get Premium — $12.99/mo
+    - paragraph: 🛡️ 48-hr money-back guarantee.
+    - text: One-Time Option
+    - paragraph: Just need one lease checked? Get a full Pro-level report for $19.99 — no subscription.
+    - link "One-Time Analysis — $19.99":
+      - /url: /analyze
+      - text: One-Time Analysis — $19.99
+      - img
+    - img
+    - text: Zero lease document storage
+    - img
+    - text: 48-hr money-back guarantee
+    - img
+    - text: Cancel anytime
+    - img
+    - text: All 50 U.S. states
+    - img
+    - text: $19.99 one-time option available
+    - heading "Full Comparison" [level=2]
+    - paragraph: Every feature, side by side.
+    - text: Feature Free Pro Premium Lease Health Score
+    - img
+    - img
+    - img
+    - text: Flagged Clauses Up to 5 Unlimited Unlimited Plain-English Explanations Basic Full Full Statute Reference Links
+    - img
+    - img
+    - img
+    - text: Negotiation Templates
+    - img
+    - img
+    - img
+    - text: PDF Report
+    - img
+    - img
+    - img
+    - text: Email Delivery
+    - img
+    - img
+    - img
+    - text: Lease Comparison
+    - img
+    - img
+    - img
+    - text: Processing Speed Standard Priority Priority Multi-Property Dashboard
+    - img
+    - img
+    - img
+    - text: Co-Tenant Access
+    - img
+    - img
+    - img
+    - text: Priority Support
+    - img
+    - img
+    - img
+    - text: Lease Document Storage Never stored Never stored Never stored
+    - paragraph: "* Lease documents are never retained. Your analysis results are held for 7 days so you can re-download without re-uploading."
+    - heading "Pricing FAQ" [level=2]
+    - paragraph: Everything you need to know before you pay anything.
+    - group: Is this a subscription or a one-time payment? +
+    - group: What's the $19.99 one-time option? +
+    - group: What payment methods do you accept? +
+    - group: Can I get a refund? +
+    - group: Why does the Free plan cap at 5 flags? +
+    - group: What is Deposit Shield? +
+    - img
+    - text: Zero lease document storage
+    - img
+    - text: 48-hr money-back guarantee
+    - img
+    - text: Cancel anytime
+    - img
+    - text: All 50 U.S. states
+    - img
+    - text: $19.99 one-time option available
+    - paragraph: Trusted by renters across all 50 states. Your lease document is never stored — analysis results are retained for up to 7 days for re-download, then permanently deleted.
+    - link "Start your free analysis":
+      - /url: /analyze
+      - text: Start your free analysis
+      - img
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

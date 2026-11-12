@@ -1,0 +1,34 @@
+{
+  "browser": {
+    "mode": "launch",
+    "executable_path": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  },
+  "start_url": {
+    "url": "https://leaseguardai.com/privacy"
+  },
+  "environment": {
+    "viewport": {
+      "width": 1440,
+      "height": 2400,
+      "device_scale_factor": 1
+    }
+  },
+  "actions": [
+    {
+      "step_id": "settle",
+      "action": "wait_for_timeout",
+      "duration_ms": 3000
+    }
+  ],
+  "capture": {
+    "at_end": [
+      "accessibility",
+      "screenshot",
+      "url"
+    ],
+    "events": [
+      "network",
+      "console"
+    ]
+  }
+}

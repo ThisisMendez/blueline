@@ -1,0 +1,158 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - link "Home":
+      - /url: /
+    - text: /
+    - link "Tenant Rights":
+      - /url: /tenant-rights/florida
+    - text: / Florida Florida Tenant Rights — 2026
+    - heading "Tenant Rights in Florida Your Complete Renter's Guide" [level=1]
+    - paragraph: Renting in Florida? Before you sign any lease, you have legal rights — rights your landlord may not volunteer to explain. This guide covers the most important tenant protections under Florida law.
+    - link "Analyze My Florida Lease — Free Preview":
+      - /url: /analyze
+      - img
+      - text: Analyze My Florida Lease — Free Preview
+      - img
+    - text: 🔒 Zero Lease Storage ⚡ 60 Seconds
+    - 'heading "Florida Landlord-Tenant Law: Quick Reference" [level=2]'
+    - paragraph: Governed by the Florida Residential Landlord and Tenant Act (F.S. Chapter 83)
+    - table:
+      - rowgroup:
+        - row "Security Deposit Maximum No statutory cap — must be held in separate account":
+          - cell "Security Deposit Maximum"
+          - cell "No statutory cap — must be held in separate account"
+        - row "Deposit Return Timeline 15 days (no deductions) or 30 days (with itemized claim)":
+          - cell "Deposit Return Timeline"
+          - cell "15 days (no deductions) or 30 days (with itemized claim)"
+        - row "Landlord Entry Notice 12 hours minimum, between 7:30 AM–8:00 PM (F.S. 83.53)":
+          - cell "Landlord Entry Notice"
+          - cell "12 hours minimum, between 7:30 AM–8:00 PM (F.S. 83.53)"
+        - row "Late Fee Cap No statutory cap — must be specified in lease; must be \"reasonable\"":
+          - cell "Late Fee Cap"
+          - cell "No statutory cap — must be specified in lease; must be \"reasonable\""
+        - row "Rent Control No (preempted by state law as of 2023)":
+          - cell "Rent Control"
+          - cell "No (preempted by state law as of 2023)"
+    - heading "Common High-Risk Lease Clauses Florida Renters See" [level=2]
+    - paragraph: The following clauses commonly raise red flags under Florida law. None of this is legal advice — it’s a starting point for a conversation with a tenant-rights attorney or your state’s legal aid office.
+    - text: "1 Security deposit terms that waive or limit the statutory refund process ⚖️ Relevant statute: F.S. 83.49(3) 2 Landlord entry provisions with less than 12 hours notice (non-emergency) ⚖️ Relevant statute: F.S. 83.53 3 Language authorizing self-help eviction / lock-out ⚖️ Relevant statute: F.S. 83.67 4 Clauses waiving the statutory written notice requirements ⚖️ Relevant statute: F.S. 83.56"
+    - heading "What to Watch For in a Florida Lease" [level=2]
+    - text: ⚠️
+    - paragraph: Late fee language with no stated cap
+    - text: ⚠️
+    - paragraph: Move-out fees stacked on security deposit
+    - text: ⚠️
+    - paragraph: Very short auto-renewal notice windows
+    - text: ⚠️
+    - paragraph: Pet fee triple-stacking
+    - heading "Florida Tenant Resources" [level=2]
+    - link "Florida AG Landlord-Tenant Guide":
+      - /url: https://www.myfloridalegal.com
+      - img
+      - text: Florida AG Landlord-Tenant Guide
+    - link "Florida Tenant Rights (F.S. Chapter 83)":
+      - /url: https://www.leg.state.fl.us
+      - img
+      - text: Florida Tenant Rights (F.S. Chapter 83)
+    - link "Bay Area Legal Services (Tampa)":
+      - /url: https://www.bals.org
+      - img
+      - text: Bay Area Legal Services (Tampa)
+    - link "HUD Office of Fair Housing & Equal Opportunity":
+      - /url: https://www.hud.gov/tenants
+      - img
+      - text: HUD Office of Fair Housing & Equal Opportunity
+    - text: 🛡️
+    - heading "Know exactly what's in your Florida lease before you sign." [level=2]
+    - paragraph: LeaseGuard AI analyzes your rental agreement against Florida landlord-tenant law in under 60 seconds — flagged clauses, statute references, and negotiation templates.
+    - link "Analyze My Florida Lease — Free Preview":
+      - /url: /analyze
+      - img
+      - text: Analyze My Florida Lease — Free Preview
+      - img
+    - text: 🔒 No storage ⚖️ Florida law database ⚡ 60 seconds
+    - heading "Tenant Rights in Other States" [level=2]
+    - link "California Tenant Rights →":
+      - /url: /tenant-rights/california
+    - link "Texas Tenant Rights →":
+      - /url: /tenant-rights/texas
+    - link "New York Tenant Rights →":
+      - /url: /tenant-rights/new-york
+    - link "Georgia Tenant Rights →":
+      - /url: /tenant-rights/georgia
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

@@ -1,0 +1,24 @@
+- document:
+  - link "LeaseGuard AI":
+    - /url: /
+    - img
+    - text: LeaseGuard AI
+  - heading "Know your rights. Before you sign." [level=2]
+  - paragraph: AI-powered lease analysis that flags hidden clauses, compliance risks, and junk fees — in seconds.
+  - text: 🔍 AI Lease Scanner Flags high-risk clauses and compliance issues instantly ⚖️ 50-State Law Coverage Know your rights in your state 📄 Instant Report Download and share your full analysis
+  - img
+  - text: Trusted by tenants across all 50 states
+  - paragraph: © 2025 LeaseGuard AI · Protecting tenants nationwide
+  - heading "Welcome back" [level=1]
+  - paragraph: Sign in to access your lease analysis history.
+  - text: Email
+  - textbox "you@example.com"
+  - text: Password
+  - textbox "••••••••"
+  - button "Toggle password visibility":
+    - img
+  - button "Sign In →"
+  - button "Forgot your password?"
+  - text: ·
+  - button "Don't have an account? Create one"
+  - alert

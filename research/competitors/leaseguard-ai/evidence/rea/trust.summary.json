@@ -1,0 +1,30 @@
+{
+  "evidence_id": "ev_63672af24503a78d8ea734ad9f1fb59eb6d2b3ae0447a8a3037ec8578d5b92eb",
+  "url": "https://leaseguardai.com/trust",
+  "final_url": "https://leaseguardai.com/trust",
+  "captured_at": "2026-11-12T17:03:53.061Z",
+  "screenshot_sha256": "af2a9d4244141ba36314838de4ec49158b144ba3aadbb7bc92d7562f3c41b570",
+  "ax_sha256": "3b33b7c0674ba2a27dff7a41ab3b46c34cd21ab80aecb7a497582a7bcbecbaa4",
+  "completeness": "complete",
+  "request_origins": {
+    "https://leaseguardai.com": 38,
+    "https://www.googletagmanager.com": 3,
+    "https://fonts.googleapis.com": 1,
+    "https://fonts.gstatic.com": 1,
+    "https://www.google-analytics.com": 1,
+    "https://googleads.g.doubleclick.net": 1,
+    "https://www.google.com": 4,
+    "https://ad.doubleclick.net": 1,
+    "https://www.redditstatic.com": 1,
+    "https://www.google.com.do": 1,
+    "https://alb.reddit.com": 1
+  },
+  "console": [],
+  "browser": {
+    "mode": "launch",
+    "process_ownership": "provider-owned",
+    "cleanup": "terminated-owned-process",
+    "product": "Chromium",
+    "version": "157.0.8103.51"
+  }
+}

@@ -1,0 +1,158 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - text: 6 Analysis Modules
+    - heading "Everything LeaseGuard AI Analyzes In Your Lease" [level=1]
+    - paragraph: Six powerful modules. One 60-second scan. Built on publicly available U.S. landlord-tenant statutes.
+    - link "Analyze My Lease — Free":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease — Free
+      - img
+    - text: 🚨 COMPLIANCE RISK
+    - heading "Compliance Risk Detection" [level=2]
+    - paragraph: Every U.S. state has tenant-protection laws. Our AI cross-references each clause in your lease against your state's current Residential Landlord-Tenant Act (RLTA) and flags anything that may not be enforceable under those statutes.
+    - list:
+      - listitem: ✓ Clauses that appear to waive habitability standards
+      - listitem: ✓ "No pets, ever" clauses that may not align with Fair Housing accommodation requirements (service animals, ESAs)
+      - listitem: ✓ Landlord entry clauses that fall short of state notice requirements
+      - listitem: ✓ Security deposit amounts that exceed state caps
+      - listitem: ✓ Clauses that may limit your access to legal remedies
+      - listitem: ✓ Mandatory arbitration clauses (treatment varies significantly by state)
+    - text: ⚠️ HIGH RISK — May conflict with Florida law
+    - blockquote: "\"Tenant waives all rights to security deposit refund disputes.\""
+    - paragraph: Florida Statute 83.49(3) outlines a written process landlords must follow for security deposit returns. Clauses that appear to waive a tenant’s rights under this statute are commonly disputed. This is the kind of language a tenant-rights attorney or your state’s legal aid office can help you evaluate before signing.
+    - text: 💸 FEE ANALYSIS
+    - heading "Junk Fee Scanner" [level=2]
+    - paragraph: Hidden fees buried in lease addenda cost U.S. renters billions every year. Our Junk Fee Scanner identifies charges that may exceed state caps, duplicate other deposit coverage, or lack a clear legal basis — and explains each one in plain English.
+    - list:
+      - listitem: ✓ "Administrative processing" fees stacked on security deposits
+      - listitem: ✓ Move-in/move-out fees duplicating security deposit coverage
+      - listitem: ✓ Mandatory "amenity" fees for services not actually rendered
+      - listitem: ✓ Utility markup fees exceeding actual cost
+      - listitem: ✓ Pet fees stacked with additional pet deposits and monthly pet rent
+      - listitem: ✓ Late fee amounts that may exceed state limits or reasonableness standards
+    - text: ⚠️ PREDATORY TERMS
+    - heading "Predatory Lease Term Detection" [level=2]
+    - paragraph: Not every aggressive clause is unenforceable — but many can still put you at a real disadvantage if disputes come up later. Our AI flags language that is one-sided, vague, or commonly used to put tenants at risk.
+    - list:
+      - listitem: ✓ Auto-renewal clauses with 60+ day notice requirements
+      - listitem: ✓ Broad indemnification language shifting all liability to tenants
+      - listitem: ✓ Excessive landlord entry rights beyond state minimums
+      - listitem: ✓ Repair & deduct prohibition clauses
+      - listitem: ✓ Lease termination penalties exceeding two months' rent
+      - listitem: ✓ Vague "reasonable" language giving landlords unchecked authority
+    - paragraph: Want to see these detections in action?
+    - paragraph: Upload your lease and get a live demonstration on your actual agreement.
+    - link "Analyze My Lease Now":
+      - /url: /analyze
+      - text: Analyze My Lease Now
+      - img
+    - text: 🗺️ LAW DATABASE
+    - heading "All-50-States Statute Database" [level=2]
+    - paragraph: Landlord-tenant law varies dramatically by state. A clause unenforceable in California may be standard in Texas. Our database includes current statutory language from all 50 U.S. states.
+    - list:
+      - listitem: ✓ Residential Landlord-Tenant Acts for all 50 states
+      - listitem: ✓ Security deposit limits and return timelines by state
+      - listitem: ✓ Legal notice periods for landlord entry
+      - listitem: ✓ State-specific habitability standards
+      - listitem: ✓ Eviction procedure rules and tenant protections
+      - listitem: ✓ Rent control applicability and local ordinances (major metros)
+    - text: ⚖️ EXPLANATIONS
+    - heading "Plain-English Statute Explanations" [level=2]
+    - paragraph: "Every flag comes with what you need to understand: what the clause says, why it raised a flag, which statute it references, and suggested next steps."
+    - text: ⚠️ EXAMPLE FLAG
+    - blockquote: "\"Tenant agrees that any disputes shall be settled by binding arbitration.\""
+    - paragraph: Mandatory arbitration clauses in residential leases are treated very differently across states — some courts have declined to enforce them, others have not. California’s CCP § 1281.2 contains specific provisions about arbitration that may apply. Before signing, this is worth raising with a tenant-rights attorney or your state’s legal aid hotline — many offer free or low-cost consultations.
+    - text: 🤝 NEGOTIATION
+    - heading "AI Negotiation Templates" [level=2]
+    - paragraph: Spotting a flagged clause is only half the work. LeaseGuard AI generates plain-language email and conversation templates for every flag — ready to copy, edit, and send.
+    - list:
+      - listitem: ✓ Templates for every medium and high-risk flag
+      - listitem: ✓ Professional email drafts ready to send
+      - listitem: ✓ Plain-language wording (no legalese)
+      - listitem: ✓ Conversation starters for in-person discussions
+    - text: ⚠️ EXAMPLE TEMPLATE
+    - blockquote: "\"Thank you for sending the lease. I noticed Section 12 includes a $350 administrative fee. I'd like to understand what this covers and request it be removed or applied toward the security deposit before I sign. Happy to move forward once we're aligned.\""
+    - heading "See All 6 Features Working On Your Lease" [level=2]
+    - paragraph: Upload your lease now and get a free analysis with all detection modules active.
+    - link "Analyze My Lease — Free":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease — Free
+      - img
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

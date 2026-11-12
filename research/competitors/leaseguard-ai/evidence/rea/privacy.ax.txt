@@ -1,0 +1,228 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - img
+    - text: Privacy Policy
+    - heading "Your Privacy Is Our Architecture" [level=1]
+    - paragraph: LeaseGuard AI is built around a zero-storage model. Your lease is analyzed — never stored, never shared, never trained on.
+    - text: "📅 Last Updated: September 22, 2026 · Questions?"
+    - link "support@leaseguardai.com":
+      - /url: mailto:support@leaseguardai.com
+    - img
+    - text: The Zero Lease Storage Guarantee
+    - paragraph: Your lease document is processed in real-time and immediately discarded. It is never written to a database, saved to disk, logged, or used in AI training. The document itself is gone the moment analysis completes — permanently. Only your analysis results are retained, for up to 7 days, as described in Section 3. This is a technical design decision, not just a promise.
+    - complementary:
+      - text: Contents
+      - navigation:
+        - link "Information We Collect":
+          - /url: "#information-we-collect"
+        - link "Your Lease Document — Zero Storage Policy":
+          - /url: "#document-privacy"
+        - link "Temporary Session Storage for Pro Upgrades":
+          - /url: "#session-storage"
+        - link "Cookies & Tracking":
+          - /url: "#cookies"
+        - link "Third-Party Data Sharing":
+          - /url: "#data-sharing"
+        - link "Your Rights":
+          - /url: "#your-rights"
+        - link "Data Security":
+          - /url: "#data-security"
+        - link "Children's Privacy":
+          - /url: "#children"
+        - link "Changes to This Policy":
+          - /url: "#changes"
+        - link "Contact Us":
+          - /url: "#contact"
+    - heading "1. Information We Collect" [level=2]
+    - paragraph: "LeaseGuard AI is designed with a privacy-first architecture. Here is what we collect and what we do not:"
+    - paragraph:
+      - strong: "What we process (not store):"
+      - text: When you upload or paste a lease document for analysis, the text is transmitted to our AI analysis pipeline and immediately processed. The document is not written to disk, is not stored in a database, and is discarded at the end of your session.
+    - paragraph:
+      - strong: "Usage analytics:"
+      - text: We use Google Analytics to understand how the site is used (pages visited, features used, session duration). Google Analytics sets cookies and receives your IP address and device and browser information. We do not send it your name, email address, lease text, or analysis results.
+    - paragraph:
+      - strong: "Advertising measurement:"
+      - text: Google Ads and Reddit receive visit and conversion data, as described in Section 4.
+    - paragraph:
+      - strong: "Contact form submissions:"
+      - text: If you contact us via the contact form, we collect your name, email address, and message. This information is used solely to respond to your inquiry.
+    - paragraph:
+      - strong: "Payment information:"
+      - text: If you upgrade to Pro, payment is processed via Stripe. We never see or store your full card number — only a payment confirmation and email for report delivery.
+    - heading "2. Your Lease Document — Zero Storage Policy" [level=2]
+    - paragraph: "This is our most important privacy commitment:"
+    - paragraph:
+      - strong: Your lease document is never stored.
+      - text: When you upload a PDF or paste lease text, it is transmitted over an encrypted connection, processed by our AI in real time, and the original document is immediately discarded. No copy of the document itself is retained — not in temporary storage, not in logs, not in a database.
+    - paragraph:
+      - strong: "One exception — temporary analysis sessions:"
+      - text: Your analysis results (the AI-generated output, not your original document) are retained server-side for up to 7 days so you can return to your report — or upgrade to Pro — without re-uploading. See Section 3, "Temporary Session Storage for Pro Upgrades," for exactly what this includes.
+    - paragraph:
+      - strong: We do not train AI models on your documents.
+      - text: Your lease content is never used to improve, fine-tune, or expand our AI systems.
+    - paragraph:
+      - strong: We do not share your documents.
+      - text: Your lease text is never shared with third parties, landlords, real estate companies, data brokers, or any other entity.
+    - paragraph: This is a technical design decision, not merely a policy — our architecture makes bulk retention of documents structurally impossible.
+    - heading "3. Temporary Session Storage for Pro Upgrades" [level=2]
+    - paragraph: "To let you upgrade to Pro (or re-open your report) without re-uploading your lease, we temporarily store your analysis session server-side. Here is exactly what that includes:"
+    - paragraph:
+      - strong: "What is stored:"
+      - text: The AI-generated analysis results — your Lease Health Score, each flagged clause with its explanation and recommendation, and negotiation templates. Each flagged clause includes a short verbatim excerpt (a "snippet") of the matching lease text, so parts of your lease wording do appear inside the stored results. Your original uploaded document is not stored.
+    - paragraph:
+      - strong: "How long:"
+      - text: Analysis sessions are retained for up to 7 days, then automatically and permanently deleted. This applies to both free previews and Pro reports.
+    - paragraph:
+      - strong: "Pro purchases with an account:"
+      - text: If you purchase a Pro report and create or hold a customer account, a copy of your analysis results (including the clause snippets described above) is also saved to your account in our database so you can re-download your report later. This account copy is not subject to the 7-day deletion window — it is retained until you delete it or ask us to (support@leaseguardai.com).
+    - paragraph:
+      - strong: "Your control:"
+      - text: You can end a session early by clearing your browser's local storage, and you can request deletion of any stored analysis at any time.
+    - heading "4. Cookies & Tracking" [level=2]
+    - paragraph: "We use a minimal cookie footprint:"
+    - paragraph:
+      - strong: "Essential cookies:"
+      - text: Used to keep you signed in and to limit free analyses per browser (that limit cookie expires after 24 hours).
+    - paragraph:
+      - strong: "Analytics cookies:"
+      - text: Google Analytics cookies that measure page views and feature usage. We do not send Google Analytics your name, email address, lease text, or analysis results.
+    - paragraph:
+      - strong: "Advertising measurement:"
+      - text: We use Google Ads (loaded directly and through Google Tag Manager) and the Reddit Pixel to measure whether our ads lead to free analyses and purchases. These services may set cookies and receive your IP address, browser information, the pages you visit on our site, and — when you run a free analysis or complete a purchase — a one-way hashed transaction ID and, for purchases, the amount. Google and Reddit process this data under their own privacy policies. We never send your lease text or your analysis results to these services.
+    - paragraph: You can disable cookies in your browser settings. Core analysis functionality will still work without cookies.
+    - heading "5. Third-Party Data Sharing" [level=2]
+    - paragraph: "We do not sell your data, and we never share your lease text or analysis results with anyone for advertising. We share limited data only with the following service providers:"
+    - paragraph:
+      - strong: "Stripe:"
+      - text: Payment processing for Pro plan purchases. Governed by Stripe's own privacy policy.
+    - paragraph:
+      - strong: "Email delivery provider:"
+      - text: Used to send Pro analysis reports to the email address you provide. Report content is transmitted but not retained by the email provider beyond delivery.
+    - paragraph:
+      - strong: "Analytics provider (Google Analytics):"
+      - text: Usage data including IP address, device and browser information, and pages visited. Never your name, email address, lease text, or analysis results.
+    - paragraph:
+      - strong: "Advertising platforms (Google Ads, Reddit):"
+      - text: Conversion measurement data as described in Section 4 — device and browser information, IP address, pages visited, and purchase amount. You can limit this through your browser cookie settings, Google Ad Settings (adssettings.google.com), and Reddit privacy settings.
+    - heading "6. Your Rights" [level=2]
+    - paragraph: "Depending on your location, you may have rights including:"
+    - paragraph:
+      - strong: "Access:"
+      - text: Request a copy of the personal data we hold about you (primarily limited to contact form submissions and payment records).
+    - paragraph:
+      - strong: "Deletion:"
+      - text: Request deletion of your personal data. Because we do not store lease documents, there is no lease data to delete. Contact and payment records can be deleted upon request.
+    - paragraph:
+      - strong: "Correction:"
+      - text: Request correction of inaccurate personal data.
+    - paragraph:
+      - strong: "Portability:"
+      - text: Request your data in a portable format.
+    - paragraph: To exercise any of these rights, contact us at support@leaseguardai.com. We will respond within 30 days.
+    - heading "7. Data Security" [level=2]
+    - paragraph: "We implement industry-standard security practices:"
+    - paragraph:
+      - strong: "Encrypted transmission:"
+      - text: All data (including lease text and contact forms) is transmitted over TLS-encrypted connections (HTTPS).
+    - paragraph:
+      - strong: "No bulk storage of sensitive documents:"
+      - text: Our zero-storage architecture eliminates the primary attack surface for document breaches.
+    - paragraph:
+      - strong: "Payment security:"
+      - text: All payment data is handled by Stripe, which is PCI DSS Level 1 certified.
+    - paragraph: No method of internet transmission or electronic storage is 100% secure. We cannot guarantee absolute security but commit to maintaining and improving our security practices.
+    - heading "8. Children's Privacy" [level=2]
+    - paragraph: LeaseGuard AI is not directed at children under 13 years of age. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected such information, please contact us immediately at support@leaseguardai.com.
+    - heading "9. Changes to This Policy" [level=2]
+    - paragraph: We may update this Privacy Policy from time to time. When we make material changes, we will update the "Last Updated" date at the top of this page. We encourage you to review this policy periodically. Your continued use of LeaseGuard AI after changes constitutes your acceptance of the updated policy.
+    - heading "10. Contact Us" [level=2]
+    - paragraph: "For privacy-related questions, data requests, or concerns, contact us at:"
+    - paragraph:
+      - strong: "Email:"
+      - text: support@leaseguardai.com
+    - paragraph: We aim to respond to all privacy inquiries within 3 business days.
+    - heading "Still have privacy questions?" [level=2]
+    - paragraph: We believe in radical transparency. If you have any concerns about how your data is handled, we'd love to hear from you.
+    - link "Contact Us":
+      - /url: /contact
+    - link "Analyze My Lease — Free":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease — Free
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

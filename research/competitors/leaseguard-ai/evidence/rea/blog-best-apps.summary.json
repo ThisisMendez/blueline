@@ -1,0 +1,31 @@
+{
+  "evidence_id": "ev_e7d5d3df26deceea9b559d546ce603fa42eec7f9d8ddad21d43384db37a42607",
+  "url": "https://leaseguardai.com/blog/best-lease-review-apps",
+  "final_url": "https://leaseguardai.com/blog/best-lease-review-apps",
+  "captured_at": "2026-11-12T17:04:45.074Z",
+  "screenshot_sha256": "244d65092d2ff574d1b902afbcf3afed5df77724fb0180b7cded11cd04aac3af",
+  "ax_sha256": "8f865849398fff2b6f3e255bbb0588aacc6c946823c872e384ea6a9e6484220d",
+  "completeness": "complete",
+  "request_origins": {
+    "https://leaseguardai.com": 36,
+    "https://rebelgrowth.s3.us-east-1.amazonaws.com": 4,
+    "https://www.googletagmanager.com": 3,
+    "https://fonts.googleapis.com": 1,
+    "https://fonts.gstatic.com": 1,
+    "https://www.google-analytics.com": 1,
+    "https://googleads.g.doubleclick.net": 1,
+    "https://www.google.com": 4,
+    "https://ad.doubleclick.net": 1,
+    "https://www.redditstatic.com": 1,
+    "https://www.google.com.do": 1,
+    "https://alb.reddit.com": 1
+  },
+  "console": [],
+  "browser": {
+    "mode": "launch",
+    "process_ownership": "provider-owned",
+    "cleanup": "terminated-owned-process",
+    "product": "Chromium",
+    "version": "157.0.8103.51"
+  }
+}

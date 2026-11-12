@@ -1,0 +1,30 @@
+{
+  "evidence_id": "ev_d97b6ca116f9b1e49f616a8bb87cd935bc4afbc284a34efe25bcf6078741bb54",
+  "url": "https://leaseguardai.com/tenant-rights/florida",
+  "final_url": "https://leaseguardai.com/tenant-rights/florida",
+  "captured_at": "2026-11-12T17:04:28.454Z",
+  "screenshot_sha256": "5afb9b9923f0a8356462af6c262c072120d1eedfc91cf94baadf5eefb78da20a",
+  "ax_sha256": "51ec3ccaa5fe164055ae2fe41d2360220533b12bfd802dcc4ab121614656ace6",
+  "completeness": "complete",
+  "request_origins": {
+    "https://leaseguardai.com": 38,
+    "https://www.googletagmanager.com": 5,
+    "https://fonts.googleapis.com": 1,
+    "https://fonts.gstatic.com": 1,
+    "https://www.google-analytics.com": 1,
+    "https://googleads.g.doubleclick.net": 1,
+    "https://www.google.com": 4,
+    "https://ad.doubleclick.net": 1,
+    "https://www.redditstatic.com": 1,
+    "https://www.google.com.do": 1,
+    "https://alb.reddit.com": 1
+  },
+  "console": [],
+  "browser": {
+    "mode": "launch",
+    "process_ownership": "provider-owned",
+    "cleanup": "terminated-owned-process",
+    "product": "Chromium",
+    "version": "157.0.8103.51"
+  }
+}

@@ -1,0 +1,112 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - text: Simple 3-Step Process
+    - heading "From Upload to Insight In Under 60 Seconds" [level=1]
+    - paragraph: Here's exactly what happens to your lease from the moment you upload it to the moment you receive your report.
+    - link "Try It Free — No Account Needed":
+      - /url: /analyze
+      - img
+      - text: Try It Free — No Account Needed
+      - img
+    - text: ☁️ Step 01
+    - heading "Upload Your Lease (PDF or Text)" [level=2]
+    - paragraph: Takes 10 seconds. Your document is processed in memory and never written to storage.
+    - text: ✓ Standard PDF leases (up to 25 pages) ✓ Scanned PDF leases (OCR-enhanced) ✓ Copy-pasted lease text ✓ Multi-addenda packages 🔒 Your lease document is processed in memory and discarded immediately. Your analysis results are retained for up to 7 days for re-download, then permanently deleted. We never share your lease or use it to train AI models. ⚙️ Step 02
+    - heading "Our AI Reads Every Clause" [level=2]
+    - paragraph: Three analysis pipelines run simultaneously.
+    - heading "Three Pipelines. Six Detection Modules." [level=3]
+    - paragraph:
+      - text: Our AI runs six detection modules across three core analysis pipelines. See our
+      - link "Features page":
+        - /url: /features
+      - text: for the full breakdown.
+    - text: 1 Statute Cross-Reference Pipeline Powers our Compliance Risk Detection and All-50-States Statute Database modules — comparing every clause against your state's landlord-tenant statutes and flagging language that may not be enforceable. 2 Fee Analysis Pipeline Powers our Junk Fee Scanner — identifying every monetary charge and benchmarking it against state caps and market norms. 3 Predatory Language Pipeline Powers our Predatory Term Detection — surfacing vague, one-sided, or unusually aggressive language that puts renters at unfair disadvantage.
+    - heading "Background Processes" [level=3]
+    - text: ⚡ Clause extraction and classification ⚡ State statute database query ⚡ Risk scoring per clause (0–100) ⚡ Aggregated Lease Health Score calculation ⚡ Negotiation template generation 🛡️ Step 03
+    - heading "Get Your Report & Take Action" [level=2]
+    - paragraph: Everything you need to act. Nothing you don't.
+    - text: 📊 Lease Health Score (A → F) Your lease's overall grade. Instantly tells you how concerned to be. 🚨 Flagged Clauses Each flag includes the exact clause text, why it raised a flag, the relevant statute reference, and your risk level. 📝 Negotiation Toolkit Plain-language email and conversation templates for every medium-to-high risk flag. 📄 PDF Report (Pro) A branded, printable report you can share with your attorney or housing advocate.
+    - link "Start My Free Analysis":
+      - /url: /analyze
+      - img
+      - text: Start My Free Analysis
+      - img
+    - heading "The Technology Behind It" [level=2]
+    - paragraph: LeaseGuard AI is powered by a large language model trained on publicly available U.S. landlord-tenant statutes, regulatory guidance, and selected case law. Our statute database is updated quarterly as state laws are amended.
+    - text: Legal Sources ⚖️ State Residential Landlord-Tenant Acts (all 50 states) ⚖️ HUD tenant protection guidelines ⚖️ Consumer Financial Protection Bureau (CFPB) junk fee guidance ⚖️ Selected federal and appellate case law ⚖️ State attorney general enforcement actions
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

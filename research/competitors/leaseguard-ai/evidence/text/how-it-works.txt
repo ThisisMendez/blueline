@@ -1,0 +1,87 @@
+How LeaseGuard AI Works — Analyze Your Lease in 3 Steps
+Lease
+Guard
+AI
+How It Works
+Features
+Pricing
+Blog
+Contact
+My Account
+Save reports · optional
+Analyze My Lease
+Simple 3-Step Process
+From Upload to Insight
+In Under 60 Seconds
+Here's exactly what happens to your lease from the moment you upload it to the moment you receive your report.
+Try It Free — No Account Needed
+☁️
+Step
+01
+Upload Your Lease (PDF or Text)
+Takes 10 seconds. Your document is processed in memory and never written to storage.
+Standard PDF leases (up to 25 pages)
+Scanned PDF leases (OCR-enhanced)
+Copy-pasted lease text
+Multi-addenda packages
+🔒 Your lease document is processed in memory and discarded immediately. Your analysis results are retained for up to 7 days for re-download, then permanently deleted. We never share your lease or use it to train AI models.
+⚙️
+02
+Our AI Reads Every Clause
+Three analysis pipelines run simultaneously.
+Three Pipelines. Six Detection Modules.
+Our AI runs six detection modules across three core analysis pipelines. See our
+Features page
+for the full breakdown.
+Statute Cross-Reference Pipeline
+Powers our Compliance Risk Detection and All-50-States Statute Database modules — comparing every clause against your state's landlord-tenant statutes and flagging language that may not be enforceable.
+Fee Analysis Pipeline
+Powers our Junk Fee Scanner — identifying every monetary charge and benchmarking it against state caps and market norms.
+Predatory Language Pipeline
+Powers our Predatory Term Detection — surfacing vague, one-sided, or unusually aggressive language that puts renters at unfair disadvantage.
+Background Processes
+Clause extraction and classification
+State statute database query
+Risk scoring per clause (0–100)
+Aggregated Lease Health Score calculation
+Negotiation template generation
+🛡️
+03
+Get Your Report & Take Action
+Everything you need to act. Nothing you don't.
+📊
+Lease Health Score (A → F)
+Your lease's overall grade. Instantly tells you how concerned to be.
+🚨
+Flagged Clauses
+Each flag includes the exact clause text, why it raised a flag, the relevant statute reference, and your risk level.
+📝
+Negotiation Toolkit
+Plain-language email and conversation templates for every medium-to-high risk flag.
+📄
+PDF Report (Pro)
+A branded, printable report you can share with your attorney or housing advocate.
+Start My Free Analysis
+The Technology Behind It
+LeaseGuard AI is powered by a large language model trained on publicly available U.S. landlord-tenant statutes, regulatory guidance, and selected case law. Our statute database is updated quarterly as state laws are amended.
+Legal Sources
+⚖️
+State Residential Landlord-Tenant Acts (all 50 states)
+HUD tenant protection guidelines
+Consumer Financial Protection Bureau (CFPB) junk fee guidance
+Selected federal and appellate case law
+State attorney general enforcement actions
+AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+Zero Lease Document Storage
+Product
+Resources
+Tenant Rights by State
+About
+Share Feedback
+Legal
+Trust & Transparency
+Privacy Policy
+Terms of Service
+LeaseGuard AI is a technology service, not a law firm.
+Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+© 2026 LeaseGuard AI. All rights reserved.
