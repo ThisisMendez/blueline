@@ -1,11 +1,12 @@
 import { buildConsistencyUserMessage, CONSISTENCY_SYSTEM_PROMPT } from "./consistency-prompt";
-import { ModelError, type ModelClient } from "./model/client";
+import type { ModelClient } from "./model/client";
 import {
   CONSISTENCY_SCHEMA_NAME,
   consistencyJsonSchema,
   modelConsistencySchema,
   type ModelConsistency,
 } from "./model/consistency-schema";
+import { completeStructured } from "./model/structured";
 import type { RiskFlag } from "./types";
 
 /**
@@ -19,24 +20,14 @@ import type { RiskFlag } from "./types";
 export const RESIDUAL_RISK_UNCONFIRMED =
   "Blueline could not confirm what would remain if this edit were accepted. Read the proposed edit above and judge for yourself what it does not address.";
 
-async function askModel(model: ModelClient, user: string): Promise<ModelConsistency> {
-  const raw = await model.complete({
-    system: CONSISTENCY_SYSTEM_PROMPT,
-    user,
-    schemaName: CONSISTENCY_SCHEMA_NAME,
-    jsonSchema: consistencyJsonSchema,
-  });
-
-  const parsed = modelConsistencySchema.safeParse(raw);
-  if (!parsed.success) {
-    throw new ModelError(
-      "unreadable",
-      `The consistency check did not match the expected shape: ${parsed.error.issues
-        .map((issue) => `${issue.path.join(".") || "(root)"} ${issue.message}`)
-        .join("; ")}`,
-    );
-  }
-  return parsed.data;
+/** One structured call: validated, and retried once if the reply is the wrong shape. */
+function askModel(model: ModelClient, user: string): Promise<ModelConsistency> {
+  return completeStructured(
+    model,
+    { system: CONSISTENCY_SYSTEM_PROMPT, user, schemaName: CONSISTENCY_SCHEMA_NAME, jsonSchema: consistencyJsonSchema },
+    modelConsistencySchema,
+    "The consistency check",
+  );
 }
 
 /**

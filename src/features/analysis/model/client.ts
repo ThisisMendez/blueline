@@ -12,6 +12,12 @@ export interface ModelRequest {
   readonly schemaName: string;
   /** JSON Schema the response must satisfy. */
   readonly jsonSchema: Record<string, unknown>;
+  /**
+   * True on the one retry sent because the previous reply did not match the
+   * schema (see structured.ts). Lets a call budget tell a shape retry apart
+   * from an ordinary call. Absent on every other request.
+   */
+  readonly retryAfterInvalidReply?: boolean;
 }
 
 export interface ModelClient {

@@ -10,6 +10,7 @@ import {
   modelAnalysisSchema,
   type ModelAnalysis,
 } from "./model/schema";
+import { completeStructured } from "./model/structured";
 import {
   ANALYSIS_SYSTEM_PROMPT,
   buildAnalysisUserMessage,
@@ -23,24 +24,14 @@ export interface GeneralReviewInput {
   readonly model: ModelClient;
 }
 
-async function askModel(model: ModelClient, user: string): Promise<ModelAnalysis> {
-  const raw = await model.complete({
-    system: ANALYSIS_SYSTEM_PROMPT,
-    user,
-    schemaName: ANALYSIS_SCHEMA_NAME,
-    jsonSchema: analysisJsonSchema,
-  });
-
-  const parsed = modelAnalysisSchema.safeParse(raw);
-  if (!parsed.success) {
-    throw new ModelError(
-      "unreadable",
-      `The analysis did not match the expected shape: ${parsed.error.issues
-        .map((issue) => `${issue.path.join(".") || "(root)"} ${issue.message}`)
-        .join("; ")}`,
-    );
-  }
-  return parsed.data;
+/** One structured call: validated, and retried once if the reply is the wrong shape. */
+function askModel(model: ModelClient, user: string): Promise<ModelAnalysis> {
+  return completeStructured(
+    model,
+    { system: ANALYSIS_SYSTEM_PROMPT, user, schemaName: ANALYSIS_SCHEMA_NAME, jsonSchema: analysisJsonSchema },
+    modelAnalysisSchema,
+    "The analysis",
+  );
 }
 
 /**
