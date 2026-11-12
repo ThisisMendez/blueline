@@ -10,6 +10,7 @@ export type SignInState =
   | { readonly status: "unconfigured" }
   | { readonly status: "sent"; readonly email: string }
   | { readonly status: "invalid-email" }
+  | { readonly status: "email-rate-limited" }
   | { readonly status: "error" };
 
 export const initialSignInState: SignInState = { status: "idle" };
