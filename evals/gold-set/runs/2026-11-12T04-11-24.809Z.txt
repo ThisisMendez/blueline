@@ -1,0 +1,62 @@
+Gold-set eval, redline-v1 v1
+Started: 2026-11-12T04:11:24.809Z
+Model: z-ai/glm-5.3-flash
+Label overlay: label-corrections.json, SHA-256 707215fdab15f00596a353ae6403b7cf45c262fdf0fbd849094692ff383d4a72 (proposal pending owner confirmation; original labels unchanged)
+Pipeline: the analysis route as npm run smoke -- --live wires it (anonymous, not persisted).
+Malformed replies: 0 first-pass invalid, 0 recovered by retry, 0 still invalid; model-unreadable: 0/9 documents
+
+Documents: 9 in manifest; 0 reviewed; 9 left out of every denominator.
+  left out, blocked as out of scope (not-a-residential-lease): adhesion-contract (Gym membership and instructor certification agreement)
+  left out, blocked as out of scope (not-a-residential-lease): clean-document (Community garden annual plot licence, not housing)
+  left out, blocked as out of scope (not-a-residential-lease): saas-subscription (Software subscription terms of service)
+  left out, blocked as out of scope (not-a-residential-lease): offer-letter (Employment offer letter for a chemist job.)
+  left out, blocked as out of scope (not-a-residential-lease): storage-unit-rental (Self-storage unit rental agreement, not residential.)
+  left out, blocked as out of scope (not-a-residential-lease): phone-plan-terms (Wireless phone service agreement, not a residential lease)
+  left out, blocked as out of scope (not-a-residential-lease): internship-agreement (A law firm summer analyst employment programme agreement.)
+  left out, blocked as out of scope (not-a-residential-lease): library-volunteer-agreement (A library volunteer agreement, not a lease.)
+  left out, blocked as out of scope (not-a-residential-lease): swim-lesson-registration (Swim lesson registration, not a residential lease)
+
+Legal-conclusion texts (ticket 14): 0 repaired, 0 withheld
+Recall (in-scope planted clauses found): 0/0 (n/a)
+  in scope     arbitration-and-class-action-waiver: 0/0 (n/a)
+  in scope     fee-escalators-and-late-fees: 0/0 (n/a)
+  in scope     auto-renewal: 0/0 (n/a)
+  in scope     unilateral-modification: 0/0 (n/a)
+  out of scope non-compete: 0/0 (n/a)
+  out of scope limitation-of-liability: 0/0 (n/a)
+  out of scope indemnification: 0/0 (n/a)
+Out-of-scope planted clauses flagged anyway (information only, never a miss): 0/0 (n/a)
+Named the right type: not measurable. Blueline's risk flags have no clause type field (RiskFlag in src/features/analysis/types.ts), and app code is not changed for this eval.
+
+Recall by characters in the planted sentence (in-scope only):
+  has at least one: 0/0 (n/a)
+  has none: 0/0 (n/a)
+  curly quote or apostrophe: 0/0 (n/a)
+  non-breaking space: 0/0 (n/a)
+  fi or fl ligature: 0/0 (n/a)
+  em dash: 0/0 (n/a)
+  two spaces in a row: 0/0 (n/a)
+
+Severity agreement (found in-scope clauses whose most severe flag matches the gold band; critical and high = high, moderate = medium): 0/0 (n/a); graded lower: 0; graded higher: 0
+Exact-band agreement (gold's own labels: product high = high, medium = moderate; High on a critical clause is not exact): 0/0 (n/a)
+
+Unilateral-modification cases (decision 2; gold grades them critical, Blueline has no Critical tier):
+Six unilateral cases High: 0/0
+  gold critical graded High (the Critical gap, not an exact band): 0/0 (n/a); exact band among found: 0/0 (n/a)
+
+Groundedness (delivered flags quoted verbatim / all flags the model returned, delivered + dropped): 0/0 (n/a)
+  raw flags across every model attempt, retries included: 0
+
+Clean documents with no flags: 0/0 (n/a); flags on clean documents: 0
+Revised clean-document view (proposed label corrections applied; PROPOSAL pending owner confirmation, the original view above is unchanged):
+  valid Low forfeiture flags (overlap a corrected sentence): 0
+  false flags (everything else on the clean documents): 0
+  clean documents with no false flag: 0/0 (n/a); corrected sentences flagged: 0/0 (n/a)
+Flags on planted documents that matched no planted clause: 0
+Flags on an unusual-but-harmless sentence: 0
+
+Planted clauses:
+
+Flags:
+
+A model wrote this gold set. These numbers are an upper bound and never a promise to a reader.
