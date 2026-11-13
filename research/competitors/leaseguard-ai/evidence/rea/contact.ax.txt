@@ -1,0 +1,130 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - text: "Response time: 1 business day"
+    - heading "We'd Love to Hear From You" [level=1]
+    - paragraph: Questions, partnerships, press inquiries — we're here.
+    - img
+    - text: Response Time Within 1 business day
+    - img
+    - text: Email support@leaseguardai.com
+    - img
+    - text: Topics Support · Partnerships · Press
+    - heading "Send a Message" [level=2]
+    - paragraph: Fill in the form and we'll reply at support@leaseguardai.com
+    - text: Name
+    - textbox "Name":
+      - /placeholder: Your name
+    - text: Email
+    - textbox "Email":
+      - /placeholder: your@email.com
+    - text: Topic
+    - button "Topic":
+      - text: Select a topic...
+      - img
+    - text: Message
+    - textbox "Message":
+      - /placeholder: Tell us how we can help...
+    - paragraph: Please complete the verification above to send your message.
+    - button "Send Message" [disabled]:
+      - img
+      - text: Send Message
+    - paragraph: We respond to all messages within 1 business day.
+  - heading "For specific topics, you can also reach us directly:" [level=2]
+  - list:
+    - listitem:
+      - link "privacy@leaseguardai.com":
+        - /url: mailto:privacy@leaseguardai.com
+      - text: — privacy questions and data requests
+    - listitem:
+      - link "legal@leaseguardai.com":
+        - /url: mailto:legal@leaseguardai.com
+      - text: — terms, IP, and legal inquiries
+    - listitem:
+      - link "press@leaseguardai.com":
+        - /url: mailto:press@leaseguardai.com
+      - text: — press and media
+    - listitem:
+      - link "trust@leaseguardai.com":
+        - /url: mailto:trust@leaseguardai.com
+      - text: — trust & safety reports
+  - paragraph:
+    - text: For tenant emergencies (eviction, lockouts, immediate disputes), LeaseGuard AI is not the right resource. Contact your state's legal aid office or
+    - link "HUD":
+      - /url: https://www.hud.gov/topics/rental_assistance
+    - text: directly.
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

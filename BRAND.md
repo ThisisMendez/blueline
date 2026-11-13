@@ -2,7 +2,7 @@
 
 **Official product name:** Blueline Redline. **Project shorthand:** Blueline.
 
-Blueline Redline helps people see what an agreement is really asking of them before they commit. It starts with renters facing a lease, but the brand can extend to other moments where fine print can change a decision. The first product version remains focused on lease signers.
+Blueline Redline helps renters, and landlords too, see what their residential agreement could mean for their side before they sign. The user picks the side; the report highlights the clauses that could harm it. “Review your rental agreement from your perspective.” “Understand what could affect you and what to clarify before signing.” Present the product as a self-check. The user decides whether and how to act.
 
 The brand is calm, precise, and quietly defiant: show the source, explain the consequence, and make room for a better reply. Agreements should feel like working documents, not intimidating legal artifacts.
 
@@ -22,7 +22,7 @@ Blueprint blue roots the name in documents and structure. Signal red makes “Re
 
 The landing page is the one Persuade-mode surface in this product; everything past sign-in is Operate mode. It earns attention on a real, specific mechanism, not a mood.
 
-- **Lead with the mechanism, not a feeling.** The hero states what the product does in one sentence a competitor couldn't truthfully copy: cited risk flags with the exact source sentence, a coverage checklist that separates "not found" from "risky," and a drafted counter-offer per flag. Do not open on an emotional appeal to anxiety about signing — the product's job is to replace that anxiety with a specific answer, not to trade on it.
+- **Lead with the role-tailored self-check.** Show how the report links risks to exact contract language and gives the selected party a practical question or proposed change. Any worked report example shows one role.
 - **Proof is a worked example, not a claim about people.** The evidence base has no confirmed customer, testimonial, or usage statistic (see PRODUCT.md's Evidence on Hand). Until real ones exist, "proof" on this page means showing the mechanism working — an example cited flag, its source sentence, and its counter-offer — not a quote, a number, or a logo.
 - **Signal red stays disciplined here too.** Reserve it for the same thing it marks in-app: a consequential term or the moment risk becomes visible. Do not use it as a general accent or CTA-button color; the CTA can be blueprint navy.
 - **The CTA is single and honest.** One primary action — sign in to start a review — stated as what it is, not softened into "get started free" language that implies a trial ending. State plainly that the product is free to use for this version.

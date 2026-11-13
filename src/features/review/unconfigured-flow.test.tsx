@@ -54,6 +54,7 @@ describe("the product with accounts unavailable", () => {
 
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     expect(screen.getByText("Accounts aren't running yet")).toBeInTheDocument();
     expect(screen.getByText("Not saved by Blueline")).toBeInTheDocument();

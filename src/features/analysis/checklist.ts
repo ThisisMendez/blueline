@@ -39,12 +39,12 @@ export const COVERAGE_CHECKLIST: readonly ChecklistTopic[] = [
     id: "deposit-deductions-and-return",
     name: "Deposit deductions and return",
     description:
-      "What the landlord can take out of your deposit, and when the rest comes back.",
+      "What can be deducted from the deposit, and when the balance is returned.",
   },
   {
     id: "early-exit-costs",
     name: "Early-exit costs",
-    description: "What you owe if you leave before the term is up.",
+    description: "What the renter owes if the lease ends early.",
   },
   {
     id: "rent-changes",
@@ -60,7 +60,7 @@ export const COVERAGE_CHECKLIST: readonly ChecklistTopic[] = [
   {
     id: "access-to-the-home",
     name: "Access to the home",
-    description: "When the landlord can come in, and how much notice you get.",
+    description: "When the landlord can enter, and how much notice is required.",
   },
   {
     id: "dispute-routes",

@@ -1,0 +1,120 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - text: Our Mission
+    - heading "We Built the Tool We Wish We Had When We Were Renters" [level=1]
+    - paragraph: Renting in America is broken. Leases are written by landlords and their lawyers — dense, one-sided, and deliberately hard to understand. LeaseGuard AI exists to change that.
+    - text: 🏗️
+    - heading "Why We Built This" [level=2]
+    - paragraph:
+      - text: The average lease is
+      - strong: 22 pages long
+      - text: . It references state statutes most renters have never heard of. It contains financial obligations buried in addenda. And it's usually handed to you with a 3-day signing deadline.
+    - paragraph:
+      - text: We built LeaseGuard AI because
+      - strong: access to legal knowledge shouldn't depend on whether you can afford a lawyer.
+      - text: Tenant rights are civil rights — and we want everyone to know them.
+    - paragraph: Every renter deserves to understand what they're signing. Not just the broad strokes — the specific clauses, the legal implications, and exactly how to push back when something isn't right.
+    - img
+    - heading "Our Approach to Privacy" [level=2]
+    - paragraph:
+      - text: Your lease contains sensitive personal information — your address, your income, your financial history. We process it to analyze it.
+      - strong: We do not sell it, share it with third parties, or use it to train AI models. Ever.
+    - paragraph: Your lease document itself is never stored — it's processed in memory and discarded as soon as analysis completes. Your analysis results are retained for up to 7 days so you can re-download or upgrade to Pro without re-uploading, then permanently deleted. That's a design decision, not just a policy.
+    - list:
+      - listitem: ✓ Lease documents never written to storage
+      - listitem: ✓ Your lease and results never reach analytics or ad platforms
+      - listitem: ✓ No selling of any data to third parties
+      - listitem: ✓ No AI training on your documents
+    - text: 🤖
+    - heading "AI + Legal Intelligence" [level=2]
+    - paragraph: We are not lawyers. LeaseGuard AI is not a law firm. We've built a system trained on the full body of publicly available U.S. landlord-tenant statutes — the kind of knowledge most renters never get to access at all. We're not a law firm and we don't replace one. But we believe every renter deserves a baseline understanding of their lease before they sign it.
+    - paragraph:
+      - text: Our state-statute database is updated quarterly as landlord-tenant laws are amended. Every flag in your report links directly to the
+      - strong: source statute
+      - text: so you can verify the underlying law yourself.
+    - text: ⚖️ State Residential Landlord-Tenant Acts (all 50) ⚖️ HUD tenant protection guidelines ⚖️ CFPB junk fee guidance ⚖️ Federal and appellate case law
+    - heading "Our Values" [level=2]
+    - text: ⚖️ Independent Not funded by landlord associations. Not affiliated with any real estate lobby. We work for renters. 🔒 Privacy-First Your lease is processed to analyze it, then immediately discarded. By design, not just policy. 📚 Law-Grounded Every flag cites the exact statute it references. Verify our work independently — we encourage it. 🏛️ Accessible Understanding your lease shouldn't depend on being able to afford an hourly legal consult. Everyone deserves to understand what they're signing.
+    - heading "Ready to analyze your lease?" [level=2]
+    - paragraph: Free, private, and built on the law. Sign with confidence — or know exactly when to call an attorney.
+    - link "Analyze My Lease — Free":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease — Free
+      - img
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

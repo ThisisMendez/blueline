@@ -164,6 +164,7 @@ describe("a packet that holds the whole agreement", () => {
     useModel();
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
     await buildPacket(user, []);
     await submit(user);
     await screen.findByRole("heading", { name: BLOCKED_HEADING });
@@ -177,6 +178,7 @@ describe("a packet that holds the whole agreement", () => {
     useModel();
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
     await submit(user);
@@ -215,6 +217,7 @@ describe("a packet that holds the whole agreement", () => {
     useModel();
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
     await submit(user);
@@ -245,6 +248,7 @@ describe("a packet that holds the whole agreement", () => {
     useModel();
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
     await submit(user);
@@ -262,7 +266,7 @@ describe("a packet that holds the whole agreement", () => {
 
     // Nothing on the wire could have carried a file, for any of the three.
     const body = JSON.parse(requests[0]) as Record<string, unknown>;
-    expect(Object.keys(body).sort()).toEqual(["referenced", "text", "title"]);
+    expect(Object.keys(body).sort()).toEqual(["referenced", "role", "text", "title"]);
     for (const supplied of body.referenced as Record<string, unknown>[]) {
       expect(Object.keys(supplied).sort()).toEqual(["text", "title"]);
     }
@@ -276,6 +280,7 @@ describe("a packet missing a document the lease points at", () => {
     useModel();
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule"]);
     await submit(user);
@@ -334,6 +339,7 @@ describe("a packet missing a document the lease points at", () => {
     useModel();
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule"]);
     await submit(user);
@@ -353,6 +359,7 @@ describe("the two waits", () => {
     holdTheRoute();
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule"]);
     await submit(user);
@@ -386,6 +393,7 @@ describe("a lease that points at nothing", () => {
     useModel();
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     const textarea = screen.getByLabelText("Paste your lease");
     await user.click(textarea);
@@ -398,7 +406,7 @@ describe("a lease that points at nothing", () => {
 
     // One send, one answer, nothing asked of the signer in between.
     expect(requests).toHaveLength(1);
-    expect(JSON.parse(requests[0])).toEqual({ text: adhesionLease.text });
+    expect(JSON.parse(requests[0])).toEqual({ role: "renter", text: adhesionLease.text });
     expect(screen.queryByRole("region", { name: BLOCKED_HEADING })).toBeNull();
     expect(screen.queryByRole("region", { name: /what your lease points at/i })).toBeNull();
 
@@ -418,6 +426,7 @@ describe("a reference whose sentence cannot be found", () => {
     useModel({ unquotableReferences: ["Pet Addendum"] });
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule"]);
     await submit(user);
@@ -449,6 +458,7 @@ describe("a match the signer disagrees with", () => {
     useModel({ mismatchedReferences: { "Pet Addendum": null } });
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
     await submit(user);
@@ -498,6 +508,7 @@ describe("a match the signer disagrees with", () => {
     useModel();
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
     await submit(user);
@@ -532,6 +543,7 @@ describe("a packet that isn't a residential lease (ADR 0014)", () => {
     useModel({ agreement: { kind: "not-a-residential-lease", description: "A gym membership agreement", evidenceSentence: evidence } });
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
     await submit(user);
@@ -549,6 +561,7 @@ describe("a packet that isn't a residential lease (ADR 0014)", () => {
     useModel({ agreement: { kind: "not-a-residential-lease", description: "Something else", evidenceSentence: "A sentence that is in no document at all." } });
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
     await submit(user);

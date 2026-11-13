@@ -1,0 +1,117 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+  - main:
+    - heading "Analyze Your Lease" [level=1]
+    - paragraph: FREE PREVIEW
+    - paragraph: $0 — no account required
+    - list:
+      - listitem: ✓ Lease Health Score (A–F)
+      - listitem: ✓ Top 5 flagged clauses
+      - listitem: ✓ Plain-English explanations
+      - listitem: ✓ Total flag count in your lease
+      - listitem: ✓ Severity level (low/med/high)
+    - paragraph: PRO REPORT
+    - paragraph: $19.99 one-time · 48-hr money-back
+    - list:
+      - listitem: "Everything in Free, plus:"
+      - listitem: ✓ Unlimited flagged clauses
+      - listitem: ✓ Full negotiation templates per flag
+      - listitem: ✓ Statute references for every flag
+      - listitem: ✓ Downloadable PDF report
+      - listitem: ✓ Email delivery to your inbox
+    - paragraph: Upload once. Try the Free preview first. Upgrade to Pro any time within 7 days — no need to re-upload.
+    - text: 1. Select Your State
+    - 'button "Select your state. Currently selected: Florida"':
+      - text: Florida ⭐
+      - img
+    - paragraph: ⭐ = enhanced statute coverage
+    - text: 2. Upload Your Lease (PDF or TXT) ☁️
+    - paragraph: Drop PDF here or tap to browse
+    - paragraph: PDF or TXT · Up to 25 pages · Analyzed privately, never stored
+    - button "Analyze My Lease Now" [disabled]
+    - paragraph: We'll analyze your lease in about 60 seconds — you'll see your Health Score first, then your top flags.
+    - paragraph: Your lease document is never stored — it's processed in memory and discarded immediately. Your analysis results are retained for up to 7 days so you can re-download or upgrade to Pro without re-uploading, then permanently deleted.
+    - paragraph:
+      - text: Want to see what you get first?
+      - link "View a sample report":
+        - /url: /analyze?demo=true
+    - text: 🔒 Zero lease document storage ⚡ Results in ~60 seconds ⚖️ All 50 state laws 🏛️ State-specific statutes 01 ☁️
+    - heading "Upload Your Lease" [level=3]
+    - paragraph: Drop your PDF or TXT file. Your document is never stored on our servers.
+    - text: 02 ⚙️
+    - heading "AI Scans Every Clause" [level=3]
+    - paragraph: We cross-reference your lease against your state's landlord-tenant statutes and current tenant-protection guidance to flag clauses worth your attention.
+    - text: 03 🛡️
+    - heading "Get Your Report" [level=3]
+    - paragraph: Lease Health Score (A–F), flagged clauses with statute references, and negotiation templates — instantly.
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

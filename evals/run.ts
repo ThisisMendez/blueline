@@ -28,7 +28,7 @@ export async function runCorpus(corpusInput: unknown, model: ModelClient): Promi
     for (const run of [1, 2, 3]) {
       const response = await route(new Request("http://localhost/api/analysis", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: lease.text, title: lease.title, referenced: referenced.map(({ text, title }) => ({ text, title })) }),
+        body: JSON.stringify({ role: "renter", text: lease.text, title: lease.title, referenced: referenced.map(({ text, title }) => ({ text, title })) }),
       }));
       records.push({ caseId: entry.id, run, outcome: await response.json() });
     }

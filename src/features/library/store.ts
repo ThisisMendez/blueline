@@ -1,4 +1,4 @@
-import type { GeneralReview } from "@/features/analysis/types";
+import type { GeneralReview, ReviewRole } from "@/features/analysis/types";
 import type { ExtractedDocument } from "@/features/packet/types";
 
 export class ReviewNeedsRerunError extends Error {
@@ -41,6 +41,7 @@ export interface StoredReviewSummary extends ReviewRetention {
   readonly title: string;
   readonly flagCount: number;
   readonly clean: boolean;
+  readonly role?: ReviewRole;
 }
 
 export interface ReviewStore {
@@ -65,5 +66,6 @@ export function summarizeStoredReview(review: StoredReview): StoredReviewSummary
     title: review.documents[0]?.title ?? "Untitled review",
     flagCount: review.review.riskFlags.length,
     clean: review.review.clean,
+    role: review.review.role,
   };
 }

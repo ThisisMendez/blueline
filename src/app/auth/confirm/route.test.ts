@@ -26,7 +26,7 @@ describe("email sign-in callback", () => {
 
   it("exchanges the code from the default Supabase magic link", async () => {
     await expect(confirm("code=email-code&next=/review")).rejects.toMatchObject({
-      digest: expect.stringContaining(";http://localhost:3000/review;"),
+      digest: expect.stringContaining(";/review;"),
     });
     expect(exchangeCodeForSession).toHaveBeenCalledWith("email-code");
     expect(verifyOtp).not.toHaveBeenCalled();
@@ -34,7 +34,7 @@ describe("email sign-in callback", () => {
 
   it("still verifies token hashes from custom email templates", async () => {
     await expect(confirm("token_hash=email-hash&type=email")).rejects.toMatchObject({
-      digest: expect.stringContaining(";http://localhost:3000/review;"),
+      digest: expect.stringContaining(";/account;"),
     });
     expect(verifyOtp).toHaveBeenCalledWith({ token_hash: "email-hash", type: "email" });
     expect(exchangeCodeForSession).not.toHaveBeenCalled();
@@ -57,7 +57,21 @@ describe("email sign-in callback", () => {
 
   it("keeps the post-login redirect on the app's origin", async () => {
     await expect(confirm("code=email-code&next=//example.test")).rejects.toMatchObject({
+      digest: expect.stringContaining(";/account;"),
+    });
+  });
+
+  it("refuses OTP types outside the email confirmation and recovery flows", async () => {
+    await expect(confirm("token_hash=hash&type=email_change")).rejects.toMatchObject({
+      digest: expect.stringContaining(";/sign-in?problem=link-unreadable;"),
+    });
+    expect(verifyOtp).not.toHaveBeenCalled();
+  });
+
+  it("uses the PKCE verifier slot named in the callback", async () => {
+    await expect(confirm("code=email-code&sb_flow_id=flow-slot&next=/review")).rejects.toMatchObject({
       digest: expect.stringContaining(";/review;"),
     });
+    expect(exchangeCodeForSession).toHaveBeenCalledWith("email-code", { flowId: "flow-slot" });
   });
 });

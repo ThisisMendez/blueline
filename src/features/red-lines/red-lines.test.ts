@@ -38,7 +38,7 @@ describe("personal red lines after a general review", () => {
     const reviews = new InMemoryReviewStore();
     const model = createFixtureModelClient();
     let accounts: AccountsState = { kind: "signed-in", signer: { id: "signer-a", email: null } };
-    await createAnalysisRoute({ model, accounts: async () => accounts, store: async () => reviews, now: () => new Date(), newReviewId: () => "review-1" })(request("analysis", { text: loadFixture("adhesion-lease").text }));
+    await createAnalysisRoute({ model, accounts: async () => accounts, store: async () => reviews, now: () => new Date(), newReviewId: () => "review-1" })(request("analysis", { role: "renter", text: loadFixture("adhesion-lease").text }));
     const routes = createRedLineRoutes({ model, accounts: async () => accounts, preferences: async () => preferences, reviews: async () => reviews });
     await routes.preferences(request("red-lines", { lines: ["No arbitration"] }, "PUT"));
     accounts = { kind: "signed-in", signer: { id: "signer-b", email: null } };
@@ -60,7 +60,7 @@ describe("personal red lines after a general review", () => {
     const reviews = new InMemoryReviewStore();
     const preferences = memoryPreferences();
     const accounts = async () => ({ kind: "signed-in" as const, signer: { id: "signer-a", email: null } });
-    await createAnalysisRoute({ model, accounts, store: async () => reviews, now: () => new Date(), newReviewId: () => "review-1" })(request("analysis", { text: fixture.text }));
+    await createAnalysisRoute({ model, accounts, store: async () => reviews, now: () => new Date(), newReviewId: () => "review-1" })(request("analysis", { role: "renter", text: fixture.text }));
     await preferences.save("signer-a", [fixture.sidecar.redLines[0].redLine]);
     const routes = createRedLineRoutes({ model, accounts, preferences: async () => preferences, reviews: async () => reviews });
     const result = await (await routes.matches(request("red-lines/matches", { reviewId: "review-1" }))).json();
@@ -73,7 +73,7 @@ describe("personal red lines after a general review", () => {
     const reviews = new InMemoryReviewStore();
     const preferences = memoryPreferences();
     const accounts = async () => ({ kind: "signed-in" as const, signer: { id: "signer-a", email: null } });
-    await createAnalysisRoute({ model, accounts, store: async () => reviews, now: () => new Date(), newReviewId: () => "review-1" })(request("analysis", { text: fixture.text }));
+    await createAnalysisRoute({ model, accounts, store: async () => reviews, now: () => new Date(), newReviewId: () => "review-1" })(request("analysis", { role: "renter", text: fixture.text }));
     const before = await reviews.findForSigner("signer-a", "review-1");
     const routes = createRedLineRoutes({ model, accounts, preferences: async () => preferences, reviews: async () => reviews });
     expect((await (await routes.matches(request("red-lines/matches", { reviewId: "review-1" }))).json()).matches).toEqual([]);

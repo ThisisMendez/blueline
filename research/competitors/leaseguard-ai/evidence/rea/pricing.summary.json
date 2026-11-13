@@ -1,0 +1,32 @@
+{
+  "evidence_id": "ev_ec5b50ea3d6cfa79cd9b9cb3cb79ff81add7ec0ee4b0983d6927f6ae62387428",
+  "url": "https://leaseguardai.com/pricing",
+  "final_url": "https://leaseguardai.com/pricing",
+  "captured_at": "2026-11-12T17:03:34.359Z",
+  "screenshot_sha256": "5e533ea24c726c5724ad83e8dc83d74f3f982344041cfe3b82194191a9a3708a",
+  "ax_sha256": "819d6fa59aede020b15c198858de205b90858d8d3c34d5fc620e464366d160d0",
+  "completeness": "complete",
+  "request_origins": {
+    "https://leaseguardai.com": 37,
+    "https://www.googletagmanager.com": 4,
+    "https://fonts.googleapis.com": 1,
+    "https://fonts.gstatic.com": 1,
+    "https://www.google-analytics.com": 1,
+    "https://googleads.g.doubleclick.net": 1,
+    "https://www.google.com": 4,
+    "https://ad.doubleclick.net": 1,
+    "https://www.redditstatic.com": 1,
+    "https://www.google.com.do": 1,
+    "https://alb.reddit.com": 1
+  },
+  "console": [
+    "error: Failed to load resource: the server responded with a status of 401 ()"
+  ],
+  "browser": {
+    "mode": "launch",
+    "process_ownership": "provider-owned",
+    "cleanup": "terminated-owned-process",
+    "product": "Chromium",
+    "version": "157.0.8103.51"
+  }
+}

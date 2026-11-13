@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+const citationProperties = {
+  sourceDocumentId: { type: "string", description: "The supplied document id." },
+  sourceSentence: { type: "string", description: "The supporting sentence copied character for character." },
+};
+
 /**
  * What the model is asked to return, in two forms: the JSON Schema sent to
  * the provider as a structured-output contract, and the zod schema the reply
@@ -26,6 +31,8 @@ export const analysisJsonSchema: Record<string, unknown> = {
       items: {
         type: "object",
         properties: {
+          title: { type: "string", description: "Short title naming the specific issue." },
+          nextStep: { type: "string", description: "A practical question or action for the selected role." },
           severity: {
             type: "string",
             enum: ["high", "medium", "low"],
@@ -41,22 +48,27 @@ export const analysisJsonSchema: Record<string, unknown> = {
           },
           counterOffer: {
             type: "string",
-            description: "Concrete proposed lease wording aimed at a plausible compromise, reducing the cited downside while preserving legitimate landlord interests.",
+            description: "Concrete proposed lease wording that reduces the selected role's exposure and offers a plausible compromise.",
           },
           residualRisk: {
             type: "string",
-            description: "The specific risk or cost remaining if this proposed edit is accepted. No guarantee of full protection or landlord acceptance.",
+            description: "The specific risk or cost remaining for the selected role if this edit is accepted.",
           },
-          sourceDocumentId: {
-            type: "string",
-            description: "The id of the supplied document the sentence came from.",
-          },
-          sourceSentence: {
-            type: "string",
-            description: "One sentence copied character for character from that document.",
+          ...citationProperties,
+          relatedCitations: {
+            type: "array",
+            description: "Additional passages needed to support the finding, such as a cap, exception, or conflicting term. Empty if the primary sentence suffices.",
+            items: {
+              type: "object",
+              properties: citationProperties,
+              required: Object.keys(citationProperties),
+              additionalProperties: false,
+            },
           },
         },
         required: [
+          "title",
+          "nextStep",
           "severity",
           "consequence",
           "triggeringCondition",
@@ -64,6 +76,7 @@ export const analysisJsonSchema: Record<string, unknown> = {
           "residualRisk",
           "sourceDocumentId",
           "sourceSentence",
+          "relatedCitations",
         ],
         additionalProperties: false,
       },
@@ -73,14 +86,20 @@ export const analysisJsonSchema: Record<string, unknown> = {
   additionalProperties: false,
 };
 
-export const modelFlagSchema = z.object({
+const modelCitationSchema = z.object({
+  sourceDocumentId: z.string().trim().min(1),
+  sourceSentence: z.string().trim().min(1),
+});
+
+export const modelFlagSchema = modelCitationSchema.extend({
+  title: z.string().trim().min(1),
+  nextStep: z.string().trim().min(1),
   severity: z.enum(["high", "medium", "low"]),
   consequence: z.string().trim().min(1),
   triggeringCondition: z.string().trim().min(1),
   counterOffer: z.string().trim().min(1),
   residualRisk: z.string().trim().min(1),
-  sourceDocumentId: z.string().trim().min(1),
-  sourceSentence: z.string().trim().min(1),
+  relatedCitations: z.array(modelCitationSchema),
 });
 
 export const modelAnalysisSchema = z.object({

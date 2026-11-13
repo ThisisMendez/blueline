@@ -6,6 +6,8 @@
 
 **Status:** built; see the measured runs below
 
+**2026-11-12 update.** The default above applies to the renter-side exposure it describes. A landlord review grades the landlord's supported exposure and explains its basis using the same underlying contract terms. [Product requirements](../../../PRD.md#my-red-lines).
+
 Blueline has no Critical tier (severity is high, medium or low). The brief's "apply Critical when the existing Critical criteria are met" has nothing to attach to, and adding a tier was not approved. The gold set grades all six unilateral cases critical, so the best a product grade can do is High. The report shows that as a gap instead of hiding it: exact-band agreement uses the gold set's own labels, so High on a critical case is not exact.
 
 - [x] PRD.md "My red lines" has a unilateral-changes row; the analysis prompt has the matching bullet

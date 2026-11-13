@@ -1,0 +1,31 @@
+{
+  "evidence_id": "ev_3b28f771831952b8e22aff6a3d96acfa8d3868b8c7fee7d065dd2f2b417fa9f4",
+  "url": "https://leaseguardai.com/analyze?demo=true",
+  "final_url": "https://leaseguardai.com/analyze?demo=true",
+  "captured_at": "2026-11-12T17:05:41.527Z",
+  "screenshot_sha256": "5fa1366151b340e5987abe6c8df075e4a4c3a4b5450519e017d88ba403515e6a",
+  "ax_sha256": "eb879539387688d5f502a415d7c1fef97dad4143a219332265094fd9422b69c0",
+  "completeness": "complete",
+  "request_origins": {
+    "https://leaseguardai.com": 44,
+    "https://www.googletagmanager.com": 4,
+    "https://fonts.googleapis.com": 1,
+    "https://fonts.gstatic.com": 1,
+    "https://challenges.cloudflare.com": 2,
+    "https://www.google-analytics.com": 2,
+    "https://googleads.g.doubleclick.net": 1,
+    "https://www.google.com": 4,
+    "https://ad.doubleclick.net": 1,
+    "https://www.redditstatic.com": 1,
+    "https://www.google.com.do": 1,
+    "https://alb.reddit.com": 1
+  },
+  "console": [],
+  "browser": {
+    "mode": "launch",
+    "process_ownership": "provider-owned",
+    "cleanup": "terminated-owned-process",
+    "product": "Chromium",
+    "version": "157.0.8103.51"
+  }
+}

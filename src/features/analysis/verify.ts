@@ -6,7 +6,7 @@ import {
 } from "@/features/packet/types";
 
 import type { CandidateFlag } from "./model/schema";
-import type { RiskFlag } from "./types";
+import type { ReviewCitation, RiskFlag } from "./types";
 
 /**
  * Citation verification (ADR 0001).
@@ -78,6 +78,15 @@ export function flagId(
   return `${sourceDocumentId}#${sourceStart}-${sourceEnd}`;
 }
 
+function toReviewCitation(citation: LocatedCitation): ReviewCitation {
+  return {
+    sourceSentence: citation.sentence,
+    sourceDocumentId: citation.document.id,
+    sourceStart: citation.start,
+    sourceEnd: citation.end,
+  };
+}
+
 /** Verifies each candidate's quotation against the packet's extracted text. */
 export function verifyFlags(
   candidates: readonly CandidateFlag[],
@@ -88,50 +97,40 @@ export function verifyFlags(
   const seen = new Set<string>();
 
   for (const candidate of candidates) {
-    const document = findDocument(packet, candidate.sourceDocumentId);
-    if (!document) {
-      rejected.push({
-        consequence: candidate.consequence,
-        triggeringCondition: candidate.triggeringCondition,
-        reason: "unknown-document",
-        sourceDocumentId: candidate.sourceDocumentId,
-        quotation: candidate.sourceSentence,
-      });
-      continue;
+    const citations = new Map<string, ReviewCitation>();
+    for (const source of [candidate, ...candidate.relatedCitations]) {
+      const located = locateCitation(packet, source.sourceDocumentId, source.sourceSentence);
+      if (!located) {
+        rejected.push({
+          consequence: candidate.consequence,
+          triggeringCondition: candidate.triggeringCondition,
+          reason: findDocument(packet, source.sourceDocumentId) ? "quotation-not-found" : "unknown-document",
+          sourceDocumentId: source.sourceDocumentId,
+          quotation: source.sourceSentence,
+        });
+        citations.clear();
+        break;
+      }
+      citations.set(flagId(located.document.id, located.start, located.end), toReviewCitation(located));
     }
 
-    const located = locateCitation(
-      packet,
-      candidate.sourceDocumentId,
-      candidate.sourceSentence,
-    );
-    if (!located) {
-      rejected.push({
-        consequence: candidate.consequence,
-        triggeringCondition: candidate.triggeringCondition,
-        reason: "quotation-not-found",
-        sourceDocumentId: candidate.sourceDocumentId,
-        quotation: candidate.sourceSentence,
-      });
-      continue;
-    }
-
-    const id = flagId(document.id, located.start, located.end);
+    const [primary, ...relatedCitations] = citations.values();
+    if (!primary) continue;
+    const id = flagId(primary.sourceDocumentId, primary.sourceStart, primary.sourceEnd);
     if (seen.has(id)) continue;
     seen.add(id);
 
     verified.push({
       id,
+      title: candidate.title,
+      nextStep: candidate.nextStep,
       severity: candidate.severity,
       consequence: candidate.consequence,
       triggeringCondition: candidate.triggeringCondition,
       counterOffer: candidate.counterOffer,
       residualRisk: candidate.residualRisk,
-      // The signer reads the document's own words, not the model's echo.
-      sourceSentence: located.sentence,
-      sourceDocumentId: document.id,
-      sourceStart: located.start,
-      sourceEnd: located.end,
+      ...primary,
+      relatedCitations,
     });
   }
 

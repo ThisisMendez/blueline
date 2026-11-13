@@ -1,0 +1,150 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+  - main:
+    - heading "Analyze Your Lease" [level=1]
+    - text: 📄
+    - paragraph: SAMPLE REPORT — This is an example using a fictional lease.
+    - paragraph: Upload your own lease to see a real analysis.
+    - button "Analyze My Real Lease"
+    - img
+    - text: C 62/100 Sample Report · Florida
+    - heading "⚠️ Found 8 issues total — including 1 HIGH-risk clause that could put your deposit or rights at risk. Review before signing." [level=2]
+    - text: 📋 26 clauses reviewed 🚨 8 issues found
+    - paragraph: We found 8 flagged clauses in your lease — 1 high-risk, 4 medium-risk, 3 low-risk.
+    - text: Checked against Florida's landlord-tenant statutes
+    - heading "🚨 Issues Detected (8 total)" [level=3]
+    - text: HIGH RISK Deposit Deductions Without Written Notice May Not Be Enforceable
+    - paragraph: "\"Landlord may deduct from the security deposit for any damages at Landlord's sole discretion, without itemization.\""
+    - paragraph: Why It Matters
+    - paragraph: Florida Statute 83.49(3) sets out a written, itemized claim process (by certified mail, within 30 days) before a landlord may keep any part of your deposit. A clause allowing undocumented deductions at the landlord's discretion may conflict with that process and may not be enforceable.
+    - paragraph: Recommended Action
+    - paragraph: Ask for this clause to be revised to follow the FS 83.49(3) written-notice process. If the landlord refuses, a tenant-rights attorney or your county's legal aid office can tell you how the statute applies.
+    - text: ⚖ F.S. 83.49(3) MEDIUM RISK Late Fee That May Exceed Florida's Cap
+    - paragraph: "\"A late fee equal to 25% of monthly rent will be charged if rent is not received by the 2nd of the month.\""
+    - paragraph: Why It Matters
+    - paragraph: Florida's 2026 late-fee framework (FS 83.808) caps late fees at the greater of $20 or 20% of monthly rent. A 25% fee appears to exceed that cap, and the 1-day grace period is shorter than what most Florida leases provide.
+    - paragraph: Recommended Action
+    - paragraph: "Request the fee be brought within the FS 83.808 cap and ask for at least a 3–5 day grace period. Template: 'I'd like the late fee revised to align with Florida's statutory cap under FS 83.808.'"
+    - text: ⚖ F.S. 83.808 MEDIUM RISK Vague Landlord Entry Language
+    - paragraph: "\"Landlord may enter the premises upon reasonable notice for inspections or repairs.\""
+    - paragraph: Why It Matters
+    - paragraph: Florida Statute 83.53 generally requires at least 12 hours' notice before non-emergency entry. "Reasonable notice" with no defined timeframe leaves that open to interpretation — and the ambiguity tends to favor the landlord.
+    - paragraph: Recommended Action
+    - paragraph: Ask for the clause to specify 'at least 12 hours' advance notice, during reasonable hours, except in emergencies' — matching F.S. 83.53.
+    - text: ⚖ F.S. 83.53 MEDIUM RISK One-Sided Attorney Fees Clause
+    - paragraph: "\"In any dispute, Tenant shall pay all of Landlord's attorney fees and legal costs.\""
+    - paragraph: Why It Matters
+    - paragraph: Florida Statute 83.48 generally makes attorney-fee rights mutual in residential lease disputes — the prevailing party may recover fees. One-sided language may not operate the way it reads, but it can pressure tenants who don't know the statute.
+    - paragraph: Recommended Action
+    - paragraph: "Request mutual language: 'The prevailing party in any dispute shall be entitled to reasonable attorney's fees.' Cite F.S. 83.48."
+    - text: ⚖ F.S. 83.48 MEDIUM RISK Auto-Renewal With a 90-Day Opt-Out Window
+    - paragraph: "\"This lease shall automatically renew for a 12-month term unless Tenant provides written notice at least 90 days prior to expiration.\""
+    - paragraph: Why It Matters
+    - paragraph: A 90-day opt-out window is unusually long and easy to miss — locking you into another full year. Florida law does not prohibit auto-renewal, which makes the notice window itself the negotiation point.
+    - paragraph: Recommended Action
+    - paragraph: Ask to shorten the notice window to 30–60 days, make it mutual, or convert to month-to-month at expiration. Put a calendar reminder on the deadline either way.
+    - paragraph: 🔓 Unlock 3 more flags with Pro
+    - heading "We found 3 more flags in your lease worth reviewing before you sign." [level=3]
+    - paragraph: Pro unlocks every flag, plain-English negotiation templates for each one, the full PDF report, and statute references — for $19.99 one-time, 48-hour money-back guarantee.
+    - text: 📧 Where should we send your report?
+    - textbox "📧 Where should we send your report?":
+      - /placeholder: your@email.com
+    - paragraph: Report emailed instantly after payment. No spam, ever.
+    - button "→ Unlock Full Report — $19.99"
+    - text: 🔐 Stripe Secure 💳 $19.99 one-time ↩️ 48-hour money-back
+    - heading "🔒 3 More Flags in Your Lease" [level=3]
+    - text: LOW RISK Mandatory Arbitration Clause
+    - paragraph: "\"Any dispute arising under this lease shall be resolved exclusively through binding arbitration.\""
+    - button "🔒 Unlock with Pro"
+    - text: LOW RISK HOA Rules Incorporated Without a Copy
+    - paragraph: "\"Tenant agrees to abide by all rules and regulations of the homeowners association, as amended from time to time.\""
+    - button "🔒 Unlock with Pro"
+    - text: LOW RISK Mandatory Carpet-Cleaning Fee Regardless of Condition
+    - paragraph: "\"Tenant shall pay a $150 professional carpet cleaning fee upon move-out, regardless of carpet condition.\""
+    - button "🔒 Unlock with Pro"
+    - button "→ Unlock All 8 Flags — $19.99"
+    - paragraph: ⚖️ Florida — Key Tenant Rights (Free)
+    - paragraph: Security Deposit Limit
+    - paragraph: No limit; return within 15-30 days (FS §83.49)
+    - paragraph: Notice Period
+    - paragraph: 15 days (monthly)
+    - text: 🔒 Key statutes + high-risk clause types in Florida — included with Pro 🔒 Zero lease document storage ⚡ Results in ~60 seconds ⚖️ All 50 state laws 🏛️ State-specific statutes 01 ☁️
+    - heading "Upload Your Lease" [level=3]
+    - paragraph: Drop your PDF or TXT file. Your document is never stored on our servers.
+    - text: 02 ⚙️
+    - heading "AI Scans Every Clause" [level=3]
+    - paragraph: We cross-reference your lease against your state's landlord-tenant statutes and current tenant-protection guidance to flag clauses worth your attention.
+    - text: 03 🛡️
+    - heading "Get Your Report" [level=3]
+    - paragraph: Lease Health Score (A–F), flagged clauses with statute references, and negotiation templates — instantly.
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

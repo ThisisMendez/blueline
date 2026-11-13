@@ -2,90 +2,53 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { AccountsNotice } from "@/features/auth/components/AccountsNotice";
-import { SignInForm } from "@/features/auth/components/SignInForm";
+import { AuthFrame, authPageHref, type AuthPageProps } from "@/features/auth/components/AuthFrame";
+import { GoogleSignInForm, SignInForm } from "@/features/auth/components/SignInForm";
+import { readAuthProviderSettings } from "@/features/auth/provider-settings";
+import { isRecoveryConfigured } from "@/features/auth/recovery-authorization";
+import { signInReturnPath } from "@/features/auth/redirects";
 import { getAccountsState } from "@/features/auth/session";
 
-export const metadata: Metadata = {
-  title: "Sign in | Blueline Redline",
-};
+export const metadata: Metadata = { title: "Sign in | Blueline Redline" };
 
 const PROBLEM_MESSAGE: Record<string, string> = {
-  "link-unreadable": "That link arrived incomplete. Send a fresh one.",
-  "link-expired": "That link has expired. Send a fresh one and use it straight away.",
-  "accounts-unavailable": "Accounts aren't running on this deployment yet.",
+  "link-unreadable": "That confirmation link is incomplete. Request a new one.",
+  "link-expired": "That confirmation link has expired. Request a new one and open it in this browser.",
+  "accounts-unavailable": "Accounts aren’t running on this deployment yet.",
+  "google-incomplete": "Google sign-in didn’t finish. Try again or sign in with email and password.",
 };
 
-/**
- * The front door. With accounts absent it says so and points at the review
- * screen, which works without one — the product does not pretend to sign
- * anybody in.
- */
-export default async function SignInPage(props: PageProps<"/sign-in">) {
+export default async function SignInPage({ searchParams }: AuthPageProps) {
   const accounts = await getAccountsState();
-  const searchParams = await props.searchParams;
-
-  if (accounts.kind === "signed-in") {
-    const next = searchParams.next;
-    const base = "https://blueline.invalid";
-    const destination =
-      typeof next === "string" && next.startsWith("/") ? URL.parse(next, base) : null;
-    if (!destination || destination.origin !== base || destination.pathname.startsWith("//")) {
-      redirect("/review");
-    }
-    redirect(`${destination.pathname}${destination.search}${destination.hash}`);
-  }
-
-  const problemParam = searchParams.problem;
-  const problem =
-    typeof problemParam === "string" ? PROBLEM_MESSAGE[problemParam] : undefined;
+  const query = await searchParams;
+  const next = signInReturnPath(query.next);
+  if (accounts.kind === "signed-in") redirect(next);
+  const showGoogle = accounts.kind !== "unconfigured"
+    && (await readAuthProviderSettings())?.external?.google === true;
+  const problem = typeof query.problem === "string" && Object.hasOwn(PROBLEM_MESSAGE, query.problem)
+    ? PROBLEM_MESSAGE[query.problem]
+    : undefined;
 
   return (
-    <main
-      id="main"
-      className="flex flex-1 flex-col items-center px-6 py-16 sm:px-10 md:py-24"
+    <AuthFrame
+      title="Sign in to Blueline Redline"
+      description="Open your saved lease reviews and account settings."
+      configured={accounts.kind !== "unconfigured"}
+      problem={problem}
     >
-      <div className="flex w-full max-w-lg flex-col gap-8">
-        <div>
-          <Link
-            href="/"
-            className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight text-[var(--color-navy-ink)]"
-          >
-            Blueline <span className="text-[var(--color-red-ink)]">Redline</span>
-          </Link>
-          <h1 className="mt-6 font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl">
-            Sign in to keep your reviews
-          </h1>
-          <p className="mt-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-            Your account holds your review library and personal red lines.
-            We send an email link to sign you in.
-          </p>
-        </div>
-
-        {accounts.kind === "unconfigured" ? (
-          <>
-            <AccountsNotice />
-            <p>
-              <Link
-                href="/review"
-                className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-wide text-[var(--color-navy)] underline decoration-2 underline-offset-4 hover:text-[var(--color-red-ink)]"
-              >
-                Review a lease without an account
-              </Link>
-            </p>
-          </>
-        ) : (
-          <>
-            {problem ? (
-              <p className="border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-5 py-4 font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)]">
-                {problem}
-              </p>
-            ) : null}
-            <SignInForm />
-            <Link href="/review" className="underline">Review a lease without an account</Link>
-          </>
-        )}
+      {showGoogle ? <GoogleSignInForm next={next} /> : null}
+      <SignInForm next={next} />
+      <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+        {isRecoveryConfigured() ? (
+          <Link href={authPageHref("/forgot-password", next)} className="underline">Forgot password?</Link>
+        ) : null}
+        <Link href={authPageHref("/sign-up", next)} className="underline">Create account</Link>
+        <Link href={authPageHref("/sign-up", next, { mode: "resend" })} className="underline">Resend confirmation</Link>
       </div>
-    </main>
+      <details className="border-t border-[var(--color-navy)]/30 pt-4">
+        <summary className="cursor-pointer text-sm font-semibold underline">Sign in with an email link</summary>
+        <div className="mt-3"><SignInForm mode="email-link" next={next} /></div>
+      </details>
+    </AuthFrame>
   );
 }

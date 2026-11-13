@@ -2,7 +2,7 @@
 
 Production: https://blueline-khaki-eta.vercel.app
 
-Residential lease review with exact source citations. It reads the lease text only: it does not check terms against local law or judge enforceability (see ADR 0014). The existing Next.js application lives in `src/app/`; feature code lives in `src/features/`.
+A contract review app for residential leases, built for renters first and supporting landlords. Choose your side, and the review highlights clauses that could harm it, each with its exact source citation. The selected role belongs to that review. V1 reads the lease text only (see ADR 0014). The Next.js application lives in `src/app/`; feature code lives in `src/features/`.
 
 ## Run locally
 
@@ -55,7 +55,7 @@ npm run smoke
 
 Tests and the default smoke run use deterministic responses at the external model boundary. They require no live credentials. The smoke command prints synthetic source sentences and verification counts while exercising the real route, completeness check, schemas and citation pipeline.
 
-`npm run smoke -- --live` uses `.env.local` and sends one synthetic planted-risk fixture to the configured model. It is bounded to seven requests (one is the legal-claim repair, used only when needed), 30 seconds per request and a two-minute start budget. It does not prove independent model quality. See `evals/README.md` for the separate evaluation prerequisites and `BUILD-REPORT.md` for current evidence and limitations.
+`npm run smoke -- --live --role=renter` and `npm run smoke -- --live --role=landlord` each use `.env.local` to send one synthetic planted-risk fixture to the configured model. The script caps regular model calls at seven per run, with 30 seconds per request. See `evals/README.md` for independent evaluation and `BUILD-REPORT.md` for earlier evidence and limitations.
 
 ## Browser checks with synthetic fixtures
 
@@ -69,15 +69,19 @@ The default 250 ms delay per model request makes loading states visible; set `BL
 
 Provide `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` for an existing Supabase project. Ordered schema migrations are tracked under `supabase/migrations/`. This build does not create a hosted project or apply remote migrations. SQL and deployed row-level security need separate verification before relying on account persistence.
 
-Email sign-in uses `/auth/confirm`. In Supabase Authentication → URL Configuration, set the Site URL to your app's default origin and allow its callback URL. For a local-only setup, use `http://localhost:3000` as the Site URL and allow `http://localhost:3000/auth/confirm` (an existing `http://localhost:3000/**` entry also covers it).
+### Configure account sign-in
 
-The default Supabase email template works with the app. Request the link from Blueline's sign-in form and open it in the same browser profile so the callback can exchange the returned PKCE code using the verifier cookie. A custom email template can still send users to `/auth/confirm?token_hash={{ .TokenHash }}&type=email`. To check that sign-in created a session, verify that `/review` shows **Sign out** after following the link, then reload and check again.
+Use the `redline` Supabase project for staging. Set `NEXT_PUBLIC_SITE_URL` to the test app's origin and set a unique server-only `AUTH_RECOVERY_COOKIE_SECRET` with `openssl rand -hex 32`. Configure the app origin and the `/auth/confirm` and `/auth/callback` redirect paths in staging's Supabase Auth URL Configuration. Include any required query-string matches for the allowlist, and keep preview rules limited to the staging host.
+
+- Keep **Confirm email** enabled. Email/password users verify their address once when they sign up. Later sign-ins use their password. Existing email-link users can keep using **Sign in with an email link**. When password recovery is configured, they can choose **Forgot password?** to set a password on their existing account. Open standard PKCE email links in the same browser profile where they were requested. Public confirmation and recovery email require a [custom SMTP sender](https://supabase.com/docs/guides/auth/auth-smtp). Use a free sender within its quotas and a domain you control.
+- For Google, configure a web OAuth client in Google Cloud with the staging Supabase provider's exact `/auth/v1/callback` URL, then enter the client ID and secret in Supabase Auth → Sign In / Providers → Google. Use the basic identity scopes in the [Supabase setup guide](https://supabase.com/docs/guides/auth/social-sign-in/auth-google). The app's OAuth callback is `/auth/callback`. The Google secret belongs in Supabase's provider settings.
+- Test email confirmation, subsequent password sign-in without a new email, recovery, and Google sign-in using test accounts. Reload `/account`, reopen a saved renter and landlord review, and confirm a second account cannot open them. Test that an existing confirmed account using Google with the same verified address retains its UID and library.
 
 Do not commit private lease text, environment files, database dumps or credentials.
 
 ### Retention deployment gate
 
-Apply the ordered migrations through `0006_expiry_schedule.sql` to an existing staging project before enabling the library. `0005` makes review creation atomic, derives lifecycle timestamps from the database clock, and limits table access to unexpired owned reviews. Completion retains a review for 30 fixed 24-hour days; each explicit save sets a new 90-day expiry from that save. Browser-supplied timestamps cannot change these dates. The library uses explicit composite-foreign-key hints for its nested queries because multiple relationships exist. See [Supabase joins and nesting](https://supabase.com/docs/guides/database/joins-and-nesting).
+Apply the ordered migrations through `0007_review_roles.sql` to an existing staging project before enabling the library. `0007` stores the selected role and additional finding locations in the existing atomic write. `0005` derives lifecycle timestamps from the database clock and limits table access to unexpired owned reviews. Completion retains a review for 30 fixed 24-hour days. Each explicit save sets a new 90-day expiry from that save. The library uses explicit composite-foreign-key hints for its nested queries because multiple relationships exist. See [Supabase joins and nesting](https://supabase.com/docs/guides/database/joins-and-nesting).
 
 At expiry, account access stops. Physical deletion is a separate operation: `0006` schedules `purge_expired_reviews()` every minute, deleting the review and cascading to its extracted text, flags and checklist rows. It requires [Supabase Cron / pg_cron](https://supabase.com/docs/guides/cron/install); migration failure or a failed cleanup job is a deployment blocker, not evidence that expired text was deleted. A normal successful job removes expired rows on the next run. Monitor job failures and delays; do not promise deletion at the exact expiry instant.
 

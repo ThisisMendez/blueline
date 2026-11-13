@@ -1,0 +1,161 @@
+LeaseGuard AI — AI Lease Review in 60 Seconds for Renters
+Lease
+Guard
+AI
+How It Works
+Features
+Pricing
+Blog
+Contact
+My Account
+Save reports · optional
+Analyze My Lease
+Privacy-First · Zero Lease Storage · All 50 States
+Know Your Lease
+LeaseGuard AI reads your rental agreement line by line and flags clauses worth a closer look — junk fees, predatory terms, and language that may conflict with your state's tenant-protection laws.
+See your top 5 flags free in under 60 seconds. Full report available with Pro.
+Analyze My Lease — Free Preview
+See How It Works ↓
+📄 See Sample Report
+Free preview:
+top 5 flags + Lease Health Score
+Pro ($19.99 one-time):
+unlimited flags, negotiation templates, full PDF report
+Lawyers charge $400–$800/hr
+Full report from $19.99 one-time
+Zero Lease Storage
+60-Second Analysis
+U.S. Statute Database
+All 50 States ↗
+What We Look For In Your Lease
+Most renters sign leases they don't fully understand. Landlords count on that.
+LeaseGuard AI doesn't.
+🚨
+Compliance Risk Detection
+Every clause cross-referenced against your state's landlord-tenant statutes. Anything that may not be enforceable in your state gets flagged — with the source statute attached.
+💸
+Junk Fee Scanner
+Admin fees, move-in penalties, and "convenience" charges that may exceed state caps or duplicate other deposit coverage — found and explained in plain English.
+⚠️
+Predatory Term Detection
+Auto-renewals, one-sided indemnification, excessive landlord entry rights, and late fees that go beyond market norms — all surfaced for your review.
+🤝
+Negotiation Templates
+Plain-language email and conversation templates for raising any flagged clause with your landlord — ready to copy, edit, and send.
+See All Features
+Lease Health Score
+Your lease gets a grade.
+A through F.
+Know your risk before you read a single clause.
+Safe to sign
+Clean lease. Sign with confidence.
+No high-risk flags found in our review. No junk fees or aggressive terms detected. Standard landlord protections only — this is as good as it gets.
+Get My Lease Grade
+Minor issues. Clarify before signing.
+Low risk
+Notable risks. Negotiate these terms.
+Negotiable
+Multiple high-risk flags. Strongly consider consulting a tenant-rights attorney before signing.
+High risk
+Predatory. We recommend not signing as-is.
+Do not sign
+How It Works — 3 Steps
+From upload to insight in under 60 seconds.
+01
+☁️
+Upload Your Lease
+Drag and drop your lease PDF or paste the full text. Takes 10 seconds. Never stored.
+02
+⚙️
+AI Scans Every Clause
+Our AI cross-references every clause against your state's landlord-tenant law database.
+03
+🛡️
+Get Your Report
+Lease Health Score, flagged clauses with statute references, and negotiation templates — ready in 60 seconds.
+Learn More
+Built For Renters, By Operators
+A licensed attorney is the right call for a real legal dispute. But for a sanity check before you sign?
+You deserve a tool that's fast, free, and built for you — not a billable hour.
+50
+states covered
+<60s
+average analysis time
+Zero
+lease document storage
+detection modules per scan
+Feedback From Our Beta Testers
+Beta testers received free access to the product in exchange for their honest evaluation. All opinions are their own.
+The negotiation scripts alone made it worth it. I copied the exact language, sent it to my landlord, and got two clauses removed before signing. Incredibly easy to use.
+Meera R.
+Beta Tester
+It's cheaper than hiring a lawyer to review your documents. The state law breakdown was exactly what I needed — I knew my rights before I even talked to my landlord.
+Julie Ann F.
+I sent one email to my landlord using the exact script and had a fee removed the same day. Never would have known to push back on that clause without this tool.
+Harish P.
+I had no idea my state had specific rules on security deposit returns. The state law section opened my eyes — my landlord's clause may not have held up.
+Moin G.
+The health score is surprisingly accurate. Gave me a clear picture of how risky my lease was before I even read a single clause. Fast and easy.
+Darshan M.
+I was skeptical AI could handle legal documents but it was spot on. Caught a clause my property manager may not have had a solid basis to include. Impressed.
+Dhruvesh P.
+The Lease Health Score was the most useful part for me — seeing a letter grade instantly told me how worried I should be. I'd absolutely pay for the full report.
+Anas W.
+LeaseGuard AI vs. Your Alternatives
+You have three options when you get a lease. Here's the honest comparison.
+← Scroll to compare →
+Feature
+LeaseGuard AI
+Sign Blind
+Pre-Lease Attorney Review
+Cost
+Free (Pro from $19.99)
+Free
+$400–$800+
+Time to insight
+60 seconds
+1–5 days
+Clause-by-clause review
+All 50 states
+Varies
+Statute references
+Negotiation templates
+Extra charge
+Privacy (no storage)
+LeaseGuard AI is an informational tool, not a substitute for legal counsel. We recommend pre-lease attorney review for high-value, complex, or commercial leases.
+Frequently Asked Questions
+Is LeaseGuard AI really free?
+Yes — your free preview includes the Lease Health Score (A–F grade), your top flagged clauses (title, severity, and the exact lease text), plus your state’s key tenant rights (deposit limit & notice period). Upgrading to Pro ($19.99 one-time) unlocks the full report: every red flag with legal explanations, relevant statutes, recommended negotiation actions, ready-to-use templates, the complete state law guide, and a PDF copy via email.
+Is my lease stored or shared?
+Your lease document itself is never stored — it's processed in memory and discarded as soon as analysis completes. Your analysis results (including short lease-text snippets in each flag) are retained for up to 7 days so you can re-download your report or upgrade to Pro without re-uploading. After 7 days, they're permanently deleted (Pro reports saved to a customer account are kept until you delete them). We never sell, share, or use your lease content to train AI models. Full details on our Privacy page.
+Does LeaseGuard AI replace a lawyer?
+No — and we're upfront about that. LeaseGuard AI is an informational tool, not a law firm. We don't give legal advice. For legal interpretation of how a clause applies to your specific situation, or for any active dispute, please consult a licensed attorney in your state. Many states have free tenant-rights legal aid offices — we link to them in our tenant-rights guides.
+Which states are supported?
+All 50 U.S. states. Our database includes current landlord-tenant statutes, consumer protection laws, and relevant case law for every state.
+How accurate is the AI?
+Our model is trained on publicly available U.S. landlord-tenant statutes and tenant-protection guidance. Every flag links to its underlying source so you can verify the language directly. AI gets things wrong sometimes — that's why we always recommend you verify any flag yourself, and consult a licensed attorney for legal interpretation specific to your situation.
+What file types do you support?
+We accept standard PDF leases (up to 25 pages), scanned PDF leases (OCR-enhanced), and copy-pasted lease text. Multi-addenda packages are also supported.
+I have a signing deadline — how fast is this really?
+Most analyses complete in under 60 seconds after upload. Even for complex leases over 20 pages, you typically have your full report in under 3 minutes — fast enough for any deadline.
+Your lease deadline is
+closer than you think.
+Don't sign blind. Get an instant AI-powered lease review — flag compliance risks and high-risk clauses before you sign.
+📄 View Sample Report
+Free preview
+Full report from $19.99
+No account needed
+AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+Zero Lease Document Storage
+Product
+Resources
+Tenant Rights by State
+About
+Share Feedback
+Legal
+Trust & Transparency
+Privacy Policy
+Terms of Service
+LeaseGuard AI is a technology service, not a law firm.
+Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+© 2026 LeaseGuard AI. All rights reserved.

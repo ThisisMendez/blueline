@@ -1,0 +1,97 @@
+Features — 6 Detection Modules for Renters | LeaseGuard AI
+Lease
+Guard
+AI
+How It Works
+Features
+Pricing
+Blog
+Contact
+My Account
+Save reports · optional
+Analyze My Lease
+6 Analysis Modules
+Everything LeaseGuard AI Analyzes
+In Your Lease
+Six powerful modules. One 60-second scan. Built on publicly available U.S. landlord-tenant statutes.
+Analyze My Lease — Free
+🚨
+COMPLIANCE RISK
+Compliance Risk Detection
+Every U.S. state has tenant-protection laws. Our AI cross-references each clause in your lease against your state's current Residential Landlord-Tenant Act (RLTA) and flags anything that may not be enforceable under those statutes.
+Clauses that appear to waive habitability standards
+"No pets, ever" clauses that may not align with Fair Housing accommodation requirements (service animals, ESAs)
+Landlord entry clauses that fall short of state notice requirements
+Security deposit amounts that exceed state caps
+Clauses that may limit your access to legal remedies
+Mandatory arbitration clauses (treatment varies significantly by state)
+⚠️
+HIGH RISK — May conflict with Florida law
+"Tenant waives all rights to security deposit refund disputes."
+Florida Statute 83.49(3) outlines a written process landlords must follow for security deposit returns. Clauses that appear to waive a tenant’s rights under this statute are commonly disputed. This is the kind of language a tenant-rights attorney or your state’s legal aid office can help you evaluate before signing.
+💸
+FEE ANALYSIS
+Junk Fee Scanner
+Hidden fees buried in lease addenda cost U.S. renters billions every year. Our Junk Fee Scanner identifies charges that may exceed state caps, duplicate other deposit coverage, or lack a clear legal basis — and explains each one in plain English.
+"Administrative processing" fees stacked on security deposits
+Move-in/move-out fees duplicating security deposit coverage
+Mandatory "amenity" fees for services not actually rendered
+Utility markup fees exceeding actual cost
+Pet fees stacked with additional pet deposits and monthly pet rent
+Late fee amounts that may exceed state limits or reasonableness standards
+PREDATORY TERMS
+Predatory Lease Term Detection
+Not every aggressive clause is unenforceable — but many can still put you at a real disadvantage if disputes come up later. Our AI flags language that is one-sided, vague, or commonly used to put tenants at risk.
+Auto-renewal clauses with 60+ day notice requirements
+Broad indemnification language shifting all liability to tenants
+Excessive landlord entry rights beyond state minimums
+Repair & deduct prohibition clauses
+Lease termination penalties exceeding two months' rent
+Vague "reasonable" language giving landlords unchecked authority
+Want to see these detections in action?
+Upload your lease and get a live demonstration on your actual agreement.
+Analyze My Lease Now
+🗺️
+LAW DATABASE
+All-50-States Statute Database
+Landlord-tenant law varies dramatically by state. A clause unenforceable in California may be standard in Texas. Our database includes current statutory language from all 50 U.S. states.
+Residential Landlord-Tenant Acts for all 50 states
+Security deposit limits and return timelines by state
+Legal notice periods for landlord entry
+State-specific habitability standards
+Eviction procedure rules and tenant protections
+Rent control applicability and local ordinances (major metros)
+⚖️
+EXPLANATIONS
+Plain-English Statute Explanations
+Every flag comes with what you need to understand: what the clause says, why it raised a flag, which statute it references, and suggested next steps.
+EXAMPLE FLAG
+"Tenant agrees that any disputes shall be settled by binding arbitration."
+Mandatory arbitration clauses in residential leases are treated very differently across states — some courts have declined to enforce them, others have not. California’s CCP § 1281.2 contains specific provisions about arbitration that may apply. Before signing, this is worth raising with a tenant-rights attorney or your state’s legal aid hotline — many offer free or low-cost consultations.
+🤝
+NEGOTIATION
+AI Negotiation Templates
+Spotting a flagged clause is only half the work. LeaseGuard AI generates plain-language email and conversation templates for every flag — ready to copy, edit, and send.
+Templates for every medium and high-risk flag
+Professional email drafts ready to send
+Plain-language wording (no legalese)
+Conversation starters for in-person discussions
+EXAMPLE TEMPLATE
+"Thank you for sending the lease. I noticed Section 12 includes a $350 administrative fee. I'd like to understand what this covers and request it be removed or applied toward the security deposit before I sign. Happy to move forward once we're aligned."
+See All 6 Features Working On
+Your Lease
+Upload your lease now and get a free analysis with all detection modules active.
+AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+Zero Lease Document Storage
+Product
+Resources
+Tenant Rights by State
+About
+Share Feedback
+Legal
+Trust & Transparency
+Privacy Policy
+Terms of Service
+LeaseGuard AI is a technology service, not a law firm.
+Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+© 2026 LeaseGuard AI. All rights reserved.

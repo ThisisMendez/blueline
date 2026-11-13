@@ -1,0 +1,1026 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - text: Tenant Rights & Lease Guides
+    - heading "Tenant Rights & Lease Guides" [level=1]
+    - paragraph: Everything renters need to understand their leases, know their rights, and negotiate with confidence.
+    - button "All"
+    - button "Lease Tips"
+    - button "Tenant Rights"
+    - button "Junk Fees"
+    - button "Negotiation"
+    - button "First-Time Renters"
+    - button "Florida"
+    - 'link "Lease Tips Apr 3, 2026 How to Read a Lease Agreement: Complete Guide for Renters (2026) Most renters spend less than 10 minutes reading a lease before signing it. Here''s how to read a lease the way a tenant-rights attorney would — which sections to hit first and where the costly terms hide. 8 min read Read article"':
+      - /url: /blog/how-to-read-a-lease-agreement
+      - text: Lease Tips Apr 3, 2026
+      - 'heading "How to Read a Lease Agreement: Complete Guide for Renters (2026)" [level=2]'
+      - paragraph: Most renters spend less than 10 minutes reading a lease before signing it. Here's how to read a lease the way a tenant-rights attorney would — which sections to hit first and where the costly terms hide.
+      - text: 8 min read Read article
+      - img
+    - 'link "Junk Fees Apr 3, 2026 Most Common Junk Fees in Leases: 7 to Challenge in 2026 Many lease fees landlords charge may exceed state caps, lack a clear legal basis, or duplicate other charges. Here are 7 fee types worth examining before you sign. 6 min read Read article"':
+      - /url: /blog/most-common-junk-fees-in-leases
+      - text: Junk Fees Apr 3, 2026
+      - 'heading "Most Common Junk Fees in Leases: 7 to Challenge in 2026" [level=2]'
+      - paragraph: Many lease fees landlords charge may exceed state caps, lack a clear legal basis, or duplicate other charges. Here are 7 fee types worth examining before you sign.
+      - text: 6 min read Read article
+      - img
+    - link "Florida May 5, 2026 Florida Lease Review AI — How to Analyze Your Florida Rental Agreement Before Signing A Florida lease review AI tool reads your rental agreement against Chapter 83 of the Florida Statutes and flags risky clauses, hidden fees, and one-sided terms in plain English — in under 60 seconds. 8 min read Read article":
+      - /url: /blog/florida-lease-review-ai
+      - text: Florida May 5, 2026
+      - heading "Florida Lease Review AI — How to Analyze Your Florida Rental Agreement Before Signing" [level=2]
+      - paragraph: A Florida lease review AI tool reads your rental agreement against Chapter 83 of the Florida Statutes and flags risky clauses, hidden fees, and one-sided terms in plain English — in under 60 seconds.
+      - text: 8 min read Read article
+      - img
+    - 'link "Florida May 8, 2026 Before Signing a Florida Lease: 12-Point Checklist Every Renter Must Review (2026) Before signing a Florida lease, review these 12 high-risk areas: late fees vs Florida''s statutory cap (FS 83.808), auto-renewal traps, security deposit timelines, the 12-hour landlord entry rule, hurricane clauses, hidden insurance, and more. 8 min read Read article"':
+      - /url: /blog/before-signing-florida-lease-checklist
+      - text: Florida May 8, 2026
+      - 'heading "Before Signing a Florida Lease: 12-Point Checklist Every Renter Must Review (2026)" [level=2]'
+      - paragraph: "Before signing a Florida lease, review these 12 high-risk areas: late fees vs Florida's statutory cap (FS 83.808), auto-renewal traps, security deposit timelines, the 12-hour landlord entry rule, hurricane clauses, hidden insurance, and more."
+      - text: 8 min read Read article
+      - img
+    - 'link "Florida May 8, 2026 Florida Apartment Hidden Fees: The Complete List Every Renter Must Know (2026) Florida landlords legally collect hundreds in fees most renters never see coming — admin fees, damage waivers, amenity bundles, utility markups, and auto-enrolled insurance. Here''s what each costs, whether it''s legal, and how to push back. 10 min read Read article"':
+      - /url: /blog/hidden-fees-florida-apartment-lease
+      - text: Florida May 8, 2026
+      - 'heading "Florida Apartment Hidden Fees: The Complete List Every Renter Must Know (2026)" [level=2]'
+      - paragraph: Florida landlords legally collect hundreds in fees most renters never see coming — admin fees, damage waivers, amenity bundles, utility markups, and auto-enrolled insurance. Here's what each costs, whether it's legal, and how to push back.
+      - text: 10 min read Read article
+      - img
+    - 'link "Florida May 14, 2026 Florida Security Deposit Return: FS 83.49 Deadlines & Rights (2026) Florida law gives your landlord 15 days to return your deposit — or 30 days to send a written claim. Miss either deadline and they forfeit the right to keep anything. Here''s exactly how FS 83.49 works. 9 min read Read article"':
+      - /url: /blog/florida-security-deposit-return
+      - text: Florida May 14, 2026
+      - 'heading "Florida Security Deposit Return: FS 83.49 Deadlines & Rights (2026)" [level=2]'
+      - paragraph: Florida law gives your landlord 15 days to return your deposit — or 30 days to send a written claim. Miss either deadline and they forfeit the right to keep anything. Here's exactly how FS 83.49 works.
+      - text: 9 min read Read article
+      - img
+    - 'link "Florida May 14, 2026 Florida Lease Red Flags: 10 Warning Signs to Check Before You Sign Most risky clauses in a Florida lease don''t look alarming on the surface. Late fees above the FS 83.808 cap, open-ended early termination penalties, hurricane clauses that shift liability — here are the 10 warning signs Florida renters miss most. 9 min read Read article"':
+      - /url: /blog/florida-lease-red-flags
+      - text: Florida May 14, 2026
+      - 'heading "Florida Lease Red Flags: 10 Warning Signs to Check Before You Sign" [level=2]'
+      - paragraph: Most risky clauses in a Florida lease don't look alarming on the surface. Late fees above the FS 83.808 cap, open-ended early termination penalties, hurricane clauses that shift liability — here are the 10 warning signs Florida renters miss most.
+      - text: 9 min read Read article
+      - img
+    - 'link "Florida May 14, 2026 Florida Security Deposit Rules: Complete Renter Guide (2026) Florida Statute 83.49 governs how landlords must hold your deposit, when they must return it, and what they can deduct. Most renters sign without knowing any of this — here''s what you need to know. 10 min read Read article"':
+      - /url: /blog/florida-security-deposit-rules
+      - text: Florida May 14, 2026
+      - 'heading "Florida Security Deposit Rules: Complete Renter Guide (2026)" [level=2]'
+      - paragraph: Florida Statute 83.49 governs how landlords must hold your deposit, when they must return it, and what they can deduct. Most renters sign without knowing any of this — here's what you need to know.
+      - text: 10 min read Read article
+      - img
+    - link "Lease Tips Mar 28, 2026 Lease Clauses That Are Frequently Challenged Under U.S. Tenant Law Many lease clauses landlords include are routinely challenged — or found unenforceable — under state landlord-tenant law. Here’s what to watch for and why. 8 min read":
+      - /url: /blog/lease-clauses-often-challenged
+      - text: Lease Tips Mar 28, 2026
+      - heading "Lease Clauses That Are Frequently Challenged Under U.S. Tenant Law" [level=2]
+      - paragraph: Many lease clauses landlords include are routinely challenged — or found unenforceable — under state landlord-tenant law. Here’s what to watch for and why.
+      - text: 8 min read
+      - img
+    - 'link "Tenant Rights Mar 25, 2026 Tenant Rights in Florida: What Every Renter Needs to Know in 2026 Florida''s landlord-tenant laws give renters significant protections. Here''s what Chapter 83 of the Florida Statutes means for your lease. 9 min read"':
+      - /url: /blog/tenant-rights-florida
+      - text: Tenant Rights Mar 25, 2026
+      - 'heading "Tenant Rights in Florida: What Every Renter Needs to Know in 2026" [level=2]'
+      - paragraph: Florida's landlord-tenant laws give renters significant protections. Here's what Chapter 83 of the Florida Statutes means for your lease.
+      - text: 9 min read
+      - img
+    - link "Negotiation Mar 20, 2026 How to Negotiate Your Lease Before Signing (Scripts Included) You can negotiate almost any lease clause — most landlords expect it. Here's exactly how to do it professionally, with templates ready to copy. 7 min read":
+      - /url: /blog/how-to-negotiate-lease
+      - text: Negotiation Mar 20, 2026
+      - heading "How to Negotiate Your Lease Before Signing (Scripts Included)" [level=2]
+      - paragraph: You can negotiate almost any lease clause — most landlords expect it. Here's exactly how to do it professionally, with templates ready to copy.
+      - text: 7 min read
+      - img
+    - 'link "First-Time Renters Mar 15, 2026 First-Time Renters: Everything You Need to Know Before Signing a Lease Renting your first apartment? This guide covers everything you need to know — from security deposits to maintenance clauses — before you sign anything. 10 min read"':
+      - /url: /blog/first-time-renter-guide
+      - text: First-Time Renters Mar 15, 2026
+      - 'heading "First-Time Renters: Everything You Need to Know Before Signing a Lease" [level=2]'
+      - paragraph: Renting your first apartment? This guide covers everything you need to know — from security deposits to maintenance clauses — before you sign anything.
+      - text: 10 min read
+      - img
+    - 'link "Florida May 14, 2026 Florida Late Fee Cap Explained: What FS 83.808 Means for Renters (2026) Florida Statute 83.808 caps residential late fees at $20 or 20% of monthly rent — whichever is greater. Many Florida leases exceed this cap. Here''s what the law actually says and what you can do about it. 6 min read"':
+      - /url: /blog/florida-late-fee-cap-explained
+      - text: Florida May 14, 2026
+      - 'heading "Florida Late Fee Cap Explained: What FS 83.808 Means for Renters (2026)" [level=2]'
+      - paragraph: Florida Statute 83.808 caps residential late fees at $20 or 20% of monthly rent — whichever is greater. Many Florida leases exceed this cap. Here's what the law actually says and what you can do about it.
+      - text: 6 min read
+      - img
+    - 'link "Florida May 14, 2026 Florida Late Fee Rules: What Your Landlord Can and Cannot Charge Florida Statute 83.808 caps late fees at $20 or 20% of monthly rent — and requires the fee to be written in the lease to be enforceable at all. Here''s what Florida renters need to know before they sign. 8 min read"':
+      - /url: /blog/florida-late-fee-rules
+      - text: Florida May 14, 2026
+      - 'heading "Florida Late Fee Rules: What Your Landlord Can and Cannot Charge" [level=2]'
+      - paragraph: Florida Statute 83.808 caps late fees at $20 or 20% of monthly rent — and requires the fee to be written in the lease to be enforceable at all. Here's what Florida renters need to know before they sign.
+      - text: 8 min read
+      - img
+    - link "Florida Jul 25, 2026 Can a Landlord Enter Without Notice in Florida? 2026 Renter Guide Florida Statute 83.53 requires landlords to give at least 12 hours of advance notice before entering a rental unit — except in genuine emergencies. Here's what the law says, what your lease should say, and what to do if it happens to you. 7 min read":
+      - /url: /blog/can-landlord-enter-without-notice-florida
+      - text: Florida Jul 25, 2026
+      - heading "Can a Landlord Enter Without Notice in Florida? 2026 Renter Guide" [level=2]
+      - paragraph: Florida Statute 83.53 requires landlords to give at least 12 hours of advance notice before entering a rental unit — except in genuine emergencies. Here's what the law says, what your lease should say, and what to do if it happens to you.
+      - text: 7 min read
+      - img
+    - 'link "Florida Jul 25, 2026 Hurricane Clause in a Florida Lease: What to Check Before You Sign A hurricane clause determines who pays for storm damage, whether rent continues if your unit becomes uninhabitable, and how the lease can be terminated after a storm. Here''s what to check before you sign a Florida lease. 8 min read"':
+      - /url: /blog/hurricane-clause-florida-lease
+      - text: Florida Jul 25, 2026
+      - 'heading "Hurricane Clause in a Florida Lease: What to Check Before You Sign" [level=2]'
+      - paragraph: A hurricane clause determines who pays for storm damage, whether rent continues if your unit becomes uninhabitable, and how the lease can be terminated after a storm. Here's what to check before you sign a Florida lease.
+      - text: 8 min read
+      - img
+    - 'link "Florida Jul 25, 2026 Florida City Lease Review Guide: Orlando, Miami, Tampa, and Jacksonville Orlando, Miami, Tampa, and Jacksonville are the four largest rental markets in Florida — and each one has its own set of lease traps that show up regularly enough to be worth calling out specifically before you sign. 9 min read"':
+      - /url: /blog/florida-city-lease-review-guide
+      - text: Florida Jul 25, 2026
+      - 'heading "Florida City Lease Review Guide: Orlando, Miami, Tampa, and Jacksonville" [level=2]'
+      - paragraph: Orlando, Miami, Tampa, and Jacksonville are the four largest rental markets in Florida — and each one has its own set of lease traps that show up regularly enough to be worth calling out specifically before you sign.
+      - text: 9 min read
+      - img
+    - 'link "Florida Jul 25, 2026 Tallahassee & Gainesville Student Lease Review: 5 Red Flags (2026) Student leases near FSU, FAMU, and UF have their own set of red flags — 12-month terms for 9-month students, joint and several liability, lease scams, and renewal pressure. Here''s what to check before signing your off-campus lease. 9 min read"':
+      - /url: /blog/tallahassee-gainesville-student-lease-review
+      - text: Florida Jul 25, 2026
+      - 'heading "Tallahassee & Gainesville Student Lease Review: 5 Red Flags (2026)" [level=2]'
+      - paragraph: Student leases near FSU, FAMU, and UF have their own set of red flags — 12-month terms for 9-month students, joint and several liability, lease scams, and renewal pressure. Here's what to check before signing your off-campus lease.
+      - text: 9 min read
+      - img
+    - link "Tenant Rights Oct 13, 2026 What to Do When Your Landlord Won’t Make Repairs If your landlord won't make repairs, document the problem, send written notice, check state rules, and learn safe next steps before withholding rent. 6 min read":
+      - /url: /blog/landlord-wont-make-repairs
+      - text: Tenant Rights Oct 13, 2026
+      - heading "What to Do When Your Landlord Won’t Make Repairs" [level=2]
+      - paragraph: If your landlord won't make repairs, document the problem, send written notice, check state rules, and learn safe next steps before withholding rent.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Oct 12, 2026 How to Negotiate a Lease Agreement: 6 Steps Learn how to negotiate a lease agreement with steps to compare rentals, flag risky clauses, make a clear counteroffer, and get better terms in writing. 11 min read"':
+      - /url: /blog/how-to-negotiate-a-lease-agreement
+      - text: Tenant Rights Oct 12, 2026
+      - 'heading "How to Negotiate a Lease Agreement: 6 Steps" [level=2]'
+      - paragraph: Learn how to negotiate a lease agreement with steps to compare rentals, flag risky clauses, make a clear counteroffer, and get better terms in writing.
+      - text: 11 min read
+      - img
+    - link "Tenant Rights Oct 11, 2026 Top Illegal Lease Clauses Renters Should Spot Illegal lease clauses can limit tenant rights or impose illegal fees. Discover seven red flags, state limits, and how to review your lease. 6 min read":
+      - /url: /blog/illegal-lease-clauses
+      - text: Tenant Rights Oct 11, 2026
+      - heading "Top Illegal Lease Clauses Renters Should Spot" [level=2]
+      - paragraph: Illegal lease clauses can limit tenant rights or impose illegal fees. Discover seven red flags, state limits, and how to review your lease.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Oct 10, 2026 Month-to-Month Lease vs Fixed-Term Lease: Key Differences Compare month to month lease vs fixed term lease: see how flexibility, rent stability, notice periods, fees and risk differ, and find which fits your plans. 6 min read"':
+      - /url: /blog/month-to-month-lease-vs-fixed-term
+      - text: Tenant Rights Oct 10, 2026
+      - 'heading "Month-to-Month Lease vs Fixed-Term Lease: Key Differences" [level=2]'
+      - paragraph: "Compare month to month lease vs fixed term lease: see how flexibility, rent stability, notice periods, fees and risk differ, and find which fits your plans."
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Oct 9, 2026 Can You Negotiate Rent Before Signing a Lease? Can you negotiate rent before signing a lease? Learn which rent and lease terms may be flexible, when to ask, and how to review the final agreement. 6 min read":
+      - /url: /blog/can-you-negotiate-rent-before-signing-lease
+      - text: Tenant Rights Oct 9, 2026
+      - heading "Can You Negotiate Rent Before Signing a Lease?" [level=2]
+      - paragraph: Can you negotiate rent before signing a lease? Learn which rent and lease terms may be flexible, when to ask, and how to review the final agreement.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Oct 8, 2026 Quiet Enjoyment for Tenants: Rights and Real‑World Examples Learn what quiet enjoyment means for renters, common landlord breaches, state differences, and steps you can take to protect your peace of mind. 6 min read"':
+      - /url: /blog/quiet-enjoyment-tenant
+      - text: Tenant Rights Oct 8, 2026
+      - 'heading "Quiet Enjoyment for Tenants: Rights and Real‑World Examples" [level=2]'
+      - paragraph: Learn what quiet enjoyment means for renters, common landlord breaches, state differences, and steps you can take to protect your peace of mind.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Oct 7, 2026 Lease Violations by a Landlord: Examples and Next Steps Learn what a lease violation by a landlord can look like, how to document it, give written notice, and consider mediation, agency, or court options. 9 min read"':
+      - /url: /blog/lease-violation-by-landlord
+      - text: Tenant Rights Oct 7, 2026
+      - 'heading "Lease Violations by a Landlord: Examples and Next Steps" [level=2]'
+      - paragraph: Learn what a lease violation by a landlord can look like, how to document it, give written notice, and consider mediation, agency, or court options.
+      - text: 9 min read
+      - img
+    - 'link "Tenant Rights Oct 6, 2026 How to Get Out of a Joint Lease: 5 Steps Learn how to get out of a joint lease, review your contract, talk to roommates, pick the right exit option, and secure a written release. 7 min read"':
+      - /url: /blog/how-to-get-out-of-a-joint-lease
+      - text: Tenant Rights Oct 6, 2026
+      - 'heading "How to Get Out of a Joint Lease: 5 Steps" [level=2]'
+      - paragraph: Learn how to get out of a joint lease, review your contract, talk to roommates, pick the right exit option, and secure a written release.
+      - text: 7 min read
+      - img
+    - 'link "Tenant Rights Oct 5, 2026 Trash Fee in an Apartment: What Renters Should Know A trash fee in an apartment may cover valet pickup or shared waste service. Learn how charges work, what leases and local rules say, and how to question a fee. 7 min read"':
+      - /url: /blog/trash-fee-apartment
+      - text: Tenant Rights Oct 5, 2026
+      - 'heading "Trash Fee in an Apartment: What Renters Should Know" [level=2]'
+      - paragraph: A trash fee in an apartment may cover valet pickup or shared waste service. Learn how charges work, what leases and local rules say, and how to question a fee.
+      - text: 7 min read
+      - img
+    - 'link "Tenant Rights Oct 4, 2026 Signs of a Bad Landlord: Red Flags Before You Sign Learn the signs of a bad landlord, from ignored repairs to unclear lease terms, and how to document concerns and protect yourself before signing. 7 min read"':
+      - /url: /blog/signs-of-a-bad-landlord
+      - text: Tenant Rights Oct 4, 2026
+      - 'heading "Signs of a Bad Landlord: Red Flags Before You Sign" [level=2]'
+      - paragraph: Learn the signs of a bad landlord, from ignored repairs to unclear lease terms, and how to document concerns and protect yourself before signing.
+      - text: 7 min read
+      - img
+    - link "Tenant Rights Oct 3, 2026 Top 10 Hidden Costs of Renting an Apartment to Budget For The hidden costs of renting an apartment can add up fast. See 10 fees and expenses to check, estimate your true monthly cost, and review your lease. 7 min read":
+      - /url: /blog/hidden-costs-of-renting-an-apartment
+      - text: Tenant Rights Oct 3, 2026
+      - heading "Top 10 Hidden Costs of Renting an Apartment to Budget For" [level=2]
+      - paragraph: The hidden costs of renting an apartment can add up fast. See 10 fees and expenses to check, estimate your true monthly cost, and review your lease.
+      - text: 7 min read
+      - img
+    - link "Tenant Rights Oct 2, 2026 What Is an Indemnification Clause in a Lease? Learn what an indemnification clause in a lease means, who it protects, real‑world impacts, and red flags renters should watch for. 6 min read":
+      - /url: /blog/indemnification-clause-in-lease
+      - text: Tenant Rights Oct 2, 2026
+      - heading "What Is an Indemnification Clause in a Lease?" [level=2]
+      - paragraph: Learn what an indemnification clause in a lease means, who it protects, real‑world impacts, and red flags renters should watch for.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Oct 1, 2026 Rental Application Fee Laws: State Rules and Limits Learn how rental application fee laws differ by state, what fees can cover, refund rules, and how to challenge a charge in 2026. 6 min read"':
+      - /url: /blog/rental-application-fee-laws
+      - text: Tenant Rights Oct 1, 2026
+      - 'heading "Rental Application Fee Laws: State Rules and Limits" [level=2]'
+      - paragraph: Learn how rental application fee laws differ by state, what fees can cover, refund rules, and how to challenge a charge in 2026.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Sep 30, 2026 How to Lower Your Rent: 5 Steps That Work Learn how to lower your rent with market research, a strong renewal request, smart tradeoffs, and clear scripts for negotiating with your landlord. 9 min read"':
+      - /url: /blog/how-to-lower-your-rent
+      - text: Tenant Rights Sep 30, 2026
+      - 'heading "How to Lower Your Rent: 5 Steps That Work" [level=2]'
+      - paragraph: Learn how to lower your rent with market research, a strong renewal request, smart tradeoffs, and clear scripts for negotiating with your landlord.
+      - text: 9 min read
+      - img
+    - link "Tenant Rights Sep 29, 2026 Can You Back Out of a Lease Before It Starts? Can you back out of a lease before it starts? Learn when you can cancel, what it may cost, and the steps that protect your deposit. 6 min read":
+      - /url: /blog/can-you-back-out-of-a-lease-before-it-starts
+      - text: Tenant Rights Sep 29, 2026
+      - heading "Can You Back Out of a Lease Before It Starts?" [level=2]
+      - paragraph: Can you back out of a lease before it starts? Learn when you can cancel, what it may cost, and the steps that protect your deposit.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Sep 28, 2026 What Does Breaking a Lease Do to Your Credit? What does breaking a lease do to your credit? Learn how unpaid rent, fees, collections, and tenant-screening records may affect your next move. 9 min read":
+      - /url: /blog/what-does-breaking-a-lease-do-to-your-credit
+      - text: Tenant Rights Sep 28, 2026
+      - heading "What Does Breaking a Lease Do to Your Credit?" [level=2]
+      - paragraph: What does breaking a lease do to your credit? Learn how unpaid rent, fees, collections, and tenant-screening records may affect your next move.
+      - text: 9 min read
+      - img
+    - link "Tenant Rights Sep 27, 2026 Best Lease Agreement Review Tools for Renters Compare the top lease agreement review tools for U.S. renters. See which apps flag risky clauses, explain fees, and keep your lease data private. 5 min read":
+      - /url: /blog/lease-agreement-review
+      - text: Tenant Rights Sep 27, 2026
+      - heading "Best Lease Agreement Review Tools for Renters" [level=2]
+      - paragraph: Compare the top lease agreement review tools for U.S. renters. See which apps flag risky clauses, explain fees, and keep your lease data private.
+      - text: 5 min read
+      - img
+    - 'link "Tenant Rights Sep 26, 2026 Best Pre-Lease Checks: What to Do Before Signing a Lease See what to do before signing a lease: review rent terms, deposits, fees, property details, and rules so you can spot risks and ask informed questions. 7 min read"':
+      - /url: /blog/what-to-do-before-signing-a-lease
+      - text: Tenant Rights Sep 26, 2026
+      - 'heading "Best Pre-Lease Checks: What to Do Before Signing a Lease" [level=2]'
+      - paragraph: "See what to do before signing a lease: review rent terms, deposits, fees, property details, and rules so you can spot risks and ask informed questions."
+      - text: 7 min read
+      - img
+    - 'link "Tenant Rights Sep 25, 2026 Renters’ Rights for Bed Bugs: What You Need to Know Learn renters’ rights for bed bugs in the U.S., covering landlord duties, reporting steps, costs, and lease clause tips. 7 min read"':
+      - /url: /blog/renters-rights-bed-bugs
+      - text: Tenant Rights Sep 25, 2026
+      - 'heading "Renters’ Rights for Bed Bugs: What You Need to Know" [level=2]'
+      - paragraph: Learn renters’ rights for bed bugs in the U.S., covering landlord duties, reporting steps, costs, and lease clause tips.
+      - text: 7 min read
+      - img
+    - 'link "Tenant Rights Sep 24, 2026 Pet Deposit vs Pet Fee: Cost, Refunds and Lease Terms Pet deposit vs pet fee explained – see which charge is refundable, how costs differ, lease language tips, and which option fits your rental situation. 6 min read"':
+      - /url: /blog/pet-deposit-vs-pet-fee
+      - text: Tenant Rights Sep 24, 2026
+      - 'heading "Pet Deposit vs Pet Fee: Cost, Refunds and Lease Terms" [level=2]'
+      - paragraph: Pet deposit vs pet fee explained – see which charge is refundable, how costs differ, lease language tips, and which option fits your rental situation.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Sep 23, 2026 Can a Landlord Raise Rent Mid-Lease? Can a landlord raise rent mid-lease? Check your lease, notice, and local rules, then learn how to respond if a rent increase seems improper. 10 min read":
+      - /url: /blog/can-a-landlord-raise-rent-mid-lease
+      - text: Tenant Rights Sep 23, 2026
+      - heading "Can a Landlord Raise Rent Mid-Lease?" [level=2]
+      - paragraph: Can a landlord raise rent mid-lease? Check your lease, notice, and local rules, then learn how to respond if a rent increase seems improper.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Sep 22, 2026 Landlord Discrimination Laws: Tenant Rights Explained Learn what landlord discrimination laws protect, how federal and state rules differ, what discrimination looks like, and where renters can report it. 5 min read"':
+      - /url: /blog/landlord-discrimination-laws
+      - text: Tenant Rights Sep 22, 2026
+      - 'heading "Landlord Discrimination Laws: Tenant Rights Explained" [level=2]'
+      - paragraph: Learn what landlord discrimination laws protect, how federal and state rules differ, what discrimination looks like, and where renters can report it.
+      - text: 5 min read
+      - img
+    - 'link "Tenant Rights Sep 21, 2026 Eviction Process Timeline: What Renters Can Expect The eviction process timeline depends on your state and case. Learn how notices, court dates, responses, and a judgment affect the time you have. 11 min read"':
+      - /url: /blog/eviction-process-timeline
+      - text: Tenant Rights Sep 21, 2026
+      - 'heading "Eviction Process Timeline: What Renters Can Expect" [level=2]'
+      - paragraph: The eviction process timeline depends on your state and case. Learn how notices, court dates, responses, and a judgment affect the time you have.
+      - text: 11 min read
+      - img
+    - 'link "Tenant Rights Sep 20, 2026 What to Look for in a Lease Before You Sign What to look for in a lease: the key clauses, fees, repair rules, renewal terms, and dispute provisions to check before you sign. 6 min read"':
+      - /url: /blog/what-to-look-for-in-a-lease
+      - text: Tenant Rights Sep 20, 2026
+      - heading "What to Look for in a Lease Before You Sign" [level=2]
+      - paragraph: "What to look for in a lease: the key clauses, fees, repair rules, renewal terms, and dispute provisions to check before you sign."
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Sep 19, 2026 Can a Landlord Evict You Without Notice? A Step‑by‑Step Guide Can a landlord evict you without notice? Learn the notice rules, court steps, and how to protect yourself from illegal lockouts – all in 2026. 7 min read":
+      - /url: /blog/can-a-landlord-evict-you-without-notice
+      - text: Tenant Rights Sep 19, 2026
+      - heading "Can a Landlord Evict You Without Notice? A Step‑by‑Step Guide" [level=2]
+      - paragraph: Can a landlord evict you without notice? Learn the notice rules, court steps, and how to protect yourself from illegal lockouts – all in 2026.
+      - text: 7 min read
+      - img
+    - link "Tenant Rights Sep 18, 2026 What Is a Lease Concession? Types, Examples & Tips Learn what a lease concession is, see common types like free rent and waived fees, discover how it changes your rent, and get tips to protect yourself before you sign. 8 min read":
+      - /url: /blog/what-is-a-lease-concession
+      - text: Tenant Rights Sep 18, 2026
+      - heading "What Is a Lease Concession? Types, Examples & Tips" [level=2]
+      - paragraph: Learn what a lease concession is, see common types like free rent and waived fees, discover how it changes your rent, and get tips to protect yourself before you sign.
+      - text: 8 min read
+      - img
+    - link "Tenant Rights Sep 17, 2026 How to Write a Letter to Your Landlord Learn how to write a letter to your landlord with a clear format, sample wording, and tips for repairs, fees, lease questions, and renter concerns. 9 min read":
+      - /url: /blog/how-to-write-a-letter-to-landlord
+      - text: Tenant Rights Sep 17, 2026
+      - heading "How to Write a Letter to Your Landlord" [level=2]
+      - paragraph: Learn how to write a letter to your landlord with a clear format, sample wording, and tips for repairs, fees, lease questions, and renter concerns.
+      - text: 9 min read
+      - img
+    - 'link "Tenant Rights Sep 16, 2026 Breaking a Lease for Military Orders: SCRA Steps Breaking a lease for military orders? Learn SCRA eligibility, notice timing, required documents, state rules, and how to handle deposits or landlord pushback. 9 min read"':
+      - /url: /blog/breaking-a-lease-military
+      - text: Tenant Rights Sep 16, 2026
+      - 'heading "Breaking a Lease for Military Orders: SCRA Steps" [level=2]'
+      - paragraph: Breaking a lease for military orders? Learn SCRA eligibility, notice timing, required documents, state rules, and how to handle deposits or landlord pushback.
+      - text: 9 min read
+      - img
+    - link "Tenant Rights Sep 15, 2026 How to Remove Someone From a Lease – Step‑by‑Step Guide Removing someone from a lease? Follow this step‑by‑step guide to get landlord approval, draft the right notice, sign an amendment, and keep proof of the change. 6 min read":
+      - /url: /blog/removing-someone-from-a-lease
+      - text: Tenant Rights Sep 15, 2026
+      - heading "How to Remove Someone From a Lease – Step‑by‑Step Guide" [level=2]
+      - paragraph: Removing someone from a lease? Follow this step‑by‑step guide to get landlord approval, draft the right notice, sign an amendment, and keep proof of the change.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Sep 14, 2026 How to Add Someone to a Lease: 5 Steps Learn the steps for adding a roommate to an existing lease, getting written landlord approval, checking costs, and signing a clear lease addendum. 8 min read"':
+      - /url: /blog/how-to-add-someone-to-a-lease
+      - text: Tenant Rights Sep 14, 2026
+      - 'heading "How to Add Someone to a Lease: 5 Steps" [level=2]'
+      - paragraph: Learn the steps for adding a roommate to an existing lease, getting written landlord approval, checking costs, and signing a clear lease addendum.
+      - text: 8 min read
+      - img
+    - link "Tenant Rights Sep 13, 2026 What Is Subletting? A Clear Guide for Renters What is subletting? Learn how a sublease works, who stays responsible, landlord approval rules, fees, and what renters should watch out for. 6 min read":
+      - /url: /blog/what-is-subletting
+      - text: Tenant Rights Sep 13, 2026
+      - heading "What Is Subletting? A Clear Guide for Renters" [level=2]
+      - paragraph: What is subletting? Learn how a sublease works, who stays responsible, landlord approval rules, fees, and what renters should watch out for.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Sep 12, 2026 Florida 3 Day Notice: Steps Renters Can Take Got a Florida 3 day notice? Learn how to check the amount, count the deadline, respond, and prepare for possible next steps as a renter. 7 min read"':
+      - /url: /blog/florida-3-day-notice
+      - text: Tenant Rights Sep 12, 2026
+      - 'heading "Florida 3 Day Notice: Steps Renters Can Take" [level=2]'
+      - paragraph: Got a Florida 3 day notice? Learn how to check the amount, count the deadline, respond, and prepare for possible next steps as a renter.
+      - text: 7 min read
+      - img
+    - link "Tenant Rights Sep 11, 2026 How to Write a Sublet Agreement Learn how to write a sublet agreement with landlord approval, key terms, deposit rules, signatures, and lease-risk checks for U.S. renters. 10 min read":
+      - /url: /blog/sublet-agreement
+      - text: Tenant Rights Sep 11, 2026
+      - heading "How to Write a Sublet Agreement" [level=2]
+      - paragraph: Learn how to write a sublet agreement with landlord approval, key terms, deposit rules, signatures, and lease-risk checks for U.S. renters.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Sep 11, 2026 Lease Renewal Fee: Typical Costs, Rules, and Negotiation Tips Learn what a lease renewal fee covers, typical costs by state, legal rules, and how to question or negotiate the charge. 6 min read"':
+      - /url: /blog/lease-renewal-fee
+      - text: Tenant Rights Sep 11, 2026
+      - 'heading "Lease Renewal Fee: Typical Costs, Rules, and Negotiation Tips" [level=2]'
+      - paragraph: Learn what a lease renewal fee covers, typical costs by state, legal rules, and how to question or negotiate the charge.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Sep 10, 2026 Texas Security Deposit Law: What Renters Must Know Learn Texas security deposit law, deposit limits, return deadlines, allowed deductions, and how to fight a wrongful withholding. 6 min read"':
+      - /url: /blog/texas-security-deposit-law
+      - text: Tenant Rights Sep 10, 2026
+      - 'heading "Texas Security Deposit Law: What Renters Must Know" [level=2]'
+      - paragraph: Learn Texas security deposit law, deposit limits, return deadlines, allowed deductions, and how to fight a wrongful withholding.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Sep 9, 2026 How to End a Month-to-Month Lease: 6 Steps Learn how to end a month-to-month lease, confirm your notice deadline, send written notice, plan your move, and protect your security deposit. 14 min read"':
+      - /url: /blog/how-to-end-a-month-to-month-lease
+      - text: Tenant Rights Sep 9, 2026
+      - 'heading "How to End a Month-to-Month Lease: 6 Steps" [level=2]'
+      - paragraph: Learn how to end a month-to-month lease, confirm your notice deadline, send written notice, plan your move, and protect your security deposit.
+      - text: 14 min read
+      - img
+    - 'link "Tenant Rights Sep 8, 2026 Security Deposit Interest: Rates, Rules, and Rights Learn how security deposit interest works, how rates vary by location, when landlords must pay it, and how renters can check what they’re owed. 8 min read"':
+      - /url: /blog/security-deposit-interest
+      - text: Tenant Rights Sep 8, 2026
+      - 'heading "Security Deposit Interest: Rates, Rules, and Rights" [level=2]'
+      - paragraph: Learn how security deposit interest works, how rates vary by location, when landlords must pay it, and how renters can check what they’re owed.
+      - text: 8 min read
+      - img
+    - link "Tenant Rights Sep 6, 2026 Best AI-Powered Lease Review Tools 2026 Compare AI-powered lease review tools 2026 for U.S. renters, with LeaseGuard AI, key checks, privacy safeguards, and safe review tips. 10 min read":
+      - /url: /blog/ai-powered-lease-review-tools-2026
+      - text: Tenant Rights Sep 6, 2026
+      - heading "Best AI-Powered Lease Review Tools 2026" [level=2]
+      - paragraph: Compare AI-powered lease review tools 2026 for U.S. renters, with LeaseGuard AI, key checks, privacy safeguards, and safe review tips.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Sep 6, 2026 Warranty of Habitability: What Renters Must Know Learn what the warranty of habitability means, what it covers, and how U.S. renters can enforce it when landlords fail to make repairs. 11 min read"':
+      - /url: /blog/warranty-of-habitability
+      - text: Tenant Rights Sep 6, 2026
+      - 'heading "Warranty of Habitability: What Renters Must Know" [level=2]'
+      - paragraph: Learn what the warranty of habitability means, what it covers, and how U.S. renters can enforce it when landlords fail to make repairs.
+      - text: 11 min read
+      - img
+    - link "Tenant Rights Sep 6, 2026 What Is a Lease Guarantor? 10 Things Renters Must Know What is a lease guarantor? Learn who qualifies, what they're liable for, and how to protect yourself as a renter or guarantor in 2026. 16 min read":
+      - /url: /blog/what-is-a-lease-guarantor
+      - text: Tenant Rights Sep 6, 2026
+      - heading "What Is a Lease Guarantor? 10 Things Renters Must Know" [level=2]
+      - paragraph: What is a lease guarantor? Learn who qualifies, what they're liable for, and how to protect yourself as a renter or guarantor in 2026.
+      - text: 16 min read
+      - img
+    - link "Tenant Rights Sep 6, 2026 Does Breaking a Lease Hurt Your Credit? 10 Ways It Can Does breaking a lease hurt your credit? Here are 10 ways it can damage your score—and what you can do to protect yourself. 14 min read":
+      - /url: /blog/does-breaking-a-lease-hurt-your-credit
+      - text: Tenant Rights Sep 6, 2026
+      - heading "Does Breaking a Lease Hurt Your Credit? 10 Ways It Can" [level=2]
+      - paragraph: Does breaking a lease hurt your credit? Here are 10 ways it can damage your score—and what you can do to protect yourself.
+      - text: 14 min read
+      - img
+    - link "Tenant Rights Sep 6, 2026 What Is a RUBS Fee? Costs, Rules, and Renters’ Rights A RUBS fee splits shared utility costs by a lease formula. Learn how charges are calculated, what rules may apply, and how to question a bill. 9 min read":
+      - /url: /blog/rubs-fee
+      - text: Tenant Rights Sep 6, 2026
+      - heading "What Is a RUBS Fee? Costs, Rules, and Renters’ Rights" [level=2]
+      - paragraph: A RUBS fee splits shared utility costs by a lease formula. Learn how charges are calculated, what rules may apply, and how to question a bill.
+      - text: 9 min read
+      - img
+    - 'link "Tenant Rights Sep 5, 2026 California Security Deposit Law: What Renters Must Know Learn the caps, allowed deductions, 21‑day return rule, and how to fight wrongful withholdings under California security deposit law. 5 min read"':
+      - /url: /blog/california-security-deposit-law
+      - text: Tenant Rights Sep 5, 2026
+      - 'heading "California Security Deposit Law: What Renters Must Know" [level=2]'
+      - paragraph: Learn the caps, allowed deductions, 21‑day return rule, and how to fight wrongful withholdings under California security deposit law.
+      - text: 5 min read
+      - img
+    - 'link "Tenant Rights Sep 4, 2026 Holding Fee Apartment Explained: Refunds and Rules A holding fee apartment payment can affect your move-in costs. Learn what it covers, when it may be refundable, and what renters should check before paying. 6 min read"':
+      - /url: /blog/holding-fee-apartment
+      - text: Tenant Rights Sep 4, 2026
+      - 'heading "Holding Fee Apartment Explained: Refunds and Rules" [level=2]'
+      - paragraph: A holding fee apartment payment can affect your move-in costs. Learn what it covers, when it may be refundable, and what renters should check before paying.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Sep 3, 2026 Redecorating Fee: What Renters Need to Know A redecorating fee may cover repainting or updates, but lease terms and renter protections vary. Learn what it means and how to check the charge. 6 min read"':
+      - /url: /blog/redecorating-fee
+      - text: Tenant Rights Sep 3, 2026
+      - 'heading "Redecorating Fee: What Renters Need to Know" [level=2]'
+      - paragraph: A redecorating fee may cover repainting or updates, but lease terms and renter protections vary. Learn what it means and how to check the charge.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Sep 2, 2026 Top Accelerated Rent Charges Options for Renters Compare accelerated rent charges, lease-break alternatives, Florida limits, and renter protections before signing a U.S. residential lease. 11 min read":
+      - /url: /blog/accelerated-rent-charges
+      - text: Tenant Rights Sep 2, 2026
+      - heading "Top Accelerated Rent Charges Options for Renters" [level=2]
+      - paragraph: Compare accelerated rent charges, lease-break alternatives, Florida limits, and renter protections before signing a U.S. residential lease.
+      - text: 11 min read
+      - img
+    - 'link "Tenant Rights Sep 2, 2026 Late Fee on Rent: Rules, Limits, and What to Do Learn when a late fee on rent applies, state caps, lease language to watch, and steps to challenge unfair charges. 6 min read"':
+      - /url: /blog/late-fee-on-rent
+      - text: Tenant Rights Sep 2, 2026
+      - 'heading "Late Fee on Rent: Rules, Limits, and What to Do" [level=2]'
+      - paragraph: Learn when a late fee on rent applies, state caps, lease language to watch, and steps to challenge unfair charges.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Sep 2, 2026 Move In Fees: What Renters Pay Before Moving Move in fees can include application, admin, and move‑in charges. Learn what renters may pay, which fees may be refundable, and how to review lease terms. 6 min read"':
+      - /url: /blog/move-in-fees
+      - text: Tenant Rights Sep 2, 2026
+      - 'heading "Move In Fees: What Renters Pay Before Moving" [level=2]'
+      - paragraph: Move in fees can include application, admin, and move‑in charges. Learn what renters may pay, which fees may be refundable, and how to review lease terms.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Sep 1, 2026 Verbal Lease Agreement: Is It Legally Binding? A verbal lease agreement may be enforceable, but state law and proof matter. Learn your rights, notice rules, evidence tips, and when to get terms in writing. 9 min read"':
+      - /url: /blog/verbal-lease-agreement
+      - text: Tenant Rights Sep 1, 2026
+      - 'heading "Verbal Lease Agreement: Is It Legally Binding?" [level=2]'
+      - paragraph: A verbal lease agreement may be enforceable, but state law and proof matter. Learn your rights, notice rules, evidence tips, and when to get terms in writing.
+      - text: 9 min read
+      - img
+    - link "Tenant Rights Aug 31, 2026 Can a Landlord Charge a Cleaning Fee? Rules & Rights Can a landlord charge a cleaning fee? Learn when U.S. landlords can charge, what counts as fair cleaning, how deposits work, and how to challenge unsupported fees. 8 min read":
+      - /url: /blog/can-a-landlord-charge-a-cleaning-fee
+      - text: Tenant Rights Aug 31, 2026
+      - heading "Can a Landlord Charge a Cleaning Fee? Rules & Rights" [level=2]
+      - paragraph: Can a landlord charge a cleaning fee? Learn when U.S. landlords can charge, what counts as fair cleaning, how deposits work, and how to challenge unsupported fees.
+      - text: 8 min read
+      - img
+    - link "Tenant Rights Aug 30, 2026 What Is a Reletting Fee? Costs and Your Rights A reletting fee may cover the cost of finding a new renter after an early move-out. Learn what to check, how charges work, and ways to dispute them. 9 min read":
+      - /url: /blog/reletting-fee
+      - text: Tenant Rights Aug 30, 2026
+      - heading "What Is a Reletting Fee? Costs and Your Rights" [level=2]
+      - paragraph: A reletting fee may cover the cost of finding a new renter after an early move-out. Learn what to check, how charges work, and ways to dispute them.
+      - text: 9 min read
+      - img
+    - 'link "Tenant Rights Aug 29, 2026 First Apartment Checklist: Essentials and Actions Use this first apartment checklist to plan lease questions, move‑in costs, apartment essentials, utility setup, renters insurance, and your walkthrough. 6 min read"':
+      - /url: /blog/first-apartment-checklist
+      - text: Tenant Rights Aug 29, 2026
+      - 'heading "First Apartment Checklist: Essentials and Actions" [level=2]'
+      - paragraph: Use this first apartment checklist to plan lease questions, move‑in costs, apartment essentials, utility setup, renters insurance, and your walkthrough.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Aug 26, 2026 Pet Rent: How to Set and Challenge Rental Fees Learn what pet rent is, how landlords calculate it, and how U.S. renters can review, negotiate, and challenge unfair pet-related fees. 11 min read"':
+      - /url: /blog/pet-rent
+      - text: Tenant Rights Aug 26, 2026
+      - 'heading "Pet Rent: How to Set and Challenge Rental Fees" [level=2]'
+      - paragraph: Learn what pet rent is, how landlords calculate it, and how U.S. renters can review, negotiate, and challenge unfair pet-related fees.
+      - text: 11 min read
+      - img
+    - 'link "Tenant Rights Aug 26, 2026 Florida Eviction Process: A Step‑by‑Step Guide Learn the Florida eviction process step by step, from reading notices to handling the writ of possession. Practical tips for renters. 7 min read"':
+      - /url: /blog/florida-eviction-process
+      - text: Tenant Rights Aug 26, 2026
+      - 'heading "Florida Eviction Process: A Step‑by‑Step Guide" [level=2]'
+      - paragraph: Learn the Florida eviction process step by step, from reading notices to handling the writ of possession. Practical tips for renters.
+      - text: 7 min read
+      - img
+    - 'link "Tenant Rights Aug 25, 2026 Resident Benefit Package: What Renters Should Know A resident benefit package can add recurring rental fees. Learn what it includes, costs, red flags, and how LeaseGuard AI can review your lease. 6 min read"':
+      - /url: /blog/resident-benefit-package
+      - text: Tenant Rights Aug 25, 2026
+      - 'heading "Resident Benefit Package: What Renters Should Know" [level=2]'
+      - paragraph: A resident benefit package can add recurring rental fees. Learn what it includes, costs, red flags, and how LeaseGuard AI can review your lease.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Aug 25, 2026 How to Write a Rent Increase Notice Learn how to write a rent increase notice, check notice periods, calculate new rent, deliver it correctly, and respond to an improper increase. 11 min read":
+      - /url: /blog/rent-increase-notice
+      - text: Tenant Rights Aug 25, 2026
+      - heading "How to Write a Rent Increase Notice" [level=2]
+      - paragraph: Learn how to write a rent increase notice, check notice periods, calculate new rent, deliver it correctly, and respond to an improper increase.
+      - text: 11 min read
+      - img
+    - link "Tenant Rights Aug 24, 2026 How Long Does a Landlord Have to Fix Something? How long does a landlord have to fix something? Learn U.S. repair deadlines, emergency rules, notice requirements, and what renters can do next. 6 min read":
+      - /url: /blog/how-long-does-a-landlord-have-to-fix-something
+      - text: Tenant Rights Aug 24, 2026
+      - heading "How Long Does a Landlord Have to Fix Something?" [level=2]
+      - paragraph: How long does a landlord have to fix something? Learn U.S. repair deadlines, emergency rules, notice requirements, and what renters can do next.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Aug 23, 2026 Amenity Fee: What Renters Should Know What is an amenity fee? Learn how rental amenity fees work, what they cover, when they’re disclosed, and how renters can question them. 6 min read"':
+      - /url: /blog/amenity-fee
+      - text: Tenant Rights Aug 23, 2026
+      - 'heading "Amenity Fee: What Renters Should Know" [level=2]'
+      - paragraph: What is an amenity fee? Learn how rental amenity fees work, what they cover, when they’re disclosed, and how renters can question them.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Aug 22, 2026 Lease Renewal Negotiation: A Renter''s Guide Learn how to handle lease renewal negotiation, compare rent and fees, request better terms, and protect yourself before signing a new rental lease. 6 min read"':
+      - /url: /blog/lease-renewal-negotiation
+      - text: Tenant Rights Aug 22, 2026
+      - 'heading "Lease Renewal Negotiation: A Renter''s Guide" [level=2]'
+      - paragraph: Learn how to handle lease renewal negotiation, compare rent and fees, request better terms, and protect yourself before signing a new rental lease.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Aug 21, 2026 Best Lease vs Rental Agreement Options Compare lease vs rental agreement options for U.S. renters, including term length, costs, flexibility, renewals, deposits, and key clauses. 12 min read":
+      - /url: /blog/lease-vs-rental-agreement
+      - text: Tenant Rights Aug 21, 2026
+      - heading "Best Lease vs Rental Agreement Options" [level=2]
+      - paragraph: Compare lease vs rental agreement options for U.S. renters, including term length, costs, flexibility, renewals, deposits, and key clauses.
+      - text: 12 min read
+      - img
+    - link "Tenant Rights Aug 20, 2026 How to Get Out of a Lease Agreement – Step‑by‑Step Guide Learn how to get out of a lease agreement with less stress. Follow five clear steps, see legal protections, calculate costs, and protect your rights. 5 min read":
+      - /url: /blog/how-to-get-out-of-a-lease-agreement
+      - text: Tenant Rights Aug 20, 2026
+      - heading "How to Get Out of a Lease Agreement – Step‑by‑Step Guide" [level=2]
+      - paragraph: Learn how to get out of a lease agreement with less stress. Follow five clear steps, see legal protections, calculate costs, and protect your rights.
+      - text: 5 min read
+      - img
+    - 'link "Tenant Rights Aug 19, 2026 Landlord Retaliation Laws: Tenant Rights Explained Learn how landlord retaliation laws protect U.S. renters, what counts as retaliation, how to document it, and how LeaseGuard AI can help. 11 min read"':
+      - /url: /blog/landlord-retaliation-laws
+      - text: Tenant Rights Aug 19, 2026
+      - 'heading "Landlord Retaliation Laws: Tenant Rights Explained" [level=2]'
+      - paragraph: Learn how landlord retaliation laws protect U.S. renters, what counts as retaliation, how to document it, and how LeaseGuard AI can help.
+      - text: 11 min read
+      - img
+    - link "Tenant Rights Aug 19, 2026 How Much Can a Landlord Charge for Late Fees? Learn how lease terms, state laws, grace periods, and reasonable fee limits affect renters and what you can do about late fees. 7 min read":
+      - /url: /blog/how-much-can-a-landlord-charge-for-late-fees
+      - text: Tenant Rights Aug 19, 2026
+      - heading "How Much Can a Landlord Charge for Late Fees?" [level=2]
+      - paragraph: Learn how lease terms, state laws, grace periods, and reasonable fee limits affect renters and what you can do about late fees.
+      - text: 7 min read
+      - img
+    - 'link "Tenant Rights Aug 18, 2026 Early Termination Fee Lease: What Renters Should Know Learn what an early termination fee lease clause means, how fees work, state rules, negotiation tips, and how to spot risky rental terms. 5 min read"':
+      - /url: /blog/early-termination-fee-lease
+      - text: Tenant Rights Aug 18, 2026
+      - 'heading "Early Termination Fee Lease: What Renters Should Know" [level=2]'
+      - paragraph: Learn what an early termination fee lease clause means, how fees work, state rules, negotiation tips, and how to spot risky rental terms.
+      - text: 5 min read
+      - img
+    - 'link "Tenant Rights Aug 17, 2026 Top Answers: Can a Landlord Enter Without Permission? Can a landlord enter without permission? Learn when entry is legal, notice rules, emergencies, tenant rights, and what renters can do. 10 min read"':
+      - /url: /blog/can-a-landlord-enter-without-permission
+      - text: Tenant Rights Aug 17, 2026
+      - 'heading "Top Answers: Can a Landlord Enter Without Permission?" [level=2]'
+      - paragraph: Can a landlord enter without permission? Learn when entry is legal, notice rules, emergencies, tenant rights, and what renters can do.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Aug 16, 2026 Notice to Vacate Letter: How to Write One Learn how to write and deliver a notice to vacate letter, including notice periods, required details, templates, proof of delivery, and next steps. 11 min read"':
+      - /url: /blog/notice-to-vacate-letter
+      - text: Tenant Rights Aug 16, 2026
+      - 'heading "Notice to Vacate Letter: How to Write One" [level=2]'
+      - paragraph: Learn how to write and deliver a notice to vacate letter, including notice periods, required details, templates, proof of delivery, and next steps.
+      - text: 11 min read
+      - img
+    - 'link "Tenant Rights Aug 15, 2026 How to Sublease an Apartment: 4 Steps Learn how to sublease an apartment legally and safely, from checking your lease to screening a subtenant and signing a clear agreement. 8 min read"':
+      - /url: /blog/how-to-sublease-an-apartment
+      - text: Tenant Rights Aug 15, 2026
+      - 'heading "How to Sublease an Apartment: 4 Steps" [level=2]'
+      - paragraph: Learn how to sublease an apartment legally and safely, from checking your lease to screening a subtenant and signing a clear agreement.
+      - text: 8 min read
+      - img
+    - 'link "Tenant Rights Aug 13, 2026 Apartment Application Fee: Costs, Rules & Tips Learn what an apartment application fee covers, typical costs, refund rules, state caps, scam warnings, and ways to avoid extra rental fees. 9 min read"':
+      - /url: /blog/apartment-application-fee
+      - text: Tenant Rights Aug 13, 2026
+      - 'heading "Apartment Application Fee: Costs, Rules & Tips" [level=2]'
+      - paragraph: Learn what an apartment application fee covers, typical costs, refund rules, state caps, scam warnings, and ways to avoid extra rental fees.
+      - text: 9 min read
+      - img
+    - 'link "Tenant Rights Aug 13, 2026 Tenant Screening Report: Step-by-Step Guide Tenant screening report guide for renters and landlords. Learn what reports include, how to read them, dispute errors, and follow fair housing rules. 8 min read"':
+      - /url: /blog/tenant-screening-report
+      - text: Tenant Rights Aug 13, 2026
+      - 'heading "Tenant Screening Report: Step-by-Step Guide" [level=2]'
+      - paragraph: Tenant screening report guide for renters and landlords. Learn what reports include, how to read them, dispute errors, and follow fair housing rules.
+      - text: 8 min read
+      - img
+    - 'link "Tenant Rights Aug 13, 2026 Guarantor for Apartment: A Renter’s Guide Need a guarantor for an apartment? Learn who qualifies, what guarantors pay, how to apply, and how to review lease risks before signing. 9 min read"':
+      - /url: /blog/guarantor-for-apartment
+      - text: Tenant Rights Aug 13, 2026
+      - 'heading "Guarantor for Apartment: A Renter’s Guide" [level=2]'
+      - paragraph: Need a guarantor for an apartment? Learn who qualifies, what guarantors pay, how to apply, and how to review lease risks before signing.
+      - text: 9 min read
+      - img
+    - link "Tenant Rights Aug 13, 2026 What Is a Rental History Report? Renter Guide What is a rental history report? Learn what it contains, how to get and read yours, dispute errors, and improve your rental application. 8 min read":
+      - /url: /blog/what-is-a-rental-history-report
+      - text: Tenant Rights Aug 13, 2026
+      - heading "What Is a Rental History Report? Renter Guide" [level=2]
+      - paragraph: What is a rental history report? Learn what it contains, how to get and read yours, dispute errors, and improve your rental application.
+      - text: 8 min read
+      - img
+    - link "Tenant Rights Aug 13, 2026 What Is a Rent‑to‑Own Agreement? A Renter’s Guide What is a rent‑to‑own agreement? Learn how lease‑purchase contracts work, key clauses, benefits, risks, and how to review one before signing. 7 min read":
+      - /url: /blog/what-is-a-rent-to-own-agreement
+      - text: Tenant Rights Aug 13, 2026
+      - heading "What Is a Rent‑to‑Own Agreement? A Renter’s Guide" [level=2]
+      - paragraph: What is a rent‑to‑own agreement? Learn how lease‑purchase contracts work, key clauses, benefits, risks, and how to review one before signing.
+      - text: 7 min read
+      - img
+    - link "Tenant Rights Aug 13, 2026 What Is Normal Wear and Tear in an Apartment? What is normal wear and tear apartment damage? Learn what tenants may be charged for, how deposits work, and how to document your rental’s condition. 10 min read":
+      - /url: /blog/what-is-normal-wear-and-tear-apartment
+      - text: Tenant Rights Aug 13, 2026
+      - heading "What Is Normal Wear and Tear in an Apartment?" [level=2]
+      - paragraph: What is normal wear and tear apartment damage? Learn what tenants may be charged for, how deposits work, and how to document your rental’s condition.
+      - text: 10 min read
+      - img
+    - link "Tenant Rights Aug 13, 2026 What Is an Eviction Notice? A Renter's Guide What is an eviction notice? Learn notice types, deadlines, service rules, renter responses, and what happens before an eviction court case. 10 min read":
+      - /url: /blog/what-is-an-eviction-notice
+      - text: Tenant Rights Aug 13, 2026
+      - heading "What Is an Eviction Notice? A Renter's Guide" [level=2]
+      - paragraph: What is an eviction notice? Learn notice types, deadlines, service rules, renter responses, and what happens before an eviction court case.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Aug 13, 2026 Best Answer: How Much Can a Landlord Raise Rent? How much can a landlord raise rent? Learn U.S. rent caps, notice periods, lease rules, exemptions, and what renters can do about an unlawful increase. 12 min read"':
+      - /url: /blog/how-much-can-a-landlord-raise-rent
+      - text: Tenant Rights Aug 13, 2026
+      - 'heading "Best Answer: How Much Can a Landlord Raise Rent?" [level=2]'
+      - paragraph: How much can a landlord raise rent? Learn U.S. rent caps, notice periods, lease rules, exemptions, and what renters can do about an unlawful increase.
+      - text: 12 min read
+      - img
+    - link "Tenant Rights Aug 13, 2026 What Is a Certificate of Occupancy? Learn what a certificate of occupancy proves, when it’s needed, how it differs from a TCO or Letter of No Objection, and what renters should check before signing a lease. 6 min read":
+      - /url: /blog/what-is-a-certificate-of-occupancy
+      - text: Tenant Rights Aug 13, 2026
+      - heading "What Is a Certificate of Occupancy?" [level=2]
+      - paragraph: Learn what a certificate of occupancy proves, when it’s needed, how it differs from a TCO or Letter of No Objection, and what renters should check before signing a lease.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Aug 13, 2026 How to Break an Apartment Lease Legally Learn how to break an apartment lease legally, check protected reasons, reduce fees, negotiate an exit, and document your move-out. 10 min read":
+      - /url: /blog/how-to-break-an-apartment-lease
+      - text: Tenant Rights Aug 13, 2026
+      - heading "How to Break an Apartment Lease Legally" [level=2]
+      - paragraph: Learn how to break an apartment lease legally, check protected reasons, reduce fees, negotiate an exit, and document your move-out.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Aug 13, 2026 Best Answers: How Much Notice Does a Landlord Give? How much notice does a landlord have to give? See notice periods by lease type, reason, state, delivery method, and tenant protections. 14 min read"':
+      - /url: /blog/how-much-notice-does-a-landlord-have-to-give
+      - text: Tenant Rights Aug 13, 2026
+      - 'heading "Best Answers: How Much Notice Does a Landlord Give?" [level=2]'
+      - paragraph: How much notice does a landlord have to give? See notice periods by lease type, reason, state, delivery method, and tenant protections.
+      - text: 14 min read
+      - img
+    - 'link "Tenant Rights Aug 13, 2026 Top 10 Stages: How Does an Eviction Work? How does an eviction work? Learn the notice, lawsuit, hearing, judgment, writ, removal, appeal, and tenant-rights steps in plain English. 10 min read"':
+      - /url: /blog/how-does-an-eviction-work
+      - text: Tenant Rights Aug 13, 2026
+      - 'heading "Top 10 Stages: How Does an Eviction Work?" [level=2]'
+      - paragraph: How does an eviction work? Learn the notice, lawsuit, hearing, judgment, writ, removal, appeal, and tenant-rights steps in plain English.
+      - text: 10 min read
+      - img
+    - link "Tenant Rights Aug 8, 2026 What Is a Holdover Tenant? Renter's Guide Learn what a holdover tenant is, how it works, your rights, notice rules, possible fees, and steps to protect yourself after a lease ends. 6 min read":
+      - /url: /blog/what-is-a-holdover-tenant
+      - text: Tenant Rights Aug 8, 2026
+      - heading "What Is a Holdover Tenant? Renter's Guide" [level=2]
+      - paragraph: Learn what a holdover tenant is, how it works, your rights, notice rules, possible fees, and steps to protect yourself after a lease ends.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Aug 6, 2026 What Is a Lease Buyout? Costs and Options Explained What is a lease buyout? Discover how early lease termination works, typical costs, negotiation tips, and how to read your lease before signing. 6 min read":
+      - /url: /blog/what-is-a-lease-buyout
+      - text: Tenant Rights Aug 6, 2026
+      - heading "What Is a Lease Buyout? Costs and Options Explained" [level=2]
+      - paragraph: What is a lease buyout? Discover how early lease termination works, typical costs, negotiation tips, and how to read your lease before signing.
+      - text: 6 min read
+      - img
+    - 'link "Tenant Rights Aug 5, 2026 Best Apartment Hidden Fees Guide: 10 Costs to Check Use this apartment hidden fees guide to spot application, deposit, utility, pet, parking, and other rental charges before signing. 10 min read"':
+      - /url: /blog/apartment-hidden-fees-guide
+      - text: Tenant Rights Aug 5, 2026
+      - 'heading "Best Apartment Hidden Fees Guide: 10 Costs to Check" [level=2]'
+      - paragraph: Use this apartment hidden fees guide to spot application, deposit, utility, pet, parking, and other rental charges before signing.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Aug 4, 2026 Landlord Harassment: Signs, Rights, and What to Do Learn what landlord harassment looks like, which actions may be illegal, how to document incidents, and where U.S. renters can seek help. 7 min read"':
+      - /url: /blog/landlord-harassment
+      - text: Tenant Rights Aug 4, 2026
+      - 'heading "Landlord Harassment: Signs, Rights, and What to Do" [level=2]'
+      - paragraph: Learn what landlord harassment looks like, which actions may be illegal, how to document incidents, and where U.S. renters can seek help.
+      - text: 7 min read
+      - img
+    - link "Tenant Rights Aug 3, 2026 What Is Renters Insurance? A Simple Explanation Learn what renters insurance covers, its limits, costs, and why it matters for protecting your belongings and finances. 7 min read":
+      - /url: /blog/what-is-renters-insurance
+      - text: Tenant Rights Aug 3, 2026
+      - heading "What Is Renters Insurance? A Simple Explanation" [level=2]
+      - paragraph: Learn what renters insurance covers, its limits, costs, and why it matters for protecting your belongings and finances.
+      - text: 7 min read
+      - img
+    - link "Tenant Rights Aug 1, 2026 How Much Is a Security Deposit? Renters' Guide How much is a security deposit? Learn typical amounts, state limits, move‑in costs, refund rules, and how to review your lease before signing. 6 min read":
+      - /url: /blog/how-much-is-a-security-deposit
+      - text: Tenant Rights Aug 1, 2026
+      - heading "How Much Is a Security Deposit? Renters' Guide" [level=2]
+      - paragraph: How much is a security deposit? Learn typical amounts, state limits, move‑in costs, refund rules, and how to review your lease before signing.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Aug 1, 2026 Best LeaseGuard AI Trust Options for Renters Compare LeaseGuard AI trust and top lease‑review tools. Find the most private, clear and secure AI option for renters in 2026. 8 min read":
+      - /url: /blog/leaseguard-ai-trust
+      - text: Tenant Rights Aug 1, 2026
+      - heading "Best LeaseGuard AI Trust Options for Renters" [level=2]
+      - paragraph: Compare LeaseGuard AI trust and top lease‑review tools. Find the most private, clear and secure AI option for renters in 2026.
+      - text: 8 min read
+      - img
+    - 'link "Tenant Rights Jul 31, 2026 Best Apartment Lease Checklist Florida: 10 Picks Use this apartment lease checklist Florida renters can trust to review fees, clauses, deposits, inspections, city rules, and lease risks before signing. 10 min read"':
+      - /url: /blog/apartment-lease-checklist-florida
+      - text: Tenant Rights Jul 31, 2026
+      - 'heading "Best Apartment Lease Checklist Florida: 10 Picks" [level=2]'
+      - paragraph: Use this apartment lease checklist Florida renters can trust to review fees, clauses, deposits, inspections, city rules, and lease risks before signing.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Jul 31, 2026 Constructive Eviction: A Tenant’s Step-by-Step Guide Learn what constructive eviction means, how to document unsafe rental conditions, notify your landlord, move out, and pursue tenant remedies. 11 min read"':
+      - /url: /blog/constructive-eviction
+      - text: Tenant Rights Jul 31, 2026
+      - 'heading "Constructive Eviction: A Tenant’s Step-by-Step Guide" [level=2]'
+      - paragraph: Learn what constructive eviction means, how to document unsafe rental conditions, notify your landlord, move out, and pursue tenant remedies.
+      - text: 11 min read
+      - img
+    - link "Tenant Rights Jul 28, 2026 Why LeaseGuard AI Earns Renters' Trust Discover why renters trust LeaseGuard AI for lease checks, plain‑language reports, and state‑specific analysis before signing. 5 min read":
+      - /url: /blog/why-leaseguard-ai-is-trusted-by-renters
+      - text: Tenant Rights Jul 28, 2026
+      - heading "Why LeaseGuard AI Earns Renters' Trust" [level=2]
+      - paragraph: Discover why renters trust LeaseGuard AI for lease checks, plain‑language reports, and state‑specific analysis before signing.
+      - text: 5 min read
+      - img
+    - 'link "Tenant Rights Jul 27, 2026 Lease Violation Examples: 7 Common Breaches See lease violation examples involving rent, pets, noise, guests, and damage, plus notice rules, tenant rights, and ways to respond before signing. 10 min read"':
+      - /url: /blog/lease-violation-examples
+      - text: Tenant Rights Jul 27, 2026
+      - 'heading "Lease Violation Examples: 7 Common Breaches" [level=2]'
+      - paragraph: See lease violation examples involving rent, pets, noise, guests, and damage, plus notice rules, tenant rights, and ways to respond before signing.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Jul 24, 2026 Renters Insurance Requirements: What Tenants Need to Know Understand renters insurance requirements, what a landlord can put in your lease, common coverage terms, and what to check before you sign. 5 min read"':
+      - /url: /blog/renters-insurance-requirements
+      - text: Tenant Rights Jul 24, 2026
+      - 'heading "Renters Insurance Requirements: What Tenants Need to Know" [level=2]'
+      - paragraph: Understand renters insurance requirements, what a landlord can put in your lease, common coverage terms, and what to check before you sign.
+      - text: 5 min read
+      - img
+    - link "Tenant Rights Jul 24, 2026 How to Break a Lease Without Penalty Learn step‑by‑step how to break a lease without penalty, check legal exits, give proper notice, and protect your deposit in 2026. 7 min read":
+      - /url: /blog/how-to-break-a-lease-without-penalty
+      - text: Tenant Rights Jul 24, 2026
+      - heading "How to Break a Lease Without Penalty" [level=2]
+      - paragraph: Learn step‑by‑step how to break a lease without penalty, check legal exits, give proper notice, and protect your deposit in 2026.
+      - text: 7 min read
+      - img
+    - 'link "Tenant Rights Jul 24, 2026 How to Negotiate Rent: 7 Tips That Work Learn how to negotiate rent with market data, timing, tenant strengths, sample scripts, and creative concessions that can lower your housing costs. 8 min read"':
+      - /url: /blog/how-to-negotiate-rent
+      - text: Tenant Rights Jul 24, 2026
+      - 'heading "How to Negotiate Rent: 7 Tips That Work" [level=2]'
+      - paragraph: Learn how to negotiate rent with market data, timing, tenant strengths, sample scripts, and creative concessions that can lower your housing costs.
+      - text: 8 min read
+      - img
+    - 'link "Tenant Rights Jul 24, 2026 Top Answers: What Happens If You Break a Lease What happens if you break a lease? Learn about fees, rent liability, credit effects, legal exceptions, and ways U.S. renters can reduce the cost. 12 min read"':
+      - /url: /blog/what-happens-if-you-break-a-lease
+      - text: Tenant Rights Jul 24, 2026
+      - 'heading "Top Answers: What Happens If You Break a Lease" [level=2]'
+      - paragraph: What happens if you break a lease? Learn about fees, rent liability, credit effects, legal exceptions, and ways U.S. renters can reduce the cost.
+      - text: 12 min read
+      - img
+    - 'link "Tenant Rights Jul 24, 2026 Prorated Rent: How It Works and How to Calculate Learn what prorated rent means, when it applies, and how to calculate move-in or move-out charges using common methods and lease terms. 9 min read"':
+      - /url: /blog/prorated-rent
+      - text: Tenant Rights Jul 24, 2026
+      - 'heading "Prorated Rent: How It Works and How to Calculate" [level=2]'
+      - paragraph: Learn what prorated rent means, when it applies, and how to calculate move-in or move-out charges using common methods and lease terms.
+      - text: 9 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 How Much Can Rent Increase? U.S. Guide Learn how much rent can increase in the U.S., the rules behind caps, notice periods, exceptions, and tips to review a rent hike before you sign. 6 min read":
+      - /url: /blog/how-much-can-rent-increase
+      - text: Tenant Rights Jul 23, 2026
+      - heading "How Much Can Rent Increase? U.S. Guide" [level=2]
+      - paragraph: Learn how much rent can increase in the U.S., the rules behind caps, notice periods, exceptions, and tips to review a rent hike before you sign.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 What Is a Lease Takeover? A Renter's Guide What is a lease takeover? Learn how lease transfers work, landlord approval, costs, credit impact, risks, and key steps for U.S. renters. 10 min read":
+      - /url: /blog/what-is-a-lease-takeover
+      - text: Tenant Rights Jul 23, 2026
+      - heading "What Is a Lease Takeover? A Renter's Guide" [level=2]
+      - paragraph: What is a lease takeover? Learn how lease transfers work, landlord approval, costs, credit impact, risks, and key steps for U.S. renters.
+      - text: 10 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 Questions to Ask Before Renting an Apartment Use these questions to ask before renting an apartment to uncover hidden fees, lease risks, utility costs, policies, and renter protections. 8 min read":
+      - /url: /blog/questions-to-ask-before-renting-an-apartment
+      - text: Tenant Rights Jul 23, 2026
+      - heading "Questions to Ask Before Renting an Apartment" [level=2]
+      - paragraph: Use these questions to ask before renting an apartment to uncover hidden fees, lease risks, utility costs, policies, and renter protections.
+      - text: 8 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 Best Roommate Lease Agreement Review Tools Compare top roommate lease agreement review tools. Spot hidden fees, risky clauses, and tenant‑rights issues before you sign. 7 min read":
+      - /url: /blog/roommate-lease-agreement
+      - text: Tenant Rights Jul 23, 2026
+      - heading "Best Roommate Lease Agreement Review Tools" [level=2]
+      - paragraph: Compare top roommate lease agreement review tools. Spot hidden fees, risky clauses, and tenant‑rights issues before you sign.
+      - text: 7 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 What Is an Estoppel Certificate? What is an estoppel certificate? Learn what renters should check, who signs it, when it's due, and how it affects a property sale or loan. 6 min read":
+      - /url: /blog/what-is-an-estoppel-certificate
+      - text: Tenant Rights Jul 23, 2026
+      - heading "What Is an Estoppel Certificate?" [level=2]
+      - paragraph: What is an estoppel certificate? Learn what renters should check, who signs it, when it's due, and how it affects a property sale or loan.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 Landlord Not Returning Security Deposit? 5 Steps Landlord not returning security deposit? Learn the deadlines, legal deductions, evidence, demand letters, and court steps U.S. renters can take. 10 min read":
+      - /url: /blog/landlord-not-returning-security-deposit
+      - text: Tenant Rights Jul 23, 2026
+      - heading "Landlord Not Returning Security Deposit? 5 Steps" [level=2]
+      - paragraph: Landlord not returning security deposit? Learn the deadlines, legal deductions, evidence, demand letters, and court steps U.S. renters can take.
+      - text: 10 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 Can a Landlord Charge for Painting? Tenant Guide Can a landlord charge for painting? Learn when painting deductions are legal, how wear and tear affects costs, and how renters can dispute unfair charges. 10 min read":
+      - /url: /blog/can-a-landlord-charge-for-painting
+      - text: Tenant Rights Jul 23, 2026
+      - heading "Can a Landlord Charge for Painting? Tenant Guide" [level=2]
+      - paragraph: Can a landlord charge for painting? Learn when painting deductions are legal, how wear and tear affects costs, and how renters can dispute unfair charges.
+      - text: 10 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 What Is a Security Deposit? A Renter's Guide What is a security deposit? Learn how deposits work, common amounts, state limits, deductions, return timelines, and ways to protect your money. 9 min read":
+      - /url: /blog/what-is-a-security-deposit
+      - text: Tenant Rights Jul 23, 2026
+      - heading "What Is a Security Deposit? A Renter's Guide" [level=2]
+      - paragraph: What is a security deposit? Learn how deposits work, common amounts, state limits, deductions, return timelines, and ways to protect your money.
+      - text: 9 min read
+      - img
+    - 'link "Tenant Rights Jul 23, 2026 Credit Score to Rent an Apartment: What to Know Learn the credit score to rent an apartment, what landlords check, and how to qualify with limited or damaged credit in the U.S. 10 min read"':
+      - /url: /blog/credit-score-to-rent-an-apartment
+      - text: Tenant Rights Jul 23, 2026
+      - 'heading "Credit Score to Rent an Apartment: What to Know" [level=2]'
+      - paragraph: Learn the credit score to rent an apartment, what landlords check, and how to qualify with limited or damaged credit in the U.S.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Jul 23, 2026 Rent Concession Meaning: Free Rent, Allowances & Common Perks Learn rent concession meaning, see common types like free rent and move‑in allowances, calculate effective rent, and spot risky lease clauses. 6 min read"':
+      - /url: /blog/rent-concession-meaning
+      - text: Tenant Rights Jul 23, 2026
+      - 'heading "Rent Concession Meaning: Free Rent, Allowances & Common Perks" [level=2]'
+      - paragraph: Learn rent concession meaning, see common types like free rent and move‑in allowances, calculate effective rent, and spot risky lease clauses.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 What Is Joint and Several Liability? A Simple Guide Learn what joint and several liability means, see rental examples, understand roommate risks, and check lease terms before you sign. 6 min read":
+      - /url: /blog/what-is-joint-and-several-liability
+      - text: Tenant Rights Jul 23, 2026
+      - heading "What Is Joint and Several Liability? A Simple Guide" [level=2]
+      - paragraph: Learn what joint and several liability means, see rental examples, understand roommate risks, and check lease terms before you sign.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 What Is a Lease Addendum? A Renter's Guide What is a lease addendum? Learn how addenda change rental agreements, which clauses to review, and how LeaseGuard AI helps renters spot risks. 6 min read":
+      - /url: /blog/what-is-a-lease-addendum
+      - text: Tenant Rights Jul 23, 2026
+      - heading "What Is a Lease Addendum? A Renter's Guide" [level=2]
+      - paragraph: What is a lease addendum? Learn how addenda change rental agreements, which clauses to review, and how LeaseGuard AI helps renters spot risks.
+      - text: 6 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 What Is a Lease Term? Renters’ Guide What is a lease term? Learn how lease length, renewal rules, end dates, rent payments, and early termination affect U.S. renters. 5 min read":
+      - /url: /blog/what-is-a-lease-term
+      - text: Tenant Rights Jul 23, 2026
+      - heading "What Is a Lease Term? Renters’ Guide" [level=2]
+      - paragraph: What is a lease term? Learn how lease length, renewal rules, end dates, rent payments, and early termination affect U.S. renters.
+      - text: 5 min read
+      - img
+    - 'link "Tenant Rights Jul 23, 2026 Move In Inspection Checklist: A Renter''s Guide Use this move in inspection checklist to document damage, test safety systems, report issues, and protect your security deposit before unpacking. 7 min read"':
+      - /url: /blog/move-in-inspection-checklist
+      - text: Tenant Rights Jul 23, 2026
+      - 'heading "Move In Inspection Checklist: A Renter''s Guide" [level=2]'
+      - paragraph: Use this move in inspection checklist to document damage, test safety systems, report issues, and protect your security deposit before unpacking.
+      - text: 7 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 What Is a Rental Ledger? A Renter's Guide What is a rental ledger? Learn what it records, why it matters, how renters can build one, and how it can help prove payment history. 10 min read":
+      - /url: /blog/what-is-a-rental-ledger
+      - text: Tenant Rights Jul 23, 2026
+      - heading "What Is a Rental Ledger? A Renter's Guide" [level=2]
+      - paragraph: What is a rental ledger? Learn what it records, why it matters, how renters can build one, and how it can help prove payment history.
+      - text: 10 min read
+      - img
+    - 'link "Tenant Rights Jul 23, 2026 How to Get Approved for an Apartment: Step‑by‑Step Guide Learn how to get approved for an apartment with easy steps, income tips, co‑signer advice, and LeaseGuard AI lease review. Get approved fast! 5 min read"':
+      - /url: /blog/how-to-get-approved-for-an-apartment
+      - text: Tenant Rights Jul 23, 2026
+      - 'heading "How to Get Approved for an Apartment: Step‑by‑Step Guide" [level=2]'
+      - paragraph: Learn how to get approved for an apartment with easy steps, income tips, co‑signer advice, and LeaseGuard AI lease review. Get approved fast!
+      - text: 5 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 Best Lease Review Apps for Renters in 2026 – Top Picks & Comparison Explore the top lease review apps for U.S. renters, compare features, pricing, and security, and see why LeaseGuard AI is the best choice. 7 min read":
+      - /url: /blog/best-lease-review-apps
+      - text: Tenant Rights Jul 23, 2026
+      - heading "Best Lease Review Apps for Renters in 2026 – Top Picks & Comparison" [level=2]
+      - paragraph: Explore the top lease review apps for U.S. renters, compare features, pricing, and security, and see why LeaseGuard AI is the best choice.
+      - text: 7 min read
+      - img
+    - 'link "Tenant Rights Jul 23, 2026 How to Break a Lease Legally: Step‑by‑Step Guide Learn how to break a lease legally with a clear step‑by‑step guide, covering legal grounds, notice periods, negotiation, and practical tips. 5 min read"':
+      - /url: /blog/how-to-break-a-lease-legally
+      - text: Tenant Rights Jul 23, 2026
+      - 'heading "How to Break a Lease Legally: Step‑by‑Step Guide" [level=2]'
+      - paragraph: Learn how to break a lease legally with a clear step‑by‑step guide, covering legal grounds, notice periods, negotiation, and practical tips.
+      - text: 5 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 How to Get Out of an Apartment Lease Early Guide Learn the exact steps to break your apartment lease early without legal trouble. From reviewing clauses to negotiating an exit, get the full guide. 4 min read":
+      - /url: /blog/how-to-get-out-of-an-apartment-lease-early
+      - text: Tenant Rights Jul 23, 2026
+      - heading "How to Get Out of an Apartment Lease Early Guide" [level=2]
+      - paragraph: Learn the exact steps to break your apartment lease early without legal trouble. From reviewing clauses to negotiating an exit, get the full guide.
+      - text: 4 min read
+      - img
+    - link "Tenant Rights Jul 23, 2026 Administrative Fee Apartment Explained for Renters Learn what an administrative fee apartment charge means, typical costs, legal limits, negotiation tips, and how LeaseGuard AI can protect renters. 5 min read":
+      - /url: /blog/administrative-fee-apartment
+      - text: Tenant Rights Jul 23, 2026
+      - heading "Administrative Fee Apartment Explained for Renters" [level=2]
+      - paragraph: Learn what an administrative fee apartment charge means, typical costs, legal limits, negotiation tips, and how LeaseGuard AI can protect renters.
+      - text: 5 min read
+      - img
+    - heading "Ready to analyze your lease?" [level=2]
+    - paragraph: Don't just read about tenant rights — see how they apply to your specific lease.
+    - link "Analyze My Lease — Free":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease — Free
+      - img
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

@@ -22,6 +22,7 @@ describe("asking questions after an anonymous review", () => {
     const lease = loadFixture("adhesion-lease");
     const user = userEvent.setup();
     render(<DocumentIntake persists={false} />);
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
     await user.click(screen.getByLabelText("Paste your lease"));
     await user.paste(lease.text);
     await user.click(screen.getByRole("button", { name: "Read my lease" }));

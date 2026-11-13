@@ -13,23 +13,35 @@ The project shorthand used in internal documents and conversation.
 _Avoid_: Treating it as a separate product
 
 **Lease signer**:
-A person deciding whether to sign or renew a residential lease they did not write, with the document in hand and a decision approaching.
-_Avoid_: General renter, tenant in a dispute
+A renter or landlord reviewing a residential lease before signing or renewing it.
+_Avoid_: Party seeking help with an active dispute
+
+**Review role**:
+The side the user picks for one lease review: renter (the primary audience) or landlord. The report highlights clauses that could harm that side.
+_Avoid_: Account role, personal red line
 
 **Risk flag**:
-A cited lease term with a plausible, material downside for the lease signer. A term does not become a risk flag merely because its wording is unusual.
+A cited lease term with a plausible, material downside for the selected review role.
 _Avoid_: Odd clause, red flag without a stated consequence
 
 **Severity**:
-The importance of a risk flag to the lease signer's decision, based on the potential consequence and the circumstances that could bring it about.
-_Avoid_: Rarity, legal validity
+The potential harm a risk flag poses to the selected review role, based on the consequence and the circumstances that could bring it about.
+_Avoid_: Finding confidence, legal status, rarity
+
+**Finding confidence**:
+How strongly the agreement supports a finding, including its interpretation in context.
+_Avoid_: Severity, legal status
+
+**Legal status**:
+The assessment that verified, applicable legal evidence supports for a term in its jurisdiction.
+_Avoid_: Severity, finding confidence
 
 **Complete agreement**:
 The lease and every document it references, including fee schedules, rules, and addenda.
 _Avoid_: Uploaded lease alone
 
 **Clean review**:
-A review of a complete agreement in which Blueline found no material risk flags. It is not a guarantee that the agreement is safe to sign.
+A review of a complete agreement in which Blueline found no material risk flags for the selected review role.
 _Avoid_: Safe lease, approved agreement
 
 **Not-found item**:
@@ -45,11 +57,11 @@ The published set of lease protections Blueline checks for when reporting not-fo
 _Avoid_: Model-generated expectations
 
 **General review**:
-The first review of a complete agreement, before the lease signer adds personal red lines.
-_Avoid_: Personalized review
+The initial review of a complete agreement for the selected role, before applying personal red lines.
+_Avoid_: Role-neutral review
 
 **Counter-offer**:
-A proposed change to a flagged lease term that aims to reduce the signer's risk while remaining plausible for a landlord to accept.
+A proposed change to a flagged lease term that reduces risk for the selected role and offers a plausible compromise for both parties.
 _Avoid_: Maximum-demand draft
 
 **Saved review**:

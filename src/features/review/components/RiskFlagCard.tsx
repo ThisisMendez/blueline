@@ -53,7 +53,7 @@ export function RiskFlagCard({ flag, titleById }: RiskFlagCardProps) {
             id={headingId}
             className="min-w-0 [overflow-wrap:anywhere] font-[family-name:var(--font-display)] text-xl font-bold leading-tight text-[var(--color-navy-ink)]"
           >
-            {quoteHeading(flag.sourceSentence)}
+            {flag.title ?? quoteHeading(flag.sourceSentence)}
           </h3>
         </header>
         <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
@@ -64,6 +64,19 @@ export function RiskFlagCard({ flag, titleById }: RiskFlagCardProps) {
             <p className="mt-2 [overflow-wrap:anywhere] font-[family-name:var(--font-data)] text-xs leading-relaxed text-[var(--color-navy)]">
               {documentTitle}, characters {flag.sourceStart} to {flag.sourceEnd}
             </p>
+            {flag.relatedCitations?.map((citation) => (
+              <div
+                key={`${citation.sourceDocumentId}-${citation.sourceStart}-${citation.sourceEnd}`}
+                className="mt-3 border-t border-[var(--color-navy)]/25 pt-3"
+              >
+                <blockquote className="[overflow-wrap:anywhere] font-[family-name:var(--font-body)] text-base leading-relaxed">
+                  {citation.sourceSentence}
+                </blockquote>
+                <p className="mt-2 [overflow-wrap:anywhere] font-[family-name:var(--font-data)] text-xs leading-relaxed text-[var(--color-navy)]">
+                  {titleById.get(citation.sourceDocumentId) ?? citation.sourceDocumentId}, characters {citation.sourceStart} to {citation.sourceEnd}
+                </p>
+              </div>
+            ))}
           </div>
 
           <div className="flex min-w-0 flex-col gap-3">
@@ -75,6 +88,16 @@ export function RiskFlagCard({ flag, titleById }: RiskFlagCardProps) {
                 {flag.consequence}
               </p>
             </div>
+            {flag.nextStep ? (
+              <div>
+                <h4 className="font-[family-name:var(--font-display)] text-sm font-bold text-[var(--color-navy)]">
+                  Next step
+                </h4>
+                <p className="mt-1 [overflow-wrap:anywhere] font-[family-name:var(--font-body)] text-base leading-relaxed">
+                  {flag.nextStep}
+                </p>
+              </div>
+            ) : null}
             <button
               type="button"
               aria-expanded={explanationOpen}
@@ -118,7 +141,7 @@ export function RiskFlagCard({ flag, titleById }: RiskFlagCardProps) {
               Proposed edit
             </h4>
             <p className="mt-2 font-[family-name:var(--font-body)] text-sm leading-relaxed">
-              Use it to start the conversation. Your landlord doesn&apos;t have to accept it, and it isn&apos;t legal advice.
+              Any change needs the other party&apos;s agreement.
             </p>
             <p className="mt-2 [overflow-wrap:anywhere] font-[family-name:var(--font-body)] text-base leading-relaxed">
               {flag.counterOffer}

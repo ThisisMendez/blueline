@@ -127,4 +127,19 @@ describe("enforcing the legal boundary on a review", () => {
     expect(result.riskFlags[0].counterOffer).toBe(WITHHELD_TEXT.counterOffer);
     expect(result.riskFlags[0].residualRisk).toBe(WITHHELD_TEXT.residualRisk);
   });
+
+  it("checks the new title and next-step fields for legal conclusions", async () => {
+    const flag = {
+      ...FLAG,
+      title: "Illegal early termination fee",
+      consequence: "Leaving early could cost $500.",
+      nextStep: "Tell the other party this fee is illegal.",
+    };
+    const model = repairModel({ summary: null, items: [{ ...flag, index: 0, title: "Early termination fee" }] });
+    const result = await enforceLegalBoundary("A twelve-month lease.", [flag], model, "landlord");
+    expect(result.riskFlags[0]).toMatchObject({
+      title: "Early termination fee", nextStep: WITHHELD_TEXT.nextStep, severity: "high",
+    });
+    expect(result.legalClaims).toEqual({ repaired: 1, withheld: 1 });
+  });
 });

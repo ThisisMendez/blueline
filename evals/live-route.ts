@@ -9,9 +9,9 @@ import { OpenRouterModelClient } from "../src/features/analysis/model/openrouter
 import { ModelError, type ModelClient } from "../src/features/analysis/model/client";
 import { runGeneralReview } from "../src/features/analysis/review";
 import { createAnalysisRoute } from "../src/features/analysis/server/route";
-import type { AnalysisOutcome } from "../src/features/analysis/types";
+import type { AnalysisOutcome, ReviewRole } from "../src/features/analysis/types";
 
-export async function runDocument(text: string, title: string, ungated: boolean): Promise<{ outcome: AnalysisOutcome | null; returnedFlags: number; providerError: string | null }> {
+export async function runDocument(text: string, title: string, ungated: boolean, role: ReviewRole = "renter"): Promise<{ outcome: AnalysisOutcome | null; returnedFlags: number; providerError: string | null }> {
   const client = new OpenRouterModelClient({ timeoutMs: 30_000 });
   let calls = 0;
   let shapeRetries = 0;
@@ -48,7 +48,7 @@ export async function runDocument(text: string, title: string, ungated: boolean)
   if (ungated) {
     const documents = [{ id: "pasted-lease", title, text }];
     try {
-      const review = await runGeneralReview({ packet: { documents }, model });
+      const review = await runGeneralReview({ role, packet: { documents }, model });
       return {
         outcome: {
           status: "reviewed", reviewId: null, persisted: false, retention: null, persistenceFailed: false,
@@ -66,7 +66,7 @@ export async function runDocument(text: string, title: string, ungated: boolean)
     const response = await route(new Request("http://localhost/api/analysis", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ text, title }),
+      body: JSON.stringify({ role, text, title }),
     }));
     return { outcome: (await response.json()) as AnalysisOutcome, returnedFlags, providerError };
   } catch (error) {

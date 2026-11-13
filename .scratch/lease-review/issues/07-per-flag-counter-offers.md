@@ -6,6 +6,8 @@
 
 **Status:** implemented and verified offline; live quality concerns require independent review
 
+**2026-11-12 update.** The original implementation and evidence below describe the renter flow. The V1 prompt now drafts the edit for the selected role and aims for terms both parties could accept. [Review-role implementation](../spec.md#review-role-implementation).
+
 - [x] Every risk flag has an associated counter-offer
 - [x] The counter-offer text is hidden until the signer has opened the flag's explanation
 - [x] Each counter-offer states any residual risk that would remain if it were accepted

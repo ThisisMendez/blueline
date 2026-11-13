@@ -1,3 +1,5 @@
+import type { User } from "@supabase/supabase-js";
+
 import { getSupabaseConfig } from "./config";
 import { createServerSupabaseClient } from "./server-client";
 
@@ -5,6 +7,27 @@ import { createServerSupabaseClient } from "./server-client";
 export interface Signer {
   readonly id: string;
   readonly email: string | null;
+  readonly displayName?: string;
+  readonly emailVerified?: boolean;
+  readonly memberSince?: string;
+  readonly lastSignInAt?: string;
+  readonly signInMethods?: readonly SignInMethod[];
+}
+
+type SignInMethod = "email" | "google";
+
+export function getSignInMethods(user: User): readonly SignInMethod[] {
+  const providers = user.identities?.length
+    ? user.identities.map(({ provider }) => provider)
+    : user.app_metadata.providers ?? [user.app_metadata.provider];
+  return providers.filter((provider): provider is SignInMethod => provider === "email" || provider === "google");
+}
+
+function getDisplayName(user: User): string | undefined {
+  const metadata = user.user_metadata;
+  for (const value of [metadata.display_name, metadata.full_name, metadata.name]) {
+    if (typeof value === "string" && value.trim()) return value.trim().slice(0, 80);
+  }
 }
 
 /**
@@ -33,9 +56,18 @@ export async function getAccountsState(): Promise<AccountsState> {
   const { data, error } = await supabase.auth.getUser();
   if (error || !data.user) return { kind: "signed-out" };
 
+  const user = data.user;
   return {
     kind: "signed-in",
-    signer: { id: data.user.id, email: data.user.email ?? null },
+    signer: {
+      id: user.id,
+      email: user.email ?? null,
+      displayName: getDisplayName(user),
+      emailVerified: Boolean(user.email_confirmed_at),
+      memberSince: user.created_at,
+      lastSignInAt: user.last_sign_in_at,
+      signInMethods: getSignInMethods(user),
+    },
   };
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import type { ReviewRole } from "@/features/analysis/types";
 import type { ExtractedDocument } from "@/features/packet/types";
 import { LOCAL_LAW_NOTE, NOT_ADDRESSED, type QuestionOutcome } from "./contract";
 
@@ -13,7 +14,10 @@ const FAILURE_COPY: Record<string, string> = {
   "unavailable": "The review service could not answer. Try again.",
 };
 
-export function QuestionPanel({ documents }: { readonly documents: readonly ExtractedDocument[] }) {
+export function QuestionPanel({ documents, role }: {
+  readonly documents: readonly ExtractedDocument[];
+  readonly role?: ReviewRole;
+}) {
   const [question, setQuestion] = useState("");
   const [submitted, setSubmitted] = useState("");
   const [pending, setPending] = useState(false);
@@ -28,7 +32,7 @@ export function QuestionPanel({ documents }: { readonly documents: readonly Extr
     try {
       const response = await fetch("/api/questions", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: question.trim(), documents }),
+        body: JSON.stringify({ question: question.trim(), documents, role }),
       });
       setOutcome(await response.json() as QuestionOutcome);
     } catch {

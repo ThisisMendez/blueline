@@ -3,7 +3,7 @@ import { z } from "zod";
 import { CONSISTENCY_SCHEMA_NAME } from "../src/features/analysis/model/consistency-schema";
 import { normalizeText } from "../src/features/packet/normalize";
 import { loadFixture, type FixtureId } from "../tests/fixtures";
-import { createFixtureModelClient } from "../tests/support/fixture-model-client";
+import { addendum, lease, roleFixtureModel } from "../tests/support/role-fixture-model";
 
 const ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
 const FIXTURE_IDS: readonly FixtureId[] = ["adhesion-lease", "clean-lease", "referencing-lease", "fee-schedule", "pet-addendum"];
@@ -20,8 +20,7 @@ const requestSchema = z.object({
 
 /** Test transport only; the production app never imports this module. */
 export function createBrowserFixtureFetch(networkFetch: typeof fetch, delayMs = 0): typeof fetch {
-  const knownTexts = new Set(FIXTURE_IDS.map((id) => normalizeText(loadFixture(id).text)));
-  const model = createFixtureModelClient();
+  const knownTexts = new Set([lease, addendum, ...FIXTURE_IDS.map((id) => loadFixture(id).text)].map(normalizeText));
   return async function fixtureFetch(input, init): Promise<Response> {
     const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
     if (url !== ENDPOINT) return networkFetch(input, init);
@@ -45,7 +44,7 @@ export function createBrowserFixtureFetch(networkFetch: typeof fetch, delayMs = 
       }
     }
     if (delayMs > 0) await new Promise<void>((resolve) => setTimeout(resolve, delayMs));
-    const result = await model.complete({
+    const result = await roleFixtureModel.complete({
       system: body.messages[0].content, user,
       schemaName: body.response_format.json_schema.name,
       jsonSchema: body.response_format.json_schema.schema,

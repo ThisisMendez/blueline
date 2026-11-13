@@ -1,0 +1,193 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - navigation "Breadcrumb":
+      - link "LeaseGuard AI Home":
+        - /url: /
+      - text: /
+      - link "Blog":
+        - /url: /blog
+      - text: / Why LeaseGuard AI Earns Renters' Trust
+    - heading "Why LeaseGuard AI Earns Renters' Trust" [level=1]
+    - paragraph: Discover why renters trust LeaseGuard AI for lease checks, plain‑language reports, and state‑specific analysis before signing.
+    - img
+    - text: Jul 28, 2026
+    - img
+    - text: 5 min read
+    - img "Why LeaseGuard AI Earns Renters' Trust"
+    - article:
+      - paragraph:
+        - text: Renters keep losing money to hidden lease clauses.
+        - link "LeaseGuard AI":
+          - /url: https://leaseguardai.com
+        - text: shows you the risks in seconds, so you can act before you sign. Here’s why the tool has become the go‑to for renters across the U.S.
+      - navigation:
+        - heading "Table of Contents" [level=3]
+        - list:
+          - listitem:
+            - link "Trust Starts With Lease Analysis Built for Renters":
+              - /url: "#trust-starts-with-lease-analysis-built-for-renters"
+          - listitem:
+            - link "State‑Specific Cross‑Checking Makes the Results More Relevant":
+              - /url: "#state-specific-cross-checking-makes-the-results-more-relevant"
+          - listitem:
+            - link "Plain‑Language Reports Turn Lease Jargon Into Next Steps":
+              - /url: "#plain-language-reports-turn-lease-jargon-into-next-steps"
+          - listitem:
+            - link "A Trusted Tool Should Be Helpful Without Overpromising":
+              - /url: "#a-trusted-tool-should-be-helpful-without-overpromising"
+          - listitem:
+            - 'link "FAQ: Why LeaseGuard AI Is Trusted by Renters"':
+              - /url: "#faq-why-leaseguard-ai-is-trusted-by-renters"
+          - listitem:
+            - link "Conclusion":
+              - /url: "#conclusion"
+      - heading "Trust Starts With Lease Analysis Built for Renters" [level=2]
+      - paragraph: LeaseGuard AI scans every line of a lease and flags clauses that could cost you thousands. The AI pulls from a database of all 50 state landlord‑tenant statutes, so the flags are not generic warnings, they match the law that applies to you.
+      - paragraph: For example, the system catches early‑termination penalties that demand two months’ rent if you leave early. It also spots automatic renewal language that could lock you in for another year without a clear notice period. Each flag comes with a plain‑English note that explains why the clause matters and what you might owe.
+      - paragraph: The free preview gives you a “Lease Health Score” and the top five risky items in under a minute. That instant feedback lets you decide whether to pay for the full report or negotiate the terms first.
+      - paragraph: Privacy matters, too. Uploaded files are processed in‑session and deleted immediately, so your personal data never lives on a server.
+      - paragraph:
+        - text: Learn more about the three‑step analysis pipeline on the
+        - link "How LeaseGuard AI Works, Lease Analysis in 3 Simple Steps":
+          - /url: https://leaseguardai.com/how-it-works
+        - text: page.
+      - img "lease analysis tool shows risky clauses for renters"
+      - heading "State‑Specific Cross‑Checking Makes the Results More Relevant" [level=2]
+      - paragraph: Every state has its own caps on fees, limits on rent hikes, and rules about security deposits. LeaseGuard AI matches each clause against the exact statutes for the renter’s state, so the advice is not one‑size‑fits‑all.
+      - paragraph: In Florida, for instance, Chapter 83 limits late‑fee amounts to 5% of the rent. The AI will flag any clause that tries to charge more than that and link directly to the statute so you can verify it yourself.
+      - paragraph: Similarly, in California the law caps security deposits at two months’ rent for unfurnished units. LeaseGuard AI spots deposits that exceed the cap and tells you why it could be illegal.
+      - paragraph: This state‑by‑state check builds trust because renters see concrete legal citations instead of vague warnings.
+      - paragraph:
+        - text: Understanding local tenant‑rights laws can help reduce disputes; see
+        - link "tenant protection guidelines":
+          - /url: https://www.hud.gov/topics/tenants
+        - text: .
+      - paragraph: Because the AI pulls from an up‑to‑date statute database, the tool stays reliable even as laws change. The database is refreshed each quarter, so new caps or rule changes appear in the next scan.
+      - paragraph: LeaseGuard AI provides informational analysis only; it is not a law firm.
+      - heading "Plain‑Language Reports Turn Lease Jargon Into Next Steps" [level=2]
+      - paragraph: Legal language can feel like a foreign code. LeaseGuard AI rewrites each flagged clause in plain English and adds a suggested action.
+      - paragraph: "If a lease demands an “administrative fee” with no legal basis, the report will say: “This fee is not required by state law. Ask the landlord to remove it or provide a written justification.” The report also supplies a ready‑to‑use email template you can copy, edit, and send."
+      - paragraph: The report groups risks by severity, low, medium, high, so you know which items need immediate attention. High‑risk items, like clauses that let a landlord enter without notice, appear first with clear negotiation language.
+      - paragraph: All of this is laid out in a single PDF that you can download, print, or share with a legal advisor.
+      - paragraph:
+        - text: See the full feature list on the
+        - link "Features, LeaseGuard AI":
+          - /url: https://leaseguardai.com/features
+        - text: page for more detail.
+      - strong: "Key Takeaway:"
+      - text: A plain‑language report turns confusing lease text into actionable steps, letting renters negotiate with confidence.
+      - paragraph: LeaseGuard AI provides informational analysis only; it is not a law firm.
+      - heading "A Trusted Tool Should Be Helpful Without Overpromising" [level=2]
+      - paragraph: Transparency is the biggest trust factor. LeaseGuard AI offers a free preview that shows the top five risks and a health score before you pay. That lets you test the service risk‑free.
+      - paragraph: "The AI also discloses its accuracy claim: the health score is “surprisingly accurate,” a statement backed by the company’s own testing data. No other comparable tool in the market makes a comparable claim."
+      - img "why leaseguard ai is trusted by renters a trusted tool should be helpful without overpromising"
+      - paragraph: Pricing is clear, a one‑time $19.99 fee for the full report, with a 48‑hour money‑back guarantee. There’s no hidden subscription, no surprise charges.
+      - paragraph: Because the tool does not store your document after analysis, renters avoid the fear that their lease could be used for other purposes.
+      - paragraph:
+        - text: If you’re ready to see a real example, try the free preview on the
+        - link "Analyze My Lease, AI Review in 60 Seconds | LeaseGuard AI":
+          - /url: https://leaseguardai.com/analyze
+        - text: page.
+      - strong: "Pro Tip:"
+      - text: After you get the report, use the provided negotiation template to ask the landlord for a written amendment. A written request creates a paper trail that can protect you later.
+      - paragraph: LeaseGuard AI provides informational analysis only; it is not a law firm.
+      - 'heading "FAQ: Why LeaseGuard AI Is Trusted by Renters" [level=2]'
+      - heading "Does LeaseGuard AI really catch hidden fees?" [level=3]
+      - paragraph: Yes. The AI looks for fees that exceed state caps, such as late‑fee amounts that surpass the limit in Florida statutes. It flags each fee and cites the specific law so you can verify it.
+      - heading "How fast is the analysis?" [level=3]
+      - paragraph: The free preview runs in about 60 seconds for most leases, delivering a health score and the top five risk items.
+      - heading "Is my lease data stored?" [level=3]
+      - paragraph: No. Documents are processed in‑session and deleted immediately after the report is generated, so no personal data is kept.
+      - heading "Can I use the tool for any state?" [level=3]
+      - paragraph: Yes. LeaseGuard AI covers all 50 states and cross‑references each clause with the relevant state’s landlord‑tenant act.
+      - heading "What if I need legal advice?" [level=3]
+      - paragraph: LeaseGuard AI is an informational tool, not a law firm. If a clause looks risky, you should consult a qualified attorney for legal advice.
+      - heading "Is there a money‑back guarantee?" [level=3]
+      - paragraph: Yes. The full report comes with a 48‑hour money‑back guarantee if you’re not satisfied with the results.
+      - heading "Conclusion" [level=2]
+      - paragraph: If you want a fast, transparent way to spot risky lease clauses, start with LeaseGuard AI’s free preview and upgrade only if you need the full report. Upload your lease today and see the top five risks in seconds.
+      - paragraph: This article is general information, not legal advice. Laws vary by state — verify details with your state's landlord-tenant statutes or a licensed attorney.
+      - text: 🛡️
+      - heading "Check Your Own Lease Now" [level=2]
+      - paragraph: Everything in this guide applies to leases in general — but your lease may have specific clauses that need their own review. Upload it free.
+      - link "Analyze My Lease — Free":
+        - /url: /analyze
+        - img
+        - text: Analyze My Lease — Free
+        - img
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert

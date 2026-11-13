@@ -35,7 +35,7 @@ describe("test-only browser fixture transport", () => {
       newReviewId: () => { throw new Error("Unexpected persisted ID"); },
     });
     const response = await route(new Request("http://localhost/api/analysis", {
-      method: "POST", body: JSON.stringify({ text: fixture.text }),
+      method: "POST", body: JSON.stringify({ role: "renter", text: fixture.text }),
     }));
     const outcome = await response.json();
     expect(outcome.status).toBe("reviewed");
@@ -49,7 +49,7 @@ describe("test-only browser fixture transport", () => {
     const route = analysisRoute();
     for (const id of ["clean-lease", "referencing-lease"] as const) {
       const response = await route(new Request("http://localhost/api/analysis", {
-        method: "POST", body: JSON.stringify({ text: loadFixture(id).text }),
+        method: "POST", body: JSON.stringify({ role: "renter", text: loadFixture(id).text }),
       }));
       const outcome = await response.json();
       expect(outcome.status).toBe(id === "clean-lease" ? "reviewed" : "blocked");
@@ -63,7 +63,7 @@ describe("test-only browser fixture transport", () => {
     const network = useFixtureTransport();
     const route = analysisRoute();
     for (const text of ["Unknown lease text.", loadFixture("clean-lease").text + " An additional clause."]) {
-      const response = await route(new Request("http://localhost/api/analysis", { method: "POST", body: JSON.stringify({ text }) }));
+      const response = await route(new Request("http://localhost/api/analysis", { method: "POST", body: JSON.stringify({ role: "renter", text }) }));
       expect(await response.json()).toEqual({ status: "failed", reason: "model-unavailable" });
     }
     expect(network).not.toHaveBeenCalled();

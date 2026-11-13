@@ -1,0 +1,31 @@
+{
+  "evidence_id": "ev_894cd78594086376cfce9d8dda08a43b5a799fadd4f87bc44b959e0ff01e845a",
+  "url": "https://leaseguardai.com/blog/leaseguard-ai-trust",
+  "final_url": "https://leaseguardai.com/blog/leaseguard-ai-trust",
+  "captured_at": "2026-11-12T17:04:51.335Z",
+  "screenshot_sha256": "f366585904332b86aab0ed7e601215ad22100dcf3aff06c88e5cbd0c2831b22a",
+  "ax_sha256": "2d6452f3e94bf8ee180761664ab735252856854bf306af4aa50323a9fce9ed6f",
+  "completeness": "complete",
+  "request_origins": {
+    "https://leaseguardai.com": 36,
+    "https://rebelgrowth.s3.us-east-1.amazonaws.com": 3,
+    "https://www.googletagmanager.com": 4,
+    "https://fonts.googleapis.com": 1,
+    "https://fonts.gstatic.com": 1,
+    "https://www.google-analytics.com": 1,
+    "https://googleads.g.doubleclick.net": 1,
+    "https://www.google.com": 4,
+    "https://ad.doubleclick.net": 1,
+    "https://www.redditstatic.com": 1,
+    "https://alb.reddit.com": 1,
+    "https://www.google.com.do": 1
+  },
+  "console": [],
+  "browser": {
+    "mode": "launch",
+    "process_ownership": "provider-owned",
+    "cleanup": "terminated-owned-process",
+    "product": "Chromium",
+    "version": "157.0.8103.51"
+  }
+}

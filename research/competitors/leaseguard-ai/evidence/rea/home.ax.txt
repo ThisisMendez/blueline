@@ -1,0 +1,215 @@
+- document:
+  - banner:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - navigation:
+      - link "How It Works":
+        - /url: /how-it-works
+      - link "Features":
+        - /url: /features
+      - link "Pricing":
+        - /url: /pricing
+      - link "Blog":
+        - /url: /blog
+      - link "Contact":
+        - /url: /contact
+    - link "My Account Save reports · optional":
+      - /url: /account
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+  - main:
+    - text: Privacy-First · Zero Lease Storage · All 50 States
+    - heading "Know Your Lease Before You Sign. |" [level=1]
+    - paragraph: LeaseGuard AI reads your rental agreement line by line and flags clauses worth a closer look — junk fees, predatory terms, and language that may conflict with your state's tenant-protection laws. See your top 5 flags free in under 60 seconds. Full report available with Pro.
+    - link "Analyze My Lease — Free Preview":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease — Free Preview
+      - img
+    - link "See How It Works ↓":
+      - /url: /how-it-works
+    - link "📄 See Sample Report":
+      - /url: /analyze?demo=true
+    - paragraph:
+      - text: ✅
+      - strong: "Free preview:"
+      - text: top 5 flags + Lease Health Score · ⚡
+      - strong: "Pro ($19.99 one-time):"
+      - text: unlimited flags, negotiation templates, full PDF report
+    - text: Lawyers charge $400–$800/hr · Full report from $19.99 one-time
+    - img
+    - text: Zero Lease Storage
+    - img
+    - text: 60-Second Analysis
+    - img
+    - text: U.S. Statute Database
+    - link "All 50 States ↗":
+      - /url: /tenant-rights/florida
+      - img
+      - text: All 50 States ↗
+    - heading "What We Look For In Your Lease" [level=2]
+    - paragraph: Most renters sign leases they don't fully understand. Landlords count on that. LeaseGuard AI doesn't.
+    - text: 🚨
+    - heading "Compliance Risk Detection" [level=3]
+    - paragraph: Every clause cross-referenced against your state's landlord-tenant statutes. Anything that may not be enforceable in your state gets flagged — with the source statute attached.
+    - text: 💸
+    - heading "Junk Fee Scanner" [level=3]
+    - paragraph: Admin fees, move-in penalties, and "convenience" charges that may exceed state caps or duplicate other deposit coverage — found and explained in plain English.
+    - text: ⚠️
+    - heading "Predatory Term Detection" [level=3]
+    - paragraph: Auto-renewals, one-sided indemnification, excessive landlord entry rights, and late fees that go beyond market norms — all surfaced for your review.
+    - text: 🤝
+    - heading "Negotiation Templates" [level=3]
+    - paragraph: Plain-language email and conversation templates for raising any flagged clause with your landlord — ready to copy, edit, and send.
+    - link "See All Features":
+      - /url: /features
+      - text: See All Features
+      - img
+    - paragraph: Lease Health Score
+    - heading "Your lease gets a grade. A through F." [level=2]
+    - paragraph: Know your risk before you read a single clause.
+    - text: A Safe to sign Clean lease. Sign with confidence.
+    - paragraph: No high-risk flags found in our review. No junk fees or aggressive terms detected. Standard landlord protections only — this is as good as it gets.
+    - button "Grade A": A
+    - button "Grade B": B
+    - button "Grade C": C
+    - button "Grade D": D
+    - button "Grade F": F
+    - link "Get My Lease Grade":
+      - /url: /analyze
+      - text: Get My Lease Grade
+      - img
+    - button "A Clean lease. Sign with confidence. Safe to sign":
+      - text: A Clean lease. Sign with confidence. Safe to sign
+      - img
+    - button "B Minor issues. Clarify before signing. Low risk":
+      - text: B Minor issues. Clarify before signing. Low risk
+      - img
+    - button "C Notable risks. Negotiate these terms. Negotiable":
+      - text: C Notable risks. Negotiate these terms. Negotiable
+      - img
+    - button "D Multiple high-risk flags. Strongly consider consulting a tenant-rights attorney before signing. High risk":
+      - text: D Multiple high-risk flags. Strongly consider consulting a tenant-rights attorney before signing. High risk
+      - img
+    - button "F Predatory. We recommend not signing as-is. Do not sign":
+      - text: F Predatory. We recommend not signing as-is. Do not sign
+      - img
+    - heading "How It Works — 3 Steps" [level=2]
+    - paragraph: From upload to insight in under 60 seconds.
+    - img
+    - text: 01 ☁️
+    - heading "Upload Your Lease" [level=3]
+    - paragraph: Drag and drop your lease PDF or paste the full text. Takes 10 seconds. Never stored.
+    - img
+    - text: 02 ⚙️
+    - heading "AI Scans Every Clause" [level=3]
+    - paragraph: Our AI cross-references every clause against your state's landlord-tenant law database.
+    - text: 03 🛡️
+    - heading "Get Your Report" [level=3]
+    - paragraph: Lease Health Score, flagged clauses with statute references, and negotiation templates — ready in 60 seconds.
+    - link "Learn More":
+      - /url: /how-it-works
+      - text: Learn More
+      - img
+    - heading "Built For Renters, By Operators" [level=2]
+    - paragraph: A licensed attorney is the right call for a real legal dispute. But for a sanity check before you sign? You deserve a tool that's fast, free, and built for you — not a billable hour.
+    - text: 50 states covered <60s average analysis time Zero lease document storage 6 detection modules per scan
+    - heading "Feedback From Our Beta Testers" [level=2]
+    - paragraph: Beta testers received free access to the product in exchange for their honest evaluation. All opinions are their own.
+    - text: ★ ★ ★ ★ ★
+    - paragraph: “The negotiation scripts alone made it worth it. I copied the exact language, sent it to my landlord, and got two clauses removed before signing. Incredibly easy to use.”
+    - text: Meera R. Beta Tester ★ ★ ★ ★ ★
+    - paragraph: “It's cheaper than hiring a lawyer to review your documents. The state law breakdown was exactly what I needed — I knew my rights before I even talked to my landlord.”
+    - text: Julie Ann F. Beta Tester ★ ★ ★ ★ ★
+    - paragraph: “I sent one email to my landlord using the exact script and had a fee removed the same day. Never would have known to push back on that clause without this tool.”
+    - text: Harish P. Beta Tester ★ ★ ★ ★ ★
+    - paragraph: “I had no idea my state had specific rules on security deposit returns. The state law section opened my eyes — my landlord's clause may not have held up.”
+    - text: Moin G. Beta Tester ★ ★ ★ ★ ★
+    - paragraph: “The health score is surprisingly accurate. Gave me a clear picture of how risky my lease was before I even read a single clause. Fast and easy.”
+    - text: Darshan M. Beta Tester ★ ★ ★ ★ ★
+    - paragraph: “I was skeptical AI could handle legal documents but it was spot on. Caught a clause my property manager may not have had a solid basis to include. Impressed.”
+    - text: Dhruvesh P. Beta Tester ★ ★ ★ ★
+    - paragraph: “The Lease Health Score was the most useful part for me — seeing a letter grade instantly told me how worried I should be. I'd absolutely pay for the full report.”
+    - text: Anas W. Beta Tester
+    - heading "LeaseGuard AI vs. Your Alternatives" [level=2]
+    - paragraph: You have three options when you get a lease. Here's the honest comparison.
+    - text: Feature LeaseGuard AI Sign Blind Pre-Lease Attorney Review Cost Free (Pro from $19.99) Free $400–$800+ Time to insight 60 seconds — 1–5 days Clause-by-clause review ✓ ✗ ✓ All 50 states ✓ ✗ Varies Statute references ✓ ✗ ✓ Negotiation templates ✓ ✗ Extra charge Privacy (no storage) ✓ ✓ Varies
+    - paragraph: LeaseGuard AI is an informational tool, not a substitute for legal counsel. We recommend pre-lease attorney review for high-value, complex, or commercial leases.
+    - heading "Frequently Asked Questions" [level=2]
+    - group: Is LeaseGuard AI really free? +
+    - group: Is my lease stored or shared? +
+    - group: Does LeaseGuard AI replace a lawyer? +
+    - group: Which states are supported? +
+    - group: How accurate is the AI? +
+    - group: What file types do you support? +
+    - group: I have a signing deadline — how fast is this really? +
+    - text: 🛡️
+    - heading "Your lease deadline is closer than you think." [level=2]
+    - paragraph: Don't sign blind. Get an instant AI-powered lease review — flag compliance risks and high-risk clauses before you sign.
+    - link "Analyze My Lease":
+      - /url: /analyze
+      - img
+      - text: Analyze My Lease
+      - img
+    - link "📄 View Sample Report":
+      - /url: /analyze?demo=true
+    - img
+    - text: Free preview Full report from $19.99 No account needed
+  - contentinfo:
+    - link "LeaseGuard AI":
+      - /url: /
+      - img
+      - text: LeaseGuard AI
+    - paragraph: AI-powered lease analysis for all 50 U.S. states. Flag compliance risks, junk fees, and predatory terms — before you sign.
+    - text: Zero Lease Document Storage
+    - heading "Product" [level=3]
+    - list:
+      - listitem:
+        - link "How It Works":
+          - /url: /how-it-works
+      - listitem:
+        - link "Features":
+          - /url: /features
+      - listitem:
+        - link "Pricing":
+          - /url: /pricing
+      - listitem:
+        - link "Analyze My Lease":
+          - /url: /analyze
+    - heading "Resources" [level=3]
+    - list:
+      - listitem:
+        - link "Blog":
+          - /url: /blog
+      - listitem:
+        - link "Tenant Rights by State":
+          - /url: /tenant-rights/florida
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Contact":
+          - /url: /contact
+      - listitem:
+        - link "Share Feedback":
+          - /url: /feedback
+    - heading "Legal" [level=3]
+    - list:
+      - listitem:
+        - link "Trust & Transparency":
+          - /url: /trust
+      - listitem:
+        - link "Privacy Policy":
+          - /url: /privacy
+      - listitem:
+        - link "Terms of Service":
+          - /url: /terms
+    - paragraph:
+      - strong: LeaseGuard AI is a technology service, not a law firm.
+      - text: Analysis is for informational and educational purposes only and does not constitute legal advice. For legal disputes, consult a licensed attorney in your state.
+    - paragraph: © 2026 LeaseGuard AI. All rights reserved.
+  - alert
