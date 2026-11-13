@@ -1,6 +1,6 @@
 # 33. Ask for feedback during beta
 
-Status: ready-for-agent
+Status: links live in 0.2.0, sending pending ticket 31
 
 Add a small **Give feedback** prompt after the report, where renters and landlords have enough context to say what helped or was missing. Keep a persistent link in the footer for feedback at other points, including when a review fails. Both should open the same form with the topic set to beta feedback.
 

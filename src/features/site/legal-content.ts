@@ -51,7 +51,7 @@ export const TERMS_SECTIONS: readonly LegalSection[] = [
   {
     heading: "Accounts",
     paragraphs: [
-      "You can run a review without an account. If you create one, keep your sign-in details private. We may suspend an account that is used to misuse the service.",
+      "You can run a review without an account. If you create one, confirm your email address and keep your sign-in details private. Saving to your library requires an account. Some drafting tools may ask you to sign in. We may suspend an account that is used to misuse the service.",
     ],
   },
   {
@@ -69,7 +69,7 @@ export const TERMS_SECTIONS: readonly LegalSection[] = [
   {
     heading: "Contact",
     paragraphs: [
-      "Use the contact page. We are still setting up a public contact address.",
+      "Use the contact page when sending is available.",
     ],
   },
 ];
@@ -79,9 +79,10 @@ export const PRIVACY_SECTIONS: readonly LegalSection[] = [
     heading: "What we collect",
     paragraphs: [
       "The text of your lease and any documents you add, the titles they carry, the side you chose, and the review we produce. We never receive the PDF file itself.",
-      "If you create an account: your email address, the display name you give us, and your password, which our sign-in provider stores in hashed form. If you sign in with Google, we receive your name and email address from Google.",
+      "If you create an account, we collect your email address and the name you enter. The signup form asks for your first name. Supabase handles your password and confirmation email. If Google sign-in is available and you use it, we receive your name and email address from Google.",
       "If you are signed in: the personal red lines you write (up to 20).",
       "We use cookies to keep you signed in.",
+      "If you send a contact message, we receive your name, reply email, topic, and message. Feedback can include your comment, whether the report was useful, the page you came from, and whether you reviewed as a renter or landlord. Email is optional for feedback.",
     ],
   },
   {
@@ -89,7 +90,7 @@ export const PRIVACY_SECTIONS: readonly LegalSection[] = [
     paragraphs: [
       "Your browser reads the text out of each PDF. The file stays on your device.",
       "The text and your chosen side go to our server, which sends them to an AI model through OpenRouter. OpenRouter passes the request to a single model provider that we choose in our settings, and that provider processes the text to write the review.",
-      "If you are not signed in, we don't save the text or the review in our database.",
+      "Guest reviews stay in the open browser tab. Where guest saving is available, the app keeps a temporary encrypted copy in that tab for up to two hours so you can sign in and return to the report. It adds the guest review to your library when you choose to save it.",
     ],
   },
   {
@@ -109,7 +110,7 @@ export const PRIVACY_SECTIONS: readonly LegalSection[] = [
   {
     heading: "Who else handles your data",
     paragraphs: [
-      "Supabase stores accounts and saved reviews. Vercel hosts the site. OpenRouter and the model provider it routes to process the text of each review. Each one handles data under its own terms.",
+      "Supabase stores accounts and saved reviews. Vercel hosts the site. OpenRouter and the model provider it routes to process the text of each review. When contact and feedback sending is available, Formspree receives the submission and sends a notification to the support inbox.",
       "We don't sell your data.",
     ],
   },

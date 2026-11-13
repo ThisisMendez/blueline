@@ -5,6 +5,10 @@ export type SignInStatus =
   | "recovery-sent"
   | "confirmation-required"
   | "confirmation-unavailable"
+  | "confirmation-session-ended"
+  | "invalid-confirmation-code"
+  | "invalid-confirmation-link"
+  | "verification-rate-limited"
   | "invalid-input"
   | "invalid-password"
   | "password-mismatch"
@@ -17,6 +21,7 @@ export type SignInStatus =
 
 export interface SignInState {
   readonly status: SignInStatus;
+  readonly confirmationEmail?: string;
 }
 
 export const initialSignInState: SignInState = { status: "idle" };

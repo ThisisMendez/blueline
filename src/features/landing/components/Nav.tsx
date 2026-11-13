@@ -64,6 +64,9 @@ export function Nav() {
             aria-label="Mobile navigation"
             className="absolute right-0 top-full z-10 mt-1 flex w-44 flex-col border-2 border-[var(--color-navy)] bg-[var(--color-paper)] px-3 py-1"
           >
+            <Link href="/review" onNavigate={closeMenu} className={navLinkClassName}>
+              Analyze My Lease
+            </Link>
             {navigation.map(({ label, href }) => (
               <Link key={href} href={href} onNavigate={closeMenu} className={navLinkClassName}>
                 {label}
@@ -83,8 +86,7 @@ export function Nav() {
         </nav>
         <Link
           href="/review"
-          onNavigate={closeMenu}
-          className="col-span-2 inline-flex min-h-11 items-center justify-center bg-[var(--color-navy)] px-4 py-2 text-center font-[family-name:var(--font-display)] text-sm font-bold text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)] lg:col-span-1"
+          className="hidden min-h-11 items-center justify-center bg-[var(--color-navy)] px-4 py-2 text-center font-[family-name:var(--font-display)] text-sm font-bold text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)] lg:inline-flex"
         >
           Analyze My Lease
         </Link>

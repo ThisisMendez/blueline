@@ -4,14 +4,14 @@
 
 **Blocked by:** 15
 
-**Status:** built; the overlay is a proposal pending owner confirmation
+**Status:** built; the owner chose the Low forfeiture rule on November 13, 2026
 
 - [x] Prompt bullet and PRD row and materiality sentence: a small forfeiture is Low, not left out
 - [x] Overlay lists document, exact sentence (verified verbatim and unique by test), original label, corrected label, standard and reason; original labels untouched
 - [x] Overlay frozen before candidate runs; SHA-256 recorded in `evals/gold-set/README.md` and checked by a test
 - [x] Original 26-risk benchmark scored exactly as before; revised clean-document view reported separately
 - [x] Unit tests for overlay application and the forfeiture-vs-false-flag split
-- [ ] Owner confirms or rejects the four corrections (clean-document: 2, swim-lesson-registration: 2; library-volunteer-agreement: none)
+- [x] Owner accepts the Low forfeiture rule. The four corrections apply it to the quoted examples (clean-document: 2, swim-lesson-registration: 2; library-volunteer-agreement: none).
 
 ## Measured (final prompt)
 

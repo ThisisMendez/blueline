@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useId } from "react";
 
 import {
   requestPasswordResetAction,
@@ -10,6 +10,8 @@ import {
   signInWithPasswordAction,
   signUpAction,
   startGoogleSignInAction,
+  verifySignupCodeAction,
+  verifySignupLinkAction,
 } from "../actions";
 import { PASSWORD_MIN_LENGTH } from "../password-validation";
 import { initialSignInState, type SignInState } from "../sign-in-state";
@@ -27,10 +29,14 @@ const FORM = {
 
 const MESSAGE: Record<Exclude<SignInState["status"], "idle">, string> = {
   "sign-in-link-sent": "Check your inbox for a sign-in link and open it in this browser.",
-  "confirmation-sent": "If this address needs confirmation, check its inbox for a link. Open it in this browser.",
+  "confirmation-sent": "If this address needs confirmation, check your inbox for a code or confirmation link.",
   "recovery-sent": "If an account can use this address, you’ll receive a password reset link. Open it in this browser.",
-  "confirmation-required": "Confirm your email before signing in. You can request another confirmation link if you need one.",
+  "confirmation-required": "Confirm your email before signing in. You can request a fresh confirmation email.",
   "confirmation-unavailable": "Email confirmation isn’t set up here. Your signup didn’t finish.",
+  "confirmation-session-ended": "Request a fresh email to continue.",
+  "invalid-confirmation-code": "That code didn’t work. Check the latest email or ask for a new code.",
+  "invalid-confirmation-link": "That link is incomplete, expired, or already used. You can sign in or request a fresh email.",
+  "verification-rate-limited": "Too many attempts. Wait a while and try again.",
   "invalid-input": "Check the information you entered and try again.",
   "invalid-password": "Use at least 8 characters. If your password is very long, shorten it and try again.",
   "password-mismatch": "Enter the same password in both fields.",
@@ -55,6 +61,70 @@ function Message({ state }: { state: SignInState }) {
   );
 }
 
+function VerifySignupCodeForm({ next, email }: { readonly next: string; readonly email: string }) {
+  const id = useId();
+  const [state, action, pending] = useActionState(verifySignupCodeAction, initialSignInState);
+  const [resendState, resendAction, resending] = useActionState(resendConfirmationAction, initialSignInState);
+  return (
+    <>
+      <form action={action} className="flex flex-col gap-3">
+        <input type="hidden" name="next" value={next} />
+        <input type="hidden" name="confirmationEmail" value={email} />
+        <label htmlFor={id} className={LABEL}>Verification code</label>
+        <p id={`${id}-hint`} className="text-sm break-all">Paste the code sent to {email} to sign in.</p>
+        <input
+          id={id}
+          name="code"
+          type="text"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          aria-describedby={`${id}-hint`}
+          maxLength={10}
+          required
+          className={INPUT}
+        />
+        <button type="submit" disabled={pending || resending} className={PRIMARY}>
+          {pending ? "Verifying…" : "Verify email"}
+        </button>
+      </form>
+      <Message state={state} />
+      <form action={resendAction} className="mt-4">
+        <input type="hidden" name="next" value={next} />
+        <input type="hidden" name="confirmationEmail" value={email} />
+        <button type="submit" disabled={resending || pending} className="text-sm underline disabled:opacity-70">
+          {resending ? "Sending…" : "Send a new code"}
+        </button>
+      </form>
+      <Message state={resendState} />
+      <p className="mt-4 text-sm">You can also use the confirmation link in your email.</p>
+      <p className="mt-2 text-sm">After signing in, return to your open review and choose Continue after sign-in.</p>
+    </>
+  );
+}
+
+export function VerifySignupLinkForm() {
+  const [state, action, pending] = useActionState(async (previous: SignInState, values: FormData) => {
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const tokenHash = fragment.get("token_hash");
+    if (tokenHash) values.set("tokenHash", tokenHash);
+    const result = await verifySignupLinkAction(previous, values);
+    if (result.status === "invalid-confirmation-link") {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+    return result;
+  }, initialSignInState);
+  return (
+    <>
+      <form action={action}>
+        <button type="submit" disabled={pending} className={PRIMARY}>
+          {pending ? "Verifying…" : "Verify email"}
+        </button>
+      </form>
+      <Message state={state} />
+    </>
+  );
+}
+
 export function SignInForm({ mode = "sign-in", next = "/account" }: {
   readonly mode?: AuthFormMode;
   readonly next?: string;
@@ -67,14 +137,22 @@ export function SignInForm({ mode = "sign-in", next = "/account" }: {
   const isSignIn = mode === "sign-in";
   const showPassword = isSignIn || isSignup || isReset;
 
+  if ((isSignup || mode === "resend") && state.status === "confirmation-sent" && state.confirmationEmail) {
+    return (
+      <div>
+        <VerifySignupCodeForm next={next} email={state.confirmationEmail} />
+      </div>
+    );
+  }
+
   return (
     <div>
       <form action={action} className="flex flex-col gap-3">
         <input type="hidden" name="next" value={next} />
         {isSignup ? (
           <>
-            <label htmlFor="auth-name" className={LABEL}>Display name</label>
-            <input id="auth-name" name="displayName" autoComplete="name" required maxLength={80} className={INPUT} />
+            <label htmlFor="auth-name" className={LABEL}>First name</label>
+            <input id="auth-name" name="firstName" autoComplete="given-name" required maxLength={80} className={INPUT} />
           </>
         ) : null}
         {isReset ? null : (

@@ -1,7 +1,9 @@
 import type { ReactNode } from "react";
 
 import type { GeneralReview, ReviewRole } from "@/features/analysis/types";
+import { LandlordRecommendations } from "@/features/negotiation/LandlordRecommendations";
 import { ReviewSuggestions, type DraftAccess, type DraftWording } from "@/features/negotiation/ReviewSuggestions";
+import { landlordRecommendations } from "@/features/negotiation/landlord-recommendations";
 import { discussionShortlist } from "@/features/negotiation/shortlist";
 import type { ExtractedDocument } from "@/features/packet/types";
 import { RedLinesPanel } from "@/features/red-lines/RedLinesPanel";
@@ -47,7 +49,8 @@ export function ReviewResult({
   const documentTitles = new Map(documents.map((document) => [document.id, document.title]));
   const side = review.role ?? role ?? undefined;
   const about = firstSentences(review.summary, 2);
-  const suggestions = side ? discussionShortlist(review.riskFlags, draftableFlagIds) : [];
+  const suggestions = side === "renter" ? discussionShortlist(review.riskFlags, draftableFlagIds) : [];
+  const recommendations = side === "landlord" ? landlordRecommendations(review.riskFlags, review.coverage, draftableFlagIds) : [];
   const skippedCount = draftableFlagIds
     ? review.riskFlags.filter(({ id, severity }) => severity !== "low" && !draftableFlagIds.includes(id)).length
     : 0;
@@ -118,15 +121,22 @@ export function ReviewResult({
         </div>
       </div>
 
-      {side && suggestions.length > 0 ? (
+      {suggestions.length > 0 ? (
         <ReviewSuggestions
-          key={side}
-          role={side}
           flags={suggestions}
           documentTitles={documentTitles}
           requestDraft={requestDraft}
           wording={wording}
           skippedCount={skippedCount}
+        />
+      ) : null}
+      {recommendations.length > 0 ? (
+        <LandlordRecommendations
+          recommendations={recommendations}
+          documentTitles={documentTitles}
+          requestDraft={requestDraft}
+          wording={wording}
+          draftingUnavailable={draftableFlagIds !== undefined && !requestDraft}
         />
       ) : null}
 

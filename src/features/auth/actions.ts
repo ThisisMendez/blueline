@@ -1,7 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { redirect, RedirectType } from "next/navigation";
 
 import { isValidNewPassword } from "./password-validation";
 import { readAuthProviderSettings } from "./provider-settings";
@@ -11,20 +12,38 @@ import { createServerSupabaseClient } from "./server-client";
 import type { SignInState } from "./sign-in-state";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CONFIRMATION_EMAIL_COOKIE = "blueline-confirmation-email";
 
 function textField(formData: FormData, name: string): string {
   const value = formData.get(name);
   return typeof value === "string" ? value : "";
 }
 
-function emailField(formData: FormData): string | null {
-  const email = textField(formData, "email").trim();
+function validEmail(email: string): string | null {
   return email.length <= 254 && EMAIL_PATTERN.test(email) ? email : null;
 }
 
-function confirmationStatus(code: string | undefined): SignInState {
+function emailField(formData: FormData): string | null {
+  return validEmail(textField(formData, "email").trim());
+}
+
+async function rememberConfirmationEmail(email: string) {
+  (await cookies()).set(CONFIRMATION_EMAIL_COOKIE, email, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 24 * 60 * 60,
+  });
+}
+
+async function pendingConfirmationEmail(): Promise<string | null> {
+  return validEmail((await cookies()).get(CONFIRMATION_EMAIL_COOKIE)?.value ?? "");
+}
+
+function confirmationStatus(code: string | undefined, email: string): SignInState {
   if (!code || ["user_already_exists", "email_exists", "user_not_found", "email_address_not_authorized"].includes(code)) {
-    return { status: "confirmation-sent" };
+    return { status: "confirmation-sent", confirmationEmail: email };
   }
   if (code === "weak_password") return { status: "invalid-password" };
   if (code === "over_email_send_rate_limit") return { status: "email-rate-limited" };
@@ -79,9 +98,9 @@ export async function signUpAction(
   formData: FormData,
 ): Promise<SignInState> {
   const email = emailField(formData);
-  const displayName = textField(formData, "displayName").trim();
+  const firstName = textField(formData, "firstName").trim();
   const password = textField(formData, "password");
-  if (!email || !displayName || displayName.length > 80) return { status: "invalid-input" };
+  if (!email || !firstName || firstName.length > 80) return { status: "invalid-input" };
   if (!isValidNewPassword(password)) return { status: "invalid-password" };
 
   const supabase = await createServerSupabaseClient();
@@ -97,7 +116,7 @@ export async function signUpAction(
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { display_name: displayName }, emailRedirectTo },
+    options: { data: { display_name: firstName }, emailRedirectTo },
   });
   // A signup session means Confirm Email is disabled in this Supabase project.
   if (data.session) {
@@ -105,14 +124,18 @@ export async function signUpAction(
     return { status: "confirmation-unavailable" };
   }
   if (error && !error.code) return { status: "error" };
-  return confirmationStatus(error?.code);
+  const state = confirmationStatus(error?.code, email);
+  if (state.status === "confirmation-sent") await rememberConfirmationEmail(email);
+  return state;
 }
 
 export async function resendConfirmationAction(
   _previous: SignInState,
   formData: FormData,
 ): Promise<SignInState> {
-  const email = emailField(formData);
+  const resending = formData.has("confirmationEmail");
+  const email = resending ? await pendingConfirmationEmail() : emailField(formData);
+  if (resending && email !== textField(formData, "confirmationEmail")) return { status: "confirmation-session-ended" };
   if (!email) return { status: "invalid-input" };
 
   const supabase = await createServerSupabaseClient();
@@ -127,7 +150,47 @@ export async function resendConfirmationAction(
     options: { emailRedirectTo },
   });
   if (error && !error.code) return { status: "error" };
-  return confirmationStatus(error?.code);
+  const state = confirmationStatus(error?.code, email);
+  if (state.status === "confirmation-sent") await rememberConfirmationEmail(email);
+  return state;
+}
+
+export async function verifySignupCodeAction(
+  _previous: SignInState,
+  formData: FormData,
+): Promise<SignInState> {
+  const email = await pendingConfirmationEmail();
+  if (!email || email !== textField(formData, "confirmationEmail")) return { status: "confirmation-session-ended" };
+  const token = textField(formData, "code").trim();
+  if (!/^\d{6,10}$/.test(token)) return { status: "invalid-confirmation-code" };
+
+  const supabase = await createServerSupabaseClient();
+  if (!supabase) return { status: "unconfigured" };
+  const { data, error } = await supabase.auth.verifyOtp({ email, token, type: "email" });
+  if (error?.status === 429) return { status: "verification-rate-limited" };
+  if (error || !data.session) return { status: "invalid-confirmation-code" };
+
+  (await cookies()).delete(CONFIRMATION_EMAIL_COOKIE);
+  revalidatePath("/", "layout");
+  redirect(signInReturnPath(formData.get("next")));
+}
+
+export async function verifySignupLinkAction(
+  _previous: SignInState,
+  formData: FormData,
+): Promise<SignInState> {
+  const tokenHash = textField(formData, "tokenHash");
+  if (!/^[a-zA-Z0-9_-]{16,256}$/.test(tokenHash)) return { status: "invalid-confirmation-link" };
+
+  const supabase = await createServerSupabaseClient();
+  if (!supabase) return { status: "unconfigured" };
+  const { data, error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: "signup" });
+  if (error?.status === 429) return { status: "verification-rate-limited" };
+  if (error || !data.session) return { status: "invalid-confirmation-link" };
+
+  (await cookies()).delete(CONFIRMATION_EMAIL_COOKIE);
+  revalidatePath("/", "layout");
+  redirect("/account", RedirectType.replace);
 }
 
 export async function requestPasswordResetAction(
@@ -195,6 +258,7 @@ export async function signOutAction(): Promise<void> {
   const supabase = await createServerSupabaseClient();
   if (supabase) await supabase.auth.signOut({ scope: "local" });
   await clearPasswordRecovery();
+  (await cookies()).delete(CONFIRMATION_EMAIL_COOKIE);
   revalidatePath("/", "layout");
   redirect("/");
 }

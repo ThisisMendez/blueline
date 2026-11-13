@@ -38,7 +38,7 @@ The Lease Risk Score sums up the flags we verified. It is not approval to sign, 
 
 ## Accounts
 
-You can run a review without an account. If you create one, keep your sign-in details private. We may suspend an account that is used to misuse the service.
+You can run a review without an account. If you create one, confirm your email address and keep your sign-in details private. Saving to your library requires an account. Some drafting tools may ask you to sign in. We may suspend an account that is used to misuse the service.
 
 ## Disclaimers and limits on liability
 
@@ -50,4 +50,4 @@ If we change these terms, we will update this page and the date at the top.
 
 ## Contact
 
-Use the contact page. We are still setting up a public contact address.
+Use the contact page when sending is available.

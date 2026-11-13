@@ -1,8 +1,8 @@
 import { checklistTopic, type ChecklistTopic, type ChecklistTopicId } from "@/features/analysis/checklist";
 import {
+  foundTopics,
   notFoundItems,
   type CoverageChecklist,
-  type CoverageItem,
   type FoundTopic,
   type ReviewRole,
 } from "@/features/analysis/types";
@@ -11,7 +11,7 @@ import type { ExtractedDocument } from "@/features/packet/types";
 /**
  * The published coverage checklist, on screen.
  *
- * All six topics, in published order, each with what it means. A not-found
+ * All six topics, grouped by whether the lease addresses them. A not-found
  * item wears the system's reserved third state: a dashed navy border and the
  * words "Not found in the text reviewed", never a severity badge, never the
  * alert treatment, and no red anywhere in this section. Absence and risk are
@@ -126,8 +126,8 @@ export function CoverageChecklistSection({
   if (coverage.items.length === 0) return null;
 
   const titleById = new Map(documents.map((document) => [document.id, document.title]));
-  const absent = notFoundItems(coverage).length;
-  const found = coverage.items.length - absent;
+  const absent = notFoundItems(coverage);
+  const found = foundTopics(coverage);
 
   return (
     <section aria-labelledby="coverage-checklist-heading" className="flex flex-col gap-3">
@@ -139,32 +139,38 @@ export function CoverageChecklistSection({
           Six topics we check
         </h2>
         <p className={`mt-1 ${SMALL}`}>
-          {absent === 0
+          {absent.length === 0
             ? "We found all 6 in your documents."
-            : `We found ${found} of 6 in your documents.`}
+            : `We found ${found.length} of 6 in your documents.`}
         </p>
       </div>
 
-      <ol className="flex list-none flex-col gap-2 p-0">
-        {coverage.items.map((item: CoverageItem) => {
-          const topic = checklistTopic(item.topicId);
-          if (!topic) return null;
-
-          return (
-            <li key={item.topicId}>
-              {item.status === "found" ? (
-                <FoundCard
-                  topic={topic}
-                  item={item}
-                  documentTitle={titleById.get(item.sourceDocumentId) ?? item.sourceDocumentId}
-                />
-              ) : (
-                <NotFoundCard topic={topic} role={role} />
-              )}
-            </li>
-          );
-        })}
-      </ol>
+      {found.length > 0 ? (
+        <div className="space-y-2">
+          <p id="coverage-found-label" className="font-semibold">What the lease spells out</p>
+          <ul aria-labelledby="coverage-found-label" className="flex list-none flex-col gap-2 p-0">
+            {found.map((item) => {
+              const topic = checklistTopic(item.topicId);
+              return topic ? (
+                <li key={item.topicId}>
+                  <FoundCard topic={topic} item={item} documentTitle={titleById.get(item.sourceDocumentId) ?? item.sourceDocumentId} />
+                </li>
+              ) : null;
+            })}
+          </ul>
+        </div>
+      ) : null}
+      {absent.length > 0 ? (
+        <div className="space-y-2">
+          <p id="coverage-missing-label" className="font-semibold">What’s still open</p>
+          <ul aria-labelledby="coverage-missing-label" className="flex list-none flex-col gap-2 p-0">
+            {absent.map((item) => {
+              const topic = checklistTopic(item.topicId);
+              return topic ? <li key={item.topicId}><NotFoundCard topic={topic} role={role} /></li> : null;
+            })}
+          </ul>
+        </div>
+      ) : null}
     </section>
   );
 }

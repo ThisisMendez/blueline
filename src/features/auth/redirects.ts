@@ -26,15 +26,16 @@ function trustedOrigin(value: string): string | null {
 }
 
 async function authOrigin(): Promise<string | null> {
+  const production = process.env.VERCEL_ENV === "production";
   const configured = [
     process.env.NEXT_PUBLIC_SITE_URL,
-    process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
-    process.env.VERCEL_ENV === "production" && process.env.VERCEL_PROJECT_PRODUCTION_URL
+    production && process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : undefined,
+    process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
   ].flatMap((value) => {
     const origin = value ? trustedOrigin(value) : null;
-    return origin ? [origin] : [];
+    return origin && (!production || !isLocalOrigin(new URL(origin))) ? [origin] : [];
   });
   const requestOrigin = (await headers()).get("origin");
   if (requestOrigin) {

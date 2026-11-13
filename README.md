@@ -47,6 +47,7 @@ Production needs these four settings. Each is set on Vercel (production environm
 
 - `REVIEW_CONTINUATION_SECRET` enables sign-in to draft or save a guest report. Generate a random secret of at least 32 bytes and keep it on the server. Verify public signup and sign-in before enabling it. Keep the guest report tab open during sign-in. The report can be resumed for two hours in the original browser. Rotating the secret expires existing continuations.
 - `FORMSPREE_FORM_ID` enables Contact and beta feedback. Verify a test message reaches the approved inbox with the fixed subject and expected Reply-To before setting the production value. See [contact setup](research/contact-delivery-options.md).
+- See [signup email setup](docs/handoff/signup-confirmation.md) for the code-based confirmation template, prerequisites, and live checks.
 
 ## Verify
 

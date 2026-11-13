@@ -1,0 +1,47 @@
+name: Rhode Island source review
+
+on:
+  schedule:
+    - cron: '17 14 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check official sources
+        id: source_check
+        run: |
+          set -o pipefail
+          npm run legal:check-ri | tee "$RUNNER_TEMP/ri-sources.txt"
+      - name: Record sources that need review
+        if: failure() && steps.source_check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title='Rhode Island references need review'
+          current=$(gh issue list --search "$title in:title" --json number,title --jq ".[] | select(.title==\"$title\") | .number" | head -1)
+          notes="$RUNNER_TEMP/ri-review.md"
+          {
+            echo "See docs/legal/rhode-island-pilot.md for the review process."
+            echo
+            echo "Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo
+            echo '~~~'
+            cat "$RUNNER_TEMP/ri-sources.txt"
+            echo '~~~'
+          } > "$notes"
+          if [ -n "$current" ]; then
+            gh issue edit "$current" --body-file "$notes"
+          else
+            gh issue create --title "$title" --body-file "$notes"
+          fi

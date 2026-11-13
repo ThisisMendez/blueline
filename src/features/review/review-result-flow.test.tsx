@@ -313,7 +313,7 @@ describe("suggestions for the selected side", () => {
     expect(within(panel).getAllByRole("blockquote").map((quote) => quote.textContent)).toEqual([
       flags[2].sourceSentence, flags[2].relatedCitations![0].sourceSentence,
     ]);
-    await user.click(within(panel).getByRole("button", { name: "Open proposed wording" }));
+    await user.click(within(panel).getByRole("button", { name: "Open proposed wording for Pipe repairs" }));
     const draft = within(panel).getByRole("textbox", { name: "Proposed wording you can edit" });
     expect(draft).toHaveValue(flags[2].counterOffer);
     await user.clear(draft);

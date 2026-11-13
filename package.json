@@ -1,6 +1,6 @@
 {
   "name": "blueline-redline",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,6 +9,7 @@
     "build:fixtures": "tsx scripts/browser-fixture-preview.ts build",
     "start:fixtures": "tsx scripts/browser-fixture-preview.ts start",
     "lint": "eslint",
+    "legal:check-ri": "node scripts/check-rhode-island-sources.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
