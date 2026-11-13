@@ -3,7 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
+import { SCORE_VERSION, UNAVAILABLE_EXPLANATIONS, scoreFromOutcome } from "@/features/score";
+
 import { BlockedPacket } from "../components/BlockedPacket";
+import { ScorePanel } from "../components/report/ScorePanel";
 import { StoppedPacket } from "../components/StoppedPacket";
 
 import { useReviewSession } from "./ReviewSessionProvider";
@@ -65,16 +68,19 @@ export function ProcessingScreen() {
 
   if (state.status === "blocked" && state.outcome?.status === "blocked") {
     return (
-      <BlockedPacket
-        key={state.outcome.completeness.missing.map((reference) => reference.id).join("|")}
-        completeness={state.outcome.completeness}
-        documents={state.outcome.documents}
-        choices={state.resolutions}
-        onChoose={actions.choose}
-        onRecheck={() => void actions.start()}
-        onAddDocument={backToIntake}
-        busy={false}
-      />
+      <div className="flex flex-col gap-5">
+        <BlockedPacket
+          key={state.outcome.completeness.missing.map((reference) => reference.id).join("|")}
+          completeness={state.outcome.completeness}
+          documents={state.outcome.documents}
+          choices={state.resolutions}
+          onChoose={actions.choose}
+          onRecheck={() => void actions.start()}
+          onAddDocument={backToIntake}
+          busy={false}
+        />
+        <ScorePanel score={scoreFromOutcome(state.outcome)} />
+      </div>
     );
   }
 
@@ -83,21 +89,24 @@ export function ProcessingScreen() {
     (state.outcome?.status === "out-of-scope" || state.outcome?.status === "unverified")
   ) {
     return (
-      <StoppedPacket
-        completeness={state.outcome.completeness}
-        actions={
-          <>
-            {state.outcome.status === "unverified" ? (
-              <button type="button" className={PRIMARY} onClick={() => void actions.start()}>
-                Try again
+      <div className="flex flex-col gap-5">
+        <StoppedPacket
+          completeness={state.outcome.completeness}
+          actions={
+            <>
+              {state.outcome.status === "unverified" ? (
+                <button type="button" className={PRIMARY} onClick={() => void actions.start()}>
+                  Try again
+                </button>
+              ) : null}
+              <button type="button" className={SECONDARY} onClick={backToIntake}>
+                Change documents
               </button>
-            ) : null}
-            <button type="button" className={SECONDARY} onClick={backToIntake}>
-              Change documents
-            </button>
-          </>
-        }
-      />
+            </>
+          }
+        />
+        <ScorePanel score={scoreFromOutcome(state.outcome)} />
+      </div>
     );
   }
 
@@ -126,6 +135,14 @@ export function ProcessingScreen() {
             Change documents
           </button>
         </div>
+        <ScorePanel
+          score={{
+            available: false,
+            version: SCORE_VERSION,
+            reason: "review-failed",
+            explanation: UNAVAILABLE_EXPLANATIONS["review-failed"],
+          }}
+        />
       </section>
     );
   }
