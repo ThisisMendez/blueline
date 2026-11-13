@@ -23,7 +23,7 @@ export default function Home() {
                 How It Works
               </h2>
               <p className="mt-2 text-base leading-relaxed text-[var(--color-navy-ink)]">
-                Paste your lease or upload a PDF with selectable text. We show
+                Upload your lease as a PDF with selectable text. We show
                 the exact words we flag, why they matter, and what you could
                 ask to change.
               </p>

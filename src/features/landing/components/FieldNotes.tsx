@@ -9,7 +9,7 @@ const NOTES = [
   },
   {
     term: "What it reads",
-    body: "Pasted text and PDFs with selectable text. Scans and photographs of pages are out: if a machine can't read the text reliably, we won't guess at it.",
+    body: "PDFs with selectable text. Scans and photographs of pages are out: if a machine can't read the text reliably, we won't guess at it.",
   },
   {
     term: "What it covers",
