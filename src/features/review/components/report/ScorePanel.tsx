@@ -9,11 +9,9 @@ import {
 /**
  * The Lease Risk Score beside the report (ADR 0016).
  *
- * It restates the verified flags on one scale. The copy here never calls the
- * number approval to sign, a legal finding, a chance of harm, or proof that
- * every risk was found; the "How we score" note says so in the module's own
- * words. When the score is withheld, the reason is shown in its place and the
- * verified totals stay visible if the score module returned them.
+ * It summarizes the verified flags for the selected side. When the score is
+ * withheld, the reason is shown in its place and the verified totals stay
+ * visible if the score module returned them.
  */
 
 const LABEL = "font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-navy)]";
@@ -47,33 +45,38 @@ function HowWeScore() {
       <summary className="min-h-11 cursor-pointer py-2 font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-navy)] underline decoration-2 underline-offset-4 hover:text-[var(--color-red-ink)]">
         {HOW_WE_SCORE.title}
       </summary>
-      <div className="flex flex-col gap-2 pb-1 font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--color-navy-ink)]">
-        {HOW_WE_SCORE.paragraphs.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
-        <table className="mt-1 w-full border-collapse text-left text-sm">
-          <caption className={`${LABEL} pb-1 text-left`}>Grades</caption>
-          <thead className="visually-hidden">
-            <tr>
-              <th scope="col">Grade</th>
-              <th scope="col">Score</th>
-              <th scope="col">Meaning</th>
-            </tr>
-          </thead>
-          <tbody>
-            {GRADE_BANDS.map((band) => (
-              <tr key={band.grade} className="border-t border-[var(--color-navy)]/20">
-                <th scope="row" className="py-1 pr-3 font-[family-name:var(--font-data)] font-bold">
-                  {band.grade}
-                </th>
-                <td className="py-1 pr-3 font-[family-name:var(--font-data)] whitespace-nowrap">
-                  {band.min} to {band.max}
-                </td>
-                <td className="py-1">{band.label}</td>
+      <div className="pb-1 font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--color-navy-ink)]">
+        <ul className="list-disc space-y-1 pl-5">
+          {HOW_WE_SCORE.points.map((point) => <li key={point}>{point}</li>)}
+        </ul>
+        <p className="mt-2">The review can miss things. Read the flagged terms and the lease itself.</p>
+        <details className="mt-2">
+          <summary className="min-h-11 cursor-pointer py-2 font-[family-name:var(--font-display)] font-semibold text-[var(--color-navy)] underline decoration-2 underline-offset-4">
+            Grade ranges
+          </summary>
+          <table aria-label="Grade ranges" className="w-full border-collapse text-left text-sm">
+            <thead className="visually-hidden">
+              <tr>
+                <th scope="col">Grade</th>
+                <th scope="col">Score</th>
+                <th scope="col">Meaning</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {GRADE_BANDS.map((band) => (
+                <tr key={band.grade} className="border-t border-[var(--color-navy)]/20">
+                  <th scope="row" className="py-1 pr-3 font-[family-name:var(--font-data)] font-bold">
+                    {band.grade}
+                  </th>
+                  <td className="py-1 pr-3 font-[family-name:var(--font-data)] whitespace-nowrap">
+                    {band.min} to {band.max}
+                  </td>
+                  <td className="py-1">{band.label}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </details>
       </div>
     </details>
   );

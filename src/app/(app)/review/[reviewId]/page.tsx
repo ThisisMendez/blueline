@@ -8,6 +8,7 @@ import { ReviewNeedsRerunError } from "@/features/library/store";
 import { RetentionControls } from "@/features/library/RetentionControls";
 import { ReviewResult } from "@/features/review/components/ReviewResult";
 import { scoreFromStoredReview } from "@/features/score";
+import { FeedbackLink } from "@/features/site/FeedbackLink";
 
 /**
  * A review read back from the library.
@@ -91,6 +92,7 @@ export default async function SavedReviewPage(
           Review another lease
         </Link>
       </p>
+      <div><FeedbackLink source="report" role={stored.review.role} /></div>
     </div>
   );
 }

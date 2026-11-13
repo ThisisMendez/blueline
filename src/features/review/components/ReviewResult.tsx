@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import type { GeneralReview, ReviewRole } from "@/features/analysis/types";
-import { ReviewSuggestions } from "@/features/negotiation/ReviewSuggestions";
+import { ReviewSuggestions, type DraftAccess, type DraftWording } from "@/features/negotiation/ReviewSuggestions";
 import { discussionShortlist } from "@/features/negotiation/shortlist";
 import type { ExtractedDocument } from "@/features/packet/types";
 import { RedLinesPanel } from "@/features/red-lines/RedLinesPanel";
@@ -24,6 +24,9 @@ export interface ReviewResultProps {
   readonly reviewId?: string | null;
   /** Shown under the header: retention controls, a save failure. */
   readonly notices?: ReactNode;
+  readonly requestDraft?: DraftAccess;
+  readonly wording?: DraftWording;
+  readonly draftableFlagIds?: readonly string[];
 }
 
 export function roleLabel(role: ReviewRole): string {
@@ -38,11 +41,16 @@ const BODY = "max-w-[var(--measure)] font-[family-name:var(--font-body)] text-ba
  * terms beside the six checklist topics (stacked on small screens, flags
  * first), then personal red lines for a saved review.
  */
-export function ReviewResult({ review, documents, title, role, score, reviewId, notices }: ReviewResultProps) {
+export function ReviewResult({
+  review, documents, title, role, score, reviewId, notices, requestDraft, wording, draftableFlagIds,
+}: ReviewResultProps) {
   const documentTitles = new Map(documents.map((document) => [document.id, document.title]));
   const side = review.role ?? role ?? undefined;
   const about = firstSentences(review.summary, 2);
-  const suggestions = side ? discussionShortlist(review.riskFlags) : [];
+  const suggestions = side ? discussionShortlist(review.riskFlags, draftableFlagIds) : [];
+  const skippedCount = draftableFlagIds
+    ? review.riskFlags.filter(({ id, severity }) => severity !== "low" && !draftableFlagIds.includes(id)).length
+    : 0;
 
   return (
     <div className="flex flex-col gap-6">
@@ -95,7 +103,13 @@ export function ReviewResult({ review, documents, title, role, score, reviewId, 
               </p>
             </div>
           ) : (
-            <RiskFlagList flags={review.riskFlags} documentTitles={documentTitles} />
+            <RiskFlagList
+              flags={review.riskFlags}
+              documentTitles={documentTitles}
+              requestDraft={requestDraft}
+              wording={wording}
+              draftableFlagIds={draftableFlagIds}
+            />
           )}
         </section>
 
@@ -105,7 +119,15 @@ export function ReviewResult({ review, documents, title, role, score, reviewId, 
       </div>
 
       {side && suggestions.length > 0 ? (
-        <ReviewSuggestions key={side} role={side} flags={suggestions} documentTitles={documentTitles} />
+        <ReviewSuggestions
+          key={side}
+          role={side}
+          flags={suggestions}
+          documentTitles={documentTitles}
+          requestDraft={requestDraft}
+          wording={wording}
+          skippedCount={skippedCount}
+        />
       ) : null}
 
       {reviewId ? <RedLinesPanel key={reviewId} reviewId={reviewId} documents={documents} /> : null}

@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import type { ReviewCitation, RiskFlag, Severity } from "@/features/analysis/types";
+import type { DraftAccess } from "@/features/negotiation/ReviewSuggestions";
 
 const SEVERITY_LABEL: Record<Severity, string> = {
   high: "Severity: High",
@@ -45,13 +46,15 @@ function Location({ citation, titleById }: { readonly citation: ReviewCitation; 
 export interface RiskFlagCardProps {
   readonly flag: RiskFlag;
   readonly titleById: ReadonlyMap<string, string>;
+  readonly requestDraft?: DraftAccess;
+  readonly canDraft?: boolean;
 }
 
 /**
  * One verified flag. Consequence and the exact quote come first; the
  * proposed edit stays two steps away, behind the explanation (ADR 0010).
  */
-export function RiskFlagCard({ flag, titleById }: RiskFlagCardProps) {
+export function RiskFlagCard({ flag, titleById, requestDraft, canDraft = true }: RiskFlagCardProps) {
   const cardId = useId();
   const headingId = `${cardId}-heading`;
   const explanationId = `${cardId}-explanation`;
@@ -119,15 +122,19 @@ export function RiskFlagCard({ flag, titleById }: RiskFlagCardProps) {
               <h4 className={LABEL}>When it matters</h4>
               <p className={`mt-1 ${BODY}`}>{flag.triggeringCondition}</p>
             </div>
-            <button
+            {canDraft ? <button
               type="button"
               aria-expanded={editOpen}
               aria-controls={editId}
-              onClick={() => setEditOpen(!editOpen)}
+              onClick={() => {
+                if (editOpen) setEditOpen(false);
+                else if (requestDraft) requestDraft(() => setEditOpen(true));
+                else setEditOpen(true);
+              }}
               className="min-h-11 self-start bg-[var(--color-navy)] px-3 py-1.5 font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-paper)] hover:bg-[var(--color-navy-ink)]"
             >
               {editOpen ? "Hide proposed edit" : "See proposed edit"}
-            </button>
+            </button> : <p className={BODY}>There’s no proposed edit for this term.</p>}
           </div>
         ) : null}
       </div>

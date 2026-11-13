@@ -3,6 +3,7 @@ import Link from "next/link";
 import { signOutAction } from "@/features/auth/actions";
 import { getAccountsState } from "@/features/auth/session";
 import { ReviewSessionProvider } from "@/features/review/session/ReviewSessionProvider";
+import { FeedbackLink } from "@/features/site/FeedbackLink";
 
 /**
  * The app shell behind sign-in. The landing page's field-guide language
@@ -58,10 +59,13 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
       </main>
 
       <footer className="border-t-2 border-[var(--color-navy)]">
-        <p className="mx-auto max-w-6xl px-6 py-6 font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
-          Blueline Redline reports what your document says. It does not tell
-          you whether to sign it.
-        </p>
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-6 py-6 font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
+          <p>
+            Blueline Redline reports what your document says. It does not tell
+            you whether to sign it.
+          </p>
+          <FeedbackLink />
+        </div>
       </footer>
     </>
   );

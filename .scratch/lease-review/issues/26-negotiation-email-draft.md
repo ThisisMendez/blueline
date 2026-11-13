@@ -1,14 +1,27 @@
 # 26: Negotiation email draft
 
-**What to build:** From a completed review, the signer picks which flags to raise (high and medium are ticked by default) and gets one email draft addressed to the other party. For each chosen flag, the email quotes the cited language and proposes that flag's counter-offer wording for the selected review role. The signer can copy it, open it in their mail app, or download it as text. The signer controls editing and sending. Each flag's "Proposed edit" panel also gets a "Copy this request" button.
+Status: ready-for-agent
+
+**What to build:** From a completed review, the signer picks which flags to raise and gets one email draft addressed to the other party. For each chosen flag, the email quotes the cited language and proposes that flag's counter-offer wording for the selected review role. The signer controls editing and sending. The next beta release starts with the renter selection and copy flow below.
 
 **Why:** LeaseGuard AI sells "AI Negotiation Templates" as a paid feature. Blueline already drafts a counter-offer for every flag (ADR 0010) and checks it against its residual risk (ADR 0013). What's missing is turning those drafts into something the signer can send. Assembling the email from verified fields means it can't introduce new claims. Source: `research/competitors/leaseguard-ai/05-implementation-blueprint.md`, feature 6.
 
 **Depends on:** the completed report's review role for recipient selection. Uses clause headings from 25 if present. [Review-role implementation](../spec.md#review-role-implementation).
 
-**Status:** a smaller version is implemented in the beta candidate. The report shows up to three verified High or Medium findings with usable proposed wording. Renters can edit and copy a message for each finding. Landlords can edit and copy a proposed clarification. The combined email, tone choices, and download are still open.
+**Live baseline:** The report shows up to three verified High or Medium findings with usable proposed wording. Renters can edit and copy a message for each finding. Landlords can edit and copy a proposed clarification. The combined draft and drafting sign-in gate are pending. Release them with the [return-to-report flow](30-save-after-guest-review.md).
 
-**Scope:** a new `src/features/negotiation/` folder (a pure `assembleNegotiationEmail` function, its tests and a `NegotiationDraft` component), wired into `ReviewResult.tsx` and the proposed-edit panel in `RiskFlagCard.tsx`. It reads the completed report and assembles the draft locally.
+## Next beta release
+
+- Show the cited renter shortlist first. Let renters select one item, select a subset, or use **Select all** to include all available items. Start with no items selected. Use one selection model for all three choices.
+- Require sign-in when a renter chooses **Create email draft** or a landlord chooses to draft, revise, or copy replacement wording through a drafting tool. Keep findings, quotes, explanations, and the selection controls available to guests. Cover alternate drafting entry points as well.
+- After sign-in, return to the selected action. For renters, build one editable draft from the selected items in report order, including each exact quote and its suggested change. Keep drafts in the tab and generate them locally. Copying is an explicit action. Sending stays with the renter.
+- If a renter changes the selection after editing, keep their draft until they explicitly choose to update it. Cover the empty, one-item, and all-items cases and verify there are no extra model calls. Keep signed-in drafting free during beta and record it as a possible paid feature later. Revisit full-lease drafting, tones, download, and mail-app handoff separately.
+
+Reuse the existing `src/features/negotiation/` code and report entry points. Assemble the message from verified quotes and available proposed wording. Skip withheld wording and explain why. The draft should give the renter something concrete to ask for and leave the sending decision with them.
+
+## Later expansion
+
+The original checklist below covers the broader negotiation toolkit. Treat it as follow-up scope. The current release uses the selection and sign-in flow above.
 
 - [ ] `assembleNegotiationEmail(flags, {tone, role})` returns `{subject, body}` built from the role's fixed template wording and each flag's verified source language and counter-offer, numbered in report order
 - [ ] Two tones, `plain` and `formal`. Both fixed templates go through the humanizer skill and pass `findLegalClaims`. The templates never mention law, rights, enforceability or deadlines, and never threaten.

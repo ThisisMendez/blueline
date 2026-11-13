@@ -42,3 +42,11 @@ Baseline on November 13, 2026. GitHub `main` was `8be303a` (PR #7, compact homep
 ## Recovery
 
 For a failed application deployment, restore the last verified production deployment from the Vercel production deployment history and revert the merge in GitHub. The tested 0008 migration is additive and the older application can still create and read reviews after it. Keep the title column during an application rollback so users' edits survive. Treat any separate schema rollback as its own reviewed migration and preserve titles first.
+
+## Version 0.2.0
+
+Direct production release through `main`, with local verification. Migration 0008 was applied during the 0.1.0 release. The 0.2.0 changes require no database migration.
+
+Independent local browser checks exercised both roles, including loading, retry, mobile navigation, score details, selected renter drafts, landlord wording, cancelled and successful sign-in, and explicit saving. Contact and feedback were tested against a simulated Formspree endpoint. No paid model calls were made.
+
+Leave `REVIEW_CONTINUATION_SECRET` unset until production signup email and sign-in are verified. Leave `FORMSPREE_FORM_ID` unset until a test message reaches the approved inbox. See [version control and releases](../version-control.md) and [contact setup](../../research/contact-delivery-options.md).

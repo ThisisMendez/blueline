@@ -198,6 +198,11 @@ export type AnalysisOutcome =
       readonly persisted: boolean;
       readonly retention: ReviewRetention | null;
       readonly persistenceFailed: boolean;
+      /** Guest report proof held only in the original tab until sign-in. */
+      readonly continuation?: string;
+      readonly continuationUnavailable?: boolean;
+      /** Guests can select draftable flags without receiving their proposed wording. */
+      readonly draftableFlagIds?: readonly string[];
       readonly documents: readonly ExtractedDocument[];
       /** Every reference answered by a supplied document. */
       readonly completeness: CompleteAgreement;

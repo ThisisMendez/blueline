@@ -6,7 +6,7 @@ Draft dated 2026-11-13. Not in effect. The page at the matching route renders on
 
 - [ ] Confirm Blueline Redline's legal entity name, address, and the governing law and venue.
 - [ ] Write the disclaimer and limitation-of-liability text (placeholder in the page).
-- [ ] Choose a public support address and set `SUPPORT_EMAIL` in `src/features/site/contact-config.ts`; then replace the "still setting up" contact lines.
+- [ ] Confirm the public support contact and the data handled by the contact delivery service before publishing this policy.
 - [ ] Confirm the minimum age for users.
 - [ ] Confirm the model provider OpenRouter routes to in production (`OPENROUTER_PROVIDER`, Fireworks by default) and read OpenRouter's and that provider's data retention and training terms. The request does not currently set a data-collection or zero-retention flag.
 - [ ] Confirm what Vercel and Supabase log (request logs, IP addresses, auth events) and for how long; the draft does not cover logs.

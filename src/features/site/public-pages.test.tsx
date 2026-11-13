@@ -14,19 +14,23 @@ import { BrandHero } from "@/features/landing/components/BrandHero";
 import { FieldNotes } from "@/features/landing/components/FieldNotes";
 import { ReviewToolbar } from "@/features/landing/components/ReviewToolbar";
 
-import { SUPPORT_EMAIL } from "./contact-config";
 import { ContactForm } from "./ContactForm";
 import { draftLegalPagesVisible } from "./legal-gate";
+import { FeedbackLink } from "./FeedbackLink";
 
 afterEach(() => {
   vi.unstubAllEnvs();
+  vi.unstubAllGlobals();
 });
+
+function contactPage(searchParams: Record<string, string> = {}) {
+  return ContactPage({ params: Promise.resolve({}), searchParams: Promise.resolve(searchParams) });
+}
 
 const newPages = {
   "how it works": HowItWorksPage,
   features: FeaturesPage,
   pricing: PricingPage,
-  contact: ContactPage,
   resources: ResourcesPage,
   terms: TermsPage,
   privacy: PrivacyPage,
@@ -36,7 +40,6 @@ const publicSurfaces = {
   "how it works": HowItWorksPage,
   features: FeaturesPage,
   pricing: PricingPage,
-  contact: ContactPage,
   resources: ResourcesPage,
   terms: TermsPage,
   privacy: PrivacyPage,
@@ -85,42 +88,59 @@ describe("pricing", () => {
 });
 
 describe("contact", () => {
-  it("has no support address yet, so the form is switched off", () => {
-    expect(SUPPORT_EMAIL).toBeNull();
-    const { container } = render(<ContactPage />);
-    expect(screen.getByText(/still setting up our contact address/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Open email app" })).toBeDisabled();
+  it("keeps sending disabled without the configured delivery service", async () => {
+    vi.stubEnv("FORMSPREE_FORM_ID", "");
+    const { container } = render(await contactPage());
+    expect(screen.getByText(/temporarily unavailable/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Send message" })).toBeDisabled();
     expect(screen.getByLabelText("Message")).toBeDisabled();
     expect(container.querySelector('a[href^="mailto:"]')).toBeNull();
     expect(container.textContent).not.toMatch(/reply within|respond within|we usually reply/i);
+    expect(container.textContent).not.toMatch(/safe to sign|legally (valid|binding)|guarantee/i);
     expect(container.textContent).toMatch(/Leave your lease out/);
   });
 
-  it("opens a pre-filled draft once an address exists, and never claims it was sent", async () => {
+  it("keeps the draft on failure and clears it after delivery is accepted", async () => {
     const user = userEvent.setup();
-    render(<ContactForm supportEmail="help@example.com" />);
-
-    expect(screen.getByRole("button", { name: "Open email app" })).toBeDisabled();
+    const send = vi.fn()
+      .mockResolvedValueOnce(new Response(null, { status: 429 }))
+      .mockResolvedValueOnce(new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", send);
+    render(<ContactForm available />);
     await user.type(screen.getByLabelText("Name"), "Sam");
+    await user.type(screen.getByLabelText("Email"), "sam@example.com");
     await user.type(screen.getByLabelText("Message"), "Hello there");
+    await user.click(screen.getByRole("button", { name: "Send message" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent(/sending limit/);
+    expect(screen.getByLabelText("Message")).toHaveValue("Hello there");
 
-    const action = screen.getByRole("link", { name: "Open email app" });
-    expect(action.getAttribute("href")).toMatch(/^mailto:help@example\.com\?subject=Blueline%20Redline/);
-    expect(action.getAttribute("href")).toContain("Hello%20there");
-
-    action.addEventListener("click", (event) => event.preventDefault());
-    await user.click(action);
-    expect(screen.getByText(/isn't sent yet/)).toBeInTheDocument();
-    expect(document.body.textContent).not.toMatch(/message sent|thanks for your message/i);
+    await user.click(screen.getByRole("button", { name: "Send message" }));
+    expect(await screen.findByRole("status")).toHaveTextContent(/received your message/);
+    expect(screen.getByLabelText("Message")).toHaveValue("");
   });
 
-  it("warns and switches the action off when the message is too long", async () => {
+  it("submits report feedback with no email and only the allowed context", async () => {
     const user = userEvent.setup();
-    render(<ContactForm supportEmail="help@example.com" />);
-    await user.click(screen.getByLabelText("Message"));
-    await user.paste("x".repeat(2000));
-    expect(screen.getByRole("alert")).toHaveTextContent(/too long for an email link/);
-    expect(screen.getByRole("button", { name: "Open email app" })).toBeDisabled();
+    const send = vi.fn().mockResolvedValue(new Response(null, { status: 204 }));
+    vi.stubEnv("FORMSPREE_FORM_ID", "example123");
+    vi.stubGlobal("fetch", send);
+    render(await contactPage({ topic: "beta-feedback", source: "report", role: "landlord", reviewId: "private" }));
+    await user.selectOptions(screen.getByLabelText(/Was this useful/), "Yes");
+    await user.type(screen.getByLabelText(/What worked/), "Clear explanation");
+    await user.click(screen.getByRole("button", { name: "Send feedback" }));
+    expect(await screen.findByRole("status")).toHaveTextContent(/received your feedback/);
+    const [url, options] = send.mock.calls[0];
+    expect(url).toBe("/api/contact");
+    expect(JSON.parse(options.body)).toEqual({
+      kind: "feedback", useful: "Yes", message: "Clear explanation", source: "report", role: "landlord", website: "",
+    });
+  });
+
+  it("opens feedback from the report in a separate tab", () => {
+    render(<FeedbackLink source="report" role="renter" />);
+    const link = screen.getByRole("link", { name: /Give feedback/ });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("href", "/contact?topic=beta-feedback&source=report&role=renter");
   });
 });
 

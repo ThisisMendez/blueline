@@ -164,6 +164,7 @@ describe("choosing a side and a lease", () => {
     expect(await screen.findByRole("heading", { name: "Reading your agreement" })).toBeInTheDocument();
     expect(screen.getByText("Read 1 PDF in your browser")).toBeInTheDocument();
     expect(screen.getByText("Working")).toBeInTheDocument();
+    expect(screen.getByRole("progressbar", { name: "Lease review in progress" })).not.toHaveAttribute("aria-valuenow");
 
     // Back to the intake while it runs: the button stays off.
     await flow.goTo("/review");
@@ -174,6 +175,7 @@ describe("choosing a side and a lease", () => {
     hold!.release();
     await waitFor(() => expect(flow.currentPath()).toBe("/review/report"));
     expect(requests).toHaveLength(1);
+    expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
 
     // Returning to processing afterwards reopens the report rather than reading again.
     await flow.goTo("/review/processing");
@@ -226,7 +228,9 @@ describe("a review that fails", () => {
     await chooseLease(user, textPdf("lease.pdf", adhesion.text));
     await screen.findByText("Residential Lease Agreement");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
-    await user.click(await screen.findByRole("button", { name: "Try again" }));
+    const retry = await screen.findByRole("button", { name: "Try again" });
+    expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
+    await user.click(retry);
     await waitFor(() => expect(flow.currentPath()).toBe("/review/report"));
     expect(requests).toHaveLength(2);
   }, 20_000);

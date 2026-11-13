@@ -12,6 +12,7 @@ import { StoppedPacket } from "../components/StoppedPacket";
 import { useReviewSession } from "./ReviewSessionProvider";
 import { StartAgain } from "./StartAgain";
 import { leaseOf, supportingOf, type ReviewSessionState } from "./store";
+import styles from "./ProcessingScreen.module.css";
 
 const PRIMARY =
   "inline-flex min-h-11 items-center justify-center bg-[var(--color-navy)] px-6 py-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)] disabled:opacity-60";
@@ -167,6 +168,16 @@ export function ProcessingScreen() {
           You don&apos;t have to do anything while we read your agreement. Keep this tab open.
         </p>
       </div>
+
+      {state.status === "processing" ? (
+        <div
+          role="progressbar"
+          aria-label="Lease review in progress"
+          className="h-3 overflow-hidden border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)]"
+        >
+          <span aria-hidden="true" className={`${styles.activity} block h-full w-1/3 bg-[var(--color-navy)]`} />
+        </div>
+      ) : null}
 
       <ol aria-label="Progress" className="flex list-none flex-col gap-0 border-2 border-[var(--color-navy)] p-0">
         <li className="flex flex-col gap-1 border-b-2 border-[var(--color-navy)] bg-[var(--color-paper)] px-5 py-4">
