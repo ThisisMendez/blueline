@@ -164,8 +164,7 @@ export function ProcessingScreen() {
           Reading your agreement
         </h1>
         <p className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          You don&apos;t have to do anything while this runs. It usually takes
-          about a minute. Keep this tab open.
+          You don&apos;t have to do anything while we read your agreement. Keep this tab open.
         </p>
       </div>
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 
 import type { ReviewRole } from "@/features/analysis/types";
 import { readPdfFile, type PdfProblem } from "@/features/packet/extract/file";
@@ -58,8 +58,12 @@ export function DocumentIntake({ persists, notice }: DocumentIntakeProps) {
   const router = useRouter();
   const { state, actions } = useReviewSession();
   const [pending, setPending] = useState<readonly PendingFile[]>([]);
+  const fileReadGeneration = useRef(0);
+  const supportingReads = useRef<Promise<void>>(Promise.resolve());
   const leaseHintId = useId();
   const leaseProblemId = useId();
+
+  useEffect(() => () => { fileReadGeneration.current += 1; }, []);
 
   const lease = leaseOf(state);
   // Returning with a lease already chosen means the user came back to add a document.
@@ -81,13 +85,23 @@ export function DocumentIntake({ persists, notice }: DocumentIntakeProps) {
 
   async function read(file: File, target: "lease" | "supporting", position: number) {
     const key = newKey("file");
+    const generation = fileReadGeneration.current;
     setPending((current) => [
       // A new lease file replaces any earlier lease problem.
       ...current.filter((entry) => target === "supporting" || entry.target !== "lease"),
       { key, target, fileName: file.name, problem: null },
     ]);
 
-    const reading = await readPdfFile(file);
+    let fileRead = readPdfFile(file);
+    if (target === "supporting") {
+      // Read in parallel, but add attachments in selection order so their
+      // positions and server document IDs don't depend on read speed.
+      const startedRead = fileRead;
+      fileRead = supportingReads.current.then(() => startedRead);
+      supportingReads.current = fileRead.then(() => {});
+    }
+    const reading = await fileRead;
+    if (generation !== fileReadGeneration.current) return;
     if (reading.kind === "problem") {
       settle(key, reading.problem);
       return;
@@ -126,6 +140,8 @@ export function DocumentIntake({ persists, notice }: DocumentIntakeProps) {
   }
 
   function startOver() {
+    fileReadGeneration.current += 1;
+    supportingReads.current = Promise.resolve();
     setPending([]);
     actions.reset();
   }

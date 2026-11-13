@@ -39,6 +39,10 @@ const liveFeatures = [
     body: "What each flagged clause could mean for you, in everyday words, with a suggested edit you could raise.",
   },
   {
+    name: "Drafts for your next step",
+    body: "Renters can edit a message about a flagged term. Landlords can edit a proposed clarification before sharing the lease.",
+  },
+  {
     name: "Six topics we check",
     body: "Deposit deductions and return, early-exit costs, rent changes, repairs, access to the home, and dispute routes. A missing one shows as “Not found in the text reviewed.”",
   },
@@ -62,8 +66,8 @@ const plannedFeatures = [
     body: "Short summaries of the rules behind those sources.",
   },
   {
-    name: "Negotiation templates",
-    body: "Ready-to-edit messages for asking the other party about a term.",
+    name: "Negotiation toolkit",
+    body: "More ways to compare and organize changes you want to discuss.",
   },
 ] as const;
 

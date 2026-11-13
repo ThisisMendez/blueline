@@ -1,6 +1,6 @@
 # Beta claims
 
-What the public site may say about Blueline Redline during the beta, the evidence behind each claim, and what it must not say. Audited against `main` at `8be303a` on 2026-11-13. When the code or the evals change, re-check this list before changing copy.
+What the public site may say about Blueline Redline during the beta, the evidence behind each claim, and what it must not say. Audited against the beta refresh candidate on 2026-11-13. When the code or the evals change, re-check this list before changing copy.
 
 ## Claims the site may make
 
@@ -13,6 +13,7 @@ What the public site may say about Blueline Redline during the beta, the evidenc
 | We flag terms that could cost you money, change what you have to do, or limit your options. | `prompt.ts` rule 2 and rule 5, PRD.md "Materiality" |
 | Each flag has a severity: high, medium or low. | `types.ts` `Severity`, ADR 0003 |
 | We check six common lease topics and tell you which ones we found and which we didn't. | `src/features/analysis/checklist.ts`, `coverage.ts`, ADR 0007, ADR 0008 |
+| A short list of verified findings can provide an editable message for renters or proposed wording for landlords. | `src/features/negotiation/`, `review-result-flow.test.tsx` |
 | Each flag comes with a suggested edit you could propose. | `prompt.ts` (`counterOffer`), `consistency.ts`, ADR 0010, ADR 0013 |
 | Your PDF is read in your browser. The file itself never reaches our server. | `src/features/packet/extract/pdf.ts`, `DocumentIntake.tsx` (`readFile` sends only text), `route.ts` (`analysisRequestSchema` is strict and has no file field) |
 | We don't save reviews you run without an account. | `route.ts` (persists only when `accounts.kind === "signed-in"`) |
@@ -37,13 +38,13 @@ May make only after the retention deployment gate in README.md passes on the pro
 - **"Your lease never leaves your device", "private" or "we never store your lease".** The extracted text goes to OpenRouter and a model provider on every review, and signed-in reviews store the extracted text.
 - **Anything about how long OpenRouter or the model provider keep data, or that they don't train on it.** The code requests no retention setting (see below), and nobody has checked the account settings or provider terms.
 - **Legal advice, attorney review, testimonials, user counts or case studies.** None exist (BRAND.md, PRD.md).
-- **Scanned PDFs, photos or Word files.** Only pasted text and PDFs with selectable text are accepted (ADR 0006, `pdf.ts`).
+- **Scanned PDFs, photos or Word files.** The review screen accepts PDFs with selectable text (ADR 0006, `pdf.ts`).
 
 ## AI provider data path
 
 Traced from the code. Use these facts for the notice shown before a review is sent.
 
-1. **In the browser.** A PDF is parsed with pdf.js (`extractPdfText`). Only its text is kept. The document title defaults to the PDF's file name (`title: chosen.name` in `DocumentIntake.tsx`), and the signer can edit it. Pasted lease text is titled "Lease text you pasted" unless the signer names it. A referenced document without a title becomes "Document 2", "Document 3" and so on.
+1. **In the browser.** A PDF is parsed with pdf.js (`extractPdfText`). Only its text is kept. The app generates a lease title from a recognized heading or readable filename, with a generic fallback (`title.ts`). A supporting document uses a readable filename or a generic attachment label. Reviewers can rename saved reviews in their library.
 2. **To Blueline's server.** `POST /api/analysis` carries `role`, `text`, an optional `title`, up to 11 `referenced` documents as `{ text, title }`, and the signer's `resolutions` (which supplied document answers which reference). No file bytes and no account details are in the body.
 3. **To OpenRouter.** `src/features/analysis/model/openrouter.ts` posts to `https://openrouter.ai/api/v1/chat/completions` with:
    - headers: the server's API key, `X-OpenRouter-Title: Blueline Redline`, and `HTTP-Referer` set to `NEXT_PUBLIC_SITE_URL` when set. No user id, email or IP field is added by Blueline.
@@ -68,11 +69,11 @@ Copy below has been through the humanizer skill and contains nothing `findLegalC
 
 ### What is checked
 
-> We read your lease and the documents it refers to, pasted in or from PDFs with selectable text. If the lease needs a document you haven't added, we stop and tell you what's missing. For the side you pick, we look for terms that could cost you money, change what you have to do, or limit your options. We only flag terms with a real downside, so many clauses get no comment. We show you the exact words behind each flag. We also check six common lease topics. We don't check your lease against local law.
+> We read your lease and the documents it refers to, from PDFs with selectable text. If the lease needs a document you haven't added, we stop and tell you what's missing. For the side you pick, we look for terms that could cost you money, change what you have to do, or limit your options. We only flag terms with a real downside, so many clauses get no comment. We show you the exact words behind each flag. We also check six common lease topics. We don't check your lease against local law.
 
 Changes from the base wording, and why:
 
-- "the PDFs you add" became "the documents it refers to, pasted in or from PDFs with selectable text": paste works too, and scanned PDFs are refused (`pdf.ts`).
+- The review screen accepts PDFs with selectable text. Scanned PDFs are refused (`pdf.ts`).
 - Added the missing-document stop (ADR 0005).
 - Added "For the side you pick" (ADR 0015).
 - Added "We only flag terms with a real downside, so many clauses get no comment", so nobody reads the list as clause-by-clause coverage (`prompt.ts` rules 2 and 4).

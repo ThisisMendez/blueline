@@ -2,6 +2,7 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 
+import { WITHHELD_TEXT } from "@/features/analysis/legal-claims";
 import { CLEAN_REVIEW_STATEMENT, type GeneralReview, type RiskFlag } from "@/features/analysis/types";
 import {
   HOW_WE_SCORE,
@@ -264,5 +265,53 @@ describe("flagged terms and the six topics", () => {
     expect(screen.queryByRole("region", { name: "Ask about your agreement" })).toBeNull();
     expect(screen.queryByRole("textbox", { name: "Your question" })).toBeNull();
     expect(container.textContent).not.toMatch(/ask about (your|this) agreement/i);
+  });
+});
+
+
+describe("suggestions for the selected side", () => {
+  it("offers up to three editable renter drafts and skips withheld and minor findings", async () => {
+    const user = userEvent.setup();
+    renderReport({ riskFlags: [
+      ...flags,
+      { ...flags[0], id: "withheld", counterOffer: WITHHELD_TEXT.counterOffer },
+      { ...flags[0], id: "minor", severity: "low", counterOffer: "This minor change should not appear." },
+      { ...flags[0], id: "extra", counterOffer: "This fourth draft should not appear." },
+    ] });
+
+    const panel = screen.getByRole("region", { name: "What to discuss with your landlord" });
+    const toggle = within(panel).getByRole("button", { name: "Show suggestions" });
+    await user.click(toggle);
+    const drafts = within(panel).getAllByRole("textbox", { name: "Message you can edit" });
+    expect(drafts).toHaveLength(3);
+    expect((drafts[0] as HTMLTextAreaElement).value).toContain(flags[1].sourceSentence);
+    expect((drafts[2] as HTMLTextAreaElement).value).toContain(flags[2].relatedCitations![0].sourceSentence);
+    expect(drafts.map((draft) => (draft as HTMLTextAreaElement).value).join("\n")).not.toMatch(/withheld|fourth draft|minor change/);
+
+    await user.clear(drafts[0]);
+    await user.type(drafts[0], "Can we discuss this?");
+    await user.click(toggle);
+    await user.click(toggle);
+    expect(drafts[0]).toHaveValue("Can we discuss this?");
+    await user.click(within(panel).getAllByRole("button", { name: "Copy draft" })[0]);
+    expect(await navigator.clipboard.readText()).toBe("Can we discuss this?");
+  });
+
+  it("offers editable landlord wording with both passages of a conflict", async () => {
+    const user = userEvent.setup();
+    renderReport({ role: "landlord", riskFlags: [flags[2]] });
+    const panel = screen.getByRole("region", { name: "What to clarify in your lease" });
+    await user.click(within(panel).getByRole("button", { name: "Show suggestions" }));
+
+    expect(within(panel).getAllByRole("blockquote").map((quote) => quote.textContent)).toEqual([
+      flags[2].sourceSentence, flags[2].relatedCitations![0].sourceSentence,
+    ]);
+    const draft = within(panel).getByRole("textbox", { name: "Proposed wording you can edit" });
+    expect(draft).toHaveValue(flags[2].counterOffer);
+    await user.clear(draft);
+    await user.type(draft, "The landlord handles routine plumbing repairs.");
+    await user.click(within(panel).getByRole("button", { name: "Copy draft" }));
+    expect(await navigator.clipboard.readText()).toBe("The landlord handles routine plumbing repairs.");
+    expect(screen.queryByRole("region", { name: "What to discuss with your landlord" })).toBeNull();
   });
 });

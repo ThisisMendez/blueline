@@ -14,6 +14,7 @@ These ship now and we can support them with the current team and stack. They sta
 - PDF intake parsed in the browser, with the referenced documents and the missing-document stop ([ADR 0005](adr/0005-require-complete-referenced-agreement-before-review.md)).
 - Verified flags with exact quotes, severity filters, the fees and charges filter, and plain-English explanations with a suggested edit.
 - Lease Risk Score, a summary of verified flags only.
+- Editable renter messages and landlord clarifications drawn from the verified findings.
 - The six-topic checklist ([ADR 0008](adr/0008-use-a-published-coverage-checklist.md)).
 - Saved reviews (30 days, or 90 from a save, per [ADR 0011](adr/0011-expire-automatic-and-explicitly-saved-reviews.md)) and personal red lines.
 
@@ -26,7 +27,7 @@ Each is a candidate, not a plan. Scope and dependencies are listed so we can tel
 | State and local law references | A separate section with statute titles and official links from a hand-checked list, per QUESTIONS.md G2. Never feeds the flags or the score. | A narrow Layer 2 ADR superseding part of [ADR 0014](adr/0014-layer-1-reads-the-lease-not-the-law.md); validated coverage per state and city; a process to keep links current. | Yes, before any state ships. |
 | Plain-English summaries of those laws | Short summaries next to each checked reference. | The reference list above, plus written review of each summary. | Yes. |
 | Jurisdiction-aware checks | Comparing a clause with a specific rule. | Both rows above, an eval set of adjudicated jurisdiction cases, and a way to show the rule's source like we show the lease's. | Yes. Highest risk of reading as legal advice. |
-| Negotiation templates | Editable messages built from a flag's suggested edit. | The counter-offer residual-risk check ([ADR 0013](adr/0013-check-a-counter-offer-against-its-own-residual-risk.md)) holding up in evals; copy review so templates don't read as advice. | Light review of the template wording. |
+| Negotiation toolkit | Organize and compare proposed changes beyond the short drafts in Starter. | The counter-offer residual-risk check ([ADR 0013](adr/0013-check-a-counter-offer-against-its-own-residual-risk.md)) holding up in evals; copy review so templates don't read as advice. | Light review of the template wording. |
 | Printable or downloadable report | One report for co-signers (QUESTIONS.md G5). | A PDF renderer would be a new dependency and needs approval. | No. |
 
 Anything that needs validated state or local coverage stays out of Pro until that coverage exists and a lawyer has reviewed it. Until then it isn't a feature we can sell.

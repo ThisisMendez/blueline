@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 
 import type { GeneralReview, ReviewRole } from "@/features/analysis/types";
+import { ReviewSuggestions } from "@/features/negotiation/ReviewSuggestions";
+import { discussionShortlist } from "@/features/negotiation/shortlist";
 import type { ExtractedDocument } from "@/features/packet/types";
 import { RedLinesPanel } from "@/features/red-lines/RedLinesPanel";
 import type { LeaseRiskScore } from "@/features/score";
@@ -40,6 +42,7 @@ export function ReviewResult({ review, documents, title, role, score, reviewId, 
   const documentTitles = new Map(documents.map((document) => [document.id, document.title]));
   const side = review.role ?? role ?? undefined;
   const about = firstSentences(review.summary, 2);
+  const suggestions = side ? discussionShortlist(review.riskFlags) : [];
 
   return (
     <div className="flex flex-col gap-6">
@@ -100,6 +103,10 @@ export function ReviewResult({ review, documents, title, role, score, reviewId, 
           <CoverageChecklistSection coverage={review.coverage} documents={documents} role={side} />
         </div>
       </div>
+
+      {side && suggestions.length > 0 ? (
+        <ReviewSuggestions key={side} role={side} flags={suggestions} documentTitles={documentTitles} />
+      ) : null}
 
       {reviewId ? <RedLinesPanel key={reviewId} reviewId={reviewId} documents={documents} /> : null}
     </div>

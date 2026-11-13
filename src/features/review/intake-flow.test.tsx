@@ -1,4 +1,4 @@
-import { screen, waitFor, within } from "@testing-library/react";
+import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -96,6 +96,19 @@ async function chooseLease(user: User, file: File) {
 async function addPdf(user: User, file: File) {
   await user.upload(screen.getByLabelText("Add another PDF"), file);
   await screen.findByText(new RegExp(file.name.replace(".", "\\.")));
+}
+
+function pauseFileRead(file: File) {
+  const { promise, resolve } = Promise.withResolvers<void>();
+  const read = file.arrayBuffer.bind(file);
+  const reading = vi.spyOn(file, "arrayBuffer").mockImplementation(async () => {
+    await promise;
+    return read();
+  });
+  return () => act(async () => {
+    resolve();
+    await reading.mock.results[0].value;
+  });
 }
 
 describe("choosing a side and a lease", () => {
@@ -257,6 +270,54 @@ describe("a PDF that can't be used", () => {
     await user.upload(screen.getByLabelText("Add another PDF"), lockedPdf("rules.pdf"));
     expect(await screen.findByText(PDF_PROBLEM_MESSAGE.encrypted)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Read my lease" })).toBeEnabled();
+  });
+});
+
+describe("reading supporting PDFs", () => {
+  it("keeps selection order when a later PDF finishes reading first", async () => {
+    useRoute();
+    const user = userEvent.setup();
+    const flow = renderReviewFlow(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
+    await chooseLease(user, textPdf("lease.pdf", referencing.text));
+    await screen.findByText("Residential Lease Agreement");
+
+    const first = textPdf("fees.pdf", feeSchedule.text);
+    const finishFirst = pauseFileRead(first);
+    const second = textPdf("pets.pdf", petAddendum.text);
+    const readSecond = vi.spyOn(second, "arrayBuffer");
+    await user.upload(screen.getByLabelText("Add another PDF"), [first, second]);
+    expect(readSecond).toHaveBeenCalledTimes(1);
+    await act(async () => { await readSecond.mock.results[0].value; });
+    await finishFirst();
+    await waitFor(() => expect(flow.store.getSnapshot().documents).toHaveLength(3));
+
+    await user.click(screen.getByRole("button", { name: "Read my lease" }));
+    await waitFor(() => expect(flow.currentPath()).toBe("/review/report"));
+    expect(JSON.parse(requests[0]).referenced.map((document: { title: string }) => document.title))
+      .toEqual(["fees", "pets"]);
+  }, 20_000);
+
+  it("does not put an old supporting PDF back after the signer clears the intake", async () => {
+    useRoute();
+    const user = userEvent.setup();
+    const flow = renderReviewFlow(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
+    await chooseLease(user, textPdf("lease.pdf", referencing.text));
+    await screen.findByText("Residential Lease Agreement");
+
+    const oldFile = textPdf("fees.pdf", feeSchedule.text);
+    const finishOldFile = pauseFileRead(oldFile);
+    await user.upload(screen.getByLabelText("Add another PDF"), oldFile);
+    await screen.findByText("Reading fees.pdf…");
+    await user.click(screen.getByRole("button", { name: "Clear and start over" }));
+
+    await finishOldFile();
+    expect(flow.store.getSnapshot().documents).toEqual([]);
+    await user.click(screen.getByRole("button", { name: "I’m a landlord" }));
+    await chooseLease(user, textPdf("new-lease.pdf", adhesion.text));
+    await screen.findByText("Residential Lease Agreement");
+    expect(screen.queryByText("fees.pdf · 1 page")).not.toBeInTheDocument();
   });
 });
 

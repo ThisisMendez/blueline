@@ -59,6 +59,7 @@ export default async function SavedReviewPage(
     </section>;
   }
   if (!stored) notFound();
+  const supportingDocuments = stored.documents.slice(1);
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
@@ -70,6 +71,17 @@ export default async function SavedReviewPage(
         score={scoreFromStoredReview(stored)}
         notices={<RetentionControls reviewId={stored.id} retention={stored} />}
       />
+
+      {supportingDocuments.length > 0 ? (
+        <section aria-labelledby="saved-supporting-documents">
+          <h2 id="saved-supporting-documents" className="font-[family-name:var(--font-display)] text-lg font-bold">
+            Other documents in this review
+          </h2>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm [overflow-wrap:anywhere]">
+            {supportingDocuments.map((document) => <li key={document.id}>{document.title}</li>)}
+          </ul>
+        </section>
+      ) : null}
 
       <p>
         <Link

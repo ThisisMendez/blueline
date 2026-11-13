@@ -56,6 +56,21 @@ describe("a saved report", () => {
     expect(screen.getByRole("textbox", { name: "Your red lines" })).toBeInTheDocument();
   });
 
+  it("lists supplied attachments separately from the lease", async () => {
+    const review = await runGeneralReview({ role: "renter", packet: { documents }, model: createFixtureModelClient() });
+    await adapters.store!.save({
+      id: "review-with-attachment",
+      signerId: "a",
+      createdAt: "2027-01-12T09:00:00Z",
+      documents: [...documents, { id: "rules", title: "Building rules", text: "Quiet hours start at ten." }],
+      review,
+    });
+    await openSaved("review-with-attachment");
+
+    const section = screen.getByRole("region", { name: "Other documents in this review" });
+    expect(within(section).getAllByRole("listitem").map((item) => item.textContent)).toEqual(["Building rules"]);
+  });
+
   it("renders one report with the landlord label for a landlord review", async () => {
     await openSaved("review-landlord");
     expect(screen.getByText("Reviewed as a landlord")).toBeVisible();

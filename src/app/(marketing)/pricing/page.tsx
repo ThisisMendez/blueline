@@ -13,6 +13,7 @@ const starterIncludes = [
   "PDF upload with the documents your lease mentions",
   "Lease Risk Score and flagged terms with exact quotes",
   "Severity and fee filters",
+  "Drafts for the next step",
   "Six topics we check",
   "Saved reviews and personal red lines when you sign in",
 ] as const;
@@ -20,7 +21,7 @@ const starterIncludes = [
 const proCandidates = [
   "State and local law references, checked by hand",
   "Plain-English summaries of those laws",
-  "Negotiation templates",
+  "A toolkit to organize and compare proposed changes",
 ] as const;
 
 export default function PricingPage() {
