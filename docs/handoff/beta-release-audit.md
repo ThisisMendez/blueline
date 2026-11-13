@@ -53,7 +53,7 @@ Leave `REVIEW_CONTINUATION_SECRET` unset until production signup email and sign-
 
 ## Version 0.3.0
 
-The production Supabase project has the correct default Site URL. Its additional redirect list contains the local development origin. Its signup template uses the default confirmation link, and the dashboard requires custom SMTP before editing the template. The cause of the reported failure for an individual link has not been reproduced. Verify public delivery and both confirmation methods after configuring a sender and installing the code template.
+The production Supabase project has the correct default Site URL. Its additional redirect list contains the local development origin. An earlier delivered confirmation from the project pointed to localhost. Its origin was not established. The production app now excludes localhost from its callback origins. The hosted signup template uses the default confirmation link, and the dashboard requires custom SMTP before editing the template. Verify public delivery and both confirmation methods after configuring a sender and installing the code template.
 
 Formspree requires verification of the destination account email before activation. Complete an inbox test with the fixed notification subject and a synthetic contact submission before setting `FORMSPREE_FORM_ID`.
 
