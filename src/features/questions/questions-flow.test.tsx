@@ -1,8 +1,13 @@
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
 import { DocumentIntake } from "@/features/review/components/DocumentIntake";
+import { renderReviewFlow, textPdf } from "@/features/review/session/testing";
+
+vi.mock("@/features/packet/extract/pdf", async (original) =>
+  (await import("@/features/review/session/testing")).withTextPdfs(await original()),
+);
 import { loadFixture } from "~tests/fixtures/index";
 import { createFixtureModelClient } from "~tests/support/fixture-model-client";
 import { installRouteFetch } from "~tests/support/route-fetch";
@@ -21,17 +26,17 @@ describe("asking questions after an anonymous review", () => {
     });
     const lease = loadFixture("adhesion-lease");
     const user = userEvent.setup();
-    render(<DocumentIntake persists={false} />);
+    renderReviewFlow(<DocumentIntake persists={false} />);
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
-    await user.click(screen.getByLabelText("Paste your lease"));
-    await user.paste(lease.text);
+    await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", lease.text));
+    await screen.findByText("lease.pdf · 1 page");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
     const question = await screen.findByRole("textbox", { name: "Your question" });
     await user.type(question, lease.sidecar.qa.answerable[0].question);
     await user.click(screen.getByRole("button", { name: "Ask about this agreement" }));
     const section = screen.getByRole("region", { name: "Ask about your agreement" });
     expect(await within(section).findByText(lease.sidecar.qa.answerable[0].expectedSourceSentence)).toBeInTheDocument();
-    expect(within(section).getByText(/Source: Lease text you pasted/)).toBeInTheDocument();
+    expect(within(section).getByText(/Source: Residential Lease Agreement/)).toBeInTheDocument();
     await user.clear(question);
     await user.type(question, lease.sidecar.qa.unanswerable[0].question);
     await user.click(screen.getByRole("button", { name: "Ask about this agreement" }));

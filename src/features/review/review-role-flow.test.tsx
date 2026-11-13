@@ -12,12 +12,18 @@ import { access, addendum, cap, lateFee, lease, repairRedLine, repairs, roleFixt
 import { renderScreen } from "~tests/support/render-screen";
 import { installRouteFetch } from "~tests/support/route-fetch";
 
+import { renderReviewFlow, textPdf } from "./session/testing";
+
 const { accounts, store } = vi.hoisted(() => ({
   accounts: { kind: "signed-in", signer: { id: "owner", email: "owner@example.test" } } as const,
   store: { current: null as InMemoryReviewStore | null },
 }));
 vi.mock("@/features/auth/session", () => ({ getAccountsState: async () => accounts }));
 vi.mock("@/features/library/supabase-store", () => ({ openReviewStore: async () => store.current }));
+// Only the PDF layout is substituted, so the lease text is exactly the fixture's.
+vi.mock("@/features/packet/extract/pdf", async (original) =>
+  (await import("@/features/review/session/testing")).withTextPdfs(await original()),
+);
 
 
 let restore: (() => void) | undefined;
@@ -48,19 +54,22 @@ it("uses one selected role through missing documents and reopening, with differe
   });
 
   const user = userEvent.setup();
-  renderScreen(await ReviewPage());
+  const renderFlow = async () => renderReviewFlow(await ReviewPage(), {
+    savedReview: (reviewId) =>
+      SavedReviewPage({ params: Promise.resolve({ reviewId }), searchParams: Promise.resolve({}) }),
+  });
+  await renderFlow();
   await user.click(screen.getByRole("button", { name: "I’m a landlord" }));
-  await user.click(screen.getByLabelText("Paste your lease"));
-  await user.paste(lease);
+  await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", lease));
+  await screen.findByText("lease.pdf · 1 page");
   await user.click(screen.getByRole("button", { name: "Read my lease" }));
   await screen.findByRole("heading", { name: /points at a document that isn.t here/i });
+  await user.click(screen.getByRole("button", { name: "Add the missing document" }));
   expect(screen.getByText("Reviewing as a landlord")).toBeInTheDocument();
 
   async function supplyAddendum() {
-    await user.click(screen.getByRole("button", { name: "Add another document" }));
-    await user.type(screen.getByLabelText("Name for document 2"), "Fee Addendum");
-    await user.click(screen.getByLabelText("Paste document 2"));
-    await user.paste(addendum);
+    await user.upload(screen.getByLabelText("Add another PDF"), textPdf("Fee Addendum.pdf", addendum));
+    await screen.findByText("Fee Addendum.pdf · 1 page");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
   }
 
@@ -112,11 +121,11 @@ it("uses one selected role through missing documents and reopening, with differe
   expect(within(roleReport()).getByText("Severity: High")).toBeInTheDocument();
 
   cleanup();
-  renderScreen(await ReviewPage());
-  expect(screen.queryByLabelText("Paste your lease")).not.toBeInTheDocument();
+  await renderFlow();
+  expect(screen.queryByLabelText(/Choose file/)).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "I’m a renter" }));
-  await user.click(screen.getByLabelText("Paste your lease"));
-  await user.paste(lease);
+  await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", lease));
+  await screen.findByText("lease.pdf · 1 page");
   await supplyAddendum();
   await screen.findByRole("heading", { name: "Renter review" });
   expect(screen.queryByRole("heading", { name: "Landlord review" })).not.toBeInTheDocument();

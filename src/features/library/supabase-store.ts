@@ -19,6 +19,8 @@ import type { ExtractedDocument } from "@/features/packet/types";
 
 import {
   ReviewNeedsRerunError,
+  legacyReviewTitle,
+  titleForNewReview,
   type ReviewStore,
   type StoredReview,
   type StoredReviewSummary,
@@ -46,6 +48,8 @@ interface ReviewRow {
   created_at: string;
   saved_at: string | null;
   expires_at: string;
+  /** Null on reviews saved before migration 0008. */
+  display_title?: string | null;
   summary: string;
   role: ReviewRole | null;
   clean: boolean;
@@ -131,6 +135,7 @@ export class SupabaseReviewStore implements ReviewStore {
       p_signer_id: review.signerId,
       p_review: {
         id: review.id,
+        display_title: titleForNewReview(review),
         role: review.review.role ?? null,
         summary: review.review.summary,
         clean: review.review.clean,
@@ -150,10 +155,21 @@ export class SupabaseReviewStore implements ReviewStore {
     return result.data === null ? null : retentionFromRow(result.data);
   }
 
+  async renameForSigner(signerId: string, reviewId: string, title: string): Promise<string | null> {
+    const result = await this.client.rpc("rename_review", {
+      p_signer_id: signerId,
+      p_review_id: reviewId,
+      p_title: title,
+    });
+    if (result.error) throw new Error("The review could not be renamed.");
+    if (result.data === null) return null;
+    return z.object({ display_title: z.string() }).parse(result.data).display_title;
+  }
+
   async findForSigner(signerId: string, reviewId: string): Promise<StoredReview | null> {
     const reviewResult = await this.client
       .from("reviews")
-      .select("id, user_id, created_at, saved_at, expires_at, role, summary, clean, dropped_flag_count")
+      .select("id, user_id, created_at, saved_at, expires_at, display_title, role, summary, clean, dropped_flag_count")
       .eq("id", reviewId)
       .eq("user_id", signerId)
       .maybeSingle();
@@ -283,6 +299,7 @@ export class SupabaseReviewStore implements ReviewStore {
       id: row.id,
       signerId: row.user_id,
       ...retentionFromRow(row),
+      title: row.display_title ?? legacyReviewTitle(documents),
       documents,
       review: {
         role,
@@ -299,7 +316,7 @@ export class SupabaseReviewStore implements ReviewStore {
   async listForSigner(signerId: string): Promise<readonly StoredReviewSummary[]> {
     const result = await this.client
       .from("reviews")
-      .select("id, created_at, saved_at, expires_at, role, clean, review_documents!review_documents_owner_fk(title, position), review_flags!review_flags_owner_fk(rank)")
+      .select("id, created_at, saved_at, expires_at, display_title, role, clean, review_documents!review_documents_owner_fk(title, position), review_flags!review_flags_owner_fk(rank)")
       .eq("user_id", signerId)
       .order("created_at", { ascending: false });
     if (result.error) throw new Error(result.error.message);
@@ -309,6 +326,7 @@ export class SupabaseReviewStore implements ReviewStore {
       created_at: string;
       saved_at: string | null;
       expires_at: string;
+      display_title?: string | null;
       clean: boolean;
       role: ReviewRole | null;
       review_documents: Array<{ title: string; position: number }>;
@@ -319,8 +337,8 @@ export class SupabaseReviewStore implements ReviewStore {
       id: row.id,
       ...retentionFromRow(row),
       title:
-        [...row.review_documents].sort((left, right) => left.position - right.position)[0]
-          ?.title ?? "Untitled review",
+        row.display_title ??
+        legacyReviewTitle([...row.review_documents].sort((left, right) => left.position - right.position)),
       flagCount: row.review_flags.length,
       clean: row.clean,
       role: row.role ?? undefined,

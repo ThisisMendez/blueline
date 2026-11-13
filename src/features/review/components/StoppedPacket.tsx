@@ -6,6 +6,8 @@ import type { OutOfScopePacket, UnverifiedCompleteness } from "@/features/packet
 
 export interface StoppedPacketProps {
   readonly completeness: OutOfScopePacket | UnverifiedCompleteness;
+  /** What the signer can do next, shown under the explanation. */
+  readonly actions?: React.ReactNode;
 }
 
 /**
@@ -15,7 +17,7 @@ export interface StoppedPacketProps {
  * because the pipeline never ran. Same treatment as a blocked packet: navy,
  * never signal red, because nothing here is a risk finding.
  */
-export function StoppedPacket({ completeness }: StoppedPacketProps) {
+export function StoppedPacket({ completeness, actions }: StoppedPacketProps) {
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     heading.current?.focus();
@@ -40,7 +42,7 @@ export function StoppedPacket({ completeness }: StoppedPacketProps) {
           says.
         </p>
         <p className={bodyClass}>
-          Send it again. If this keeps happening, add any schedules, rules or
+          Try again. If this keeps happening, add any fee lists, rules, or
           addenda the lease mentions.
         </p>
       </>
@@ -67,8 +69,8 @@ export function StoppedPacket({ completeness }: StoppedPacketProps) {
           </figure>
         ) : null}
         <p className={bodyClass}>
-          If this is a lease for a home, check that you pasted the lease
-          itself and send it again.
+          If this is a lease for a home, check that you chose the lease itself
+          and try again.
         </p>
       </>
     );
@@ -78,8 +80,8 @@ export function StoppedPacket({ completeness }: StoppedPacketProps) {
     body = (
       <p className={bodyClass}>
         Blueline Redline only reviews residential leases, so we stopped
-        instead of guessing. If it is one, paste the whole lease from its
-        first page and send it again.
+        instead of guessing. If it is one, check that the file holds the
+        whole lease from its first page, then try again.
       </p>
     );
   }
@@ -102,6 +104,7 @@ export function StoppedPacket({ completeness }: StoppedPacketProps) {
           {title}
         </h2>
         {body}
+        {actions ? <div className="flex flex-wrap items-center gap-3 pt-2">{actions}</div> : null}
       </div>
     </section>
   );
