@@ -85,7 +85,7 @@ async function main() {
     `Gold-set eval, ${goldSet.corpus} v${goldSet.version}`,
     `Started: ${startedAt.toISOString()}`,
     `Model: ${process.env.OPENROUTER_MODEL}`,
-    `Label overlay: label-corrections.json, SHA-256 ${overlaySha256} (proposal pending owner confirmation; original labels unchanged)`,
+    `Label overlay: label-corrections.json, SHA-256 ${overlaySha256} (uses the approved Low forfeiture rule)`,
     ungated
       ? "Pipeline: UNGATED. The completeness check was skipped and each document went straight to runGeneralReview. This is not how a signer is served."
       : "Pipeline: the analysis route as npm run smoke -- --live wires it (anonymous, not persisted).",

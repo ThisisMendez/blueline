@@ -1,7 +1,7 @@
 import { BelowFold } from "@/features/landing/components/BelowFold";
 import { BrandHero } from "@/features/landing/components/BrandHero";
 import { ReviewToolbar } from "@/features/landing/components/ReviewToolbar";
-import { SpecimenHero } from "@/features/landing/components/SpecimenHero";
+import { SampleReportLinks } from "@/features/landing/components/SampleReportLinks";
 
 export default function Home() {
   return (
@@ -32,7 +32,7 @@ export default function Home() {
                 clauses that could cost that side.
               </p>
             </div>
-            <SpecimenHero />
+            <SampleReportLinks />
           </div>
         </section>
 

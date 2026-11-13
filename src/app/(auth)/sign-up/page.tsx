@@ -21,7 +21,7 @@ export default async function SignUpPage({ searchParams }: AuthPageProps) {
       title={resend ? "Resend your confirmation" : "Create your account"}
       description={resend
         ? "Enter the email address you used to sign up."
-        : "Confirm your email once, then sign in with your password."}
+        : "Create an account, then confirm your email."}
       configured={accounts.kind !== "unconfigured"}
     >
       <SignInForm mode={resend ? "resend" : "sign-up"} next={next} />

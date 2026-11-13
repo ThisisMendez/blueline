@@ -1,6 +1,6 @@
 # Version control and releases
 
-Blueline is in beta. Version 0.1.0 shipped from `main` at commit `66bd8d7` through [PR #8](https://github.com/ThisisMendez/blueline/pull/8). Version 0.2.0 adds the loading bar, score explanation, mobile navigation, combined renter drafts, landlord wording, and feedback entry points. The account gate and form delivery require production setup. The GitHub release records the deployed commit.
+Blueline is in beta. Version 0.1.0 shipped from `main` at commit `66bd8d7` through [PR #8](https://github.com/ThisisMendez/blueline/pull/8). Version 0.2.0 shipped at `32db23c`. Version 0.3.0 adds interactive sample reports, a simpler phone menu, more landlord recommendations, and support for signup codes. GitHub releases record the deployed commits and activation status.
 
 ## Version numbers
 

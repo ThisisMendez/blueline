@@ -1,0 +1,16 @@
+{
+  "publicLawsYear": 2026,
+  "sources": [
+    { "id": "chapter-34-18", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/index.htm" },
+    { "id": "rental-terms", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-15.htm" },
+    { "id": "rent-increase-notice", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-16.1.htm" },
+    { "id": "prohibited-provisions", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-17.htm" },
+    { "id": "security-deposits", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-19.htm" },
+    { "id": "maintenance", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-22.htm" },
+    { "id": "access", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-26.htm" },
+    { "id": "periodic-tenancy", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-37.htm" },
+    { "id": "disclosure", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-20.htm" },
+    { "id": "public-laws-2026", "url": "https://webserver.rilegislature.gov/Lawrevision/plshort/pl2026sub.htm" },
+    { "id": "public-law-2026-chapter-165", "url": "https://webserver.rilegislature.gov/PublicLaws/law26/law26165.htm" }
+  ]
+}

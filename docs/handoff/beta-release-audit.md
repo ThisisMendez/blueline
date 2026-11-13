@@ -50,3 +50,13 @@ Direct production release through `main`, with local verification. Migration 000
 Independent local browser checks exercised both roles, including loading, retry, mobile navigation, score details, selected renter drafts, landlord wording, cancelled and successful sign-in, and explicit saving. Contact and feedback were tested against a simulated Formspree endpoint. No paid model calls were made.
 
 Leave `REVIEW_CONTINUATION_SECRET` unset until production signup email and sign-in are verified. Leave `FORMSPREE_FORM_ID` unset until a test message reaches the approved inbox. See [version control and releases](../version-control.md) and [contact setup](../../research/contact-delivery-options.md).
+
+## Version 0.3.0
+
+The production Supabase project has the correct default Site URL. Its additional redirect list contains the local development origin. Its signup template uses the default confirmation link, and the dashboard requires custom SMTP before editing the template. The cause of the reported failure for an individual link has not been reproduced. Verify public delivery and both confirmation methods after configuring a sender and installing the code template.
+
+Formspree requires verification of the destination account email before activation. Complete an inbox test with the fixed notification subject and a synthetic contact submission before setting `FORMSPREE_FORM_ID`.
+
+The updated Terms, Privacy, and [Rhode Island reference pilot](../legal/rhode-island-pilot.md) are drafts for review. The weekly source check is separate from the lease-report score and from release deployment.
+
+The evaluation agent used GPT-6.1 Sol and Claude Opus 5.5 in separate sessions with the same synthetic documents and rubric under existing plan allowances. Both labeled all eight case and role pairs. All 90 quotes in their labels matched the source. The fixture-backed app comparison verified 27 of 27 citations, found all seven settled High concerns with one graded Medium, and blocked the missing addendum for both roles. Six adjudicated items remained uncertain. These results measure the synthetic exercise. The production inference route and real-lease holdout remain unmeasured.

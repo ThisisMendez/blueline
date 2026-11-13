@@ -1,6 +1,8 @@
 # 31. Send contact messages to the support inbox
 
-Status: ready-for-agent
+Status: implemented in 0.2.0, production activation pending
+
+Activate once the Formspree destination is verified and a synthetic message arrives with the fixed subject and expected Reply-To. Contact delivery has its own dependency and can ship independently of signup email.
 
 The live page has an email-app handoff with a disabled button because no address was configured. Add in-page delivery using a $0 option. Prefer a Blue Line address on an existing domain if the owner controls its mail routing and it costs nothing extra. Use the owner's approved Gmail as the private destination otherwise. Keep the destination in server or provider settings.
 

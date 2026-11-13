@@ -1,8 +1,11 @@
 import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { NextRequest } from "next/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import SignInPage from "@/app/(auth)/sign-in/page";
+import SignUpPage from "@/app/(auth)/sign-up/page";
+import VerifyEmailPage from "@/app/(auth)/verify-email/page";
 import { GET as googleCallback } from "@/app/auth/callback/route";
 import { GET as confirmEmail } from "@/app/auth/confirm/route";
 import { renderScreen } from "~tests/support/render-screen";
@@ -15,6 +18,8 @@ import {
   signOutAction,
   signUpAction,
   startGoogleSignInAction,
+  verifySignupCodeAction,
+  verifySignupLinkAction,
 } from "./actions";
 import { getAccountsState } from "./session";
 
@@ -29,6 +34,7 @@ const auth = vi.hoisted(() => ({
   signOut: vi.fn(),
   signUp: vi.fn(),
   updateUser: vi.fn(),
+  verifyOtp: vi.fn(),
 }));
 
 const cookieJar = new Map<string, string>();
@@ -119,6 +125,32 @@ describe("sign-in flows at the Supabase boundary", () => {
     expect(screen.getByRole("link", { name: /create.*account/i })).toBeVisible();
   });
 
+  it("asks for a first name at signup", async () => {
+    auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
+    renderScreen(await SignUpPage({ searchParams: Promise.resolve({}) }));
+
+    expect(screen.getByLabelText("First name")).toHaveAttribute("autocomplete", "given-name");
+    expect(screen.getByLabelText("Email address")).toBeVisible();
+    expect(screen.getByLabelText("Password")).toBeVisible();
+  });
+
+  it("shows the verification field and resend action after signup", async () => {
+    auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
+    auth.signUp.mockResolvedValue({ data: { session: null }, error: null });
+    renderScreen(await SignUpPage({ searchParams: Promise.resolve({}) }));
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText("First name"), "Alexis");
+    await user.type(screen.getByLabelText("Email address"), email);
+    await user.type(screen.getByLabelText("Password"), password);
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    const input = await screen.findByLabelText("Verification code");
+    expect(input).toHaveAttribute("autocomplete", "one-time-code");
+    expect(input).toHaveAttribute("type", "text");
+    expect(screen.getByRole("button", { name: "Send a new code" })).toBeVisible();
+    expect(auth.verifyOtp).not.toHaveBeenCalled();
+  });
+
   it("keeps email-link sign-in available when Google and recovery are unconfigured", async () => {
     vi.stubEnv("AUTH_RECOVERY_COOKIE_SECRET", "");
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json({
@@ -169,7 +201,7 @@ describe("sign-in flows at the Supabase boundary", () => {
       return { error: null };
     });
 
-    const registration = form({ displayName: "Alexis", email, password, confirmPassword: password });
+    const registration = form({ firstName: "Alexis", email, password, confirmPassword: password });
     expect(await signUpAction({ status: "idle" }, registration)).toMatchObject({ status: "confirmation-sent" });
     expect(await getAccountsState()).toEqual({ kind: "signed-out" });
     expect(await signInWithPasswordAction({ status: "idle" }, form({ email, password }))).toMatchObject({
@@ -189,6 +221,55 @@ describe("sign-in flows at the Supabase boundary", () => {
     expect(auth.signUp).toHaveBeenCalledTimes(1);
     expect(auth.signInWithOtp).not.toHaveBeenCalled();
     expect(auth.resetPasswordForEmail).not.toHaveBeenCalled();
+  });
+
+  it("verifies the pasted code with the signup address and keeps leading zeroes", async () => {
+    auth.signUp.mockResolvedValue({ data: { session: null }, error: null });
+    auth.verifyOtp.mockResolvedValue({ data: { session: {} }, error: null });
+    await signUpAction({ status: "idle" }, form({ firstName: "Alexis", email, password }));
+    expect(auth.signUp.mock.calls[0]?.[0].options.data).toEqual({ display_name: "Alexis" });
+
+    const next = "/review/saved-review";
+    const input = { code: " 001234 ", confirmationEmail: email, next };
+    const mismatchedAddress = await verifySignupCodeAction({ status: "idle" }, form({
+      ...input,
+      confirmationEmail: "someone-else@example.test",
+    }));
+    expect(mismatchedAddress.status).toBe("confirmation-session-ended");
+    expect(auth.verifyOtp).not.toHaveBeenCalled();
+
+    auth.verifyOtp.mockResolvedValueOnce({ data: { session: null }, error: { code: "otp_expired" } });
+    const expired = await verifySignupCodeAction({ status: "idle" }, form(input));
+    expect(expired.status).toBe("invalid-confirmation-code");
+    expect((await redirectDestination(verifySignupCodeAction({ status: "idle" }, form(input)))).pathname).toBe(next);
+    expect(auth.verifyOtp).toHaveBeenLastCalledWith({ email, token: "001234", type: "email" });
+    expect((await verifySignupCodeAction({ status: "idle" }, form(input))).status).toBe("confirmation-session-ended");
+  });
+
+  it("redeems the fallback link as a signup credential and ignores external continuations", async () => {
+    auth.verifyOtp.mockResolvedValue({ data: { session: {} }, error: null });
+    const tokenHash = "pkce_some-signup-hash";
+    const submitted = verifySignupLinkAction({ status: "idle" }, form({ tokenHash, next: "//example.test" }));
+    expect((await redirectDestination(submitted)).pathname).toBe("/account");
+    expect(auth.verifyOtp).toHaveBeenCalledWith({ token_hash: tokenHash, type: "signup" });
+  });
+
+  it("leaves the fallback token unused until the visitor verifies", async () => {
+    const tokenHash = "pkce_fallback-signup-hash";
+    auth.verifyOtp.mockResolvedValue({ data: { session: null }, error: { code: "otp_expired" } });
+    window.history.replaceState(null, "", `/verify-email#token_hash=${tokenHash}`);
+    try {
+      renderScreen(VerifyEmailPage());
+      const verify = screen.getByRole("button", { name: "Verify email" });
+      expect(auth.verifyOtp).not.toHaveBeenCalled();
+
+      await userEvent.setup().click(verify);
+      expect(await screen.findByRole("status")).toHaveTextContent("expired");
+      expect(auth.verifyOtp).toHaveBeenCalledExactlyOnceWith({ token_hash: tokenHash, type: "signup" });
+      expect(window.location.hash).toBe("");
+    } finally {
+      window.history.replaceState(null, "", "/");
+    }
   });
 
   it("starts Google sign-in and returns a canceled attempt to the app without exchanging a code", async () => {
@@ -234,7 +315,7 @@ describe("sign-in flows at the Supabase boundary", () => {
     auth.signOut.mockResolvedValue({ error: null });
 
     expect(await signUpAction({ status: "idle" }, form({
-      displayName: "Alexis", email, password,
+      firstName: "Alexis", email, password,
     }))).toMatchObject({ status: "confirmation-unavailable" });
     expect(auth.signUp).not.toHaveBeenCalled();
   });

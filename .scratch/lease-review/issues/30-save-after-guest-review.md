@@ -1,6 +1,8 @@
 # 30. Sign in to save or draft after a guest reads the report
 
-Status: ready-for-agent
+Status: implemented in 0.2.0, production activation pending
+
+Activation depends on the production signup and sign-in checks in [ticket 37](37-email-confirmation-and-report-return.md).
 
 Approved flow. Let guests upload a lease and read their review, including the score, flags, quotes, and explanations. Prompt for sign-in when they choose **Save this review**, **Create email draft** as a renter, or open a landlord drafting tool to revise lease wording. Keep drafting free for signed-in beta users and leave future pricing open.
 
