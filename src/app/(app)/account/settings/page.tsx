@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { ChangePasswordForm, DisplayNameForm } from "@/features/account/SettingsForms";
 import { signOutAction } from "@/features/auth/actions";
+import { isRecoveryConfigured } from "@/features/auth/recovery-authorization";
 import { getAccountsState } from "@/features/auth/session";
 
 export const metadata: Metadata = { title: "Account settings | Blueline Redline" };
@@ -63,7 +64,7 @@ export default async function AccountSettingsPage() {
         ) : (
           <>
             {hasEmailIdentity && signer.emailVerified ? <ChangePasswordForm /> : null}
-            {signer.email ? (
+            {signer.email && isRecoveryConfigured() ? (
               <p className="font-[family-name:var(--font-body)] text-sm">
                 <Link href="/forgot-password" className="underline underline-offset-4">Send a password recovery link</Link> if you forgot your password or used to sign in by email link.
               </p>

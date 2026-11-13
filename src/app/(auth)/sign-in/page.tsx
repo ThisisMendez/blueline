@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 
 import { AuthFrame, authPageHref, type AuthPageProps } from "@/features/auth/components/AuthFrame";
 import { GoogleSignInForm, SignInForm } from "@/features/auth/components/SignInForm";
+import { readAuthProviderSettings } from "@/features/auth/provider-settings";
+import { isRecoveryConfigured } from "@/features/auth/recovery-authorization";
 import { signInReturnPath } from "@/features/auth/redirects";
 import { getAccountsState } from "@/features/auth/session";
 
@@ -21,6 +23,8 @@ export default async function SignInPage({ searchParams }: AuthPageProps) {
   const query = await searchParams;
   const next = signInReturnPath(query.next);
   if (accounts.kind === "signed-in") redirect(next);
+  const showGoogle = accounts.kind !== "unconfigured"
+    && (await readAuthProviderSettings())?.external?.google === true;
   const problem = typeof query.problem === "string" && Object.hasOwn(PROBLEM_MESSAGE, query.problem)
     ? PROBLEM_MESSAGE[query.problem]
     : undefined;
@@ -32,18 +36,19 @@ export default async function SignInPage({ searchParams }: AuthPageProps) {
       configured={accounts.kind !== "unconfigured"}
       problem={problem}
     >
-      <GoogleSignInForm next={next} />
-      <div className="flex items-center gap-3 text-sm text-[var(--color-navy)]">
-        <span aria-hidden="true" className="h-px flex-1 bg-[var(--color-navy)]/30" />
-        or use email
-        <span aria-hidden="true" className="h-px flex-1 bg-[var(--color-navy)]/30" />
-      </div>
+      {showGoogle ? <GoogleSignInForm next={next} /> : null}
       <SignInForm next={next} />
       <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
-        <Link href={authPageHref("/forgot-password", next)} className="underline">Forgot password?</Link>
+        {isRecoveryConfigured() ? (
+          <Link href={authPageHref("/forgot-password", next)} className="underline">Forgot password?</Link>
+        ) : null}
         <Link href={authPageHref("/sign-up", next)} className="underline">Create account</Link>
         <Link href={authPageHref("/sign-up", next, { mode: "resend" })} className="underline">Resend confirmation</Link>
       </div>
+      <details className="border-t border-[var(--color-navy)]/30 pt-4">
+        <summary className="cursor-pointer text-sm font-semibold underline">Sign in with an email link</summary>
+        <div className="mt-3"><SignInForm mode="email-link" next={next} /></div>
+      </details>
     </AuthFrame>
   );
 }

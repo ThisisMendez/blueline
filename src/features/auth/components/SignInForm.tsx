@@ -6,6 +6,7 @@ import {
   requestPasswordResetAction,
   resendConfirmationAction,
   resetPasswordAction,
+  sendSignInLinkAction,
   signInWithPasswordAction,
   signUpAction,
   startGoogleSignInAction,
@@ -13,9 +14,10 @@ import {
 import { PASSWORD_MIN_LENGTH } from "../password-validation";
 import { initialSignInState, type SignInState } from "../sign-in-state";
 
-export type AuthFormMode = "sign-in" | "sign-up" | "resend" | "forgot-password" | "reset-password";
+export type AuthFormMode = "email-link" | "sign-in" | "sign-up" | "resend" | "forgot-password" | "reset-password";
 
 const FORM = {
+  "email-link": { action: sendSignInLinkAction, label: "Email me a sign-in link", pending: "Sending…" },
   "sign-in": { action: signInWithPasswordAction, label: "Sign in", pending: "Signing in…" },
   "sign-up": { action: signUpAction, label: "Create account", pending: "Creating account…" },
   resend: { action: resendConfirmationAction, label: "Resend confirmation", pending: "Sending…" },
@@ -24,6 +26,7 @@ const FORM = {
 };
 
 const MESSAGE: Record<Exclude<SignInState["status"], "idle">, string> = {
+  "sign-in-link-sent": "Check your inbox for a sign-in link and open it in this browser.",
   "confirmation-sent": "If this address needs confirmation, check its inbox for a link. Open it in this browser.",
   "recovery-sent": "If an account can use this address, you’ll receive a password reset link. Open it in this browser.",
   "confirmation-required": "Confirm your email before signing in. You can request another confirmation link if you need one.",
@@ -34,7 +37,7 @@ const MESSAGE: Record<Exclude<SignInState["status"], "idle">, string> = {
   "invalid-credentials": "The email or password didn’t match. Try again or reset your password.",
   "provider-unavailable": "Google sign-in is unavailable here right now. You can sign in with email and password.",
   "unconfigured": "This sign-in option isn’t set up here.",
-  "email-rate-limited": "Too many confirmation emails have gone out. Wait a while, then try again.",
+  "email-rate-limited": "Too many account emails have gone out. Wait a while, then try again.",
   "recovery-required": "Your reset link is missing or expired. Request a new link.",
   error: "Something went wrong. Try again in a moment.",
 };
@@ -58,6 +61,7 @@ export function SignInForm({ mode = "sign-in", next = "/account" }: {
 }) {
   const form = FORM[mode];
   const [state, action, pending] = useActionState(form.action, initialSignInState);
+  const emailId = mode === "email-link" ? "auth-link-email" : "auth-email";
   const isSignup = mode === "sign-up";
   const isReset = mode === "reset-password";
   const isSignIn = mode === "sign-in";
@@ -75,8 +79,8 @@ export function SignInForm({ mode = "sign-in", next = "/account" }: {
         ) : null}
         {isReset ? null : (
           <>
-            <label htmlFor="auth-email" className={LABEL}>Email address</label>
-            <input id="auth-email" name="email" type="email" autoComplete="email" required maxLength={254} className={INPUT} />
+            <label htmlFor={emailId} className={LABEL}>{mode === "email-link" ? "Email address for sign-in link" : "Email address"}</label>
+            <input id={emailId} name="email" type="email" autoComplete="email" required maxLength={254} className={INPUT} />
           </>
         )}
         {showPassword ? (

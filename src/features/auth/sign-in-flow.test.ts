@@ -10,6 +10,7 @@ import { renderScreen } from "~tests/support/render-screen";
 import {
   requestPasswordResetAction,
   resetPasswordAction,
+  sendSignInLinkAction,
   signInWithPasswordAction,
   signOutAction,
   signUpAction,
@@ -116,6 +117,29 @@ describe("sign-in flows at the Supabase boundary", () => {
     expect(screen.getByRole("button", { name: /continue with google/i })).toBeVisible();
     expect(screen.getByRole("link", { name: /forgot password/i })).toBeVisible();
     expect(screen.getByRole("link", { name: /create.*account/i })).toBeVisible();
+  });
+
+  it("keeps email-link sign-in available when Google and recovery are unconfigured", async () => {
+    vi.stubEnv("AUTH_RECOVERY_COOKIE_SECRET", "");
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json({
+      ...providerSettings,
+      external: { ...providerSettings.external, google: false },
+    })));
+    auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
+    auth.signInWithOtp.mockResolvedValue({ error: null });
+
+    renderScreen(await SignInPage({ searchParams: Promise.resolve({}) }));
+    expect(screen.queryByRole("button", { name: /continue with google/i })).toBeNull();
+    expect(screen.queryByRole("link", { name: /forgot password/i })).toBeNull();
+    expect(screen.getByText("Sign in with an email link")).toBeVisible();
+
+    const next = "/review/saved-review";
+    expect(await sendSignInLinkAction({ status: "idle" }, form({ email, next })))
+      .toEqual({ status: "sign-in-link-sent" });
+    expect(auth.signInWithOtp).toHaveBeenCalledWith({
+      email,
+      options: { emailRedirectTo: `${origin}/auth/confirm?next=%2Freview%2Fsaved-review`, shouldCreateUser: true },
+    });
   });
 
   it("confirms an address once and signs in by password without sending another link", async () => {

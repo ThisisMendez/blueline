@@ -1,5 +1,6 @@
 export type SignInStatus =
   | "idle"
+  | "sign-in-link-sent"
   | "confirmation-sent"
   | "recovery-sent"
   | "confirmation-required"

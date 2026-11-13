@@ -4,18 +4,11 @@ import { afterEach, expect, it, vi } from "vitest";
 
 import SavedReviewPage from "@/app/(app)/review/[reviewId]/page";
 import ReviewPage from "@/app/(app)/review/page";
-import { CHECKLIST_TOPIC_IDS } from "@/features/analysis/checklist";
-import { CHECKLIST_SCHEMA_NAME } from "@/features/analysis/model/checklist-schema";
-import { ANALYSIS_SCHEMA_NAME } from "@/features/analysis/model/schema";
-import { COMPLETENESS_SCHEMA_NAME } from "@/features/analysis/model/completeness-schema";
-import type { ModelClient } from "@/features/analysis/model/client";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
 import { InMemoryReviewStore } from "@/features/library/memory-store";
-import { QUESTION_SCHEMA_NAME } from "@/features/questions/contract";
 import { createQuestionRoute } from "@/features/questions/route";
-import { RED_LINES_SCHEMA_NAME } from "@/features/red-lines/contract";
 import { createRedLineRoutes } from "@/features/red-lines/routes";
-import { createFixtureModelClient } from "~tests/support/fixture-model-client";
+import { access, addendum, cap, lateFee, lease, repairRedLine, repairs, roleFixtureModel as model } from "~tests/support/role-fixture-model";
 import { renderScreen } from "~tests/support/render-screen";
 import { installRouteFetch } from "~tests/support/route-fetch";
 
@@ -26,98 +19,6 @@ const { accounts, store } = vi.hoisted(() => ({
 vi.mock("@/features/auth/session", () => ({ getAccountsState: async () => accounts }));
 vi.mock("@/features/library/supabase-store", () => ({ openReviewStore: async () => store.current }));
 
-const reference = "The attached Fee Addendum forms part of this lease.";
-const lateFee = "Tenant shall pay a late fee of $100 per day until outstanding rent is paid.";
-const cap = "Total late fees may not exceed $300 per month.";
-const exit = "Tenant shall pay four months of rent for ending the lease early.";
-const repairs = "Landlord shall complete every requested repair within one day.";
-const access = "Tenant shall provide access within seven days after a written request.";
-const notices = "Any notice to end the lease must be delivered in person exactly 60 days before the end date.";
-const repairRedLine = "I need more than one day to make repairs.";
-const lease = [
-  "Residential lease between the landlord and tenant.",
-  reference, notices, lateFee, exit, repairs,
-].join("\n");
-const addendum = ["Fee Addendum", cap, access].join("\n");
-
-function finding(
-  title: string,
-  severity: string,
-  sourceSentence: string,
-  consequence: string,
-  nextStep: string,
-  relatedCitations: readonly { sourceDocumentId: string; sourceSentence: string }[] = [],
-  triggeringCondition = "The cited obligation is triggered.",
-) {
-  return {
-    title, severity, sourceSentence, consequence, nextStep, relatedCitations,
-    sourceDocumentId: "pasted-lease",
-    triggeringCondition,
-    counterOffer: "The parties will agree to a written schedule before the obligation begins.",
-    residualRisk: "The parties still need to agree on the schedule.",
-  };
-}
-
-const baselineModel = createFixtureModelClient();
-const model: ModelClient = {
-  async complete(request) {
-    if (request.schemaName === COMPLETENESS_SCHEMA_NAME) {
-      return {
-        agreement: { kind: "residential-lease", description: "a residential lease", evidenceDocumentId: null, evidenceSentence: null },
-        references: [{
-          name: "Fee Addendum", requirement: "required", citingDocumentId: "pasted-lease", citingSentence: reference,
-          satisfiedByDocumentId: request.user.includes(cap) ? "supplied-2" : null,
-        }],
-      };
-    }
-    if (request.schemaName === CHECKLIST_SCHEMA_NAME) {
-      const sources: Partial<Record<(typeof CHECKLIST_TOPIC_IDS)[number], string>> = {
-        "early-exit-costs": exit, repairs, "access-to-the-home": access,
-      };
-      return { topics: CHECKLIST_TOPIC_IDS.map((topicId) => {
-        const sourceSentence = sources[topicId];
-        return sourceSentence
-          ? { topicId, status: "found", sourceDocumentId: topicId === "access-to-the-home" ? "supplied-2" : "pasted-lease", sourceSentence }
-          : { topicId, status: "not-found", sourceDocumentId: null, sourceSentence: null };
-      }) };
-    }
-    if (![ANALYSIS_SCHEMA_NAME, QUESTION_SCHEMA_NAME, RED_LINES_SCHEMA_NAME].includes(request.schemaName)) {
-      return baselineModel.complete(request);
-    }
-    const role = /^Review role: (renter|landlord)$/m.exec(request.user)?.[1];
-    if (!role) throw new Error("The selected perspective did not reach the review model.");
-    if (request.schemaName === QUESTION_SCHEMA_NAME) {
-      return { status: "answered", needsLocalLaw: false, citations: [{
-        sourceDocumentId: role === "landlord" ? "pasted-lease" : "supplied-2",
-        sourceSentence: role === "landlord" ? repairs : access,
-      }] };
-    }
-    if (request.schemaName === RED_LINES_SCHEMA_NAME) {
-      return { matches: role === "landlord" ? [{
-        redLineIndex: 0, sourceDocumentId: "pasted-lease", sourceSentence: repairs,
-        explanation: "The lease gives you one day to make repairs.",
-      }] : [] };
-    }
-    const related = [{ sourceDocumentId: "supplied-2", sourceSentence: cap }];
-    const noticeFlag = finding(
-      "Narrow notice window", "medium", notices,
-      "Missing the single delivery date can create a dispute about when the lease ends.",
-      "Ask for a delivery window and written acknowledgment.",
-    );
-    return {
-      summary: "Rent carries a $100 daily late fee with a $300 monthly cap.",
-      flags: role === "renter" ? [
-        finding("Early-exit payment", "high", exit, "Leaving early costs four months of rent.", "Ask to reduce the exit payment."),
-        finding("Daily late charge", "medium", lateFee, "You could owe $300 after three late days.", "Ask for a smaller one-time fee.", related),
-        noticeFlag,
-      ] : [
-        finding("Daily late charge", "low", lateFee, "A $100 daily charge up to $300 can make a late balance harder to collect.", "Consider a flat fee to simplify collections.", related),
-        finding("Repair and access timelines conflict", "high", repairs, "The one-day repair deadline may come before you can get access.", "Align the repair deadline with access.", [{ sourceDocumentId: "supplied-2", sourceSentence: access }], "The lease leaves it unclear which deadline takes priority when access takes more than one day."),
-        noticeFlag,
-      ],
-    };
-  },
-};
 
 let restore: (() => void) | undefined;
 afterEach(() => restore?.());

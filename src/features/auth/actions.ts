@@ -31,6 +31,30 @@ function confirmationStatus(code: string | undefined): SignInState {
   return { status: "error" };
 }
 
+export async function sendSignInLinkAction(
+  _previous: SignInState,
+  formData: FormData,
+): Promise<SignInState> {
+  const email = emailField(formData);
+  if (!email) return { status: "invalid-input" };
+
+  const supabase = await createServerSupabaseClient();
+  const emailRedirectTo = await authCallbackUrl("/auth/confirm", {
+    next: signInReturnPath(formData.get("next")),
+  });
+  if (!supabase || !emailRedirectTo) return { status: "unconfigured" };
+
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo, shouldCreateUser: true },
+  });
+  if (error?.code === "over_email_send_rate_limit") return { status: "email-rate-limited" };
+  if (error && !["user_not_found", "email_address_not_authorized"].includes(error.code ?? "")) {
+    return { status: "error" };
+  }
+  return { status: "sign-in-link-sent" };
+}
+
 export async function signInWithPasswordAction(
   _previous: SignInState,
   formData: FormData,
