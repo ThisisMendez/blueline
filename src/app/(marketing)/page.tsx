@@ -1,15 +1,11 @@
 import { BelowFold } from "@/features/landing/components/BelowFold";
 import { BrandHero } from "@/features/landing/components/BrandHero";
-import { Footer } from "@/features/landing/components/Footer";
-import { Nav } from "@/features/landing/components/Nav";
 import { ReviewToolbar } from "@/features/landing/components/ReviewToolbar";
 import { SpecimenHero } from "@/features/landing/components/SpecimenHero";
 
 export default function Home() {
   return (
-    <>
-      <Nav />
-      <main id="main" className="flex-1">
+    <main id="main" className="flex-1">
         <BrandHero />
 
         <section
@@ -47,8 +43,6 @@ export default function Home() {
         <div className="px-6 pb-6 sm:px-10 md:pb-8">
           <ReviewToolbar />
         </div>
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

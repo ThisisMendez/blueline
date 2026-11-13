@@ -1,7 +1,7 @@
 const NOTES = [
   {
     term: "What this is",
-    body: "A plain-English summary, ranked and cited risk flags, a coverage checklist, document-grounded answers, and a proposed edit for each flag.",
+    body: "A plain-English summary, ranked and cited risk flags, a coverage checklist, and a proposed edit for each flag.",
   },
   {
     term: "What this isn't",
