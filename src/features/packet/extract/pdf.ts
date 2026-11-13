@@ -21,7 +21,7 @@ import {
  * The usable-text rule.
  *
  * A PDF is worth reviewing when its extracted text holds at least 100
- * characters that are not whitespace **per page**, and never fewer than 200
+ * characters that are not whitespace **per page**, and never fewer than 100
  * in the document as a whole.
  *
  * Both halves matter. The per-page weight is what stops a scan from squeaking
@@ -38,7 +38,7 @@ import {
 export const MINIMUM_CHARACTERS_PER_PAGE = 100;
 
 /** The floor no document clears on a caption alone. See above. */
-export const MINIMUM_CHARACTERS_PER_DOCUMENT = 200;
+export const MINIMUM_CHARACTERS_PER_DOCUMENT = 100;
 
 /** How many non-whitespace characters a document of this length must yield. */
 export function usableTextThreshold(pageCount: number): number {

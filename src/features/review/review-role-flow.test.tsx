@@ -88,7 +88,7 @@ it("uses one selected role through missing documents and reopening, with differe
   expect(within(landlordFee).getByText(/simplify collections/)).toBeInTheDocument();
   expect(within(landlordFee).getByText(lateFee)).toBeInTheDocument();
   expect(within(landlordFee).getByText(cap)).toBeInTheDocument();
-  expect(within(landlordFee).getByText(/Fee Addendum, characters/)).toBeInTheDocument();
+  expect(within(landlordFee).getByText("From Fee Addendum")).toBeInTheDocument();
   await user.click(within(landlordFee).getByRole("button", { name: "Read explanation" }));
   expect(within(landlordFee).getByText(/harder to collect/)).toBeInTheDocument();
   const conflict = within(roleReport()).getByRole("article", { name: "Repair and access timelines conflict" });
@@ -100,7 +100,7 @@ it("uses one selected role through missing documents and reopening, with differe
   expect(within(repairCoverage).getByText("Found", { exact: true })).toBeInTheDocument();
   const accessCoverage = screen.getByRole("article", { name: "Access to the home" });
   expect(within(accessCoverage).getByText(access)).toBeInTheDocument();
-  expect(within(accessCoverage).getByText(/Fee Addendum, characters/)).toBeInTheDocument();
+  expect(within(accessCoverage).getByText("From Fee Addendum")).toBeInTheDocument();
   const depositCoverage = screen.getByRole("article", { name: "Deposit deductions and return" });
   expect(within(depositCoverage).getByText("Not found in the text reviewed", { exact: true })).toBeInTheDocument();
   expect(within(depositCoverage).getByText(/what deductions will we document/i)).toBeInTheDocument();

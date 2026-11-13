@@ -193,8 +193,8 @@ export function ProcessingScreen() {
           </p>
           <p className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--color-navy-ink)]">
             First we check that every document the lease mentions is here.
-            Then we read the whole agreement as {state.role === "renter" ? "a renter" : "a landlord"} and
-            match every quote to your text.
+            Then we look for terms that could cost you as {state.role === "renter" ? "a renter" : "a landlord"} and
+            check each quote against your text.
           </p>
         </li>
         <li aria-current={done ? "step" : undefined} className="flex flex-col gap-1 bg-[var(--color-paper)] px-5 py-4">

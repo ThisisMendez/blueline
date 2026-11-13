@@ -100,7 +100,7 @@ describe("reading a PDF with no usable text", () => {
 
 describe("the usable-text rule", () => {
   it("states the same threshold the extractor applies", () => {
-    expect(usableTextThreshold(1)).toBe(200);
+    expect(usableTextThreshold(1)).toBe(100);
     expect(usableTextThreshold(2)).toBe(200);
     expect(usableTextThreshold(3)).toBe(300);
     expect(usableTextThreshold(12)).toBe(1200);
@@ -111,20 +111,20 @@ describe("the usable-text rule", () => {
   });
 
   it("takes a one-page document that just clears the floor", async () => {
-    const result = await extractPdfText(pdfHolding(200, 1));
+    const result = await extractPdfText(pdfHolding(100, 1));
 
     expect(result.kind).toBe("text");
     if (result.kind !== "text") return;
-    expect(result.characterCount).toBe(200);
+    expect(result.characterCount).toBe(100);
   });
 
   it("refuses a one-page document one character short of it", async () => {
-    const result = await extractPdfText(pdfHolding(199, 1));
+    const result = await extractPdfText(pdfHolding(99, 1));
 
     expect(result).toEqual({
       kind: "no-usable-text",
       pageCount: 1,
-      characterCount: 199,
+      characterCount: 99,
     });
   });
 

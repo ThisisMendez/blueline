@@ -44,7 +44,7 @@ const liveFeatures = [
   },
   {
     name: "Saved reviews and personal red lines",
-    body: "Sign in to keep reviews in your library, rename them, and list your own red lines. Reviews are kept for 30 days, or 90 days after you save one.",
+    body: "Sign in to keep reviews in your library, rename them, and list your own red lines. Each saved review shows when it expires.",
   },
 ] as const;
 

@@ -96,14 +96,14 @@ export const PRIVACY_SECTIONS: readonly LegalSection[] = [
     heading: "How long we keep it",
     paragraphs: [
       "If you are signed in, each completed review is kept in your library for 30 days. If you save it, we keep it for 90 days from that save. The library shows each review's expiry date.",
-      "When a review expires you can no longer open it, and a scheduled cleanup that runs every minute deletes the stored text and results.",
+      "When a review expires you can no longer open it. A scheduled cleanup then deletes the stored text and results. [Owner: confirm the cleanup job runs in production before publishing.]",
       "Your red lines stay until you change them or your account is deleted.",
     ],
   },
   {
     heading: "Deleting your data",
     paragraphs: [
-      "There is no button yet to delete a single review or your whole account. Until there is, ask us through the contact page and we will delete it.",
+      "There is no button yet to delete a single review or your whole account. Until there is, email [support address, pending] and we will delete it. [Owner: a working contact address is required before publishing.]",
     ],
   },
   {

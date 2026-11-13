@@ -32,12 +32,12 @@ function quoteHeading(sentence: string) {
 
 /**
  * Where a quote sits. Extraction doesn't record where each PDF page starts,
- * so the location is the document and the character range only.
+ * so the location is the document. Search the PDF for the quoted words to find it.
  */
 function Location({ citation, titleById }: { readonly citation: ReviewCitation; readonly titleById: ReadonlyMap<string, string> }) {
   return (
     <p className="mt-1 [overflow-wrap:anywhere] font-[family-name:var(--font-data)] text-xs leading-relaxed text-[var(--color-navy)]">
-      {titleById.get(citation.sourceDocumentId) ?? citation.sourceDocumentId}, characters {citation.sourceStart} to {citation.sourceEnd}
+      From {titleById.get(citation.sourceDocumentId) ?? citation.sourceDocumentId}
     </p>
   );
 }

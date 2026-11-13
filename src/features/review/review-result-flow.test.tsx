@@ -200,14 +200,14 @@ describe("flagged terms and the six topics", () => {
     ]);
     expect(within(cards[0]).getByText("Severity: High")).toBeVisible();
     expect(within(cards[0]).getByText(flags[1].consequence)).toBeVisible();
-    expect(within(cards[0]).getByText("Sample lease, characters 0 to 70")).toBeVisible();
+    expect(within(cards[0]).getByText("From Sample lease")).toBeVisible();
     expect(within(cards[1]).getByText("Ask for a cap on the late fee.")).toBeVisible();
     // A conflict cites every passage involved, each with its own location.
     expect(within(cards[2]).getAllByRole("blockquote").map((quote) => quote.textContent)).toEqual([
       "The tenant shall pay for all pipe repairs.",
       "The landlord repairs plumbing within ten days.",
     ]);
-    expect(within(cards[2]).getByText("House rules, characters 0 to 46")).toBeVisible();
+    expect(within(cards[2]).getByText("From House rules")).toBeVisible();
   });
 
   it("filters with the keyboard, keeps the order and matches the counts", async () => {
@@ -249,7 +249,7 @@ describe("flagged terms and the six topics", () => {
     expect(within(access).getByText(/How much notice will I get/)).toBeVisible();
     const repairs = within(topics).getByRole("article", { name: "Repairs" });
     expect(within(repairs).getByText("Found")).toBeVisible();
-    expect(within(repairs).getByText("Sample lease, characters 125 to 167")).toBeVisible();
+    expect(within(repairs).getByText("From Sample lease")).toBeVisible();
   });
 
   it("keeps the clean review wording and hides the filters", () => {

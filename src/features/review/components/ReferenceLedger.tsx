@@ -126,8 +126,7 @@ export function ReferenceLedger({
             </div>
 
             <p className="border-t-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-6 py-4 font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)] sm:px-8">
-              Source: {citedFrom}, characters {entry.reference.citingStart} to{" "}
-              {entry.reference.citingEnd}
+              Source: {citedFrom}
             </p>
           </li>
         );

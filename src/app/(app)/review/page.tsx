@@ -35,7 +35,7 @@ export default async function ReviewPage() {
           New review
         </p>
         <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl">
-          Your lease, read sentence by sentence
+          Review your lease
         </h1>
         <p className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
           We show the biggest risks first and quote the lease for each one.

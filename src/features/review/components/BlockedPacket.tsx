@@ -93,7 +93,7 @@ export function BlockedPacket({
             disabled={busy}
             className="inline-flex min-h-11 items-center justify-center bg-[var(--color-navy)] px-6 py-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)] disabled:opacity-60"
           >
-            Add the missing document
+            {count === 1 ? "Add the missing document" : "Add the missing documents"}
           </button>
           <button
             type="button"

@@ -62,6 +62,8 @@ export function DocumentIntake({ persists, notice }: DocumentIntakeProps) {
   const leaseProblemId = useId();
 
   const lease = leaseOf(state);
+  // Returning with a lease already chosen means the user came back to add a document.
+  const [returnedWithLease] = useState(() => lease !== null && lease !== undefined);
   const supporting = supportingOf(state);
   const processing = state.status === "processing";
   const reading = pending.some((file) => file.problem === null);
@@ -262,6 +264,7 @@ export function DocumentIntake({ persists, notice }: DocumentIntakeProps) {
               <FilePicker
                 label="Add another PDF"
                 multiple
+                autoFocus={returnedWithLease}
                 disabled={processing || room <= 0}
                 onFiles={addSupporting}
               />

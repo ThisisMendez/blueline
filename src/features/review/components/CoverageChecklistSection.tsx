@@ -82,7 +82,7 @@ function FoundCard({
         {item.sourceSentence}
       </blockquote>
       <p className="mt-1 pl-3 [overflow-wrap:anywhere] font-[family-name:var(--font-data)] text-xs leading-relaxed text-[var(--color-navy)]">
-        {documentTitle}, characters {item.sourceStart} to {item.sourceEnd}
+        From {documentTitle}
       </p>
     </article>
   );

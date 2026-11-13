@@ -16,6 +16,8 @@ export interface FilePickerProps {
   readonly primary?: boolean;
   readonly invalid?: boolean;
   readonly describedBy?: string;
+  /** Focus the picker on mount, e.g. when returning to add a missing document. */
+  readonly autoFocus?: boolean;
 }
 
 /**
@@ -35,6 +37,7 @@ export function FilePicker({
   primary = false,
   invalid = false,
   describedBy,
+  autoFocus = false,
 }: FilePickerProps) {
   const id = useId();
 
@@ -55,6 +58,7 @@ export function FilePicker({
         disabled={disabled}
         aria-invalid={invalid || undefined}
         aria-describedby={describedBy}
+        autoFocus={autoFocus}
         onChange={choose}
         className="peer sr-only"
       />
