@@ -25,11 +25,15 @@ export default async function SignInPage(props: PageProps<"/sign-in">) {
   const accounts = await getAccountsState();
   const searchParams = await props.searchParams;
 
-  const nextParam = searchParams.next;
-  const next = typeof nextParam === "string" && nextParam.startsWith("/") ? nextParam : "/review";
-
   if (accounts.kind === "signed-in") {
-    redirect(next);
+    const next = searchParams.next;
+    const base = "https://blueline.invalid";
+    const destination =
+      typeof next === "string" && next.startsWith("/") ? URL.parse(next, base) : null;
+    if (!destination || destination.origin !== base || destination.pathname.startsWith("//")) {
+      redirect("/review");
+    }
+    redirect(`${destination.pathname}${destination.search}${destination.hash}`);
   }
 
   const problemParam = searchParams.problem;

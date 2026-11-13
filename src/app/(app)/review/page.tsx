@@ -38,13 +38,10 @@ export default async function ReviewPage() {
           Your lease, read sentence by sentence
         </h1>
         <p className="mt-4 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          Paste the text, or open a PDF you can select text in. Add the
-          documents your lease points at, such as a fee schedule or an
-          addendum, so we read the whole agreement rather than part of it.
-          You get a plain-English summary and the terms that could cost you,
-          heaviest first, each one quoting the sentence it came from. We
-          read only what you give us. We don&apos;t check it against local
-          law, so a term we describe may be limited by rules where you live.
+          Paste your lease or open a PDF with text you can select. Add any
+          fee lists or other documents the lease refers to. We show the
+          biggest risks first and quote the lease text for each one.
+          We don&apos;t check it against local law.
         </p>
         <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--color-navy-ink)]">
           When you submit, we send the document names and text to an AI provider.

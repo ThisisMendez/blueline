@@ -24,7 +24,7 @@ describe("a counter-offer behind a flag's explanation", () => {
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
     await screen.findByRole("heading", { name: /terms to look at/i });
     expect(screen.getByText(/haven’t checked them against local law|haven't checked them against local law/)).toBeInTheDocument();
-    const flags = screen.getAllByRole("article", { name: /^Risk flag/ });
+    const flags = within(screen.getByRole("region", { name: "Terms to look at" })).getAllByRole("article");
     for (const flag of flags) {
       expect(within(flag).queryByRole("button", { name: "See proposed edit" })).toBeNull();
     }
