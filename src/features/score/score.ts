@@ -140,14 +140,13 @@ export const GRADE_BANDS: readonly GradeBand[] = [
 export const SCORE_UNAVAILABLE_LABEL = "Score unavailable";
 
 /** The "How we score" note shown next to the score. Humanized copy. */
-export const HOW_WE_SCORE: { readonly title: string; readonly paragraphs: readonly string[] } = {
+export const HOW_WE_SCORE: { readonly title: string; readonly points: readonly string[] } = {
   title: "How we score",
-  paragraphs: [
-    "The score runs from 1 to 100. A higher score means we found fewer or less serious concerns for your side.",
-    "We only count flags whose exact words we found in your documents. Each flag counts once, even when it quotes more than one passage. Checklist topics we didn't find and matches with your own red lines don't change the score. The same rule applies whether you review as a renter or a landlord.",
-    "Your most serious flag sets the grade. One high-severity flag keeps the score at 69 or below, and two or more keep it at 59 or below. Within a grade, more flags mean a lower score. Medium and low flags on their own can't push a review into D or F.",
-    "If we had to drop a possible flag because its quote didn't match your lease, we don't show a score.",
-    "The score sums up what we found in the text you gave us. It isn't approval to sign or a legal opinion, and it doesn't predict what will happen. We can miss things, so read the flags and the lease itself.",
+  points: [
+    "A higher score means we found fewer or less serious concerns for your side.",
+    "A flag counts once if its exact quote matches your documents. Only flags affect the score.",
+    "One High flag gives a D. Two or more give an F.",
+    "If we have to leave out a flag because its quote doesn't match, we leave the score blank.",
   ],
 };
 

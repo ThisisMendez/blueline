@@ -6,7 +6,7 @@ Draft dated 2026-11-13. Not in effect. The page at the matching route renders on
 
 - [ ] Confirm Blueline Redline's legal entity name, address, and the governing law and venue.
 - [ ] Write the disclaimer and limitation-of-liability text (placeholder in the page).
-- [ ] Choose a public support address and set `SUPPORT_EMAIL` in `src/features/site/contact-config.ts`; then replace the "still setting up" contact lines.
+- [ ] Confirm the public support contact before publishing these terms.
 - [ ] Confirm the minimum age for users.
 - [ ] Confirm the "not a law firm, no legal advice" wording satisfies unauthorized-practice-of-law concerns in the states we serve.
 - [ ] Confirm the account suspension wording and any acceptable-use rules you want.

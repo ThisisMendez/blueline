@@ -8,7 +8,9 @@ import {
   type ExtractedDocument,
   type Packet,
 } from "@/features/packet/types";
+import { canIssueReviewContinuation, issueReviewContinuation, newReviewBrowser } from "@/features/review/session/continuation";
 
+import { WITHHELD_TEXT } from "../legal-claims";
 import { ModelError, type ModelClient } from "../model/client";
 import { runGeneralReview } from "../review";
 import {
@@ -213,6 +215,15 @@ export function createAnalysisRoute(
       }
     }
 
+    const requiresContinuation = (accounts.kind === "signed-out" || persistenceFailed) && canIssueReviewContinuation();
+    const browser = requiresContinuation ? newReviewBrowser(request) : null;
+    const continuation = browser
+      ? issueReviewContinuation({ id: dependencies.newReviewId(), documents: packet.documents, review }, dependencies.now().getTime(), browser)
+      : null;
+    const draftableFlagIds = continuation
+      ? review.riskFlags.filter(({ counterOffer }) => counterOffer.trim() && counterOffer !== WITHHELD_TEXT.counterOffer)
+        .map(({ id }) => id)
+      : undefined;
     const outcome: AnalysisOutcome = {
       status: "reviewed",
       reviewId,
@@ -221,8 +232,15 @@ export function createAnalysisRoute(
       persistenceFailed,
       documents: packet.documents,
       completeness,
-      review,
+      ...(continuation ? { continuation, draftableFlagIds } : {}),
+      ...(requiresContinuation && !continuation ? { continuationUnavailable: true, draftableFlagIds: [] } : {}),
+      review: requiresContinuation ? {
+        ...review,
+        riskFlags: review.riskFlags.map((flag) => ({ ...flag, counterOffer: "", residualRisk: "" })),
+      } : review,
     };
-    return Response.json(outcome, { status: 200 });
+    const headers = new Headers({ "Cache-Control": "no-store" });
+    if (continuation && browser) headers.set("Set-Cookie", browser.cookie);
+    return Response.json(outcome, { status: 200, headers });
   };
 }

@@ -298,7 +298,7 @@ describe("copy", () => {
   const copy = [
     SCORE_UNAVAILABLE_LABEL,
     HOW_WE_SCORE.title,
-    ...HOW_WE_SCORE.paragraphs,
+    ...HOW_WE_SCORE.points,
     ...GRADE_BANDS.map((band) => band.label),
     ...Object.values(UNAVAILABLE_EXPLANATIONS),
   ];

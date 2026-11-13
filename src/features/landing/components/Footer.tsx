@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { FeedbackLink } from "@/features/site/FeedbackLink";
+
 const footerLinks = [
   { label: "How It Works", href: "/how-it-works" },
   { label: "Features", href: "/features" },
@@ -10,6 +12,8 @@ const footerLinks = [
   { label: "Terms", href: "/terms", draft: true },
   { label: "Privacy", href: "/privacy", draft: true },
 ] as const;
+
+const footerLinkClass = "inline-flex min-h-11 items-center font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-navy)] underline-offset-4 hover:text-[var(--color-red-ink)] hover:underline focus-visible:underline";
 
 // Terms and Privacy are unverified drafts: they render only outside production
 // until the owner (and counsel) approve them, so production hides the links.
@@ -36,12 +40,13 @@ export function Footer() {
               <li key={href}>
                 <Link
                   href={href}
-                  className="inline-flex min-h-11 items-center font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-navy)] underline-offset-4 hover:text-[var(--color-red-ink)] hover:underline focus-visible:underline"
+                  className={footerLinkClass}
                 >
                   {label}
                 </Link>
               </li>
             ))}
+            <li><FeedbackLink className={footerLinkClass} /></li>
           </ul>
         </nav>
       </div>

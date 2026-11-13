@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { rankFlags, type RiskFlag } from "@/features/analysis/types";
+import type { DraftAccess, DraftWording } from "@/features/negotiation/ReviewSuggestions";
 
 import { RiskFlagCard } from "./RiskFlagCard";
 import { FLAG_FILTERS, matchesFlagFilter, type FlagFilter } from "./report/report-helpers";
@@ -22,9 +23,15 @@ const EMPTY_MESSAGE: Record<FlagFilter, string> = {
 export function RiskFlagList({
   flags,
   documentTitles,
+  requestDraft,
+  wording,
+  draftableFlagIds,
 }: {
   readonly flags: readonly RiskFlag[];
   readonly documentTitles: ReadonlyMap<string, string>;
+  readonly requestDraft?: DraftAccess;
+  readonly wording?: DraftWording;
+  readonly draftableFlagIds?: readonly string[];
 }) {
   const [filter, setFilter] = useState<FlagFilter>("all");
   const ranked = rankFlags(flags);
@@ -58,7 +65,12 @@ export function RiskFlagList({
       <ol role="list" hidden={visibleCount === 0} className="grid list-none gap-3 p-0">
         {ranked.map((flag) => (
           <li key={flag.id} hidden={!matchesFlagFilter(flag, filter)}>
-            <RiskFlagCard flag={flag} titleById={documentTitles} />
+            <RiskFlagCard
+              flag={wording?.has(flag.id) ? { ...flag, ...wording.get(flag.id) } : flag}
+              titleById={documentTitles}
+              requestDraft={requestDraft}
+              canDraft={draftableFlagIds?.includes(flag.id)}
+            />
           </li>
         ))}
       </ol>

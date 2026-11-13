@@ -4,13 +4,15 @@ Production: https://blueline-khaki-eta.vercel.app
 
 A contract review app for residential leases, built for renters first and supporting landlords. Choose your side, and the review highlights clauses that could harm it, each with its exact source citation. The selected role belongs to that review. V1 reads the lease text only (see ADR 0014). The Next.js application lives in `src/app/`; feature code lives in `src/features/`.
 
+See [Version control and releases](docs/version-control.md) for the version number, production history, and release workflow.
+
 ## Run locally
 
 Use Node 24 and npm. Run `npm ci`, copy `.env.example` to `.env.local`, fill in the OpenRouter key and model, then run `npm run dev`. Open `http://localhost:3000` or go directly to `/review`.
 
 The app starts without credentials and explains unavailable services. Real analysis requires `OPENROUTER_API_KEY` and `OPENROUTER_MODEL`. Paid models default to Fireworks. Set `OPENROUTER_PROVIDER` to select another provider. A `:free` model requires an explicit provider and uses zero token and request price caps. Calls still require low reasoning and strict structured JSON, with no provider fallback. An incompatible configuration returns an error.
 
-Anonymous analysis works with or without configured Supabase and is never saved by Blueline. Only the library and personal red lines require an account. Model processing still sends extracted text to the configured external provider; this application makes no claim about that provider's retention policy.
+Guests can analyze a lease and read the report without an account. Guest reviews stay in the original tab unless the user chooses to save after signing in. Model processing sends extracted text to the configured external provider.
 
 ## Test an anonymous deployment on Vercel Hobby
 
@@ -42,6 +44,9 @@ Production needs these four settings. Each is set on Vercel (production environm
 - `OPENROUTER_MODEL`
 
 `OPENROUTER_PROVIDER` is optional here. The production model id doesn't end in `:free`, so calls go to Fireworks by default.
+
+- `REVIEW_CONTINUATION_SECRET` enables sign-in to draft or save a guest report. Generate a random secret of at least 32 bytes and keep it on the server. Verify public signup and sign-in before enabling it. Keep the guest report tab open during sign-in. The report can be resumed for two hours in the original browser. Rotating the secret expires existing continuations.
+- `FORMSPREE_FORM_ID` enables Contact and beta feedback. Verify a test message reaches the approved inbox with the fixed subject and expected Reply-To before setting the production value. See [contact setup](research/contact-delivery-options.md).
 
 ## Verify
 

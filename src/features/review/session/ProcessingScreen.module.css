@@ -1,0 +1,19 @@
+.activity {
+  transform: translateX(100%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .activity {
+    animation: sweep 1.6s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(200%);
+  }
+}

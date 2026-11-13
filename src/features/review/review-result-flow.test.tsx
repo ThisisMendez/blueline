@@ -142,9 +142,12 @@ describe("the Lease Risk Score", () => {
     ]);
 
     const disclosure = within(panel).getByText(HOW_WE_SCORE.title);
-    expect(within(panel).getByText(HOW_WE_SCORE.paragraphs[0])).not.toBeVisible();
+    expect(within(panel).getByText(HOW_WE_SCORE.points[0])).not.toBeVisible();
     await user.click(disclosure);
-    expect(within(panel).getByText(HOW_WE_SCORE.paragraphs[0])).toBeVisible();
+    expect(within(panel).getByText(HOW_WE_SCORE.points[0])).toBeVisible();
+    const grades = within(panel).getByText("Grade ranges");
+    expect(within(panel).getByRole("table", { hidden: true })).not.toBeVisible();
+    await user.click(grades);
     expect(within(panel).getByRole("table")).toHaveTextContent("Severe concerns found");
     expect(panel.textContent).not.toMatch(/safe to sign|approved|guarantee|probability|legally/i);
   });
@@ -270,7 +273,7 @@ describe("flagged terms and the six topics", () => {
 
 
 describe("suggestions for the selected side", () => {
-  it("offers up to three editable renter drafts and skips withheld and minor findings", async () => {
+  it("creates one editable email from the renter's selection", async () => {
     const user = userEvent.setup();
     renderReport({ riskFlags: [
       ...flags,
@@ -280,21 +283,25 @@ describe("suggestions for the selected side", () => {
     ] });
 
     const panel = screen.getByRole("region", { name: "What to discuss with your landlord" });
-    const toggle = within(panel).getByRole("button", { name: "Show suggestions" });
-    await user.click(toggle);
-    const drafts = within(panel).getAllByRole("textbox", { name: "Message you can edit" });
-    expect(drafts).toHaveLength(3);
-    expect((drafts[0] as HTMLTextAreaElement).value).toContain(flags[1].sourceSentence);
-    expect((drafts[2] as HTMLTextAreaElement).value).toContain(flags[2].relatedCitations![0].sourceSentence);
-    expect(drafts.map((draft) => (draft as HTMLTextAreaElement).value).join("\n")).not.toMatch(/withheld|fourth draft|minor change/);
-
-    await user.clear(drafts[0]);
-    await user.type(drafts[0], "Can we discuss this?");
-    await user.click(toggle);
-    await user.click(toggle);
-    expect(drafts[0]).toHaveValue("Can we discuss this?");
-    await user.click(within(panel).getAllByRole("button", { name: "Copy draft" })[0]);
+    await user.click(within(panel).getByRole("button", { name: "Show suggestions" }));
+    const create = within(panel).getByRole("button", { name: "Create email draft" });
+    expect(create).toBeDisabled();
+    expect(within(panel).getAllByRole("checkbox")).toHaveLength(3);
+    await user.click(within(panel).getByRole("checkbox", { name: /deposit/i }));
+    await user.click(create);
+    const draft = within(panel).getByRole<HTMLTextAreaElement>("textbox", { name: "Email draft you can edit" });
+    expect(draft.value).toContain(flags[1].sourceSentence);
+    expect(draft.value).not.toContain(flags[2].sourceSentence);
+    await user.clear(draft);
+    await user.type(draft, "Can we discuss this?");
+    await user.click(within(panel).getByRole("button", { name: "Select all" }));
+    expect(draft).toHaveValue("Can we discuss this?");
+    await user.click(within(panel).getByRole("button", { name: "Copy draft" }));
     expect(await navigator.clipboard.readText()).toBe("Can we discuss this?");
+    await user.click(within(panel).getByRole("button", { name: "Update email draft" }));
+    const updated = within(panel).getByRole<HTMLTextAreaElement>("textbox", { name: "Email draft you can edit" });
+    expect(updated.value).toContain(flags[2].relatedCitations![0].sourceSentence);
+    expect(updated.value).not.toMatch(/withheld|fourth draft|minor change/);
   });
 
   it("offers editable landlord wording with both passages of a conflict", async () => {
@@ -306,6 +313,7 @@ describe("suggestions for the selected side", () => {
     expect(within(panel).getAllByRole("blockquote").map((quote) => quote.textContent)).toEqual([
       flags[2].sourceSentence, flags[2].relatedCitations![0].sourceSentence,
     ]);
+    await user.click(within(panel).getByRole("button", { name: "Open proposed wording" }));
     const draft = within(panel).getByRole("textbox", { name: "Proposed wording you can edit" });
     expect(draft).toHaveValue(flags[2].counterOffer);
     await user.clear(draft);
