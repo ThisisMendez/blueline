@@ -74,3 +74,18 @@ it("does not send a request when the model is missing", async () => {
   await expect(new OpenRouterModelClient().complete(request)).rejects.toMatchObject({ kind: "not-configured" });
   expect(fetcher).not.toHaveBeenCalled();
 });
+
+it("reports a timeout when headers arrive but the response body stalls", async () => {
+  vi.stubEnv("OPENROUTER_API_KEY", "synthetic-test-key");
+  vi.stubEnv("OPENROUTER_MODEL", "configured-test-model");
+  const response = Response.json({});
+  vi.stubGlobal("fetch", vi.fn((_url: string, { signal }: RequestInit) => {
+    vi.spyOn(response, "json").mockImplementation(() => new Promise((_resolve, reject) => {
+      signal?.addEventListener("abort", () => reject(signal.reason), { once: true });
+    }));
+    return Promise.resolve(response);
+  }));
+
+  await expect(new OpenRouterModelClient({ timeoutMs: 20 }).complete(request))
+    .rejects.toMatchObject({ kind: "timeout" });
+});
