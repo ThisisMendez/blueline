@@ -16,6 +16,7 @@ Decided. Do not reopen.
 - The uploaded file is parsed in the browser. Only the extracted text is stored, never the original file.
 - Every risk flag cites the exact sentence, verified verbatim against the extracted text. A flag whose source can't be shown is a bug.
 - State only what the document says. No safe-to-sign or legal-validity claims.
+- Blueline Redline is a contract review app for residential leases. Renters come first; landlords are supported. The user picks the side for each review, and the report highlights clauses that could harm that side (ADR 0015).
 - The OpenRouter model is `z-ai/glm-5.3-flash`, read from `OPENROUTER_MODEL`. Never hardcode a model id even though this one is chosen.
 
 ## Undecided — stop and ask

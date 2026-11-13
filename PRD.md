@@ -4,7 +4,7 @@ Blueline is the project shorthand. The official product name and visual directio
 
 ## Who this is for
 
-A renter or landlord with a residential lease or renewal in hand and a signing decision approaching. Blueline Redline is a contract self-check tool that helps either party understand the agreement, identify consequential terms, and prepare informed questions or proposed changes before deciding. Use “Review your rental agreement from your perspective” and “Understand what could affect you and what to clarify before signing.” The user decides whether and how to act on the report.
+A renter with a residential lease or renewal in hand and a signing decision approaching. Landlords reviewing the same kind of lease are supported too. Blueline Redline is a contract review tool: the user picks the side they are on, and the report highlights the clauses that could harm that side. It helps either party understand the agreement, identify consequential terms, and prepare informed questions or proposed changes before deciding. Use “Review your rental agreement from your perspective” and “Understand what could affect you and what to clarify before signing.” The user decides whether and how to act on the report.
 
 The original renter research considered self-review, consumer lease analyzers, and paid lawyer review. It recorded a $440 average for rental-lease review on ContractsCounsel and did not measure how many renters use each route. [ContractsCounsel](https://www.contractscounsel.com/b/rental-lease-agreement-cost), [consumer lease analyzer research](research/agent3-what-already-exists.md).
 

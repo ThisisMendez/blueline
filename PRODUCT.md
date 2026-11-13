@@ -12,7 +12,7 @@ Next.js, deployed on Vercel. Supabase for authentication and PostgreSQL persiste
 
 ## Users
 
-A renter or landlord with a residential lease or renewal in hand and a signing decision approaching. The review is scoped to residential leases. [Product requirements](PRD.md).
+A renter with a residential lease or renewal in hand and a signing decision approaching comes first. Landlords reviewing a residential lease are supported as a second review role. The review is scoped to residential leases. [ADR 0015](docs/adr/0015-renter-first-with-landlord-reviews.md). [Product requirements](PRD.md).
 
 ## Product Purpose
 
@@ -20,7 +20,7 @@ Blueline Redline helps a lease signer understand the agreement, see the terms th
 
 ## Positioning
 
-“Review your rental agreement from your perspective.” Blueline Redline is a contract self-check. It helps renters and landlords understand what could affect them and what to clarify before signing. Users decide how to act on the report. [Brand voice](BRAND.md).
+“Review your rental agreement from your perspective.” Blueline Redline is a contract review app. The user picks their side, and the report highlights clauses that could harm it. It helps renters first, and landlords too, understand what could affect them and what to clarify before signing. Users decide how to act on the report. [Brand voice](BRAND.md).
 
 ## Operating Context
 

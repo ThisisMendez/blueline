@@ -4,7 +4,7 @@ Status: ready-for-agent
 
 ## Problem Statement
 
-A renter or landlord with a residential lease or renewal needs to understand what could affect their own signing decision. Important terms may sit in referenced material outside the main lease. The signer needs to see the exposure, its exact source, and what to clarify before signing.
+A renter (the primary audience) or a landlord with a residential lease or renewal needs to understand what could affect their own signing decision. Important terms may sit in referenced material outside the main lease. The signer needs to see the exposure, its exact source, and what to clarify before signing.
 
 ## Solution
 

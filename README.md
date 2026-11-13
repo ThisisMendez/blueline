@@ -2,7 +2,7 @@
 
 Production: https://blueline-khaki-eta.vercel.app
 
-Choose renter or landlord for a residential lease review with exact source citations. The selected role belongs to that review. V1 reads the lease text only (see ADR 0014). The Next.js application lives in `src/app/`; feature code lives in `src/features/`.
+A contract review app for residential leases, built for renters first and supporting landlords. Choose your side, and the review highlights clauses that could harm it, each with its exact source citation. The selected role belongs to that review. V1 reads the lease text only (see ADR 0014). The Next.js application lives in `src/app/`; feature code lives in `src/features/`.
 
 ## Run locally
 

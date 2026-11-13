@@ -2,7 +2,7 @@
 
 **Official product name:** Blueline Redline. **Project shorthand:** Blueline.
 
-Blueline Redline helps renters and landlords see what their residential agreement could mean for them before they sign. “Review your rental agreement from your perspective.” “Understand what could affect you and what to clarify before signing.” Present the product as a self-check. The user decides whether and how to act.
+Blueline Redline helps renters, and landlords too, see what their residential agreement could mean for their side before they sign. The user picks the side; the report highlights the clauses that could harm it. “Review your rental agreement from your perspective.” “Understand what could affect you and what to clarify before signing.” Present the product as a self-check. The user decides whether and how to act.
 
 The brand is calm, precise, and quietly defiant: show the source, explain the consequence, and make room for a better reply. Agreements should feel like working documents, not intimidating legal artifacts.
 

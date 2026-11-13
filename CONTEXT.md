@@ -17,7 +17,7 @@ A renter or landlord reviewing a residential lease before signing or renewing it
 _Avoid_: Party seeking help with an active dispute
 
 **Review role**:
-The renter or landlord perspective selected for one lease review.
+The side the user picks for one lease review: renter (the primary audience) or landlord. The report highlights clauses that could harm that side.
 _Avoid_: Account role, personal red line
 
 **Risk flag**:
