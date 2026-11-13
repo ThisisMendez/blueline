@@ -1,4 +1,5 @@
 import { screen, waitFor } from "@testing-library/react";
+import { firstSentences } from "@/features/review/components/report/report-helpers";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -78,7 +79,7 @@ describe("the product with accounts unavailable", () => {
         { timeout: 10_000 },
       ),
     ).toBeInTheDocument();
-    expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+    expect(screen.getByText(firstSentences(sidecar.summary))).toBeInTheDocument();
 
     // Nothing saved, nothing to open later, and no claim that the lease is fine.
     expect(store.size).toBe(0);

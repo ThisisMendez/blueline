@@ -28,9 +28,9 @@ describe("a counter-offer behind a flag's explanation", () => {
     await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", fixture.text));
     await screen.findByText("lease.pdf · 1 page");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
-    await screen.findByRole("heading", { name: /terms to look at/i });
+    await screen.findByRole("heading", { name: /flagged terms/i });
     expect(screen.getByText(/haven’t checked them against local law|haven't checked them against local law/)).toBeInTheDocument();
-    const flags = within(screen.getByRole("region", { name: /terms to look at/i })).getAllByRole("article");
+    const flags = within(screen.getByRole("region", { name: /flagged terms/i })).getAllByRole("article");
     for (const flag of flags) {
       expect(within(flag).queryByRole("button", { name: "See proposed edit" })).toBeNull();
     }

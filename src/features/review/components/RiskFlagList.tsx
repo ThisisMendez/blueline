@@ -1,26 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import type { RiskFlag, Severity } from "@/features/analysis/types";
+import { rankFlags, type RiskFlag } from "@/features/analysis/types";
 
 import { RiskFlagCard } from "./RiskFlagCard";
+import { FLAG_FILTERS, matchesFlagFilter, type FlagFilter } from "./report/report-helpers";
 
-type FlagFilter = "all" | Severity | "fees";
+const EMPTY_MESSAGE: Record<FlagFilter, string> = {
+  all: "No flags to show.",
+  high: "No high-severity flags.",
+  medium: "No medium-severity flags.",
+  low: "No low-severity flags.",
+  fees: "None of the flagged passages mentions a fee or charge.",
+};
 
-const FILTERS: readonly { value: FlagFilter; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "high", label: "High" },
-  { value: "medium", label: "Medium" },
-  { value: "low", label: "Low" },
-  { value: "fees", label: "Mentions fees or charges" },
-];
-
-function matchesFilter(flag: RiskFlag, filter: FlagFilter) {
-  if (filter === "all") return true;
-  if (filter === "fees") return /\b(?:fees?|charges?)\b/i.test(flag.sourceSentence);
-  return flag.severity === filter;
-}
-
+/**
+ * The verified flags, most serious first, with filter chips. Every card stays
+ * mounted and is hidden when filtered out, so an open explanation survives a
+ * change of filter.
+ */
 export function RiskFlagList({
   flags,
   documentTitles,
@@ -29,36 +27,37 @@ export function RiskFlagList({
   readonly documentTitles: ReadonlyMap<string, string>;
 }) {
   const [filter, setFilter] = useState<FlagFilter>("all");
-  const visibleCount = flags.filter((flag) => matchesFilter(flag, filter)).length;
+  const ranked = rankFlags(flags);
+  const countFor = (value: FlagFilter) => ranked.filter((flag) => matchesFlagFilter(flag, value)).length;
+  const visibleCount = countFor(filter);
 
   return (
     <>
-      <div role="group" aria-label="Filter flags" className="flex flex-wrap gap-2">
-        {FILTERS.map(({ value, label }) => (
+      <div role="group" aria-label="Filter flags" className="flex flex-wrap gap-1.5">
+        {FLAG_FILTERS.map(({ value, label }) => (
           <button
             key={value}
             type="button"
             aria-pressed={filter === value}
             onClick={() => setFilter(value)}
-            className="min-h-11 border-2 border-[var(--color-navy)] px-3 py-2 font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-navy)] hover:bg-[var(--color-paper-deep)] aria-pressed:bg-[var(--color-navy)] aria-pressed:text-[var(--color-paper)]"
+            className="inline-flex min-h-11 items-center gap-1.5 border-2 border-[var(--color-navy)] px-2.5 py-1 font-[family-name:var(--font-display)] text-sm font-semibold text-[var(--color-navy)] hover:bg-[var(--color-paper-deep)] aria-pressed:bg-[var(--color-navy)] aria-pressed:text-[var(--color-paper)]"
           >
             {label}
+            <span aria-hidden="true" className="font-[family-name:var(--font-data)] text-xs opacity-80">
+              {countFor(value)}
+            </span>
           </button>
         ))}
       </div>
       <p
         role="status"
-        className={visibleCount === 0 ? "text-sm text-[var(--color-navy-ink)]" : "visually-hidden"}
+        className={visibleCount === 0 ? "font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]" : "visually-hidden"}
       >
-        {visibleCount === 0 ? "No flags match this filter." : `Showing ${visibleCount} of ${flags.length} flags.`}
+        {visibleCount === 0 ? EMPTY_MESSAGE[filter] : `Showing ${visibleCount} of ${ranked.length} flags.`}
       </p>
-      <ol
-        role="list"
-        hidden={visibleCount === 0}
-        className="grid list-none gap-4 p-0 sm:gap-5"
-      >
-        {flags.map((flag) => (
-          <li key={flag.id} hidden={!matchesFilter(flag, filter)}>
+      <ol role="list" hidden={visibleCount === 0} className="grid list-none gap-3 p-0">
+        {ranked.map((flag) => (
+          <li key={flag.id} hidden={!matchesFlagFilter(flag, filter)}>
             <RiskFlagCard flag={flag} titleById={documentTitles} />
           </li>
         ))}

@@ -1,4 +1,5 @@
 import { cleanup, screen, waitFor, within } from "@testing-library/react";
+import { firstSentences } from "@/features/review/components/report/report-helpers";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -162,7 +163,7 @@ describe("a signed-in signer choosing a lease", () => {
     await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", adhesionText));
     await screen.findByText("lease.pdf · 1 page");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
-    await screen.findByRole("heading", { name: /terms to look at/i });
+    await screen.findByRole("heading", { name: /flagged terms/i });
     // Not kept, so it is read in this tab rather than on a saved page.
     expect(flow.currentPath()).toBe("/review/report");
     expect(screen.getByRole("alert")).toHaveTextContent("This review wasn't saved to your library.");
@@ -176,7 +177,7 @@ describe("a signed-in signer choosing a lease", () => {
 
     const flagsHeading = await screen.findByRole(
       "heading",
-      { name: /terms to look at/i },
+      { name: /flagged terms/i },
       { timeout: 10_000 },
     );
     expect(flagsHeading).toBeInTheDocument();
@@ -185,7 +186,7 @@ describe("a signed-in signer choosing a lease", () => {
     // lookup is scoped to the flag list because one sentence can be both a
     // flag and the sentence covering a checklist topic.
     const flagsSection = flagsHeading.closest("section")!;
-    expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+    expect(screen.getByText(firstSentences(sidecar.summary))).toBeInTheDocument();
     for (const planted of sidecar.plantedFlags) {
       expect(within(flagsSection).getByText(planted.sourceSentence)).toBeInTheDocument();
     }
@@ -208,9 +209,9 @@ describe("a signed-in signer choosing a lease", () => {
     renderScreen(reloaded);
     await waitFor(() => expect(screen.getByRole("textbox", { name: "Your red lines" })).toBeEnabled());
 
-    expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+    expect(screen.getByText(firstSentences(sidecar.summary))).toBeInTheDocument();
     const reloadedFlags = screen
-      .getByRole("heading", { name: /terms to look at/i })
+      .getByRole("heading", { name: /flagged terms/i })
       .closest("section")!;
     for (const planted of sidecar.plantedFlags) {
       expect(within(reloadedFlags).getByText(planted.sourceSentence)).toBeInTheDocument();
@@ -223,7 +224,7 @@ describe("a signed-in signer choosing a lease", () => {
 
   it("keeps one signer's review away from another signer", async () => {
     await chooseAndSubmit();
-    await screen.findByRole("heading", { name: /terms to look at/i }, { timeout: 10_000 });
+    await screen.findByRole("heading", { name: /flagged terms/i }, { timeout: 10_000 });
     cleanup();
 
     expect(await store.findForSigner("signer-a", "review-1")).not.toBeNull();
@@ -244,7 +245,7 @@ describe("a signed-in signer choosing a lease", () => {
 
   it("lists the signer's own reviews and nobody else's", async () => {
     await chooseAndSubmit();
-    await screen.findByRole("heading", { name: /terms to look at/i }, { timeout: 10_000 });
+    await screen.findByRole("heading", { name: /flagged terms/i }, { timeout: 10_000 });
     cleanup();
 
     renderFlow(await ReviewPage());

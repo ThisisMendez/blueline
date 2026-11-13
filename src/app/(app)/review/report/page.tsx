@@ -12,7 +12,7 @@ export const metadata: Metadata = {
  */
 export default function SessionReportPage() {
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col gap-8">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
       <ReportScreen />
     </div>
   );

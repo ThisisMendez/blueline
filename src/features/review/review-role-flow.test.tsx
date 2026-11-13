@@ -6,7 +6,6 @@ import SavedReviewPage from "@/app/(app)/review/[reviewId]/page";
 import ReviewPage from "@/app/(app)/review/page";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
 import { InMemoryReviewStore } from "@/features/library/memory-store";
-import { createQuestionRoute } from "@/features/questions/route";
 import { createRedLineRoutes } from "@/features/red-lines/routes";
 import { access, addendum, cap, lateFee, lease, repairRedLine, repairs, roleFixtureModel as model } from "~tests/support/role-fixture-model";
 import { renderScreen } from "~tests/support/render-screen";
@@ -48,7 +47,6 @@ it("uses one selected role through missing documents and reopening, with differe
       model, now, accounts: async () => accounts, store: async () => store.current,
       newReviewId: () => `review-${++nextId}`,
     }),
-    "/api/questions": createQuestionRoute(model),
     "/api/red-lines": redLines.preferences,
     "/api/red-lines/matches": redLines.matches,
   });
@@ -73,15 +71,15 @@ it("uses one selected role through missing documents and reopening, with differe
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
   }
 
-  async function askAboutMyDeadline() {
-    await user.type(screen.getByRole("textbox", { name: "Your question" }), "What is my deadline?");
-    await user.click(screen.getByRole("button", { name: "Ask about this agreement" }));
-    return within(screen.getByRole("region", { name: "Ask about your agreement" }));
+  // Q&A is out of the beta: no report offers to answer questions.
+  function expectNoQuestionPanel() {
+    expect(screen.queryByRole("region", { name: "Ask about your agreement" })).toBeNull();
+    expect(screen.queryByRole("textbox", { name: "Your question" })).toBeNull();
   }
 
   await supplyAddendum();
-  await screen.findByRole("heading", { name: "Landlord review" });
-  const roleReport = () => screen.getByRole("heading", { name: /terms to look at/i }).closest("section")!;
+  await screen.findByText("Reviewed as a landlord");
+  const roleReport = () => screen.getByRole("heading", { name: /flagged terms/i }).closest("section")!;
   expect(within(roleReport()).getAllByRole("heading", { level: 3 }).map((node) => node.textContent)).toEqual([
     "Repair and access timelines conflict", "Narrow notice window", "Daily late charge",
   ]);
@@ -104,15 +102,16 @@ it("uses one selected role through missing documents and reopening, with differe
   expect(within(accessCoverage).getByText(access)).toBeInTheDocument();
   expect(within(accessCoverage).getByText(/Fee Addendum, characters/)).toBeInTheDocument();
   const depositCoverage = screen.getByRole("article", { name: "Deposit deductions and return" });
-  expect(within(depositCoverage).getByText("Not found", { exact: true })).toBeInTheDocument();
+  expect(within(depositCoverage).getByText("Not found in the text reviewed", { exact: true })).toBeInTheDocument();
   expect(within(depositCoverage).getByText(/what deductions will we document/i)).toBeInTheDocument();
-  expect(screen.queryByRole("heading", { name: "Renter review" })).not.toBeInTheDocument();
+  expect(screen.queryByText("Reviewed as a renter")).not.toBeInTheDocument();
+  expectNoQuestionPanel();
 
   cleanup();
   renderScreen(await SavedReviewPage({ params: Promise.resolve({ reviewId: "review-1" }), searchParams: Promise.resolve({}) }));
-  expect(screen.getByRole("heading", { name: "Landlord review" })).toBeInTheDocument();
+  expect(screen.getByText("Reviewed as a landlord")).toBeInTheDocument();
   expect(within(roleReport()).getByText(cap)).toBeInTheDocument();
-  expect(await (await askAboutMyDeadline()).findByText(repairs)).toBeInTheDocument();
+  expectNoQuestionPanel();
   const redLineInput = screen.getByRole("textbox", { name: "Your red lines" });
   await waitFor(() => expect(redLineInput).toBeEnabled());
   await user.type(redLineInput, repairRedLine);
@@ -127,8 +126,8 @@ it("uses one selected role through missing documents and reopening, with differe
   await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", lease));
   await screen.findByText("lease.pdf · 1 page");
   await supplyAddendum();
-  await screen.findByRole("heading", { name: "Renter review" });
-  expect(screen.queryByRole("heading", { name: "Landlord review" })).not.toBeInTheDocument();
+  await screen.findByText("Reviewed as a renter");
+  expect(screen.queryByText("Reviewed as a landlord")).not.toBeInTheDocument();
   expect(within(roleReport()).getAllByRole("heading", { level: 3 }).map((node) => node.textContent)).toEqual([
     "Early-exit payment", "Daily late charge", "Narrow notice window",
   ]);
@@ -141,5 +140,5 @@ it("uses one selected role through missing documents and reopening, with differe
   expect(within(renterFee).getByText("You could owe $300 after three late days.")).toBeInTheDocument();
   expect(screen.getByText("Rent carries a $100 daily late fee with a $300 monthly cap.")).toBeInTheDocument();
   expect(screen.getByText(/haven’t checked them against local law|haven't checked them against local law/)).toBeInTheDocument();
-  expect(await (await askAboutMyDeadline()).findByText(access)).toBeInTheDocument();
+  expectNoQuestionPanel();
 });

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 
 import { RetentionControls } from "@/features/library/RetentionControls";
+import { scoreFromOutcome } from "@/features/score";
 
 import { ReferenceLedger } from "../components/ReferenceLedger";
 import { ReviewResult } from "../components/ReviewResult";
@@ -51,25 +52,31 @@ export function ReportScreen() {
   const role = outcome.review.role ?? state.role;
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-2">
-        <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-navy)]">
-          Your report{role ? ` · Reviewed as ${role === "renter" ? "a renter" : "a landlord"}` : ""}
-        </p>
-        <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl [overflow-wrap:anywhere]">
-          {state.title ?? DEFAULT_REVIEW_TITLE}
-        </h1>
-      </div>
-
-      {outcome.persistenceFailed ? (
-        <p role="alert" className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)]">
-          This review wasn&apos;t saved to your library. You can read it in
-          this tab, but you&apos;ll need to run it again to save it.
-        </p>
-      ) : null}
+    <div className="flex flex-col gap-8">
+      <ReviewResult
+        review={outcome.review}
+        documents={outcome.documents}
+        reviewId={outcome.reviewId}
+        title={state.title ?? DEFAULT_REVIEW_TITLE}
+        role={role}
+        score={scoreFromOutcome(outcome)}
+        notices={
+          <>
+            {outcome.persistenceFailed ? (
+              <p role="alert" className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)]">
+                This review wasn&apos;t saved to your library. You can read it in
+                this tab, but you&apos;ll need to run it again to save it.
+              </p>
+            ) : null}
+            {outcome.reviewId && outcome.retention ? (
+              <RetentionControls reviewId={outcome.reviewId} retention={outcome.retention} />
+            ) : null}
+          </>
+        }
+      />
 
       {outcome.completeness.matches.length > 0 ? (
-        <section aria-labelledby="reference-ledger-heading" className="flex flex-col gap-5">
+        <section aria-labelledby="reference-ledger-heading" className="flex flex-col gap-3 border-t-2 border-[var(--color-navy)] pt-6">
           <div>
             <h2
               id="reference-ledger-heading"
@@ -77,7 +84,7 @@ export function ReportScreen() {
             >
               What your lease points at
             </h2>
-            <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
+            <p className="mt-1 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
               We matched these by their titles and opening lines, which can
               be wrong. If one is, change it and check the packet again.
             </p>
@@ -93,12 +100,6 @@ export function ReportScreen() {
             Check the packet again
           </button>
         </section>
-      ) : null}
-
-      <ReviewResult review={outcome.review} documents={outcome.documents} reviewId={outcome.reviewId} />
-
-      {outcome.reviewId && outcome.retention ? (
-        <RetentionControls reviewId={outcome.reviewId} retention={outcome.retention} />
       ) : null}
 
       <div>

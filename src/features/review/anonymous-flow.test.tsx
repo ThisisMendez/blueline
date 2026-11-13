@@ -38,8 +38,12 @@ it("lets a visitor review without signing in even when accounts exist", async ()
   await user.click(screen.getByRole("button", { name: "Read my lease" }));
   await waitFor(() => expect(flow.currentPath()).toBe("/review/report"));
   expect(await screen.findByRole("heading", { name: "No material flags found in the text reviewed" })).toBeInTheDocument();
-  expect(screen.getByRole("heading", { name: "Landlord review" })).toBeInTheDocument();
-  expect(screen.queryByRole("heading", { name: "Renter review" })).not.toBeInTheDocument();
+  expect(screen.getByText("Reviewed as a landlord")).toBeInTheDocument();
+  expect(screen.queryByText("Reviewed as a renter")).not.toBeInTheDocument();
+  // The in-tab report carries the session's title, one score and no Q&A.
+  expect(screen.getByRole("heading", { level: 1, name: "Residential Lease Agreement" })).toBeInTheDocument();
+  expect(screen.getByRole("region", { name: "Lease Risk Score" })).toHaveTextContent("100/100");
+  expect(screen.queryByRole("region", { name: "Ask about your agreement" })).toBeNull();
   expect(screen.getByText(/haven't checked it against local law either/)).toBeInTheDocument();
   expect(screen.queryByRole("region", { name: /your reviews/i })).toBeNull();
   expect(screen.queryByRole("link", { name: /open this review/i })).toBeNull();

@@ -131,7 +131,7 @@ describe("account home and its existing review library", () => {
 
     for (const role of ["Renter", "Landlord"]) {
       const review = renderScreen(await openReview(`existing-signer-${role.toLowerCase()}`));
-      expect(screen.getByRole("heading", { name: `${role} review` })).toBeVisible();
+      expect(screen.getByText(`Reviewed as a ${role.toLowerCase()}`)).toBeVisible();
       review.unmount();
     }
   });

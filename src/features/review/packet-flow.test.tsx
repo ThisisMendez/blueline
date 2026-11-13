@@ -1,4 +1,5 @@
 import { screen, waitFor, within } from "@testing-library/react";
+import { firstSentences } from "@/features/review/components/report/report-helpers";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -156,7 +157,7 @@ async function buildPacket(
   }
 }
 
-const REVIEW_HEADING = /terms to look at/i;
+const REVIEW_HEADING = /flagged terms/i;
 const BLOCKED_HEADING = /points at .*(isn't|aren't) here/i;
 
 describe("a packet that holds the whole agreement", () => {
@@ -302,8 +303,8 @@ describe("a packet missing a document the lease points at", () => {
 
     // No summary, no flags, no clean review, nothing partial on the screen.
     expect(screen.queryByRole("heading", { name: REVIEW_HEADING })).toBeNull();
-    expect(screen.queryByText("What this agreement says")).toBeNull();
-    expect(screen.queryByText(referencingLease.sidecar.summary)).toBeNull();
+    expect(screen.queryByText("About this agreement")).toBeNull();
+    expect(screen.queryByText(firstSentences(referencingLease.sidecar.summary))).toBeNull();
     expect(screen.queryByText(FEE_SCHEDULE_FLAG.sourceSentence)).toBeNull();
     expect(screen.queryByText(/^Severity: /)).toBeNull();
     expect(
