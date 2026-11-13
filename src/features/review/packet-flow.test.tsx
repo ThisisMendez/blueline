@@ -23,7 +23,15 @@ vi.mock("@/features/library/supabase-store", () => ({
   openReviewStore: async () => adapters.store,
 }));
 
+// Only the PDF layout is substituted, so every document's text is exactly
+// the fixture's and the expected citing sentences are found as written.
+vi.mock("@/features/packet/extract/pdf", async (original) =>
+  (await import("@/features/review/session/testing")).withTextPdfs(await original()),
+);
+
+import SavedReviewPage from "@/app/(app)/review/[reviewId]/page";
 import ReviewPage from "@/app/(app)/review/page";
+import { renderReviewFlow, textPdf } from "@/features/review/session/testing";
 import { COMPLETENESS_SCHEMA_NAME } from "@/features/analysis/model/completeness-schema";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
 import type { AnalysisOutcome } from "@/features/analysis/types";
@@ -34,7 +42,6 @@ import {
   type FixtureModelClient,
   type FixtureModelClientOptions,
 } from "~tests/support/fixture-model-client";
-import { renderScreen } from "~tests/support/render-screen";
 import { installRouteFetch } from "~tests/support/route-fetch";
 import { loadFixture } from "~tests/fixtures/index";
 
@@ -115,26 +122,26 @@ afterEach(() => {
 
 type User = ReturnType<typeof userEvent.setup>;
 
-function labels(position: number) {
-  return position === 1
-    ? { title: "Name for your lease", text: "Paste your lease" }
-    : { title: `Name for document ${position}`, text: `Paste document ${position}` };
+async function chooseLease(user: User, name: string, text: string) {
+  await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf(name, text));
+  await screen.findByText(`${name} · 1 page`);
 }
 
-async function fillSlot(user: User, position: number, title: string, text: string) {
-  const names = labels(position);
-  await user.type(screen.getByLabelText(names.title), title);
-  const textarea = screen.getByLabelText(names.text);
-  await user.click(textarea);
-  await user.paste(text);
-}
-
-async function addSlot(user: User) {
-  await user.click(screen.getByRole("button", { name: "Add another document" }));
+async function addPdf(user: User, name: string, text: string) {
+  await user.upload(screen.getByLabelText("Add another PDF"), textPdf(name, text));
+  await screen.findByText(`${name} · 1 page`);
 }
 
 function submit(user: User) {
   return user.click(screen.getByRole("button", { name: "Read my lease" }));
+}
+
+/** The intake, then processing, then the report: in this tab, or on the saved page when kept. */
+async function renderFlow() {
+  return renderReviewFlow(await ReviewPage(), {
+    savedReview: (reviewId) =>
+      SavedReviewPage({ params: Promise.resolve({ reviewId }) } as PageProps<"/review/[reviewId]">),
+  });
 }
 
 /** Puts the referencing lease in, plus whichever referenced documents are named. */
@@ -142,17 +149,10 @@ async function buildPacket(
   user: User,
   supply: readonly ("fee-schedule" | "pet-addendum")[],
 ) {
-  await fillSlot(user, 1, "marlowe-lease.pdf", referencingLease.text);
-
-  let position = 1;
+  await chooseLease(user, "marlowe-lease.pdf", referencingLease.text);
   for (const id of supply) {
-    position += 1;
-    await addSlot(user);
-    if (id === "fee-schedule") {
-      await fillSlot(user, position, "fees.pdf", feeSchedule.text);
-    } else {
-      await fillSlot(user, position, "pets.pdf", petAddendum.text);
-    }
+    if (id === "fee-schedule") await addPdf(user, "fees.pdf", feeSchedule.text);
+    else await addPdf(user, "pets.pdf", petAddendum.text);
   }
 }
 
@@ -163,13 +163,13 @@ describe("a packet that holds the whole agreement", () => {
   it("does not offer the referring lease as its own missing document", async () => {
     useModel();
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
     await buildPacket(user, []);
     await submit(user);
     await screen.findByRole("heading", { name: BLOCKED_HEADING });
     for (const selector of screen.getAllByRole("combobox", { name: "Which document is this?" })) {
-      expect(within(selector).queryByRole("option", { name: "marlowe-lease.pdf" })).toBeNull();
+      expect(within(selector).queryByRole("option", { name: "Residential Lease Agreement" })).toBeNull();
       expect(within(selector).getByRole("option", { name: "I haven't sent it yet" })).toBeInTheDocument();
     }
   });
@@ -177,7 +177,7 @@ describe("a packet that holds the whole agreement", () => {
   it("passes the gate and flags a term that is only in a referenced document", async () => {
     useModel();
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
@@ -214,9 +214,11 @@ describe("a packet that holds the whole agreement", () => {
   }, 30_000);
 
   it("accepts several referenced documents and shows what each one answered", async () => {
+    // The matches are shown on the in-tab report, so this review isn't kept.
+    adapters.accounts = { kind: "signed-out" };
     useModel();
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
@@ -240,14 +242,14 @@ describe("a packet that holds the whole agreement", () => {
     const ledger = screen.getByRole("region", { name: /what your lease points at/i });
     expect(within(ledger).getByText("Schedule of Resident Fees")).toBeInTheDocument();
     expect(within(ledger).getByText("Pet Addendum")).toBeInTheDocument();
-    expect(within(ledger).getByText(/covered by fees\.pdf/i)).toBeInTheDocument();
-    expect(within(ledger).getByText(/covered by pets\.pdf/i)).toBeInTheDocument();
+    expect(within(ledger).getByText(/covered by fees$/i)).toBeInTheDocument();
+    expect(within(ledger).getByText(/covered by pets$/i)).toBeInTheDocument();
   }, 30_000);
 
   it("keeps only extracted text for every document in the packet", async () => {
     useModel();
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
@@ -256,9 +258,9 @@ describe("a packet that holds the whole agreement", () => {
 
     const stored = await store.findForSigner("signer-a", "review-1");
     expect(stored!.documents).toEqual([
-      { id: "pasted-lease", title: "marlowe-lease.pdf", text: referencingLease.text },
-      { id: "supplied-2", title: "fees.pdf", text: feeSchedule.text },
-      { id: "supplied-3", title: "pets.pdf", text: petAddendum.text },
+      { id: "pasted-lease", title: "Residential Lease Agreement", text: referencingLease.text },
+      { id: "supplied-2", title: "fees", text: feeSchedule.text },
+      { id: "supplied-3", title: "pets", text: petAddendum.text },
     ]);
     for (const document of stored!.documents) {
       expect(Object.keys(document).sort()).toEqual(["id", "text", "title"]);
@@ -279,7 +281,7 @@ describe("a packet missing a document the lease points at", () => {
   it("is blocked, names what is missing, and carries no review of any kind", async () => {
     useModel();
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule"]);
@@ -338,7 +340,7 @@ describe("a packet missing a document the lease points at", () => {
   it("moves the signer to the blocked state and lets them read it as a request", async () => {
     useModel();
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule"]);
@@ -358,7 +360,7 @@ describe("the two waits", () => {
     useModel();
     holdTheRoute();
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule"]);
@@ -369,7 +371,8 @@ describe("the two waits", () => {
     expect(screen.getByText(/don't have to do anything/i)).toBeInTheDocument();
     expect(screen.queryByText("Waiting on your documents")).toBeNull();
     expect(screen.queryByRole("region", { name: BLOCKED_HEADING })).toBeNull();
-    expect(screen.getByRole("button", { name: "Reading your lease" })).toBeDisabled();
+    // The intake and its button are gone: nothing here can send it twice.
+    expect(screen.queryByRole("button", { name: "Read my lease" })).toBeNull();
 
     hold!.release();
 
@@ -392,12 +395,10 @@ describe("a lease that points at nothing", () => {
   it("goes straight to its review, with no extra step for the signer", async () => {
     useModel();
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
-    const textarea = screen.getByLabelText("Paste your lease");
-    await user.click(textarea);
-    await user.paste(adhesionLease.text);
+    await chooseLease(user, "harrowgate-lease.pdf", adhesionLease.text);
     await submit(user);
 
     expect(
@@ -406,7 +407,7 @@ describe("a lease that points at nothing", () => {
 
     // One send, one answer, nothing asked of the signer in between.
     expect(requests).toHaveLength(1);
-    expect(JSON.parse(requests[0])).toEqual({ role: "renter", text: adhesionLease.text });
+    expect(JSON.parse(requests[0])).toEqual({ role: "renter", title: "Residential Lease Agreement", text: adhesionLease.text });
     expect(screen.queryByRole("region", { name: BLOCKED_HEADING })).toBeNull();
     expect(screen.queryByRole("region", { name: /what your lease points at/i })).toBeNull();
 
@@ -425,7 +426,7 @@ describe("a reference whose sentence cannot be found", () => {
   it("says completeness can't be verified after one retry, without issuing a partial review", async () => {
     useModel({ unquotableReferences: ["Pet Addendum"] });
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule"]);
@@ -457,7 +458,7 @@ describe("a match the signer disagrees with", () => {
     // gave the file, so it reports the reference as unanswered.
     useModel({ mismatchedReferences: { "Pet Addendum": null } });
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
@@ -505,9 +506,11 @@ describe("a match the signer disagrees with", () => {
   }, 30_000);
 
   it("can be taken back, and the packet is blocked again", async () => {
+    // The matches are shown on the in-tab report, so this review isn't kept.
+    adapters.accounts = { kind: "signed-out" };
     useModel();
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
@@ -542,7 +545,7 @@ describe("a packet that isn't a residential lease (ADR 0014)", () => {
     const evidence = referencingLease.sidecar.plantedFlags[0].sourceSentence;
     useModel({ agreement: { kind: "not-a-residential-lease", description: "A gym membership agreement", evidenceSentence: evidence } });
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);
@@ -560,7 +563,7 @@ describe("a packet that isn't a residential lease (ADR 0014)", () => {
   it("reports unclear, not a confident judgment, when the model can't quote a sentence for it", async () => {
     useModel({ agreement: { kind: "not-a-residential-lease", description: "Something else", evidenceSentence: "A sentence that is in no document at all." } });
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    await renderFlow();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await buildPacket(user, ["fee-schedule", "pet-addendum"]);

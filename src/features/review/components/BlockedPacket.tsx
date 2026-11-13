@@ -13,6 +13,8 @@ export interface BlockedPacketProps {
   readonly choices: ReferenceChoices;
   readonly onChoose: (referenceId: string, documentId: string | null) => void;
   readonly onRecheck: () => void;
+  /** Back to the intake with the role and documents kept, to add what's missing. */
+  readonly onAddDocument: () => void;
   readonly busy: boolean;
 }
 
@@ -22,7 +24,8 @@ export interface BlockedPacketProps {
  * The type this takes has no summary and no flags on it, so there is nothing
  * partial here to hide: the pipeline was never run. What the signer gets is
  * the name of each document the agreement asks for, the sentence that asks
- * for it, and a way to say a document they already sent is the one meant.
+ * for it, a way to go back and add it without rebuilding the packet, and a
+ * way to say a document they already sent is the one meant.
  *
  * The treatment is deliberately its own. The dashed navy border belongs to a
  * not-found checklist item, and signal red belongs to risk and severity —
@@ -34,12 +37,12 @@ export function BlockedPacket({
   choices,
   onChoose,
   onRecheck,
+  onAddDocument,
   busy,
 }: BlockedPacketProps) {
   const heading = useRef<HTMLHeadingElement>(null);
 
-  // The answer arrived somewhere below where the signer was working, so send
-  // them to it rather than leaving them to find it.
+  // The answer replaced the progress the signer was watching, so send them to it.
   useEffect(() => {
     heading.current?.focus();
   }, []);
@@ -68,12 +71,10 @@ export function BlockedPacket({
               : `Your lease points at ${count} documents that aren't here`}
           </h2>
           <p className="mt-4 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-            A lease pointing at a fee schedule or an addendum is ordinary,
-            and the document it points at can hold a cost this lease never
-            states. Reading what you sent would cover part of your agreement
-            while sounding like it covered all of it, so we&apos;ve stopped
-            here. Send what&apos;s listed below and we&apos;ll read the whole
-            thing.
+            A fee list or addendum can hold costs the lease doesn&apos;t
+            state, so we wait until we have the whole agreement. Add each
+            document listed below. If you already added one, pick it from the
+            list instead.
           </p>
         </div>
 
@@ -85,19 +86,23 @@ export function BlockedPacket({
           busy={busy}
         />
 
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={onAddDocument}
+            disabled={busy}
+            className="inline-flex min-h-11 items-center justify-center bg-[var(--color-navy)] px-6 py-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)] disabled:opacity-60"
+          >
+            Add the missing document
+          </button>
           <button
             type="button"
             onClick={onRecheck}
             disabled={busy}
-            className="inline-flex items-center justify-center bg-[var(--color-navy)] px-6 py-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)] disabled:opacity-70"
+            className="inline-flex min-h-11 items-center justify-center border-2 border-[var(--color-navy)] bg-[var(--color-paper)] px-5 py-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-navy)] transition-colors hover:bg-[var(--color-paper-deep)] disabled:opacity-60"
           >
             Check the packet again
           </button>
-          <p className="max-w-[var(--measure)] font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--color-navy-ink)]">
-            Add a missing document above, or point us at one you already
-            sent, then check again.
-          </p>
         </div>
       </div>
     </section>

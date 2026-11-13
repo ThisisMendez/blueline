@@ -1,5 +1,6 @@
 import {
   summarizeStoredReview,
+  titleForNewReview,
   type ReviewStore,
   type StoredReview,
   type StoredReviewSummary,
@@ -19,8 +20,16 @@ export class InMemoryReviewStore implements ReviewStore {
   async save(review: NewReview): Promise<ReviewRetention> {
     if (this.reviews.has(review.id)) throw new Error("Review already exists.");
     const retention = { createdAt: review.createdAt, savedAt: null, expiresAt: new Date(Date.parse(review.createdAt) + 30 * 86_400_000).toISOString() };
-    this.reviews.set(review.id, structuredClone({ ...review, ...retention }));
+    this.reviews.set(review.id, structuredClone({ ...review, ...retention, title: titleForNewReview(review) }));
     return retention;
+  }
+
+  async renameForSigner(signerId: string, reviewId: string, title: string): Promise<string | null> {
+    this.purgeExpired();
+    const found = this.reviews.get(reviewId);
+    if (!found || found.signerId !== signerId) return null;
+    this.reviews.set(reviewId, { ...found, title });
+    return title;
   }
 
   private purgeExpired(): void {

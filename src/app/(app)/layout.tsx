@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { signOutAction } from "@/features/auth/actions";
 import { getAccountsState } from "@/features/auth/session";
+import { ReviewSessionProvider } from "@/features/review/session/ReviewSessionProvider";
 
 /**
  * The app shell behind sign-in. The landing page's field-guide language
@@ -53,7 +54,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
       </header>
 
       <main id="main" className="flex-1 px-6 py-12 sm:px-10 md:py-16">
-        {children}
+        <ReviewSessionProvider>{children}</ReviewSessionProvider>
       </main>
 
       <footer className="border-t-2 border-[var(--color-navy)]">

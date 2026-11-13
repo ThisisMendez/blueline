@@ -1,7 +1,6 @@
-import Link from "next/link";
-
 import type { StoredReviewSummary } from "@/features/library/store";
 import { RetentionControls } from "@/features/library/RetentionControls";
+import { ReviewTitle } from "@/features/library/ReviewTitle";
 
 export interface LibraryListProps {
   readonly reviews: readonly StoredReviewSummary[];
@@ -27,13 +26,8 @@ export function LibraryList({ reviews, unavailable = false }: LibraryListProps) 
       <ul className="mt-4 flex list-none flex-col gap-3 p-0">
         {reviews.map((review) => (
           <li key={review.id}>
-            <Link
-              href={`/review/${review.id}`}
-              className="font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)] underline decoration-2 underline-offset-4 hover:text-[var(--color-red-ink)]"
-            >
-              {review.title}
-            </Link>
-            <span className="ml-3 font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
+            <ReviewTitle reviewId={review.id} title={review.title} />
+            <span className="font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
               {review.role ? `${review.role} · ` : ""}
               {review.clean
                 ? "No material flags"
