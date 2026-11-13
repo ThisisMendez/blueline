@@ -9,6 +9,9 @@ import type { ReviewRetention } from "@/features/library/store";
 
 import type { ChecklistTopicId } from "./checklist";
 
+export const REVIEW_ROLES = ["renter", "landlord"] as const;
+export type ReviewRole = (typeof REVIEW_ROLES)[number];
+
 /** The product's fixed severity vocabulary, ranked high first. */
 export type Severity = "high" | "medium" | "low";
 
@@ -26,10 +29,21 @@ export const SEVERITY_RANK: Readonly<Record<Severity, number>> = {
  * `[sourceStart, sourceEnd)` — never the model's echo of it. A flag cannot
  * exist without those offsets, which is what makes the citation checkable.
  */
-export interface RiskFlag {
+export interface ReviewCitation {
+  readonly sourceSentence: string;
+  readonly sourceDocumentId: string;
+  readonly sourceStart: number;
+  readonly sourceEnd: number;
+}
+
+export interface RiskFlag extends ReviewCitation {
   /** Derived from the citation, so the same sentence always gets the same id. */
   readonly id: string;
   readonly severity: Severity;
+  /** These fields are absent from older saved reviews. */
+  readonly title?: string;
+  readonly nextStep?: string;
+  readonly relatedCitations?: readonly ReviewCitation[];
   /** What the signer concretely stands to lose or face. */
   readonly consequence: string;
   /** What would have to happen for the consequence to matter. */
@@ -38,11 +52,6 @@ export interface RiskFlag {
   readonly counterOffer: string;
   /** What could still happen if the proposed edit were accepted. */
   readonly residualRisk: string;
-  /** Cut from the extracted text at the offsets below. */
-  readonly sourceSentence: string;
-  readonly sourceDocumentId: string;
-  readonly sourceStart: number;
-  readonly sourceEnd: number;
 }
 
 /**
@@ -130,6 +139,8 @@ export const CLEAN_REVIEW_STATEMENT = "No material flags found in the text revie
  * `coverage` is not.
  */
 export interface GeneralReview {
+  /** Older saved reports predate role selection. */
+  readonly role?: ReviewRole;
   /** Plain-English, neutral. No verdict. */
   readonly summary: string;
   /** Verified flags, ranked high severity first. */
@@ -225,14 +236,7 @@ export type AnalysisOutcome =
   | { readonly status: "rejected"; readonly reason: AnalysisRejection }
   | { readonly status: "failed"; readonly reason: AnalysisFailure };
 
-/** Ranks flags high severity first, then by where they sit in the document. */
+/** Ranks flags high severity first, retaining the supplied priority within each band. */
 export function rankFlags(flags: readonly RiskFlag[]): RiskFlag[] {
-  return [...flags].sort((left, right) => {
-    const bySeverity = SEVERITY_RANK[left.severity] - SEVERITY_RANK[right.severity];
-    if (bySeverity !== 0) return bySeverity;
-    if (left.sourceDocumentId !== right.sourceDocumentId) {
-      return left.sourceDocumentId < right.sourceDocumentId ? -1 : 1;
-    }
-    return left.sourceStart - right.sourceStart;
-  });
+  return [...flags].sort((left, right) => SEVERITY_RANK[left.severity] - SEVERITY_RANK[right.severity]);
 }

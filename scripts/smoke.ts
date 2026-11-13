@@ -4,15 +4,18 @@ import { existsSync } from "node:fs";
 import { OpenRouterModelClient } from "../src/features/analysis/model/openrouter";
 import type { ModelClient } from "../src/features/analysis/model/client";
 import { createAnalysisRoute } from "../src/features/analysis/server/route";
-import type { AnalysisOutcome } from "../src/features/analysis/types";
+import { REVIEW_ROLES, type AnalysisOutcome } from "../src/features/analysis/types";
 import type { ExtractedDocument } from "../src/features/packet/types";
 import { loadFixture, type LeaseFixtureId } from "../tests/fixtures";
 import { createFixtureModelClient } from "../tests/support/fixture-model-client";
 
 async function main() {
   const live = process.argv.includes("--live");
+  const roleArg = process.argv.find((arg) => arg.startsWith("--role="))?.slice("--role=".length);
+  const role = REVIEW_ROLES.find((candidate) => candidate === (roleArg ?? "renter"));
+  if (!role) throw new Error("Smoke role must be renter or landlord.");
   if (live && existsSync(".env.local")) process.loadEnvFile(".env.local");
-  console.log(`Smoke mode: ${live ? "LIVE OpenRouter (synthetic fixture, bounded)" : "OFFLINE deterministic model boundary"}`);
+  console.log(`Smoke mode: ${live ? "LIVE OpenRouter (synthetic fixture, bounded)" : "OFFLINE deterministic model boundary"}; role: ${role}`);
   if (live && (!process.env.OPENROUTER_API_KEY || !process.env.OPENROUTER_MODEL)) {
     throw new Error("Live smoke requires OPENROUTER_API_KEY and OPENROUTER_MODEL. No request sent.");
   }
@@ -59,7 +62,7 @@ async function main() {
     const response = await route(new Request("http://localhost/api/analysis", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ text: fixture.text, title: fixture.sidecar.title }),
+      body: JSON.stringify({ role, text: fixture.text, title: fixture.sidecar.title }),
     }));
     const outcome = await response.json() as AnalysisOutcome;
     console.log(`Case: ${id}; status: ${outcome.status}; calls: ${calls}; returned flags (all attempts): ${returnedFlags}`);
@@ -70,7 +73,7 @@ async function main() {
     }
     if (outcome.status === "blocked") {
       console.log(`Verified flags: 0; dropped flags: 0; missing: ${outcome.completeness.missing.map(item => item.name).join(", ")}`);
-      if (!live) assert.equal(id, "referencing-lease");
+      assert.equal(id, "referencing-lease", "Complete lease fixture was incorrectly blocked");
       continue;
     }
     if (outcome.status === "out-of-scope" || outcome.status === "unverified") {
@@ -79,6 +82,7 @@ async function main() {
     }
     assert.equal(outcome.persisted, false);
     assert.equal(outcome.reviewId, null);
+    assert.equal(outcome.review.role, role);
     console.log(`Verified flags: ${outcome.review.riskFlags.length}; dropped flags: ${outcome.review.droppedFlagCount}; clean: ${outcome.review.clean}`);
     for (const flag of outcome.review.riskFlags) {
       const source: ExtractedDocument | undefined = outcome.documents.find(document => document.id === flag.sourceDocumentId);

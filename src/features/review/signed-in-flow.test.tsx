@@ -93,6 +93,7 @@ async function pasteAndSubmit() {
   const user = userEvent.setup();
   renderScreen(await ReviewPage());
 
+  await user.click(screen.getByRole("button", { name: "I’m a renter" }));
   const textarea = screen.getByLabelText("Paste your lease");
   await user.click(textarea);
   await user.paste(adhesionText);
@@ -105,7 +106,7 @@ describe("a signed-in signer pasting a lease", () => {
     vi.spyOn(store, "listForSigner").mockRejectedValueOnce(new Error("Database unavailable"));
     renderScreen(await ReviewPage());
     expect(screen.getByRole("alert")).toHaveTextContent("Your library could not be loaded.");
-    expect(screen.getByLabelText("Paste your lease")).toBeEnabled();
+    expect(screen.getByRole("button", { name: "I’m a renter" })).toBeEnabled();
     expect(screen.queryByText(/No reviews in your library/)).not.toBeInTheDocument();
   });
   it("shows automatic expiry, extends from a later save, and removes the expired review and text", async () => {
@@ -142,6 +143,7 @@ describe("a signed-in signer pasting a lease", () => {
     // There is no trusted review id, so personal red lines are unavailable too.
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
     await user.click(screen.getByLabelText("Paste your lease"));
     await user.paste(adhesionText);
     await user.click(screen.getByRole("button", { name: "Read my lease" }));

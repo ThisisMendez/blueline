@@ -40,7 +40,7 @@ describe("the general review of an adhesion lease", () => {
         ? { ...flag, residualRisk: failure === "empty-residual" ? "  " : undefined }
         : { ...flag, counterOffer: failure === "empty" ? "  " : undefined }) };
     } };
-    await expect(runGeneralReview({ packet, model })).rejects.toMatchObject({ kind: "unreadable" });
+    await expect(runGeneralReview({ role: "renter", packet, model })).rejects.toMatchObject({ kind: "unreadable" });
   });
   it("keeps a failed flag in the drop count when the retry supplies an unrelated verified flag", async () => {
     const { packet } = packetFor("adhesion-lease");
@@ -59,7 +59,7 @@ describe("the general review of an adhesion lease", () => {
         };
       },
     };
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
     expect(review.riskFlags).toHaveLength(1);
     expect(review.droppedFlagCount).toBe(1);
     expect(review.clean).toBe(false);
@@ -68,7 +68,7 @@ describe("the general review of an adhesion lease", () => {
     const { packet, text } = packetFor("adhesion-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
 
     expect(review.summary.length).toBeGreaterThan(100);
     expect(review.clean).toBe(false);
@@ -101,7 +101,7 @@ describe("the general review of an adhesion lease", () => {
       inconsistentFlagSentences: [suspectFlag.sourceSentence],
     });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
 
     expect(review.riskFlags).toHaveLength(sidecar.plantedFlags.length);
     const withheld = review.riskFlags.find(
@@ -124,7 +124,7 @@ describe("the general review of an adhesion lease", () => {
     const { sidecar } = loadFixture("adhesion-lease");
     const model = createFixtureModelClient({ behaviour: "unquotable-flag" });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
 
     const sentences = review.riskFlags.map((flag) => flag.sourceSentence);
     expect(sentences).not.toContain(UNQUOTABLE_SENTENCE);
@@ -140,7 +140,7 @@ describe("the general review of an adhesion lease", () => {
     const { sidecar } = loadFixture("adhesion-lease");
     const model = createFixtureModelClient({ behaviour: "unquotable-then-correct" });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
 
     expect(model.analysisRequests).toHaveLength(2);
     expect(review.droppedFlagCount).toBe(0);
@@ -163,7 +163,7 @@ describe("the general review of a clean lease", () => {
   it("does not report a clean review when every proposed flag failed verification", async () => {
     const { packet } = packetFor("clean-lease");
     const model = createFixtureModelClient({ behaviour: "unquotable-flag" });
-    await expect(runGeneralReview({ packet, model })).rejects.toMatchObject({
+    await expect(runGeneralReview({ role: "renter", packet, model })).rejects.toMatchObject({
       kind: "verification-failed",
     });
   });
@@ -171,7 +171,7 @@ describe("the general review of a clean lease", () => {
     const { packet } = packetFor("clean-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
 
     expect(review.riskFlags).toEqual([]);
     expect(review.clean).toBe(true);

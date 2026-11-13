@@ -7,8 +7,10 @@ import { COVERAGE_CHECKLIST } from "@/features/analysis/checklist";
 import { flagId } from "@/features/analysis/verify";
 import {
   CLEAN_REVIEW_STATEMENT,
+  REVIEW_ROLES,
   rankFlags,
   type CoverageItem,
+  type ReviewRole,
   type RiskFlag,
   type Severity,
 } from "@/features/analysis/types";
@@ -45,6 +47,7 @@ interface ReviewRow {
   saved_at: string | null;
   expires_at: string;
   summary: string;
+  role: ReviewRole | null;
   clean: boolean;
   dropped_flag_count: number;
 }
@@ -58,6 +61,9 @@ interface DocumentRow {
 
 interface FlagRow {
   severity: Severity;
+  title: string | null;
+  next_step: string | null;
+  related_citations: unknown;
   consequence: string;
   triggering_condition: string;
   counter_offer: string | null;
@@ -66,6 +72,12 @@ interface FlagRow {
   source_start: number;
   source_end: number;
 }
+
+const citationOffsetsSchema = z.object({
+  document_id: z.string(),
+  start: z.number().int(),
+  end: z.number().int(),
+});
 
 interface ChecklistRow {
   topic_id: string;
@@ -87,6 +99,13 @@ export class SupabaseReviewStore implements ReviewStore {
     }));
     const flags = review.review.riskFlags.map((flag, rank) => ({
       rank,
+      title: flag.title ?? null,
+      next_step: flag.nextStep ?? null,
+      related_citations: flag.relatedCitations?.map((citation) => ({
+        document_id: citation.sourceDocumentId,
+        start: citation.sourceStart,
+        end: citation.sourceEnd,
+      })) ?? [],
       severity: flag.severity,
       consequence: flag.consequence,
       triggering_condition: flag.triggeringCondition,
@@ -110,7 +129,16 @@ export class SupabaseReviewStore implements ReviewStore {
     // timestamps. Caller timestamps are deliberately not sent to the RPC.
     const result = await this.client.rpc("create_review", {
       p_signer_id: review.signerId,
-      p_review: { id: review.id, summary: review.review.summary, clean: review.review.clean, dropped_flag_count: review.review.droppedFlagCount, documents, flags, topics },
+      p_review: {
+        id: review.id,
+        role: review.review.role ?? null,
+        summary: review.review.summary,
+        clean: review.review.clean,
+        dropped_flag_count: review.review.droppedFlagCount,
+        documents,
+        flags,
+        topics,
+      },
     });
     if (result.error) throw new Error("The review could not be stored.");
     return retentionFromRow(result.data);
@@ -125,13 +153,14 @@ export class SupabaseReviewStore implements ReviewStore {
   async findForSigner(signerId: string, reviewId: string): Promise<StoredReview | null> {
     const reviewResult = await this.client
       .from("reviews")
-      .select("id, user_id, created_at, saved_at, expires_at, summary, clean, dropped_flag_count")
+      .select("id, user_id, created_at, saved_at, expires_at, role, summary, clean, dropped_flag_count")
       .eq("id", reviewId)
       .eq("user_id", signerId)
       .maybeSingle();
     if (reviewResult.error) throw new Error(reviewResult.error.message);
     if (!reviewResult.data) return null;
     const row = reviewResult.data as ReviewRow;
+    const role = z.enum(REVIEW_ROLES).optional().parse(row.role ?? undefined);
 
     const documentResult = await this.client
       .from("review_documents")
@@ -148,7 +177,7 @@ export class SupabaseReviewStore implements ReviewStore {
     const flagResult = await this.client
       .from("review_flags")
       .select(
-        "severity, consequence, triggering_condition, counter_offer, residual_risk, source_document_id, source_start, source_end",
+        "severity, title, next_step, related_citations, consequence, triggering_condition, counter_offer, residual_risk, source_document_id, source_start, source_end",
       )
       .eq("review_id", reviewId)
       .eq("user_id", signerId)
@@ -181,9 +210,27 @@ export class SupabaseReviewStore implements ReviewStore {
       if (!validCitation(text, flag.source_start, flag.source_end)) {
         throw new Error("Stored risk citation is incomplete.");
       }
+      if (role && (!flag.title?.trim() || !flag.next_step?.trim())) {
+        throw new Error("Stored risk finding is incomplete.");
+      }
+      const relatedCitations = z.array(citationOffsetsSchema).parse(flag.related_citations ?? []).map((citation) => {
+        const source = textById.get(citation.document_id);
+        if (source === undefined || !validCitation(source, citation.start, citation.end)) {
+          throw new Error("Stored related citation is incomplete.");
+        }
+        return {
+          sourceDocumentId: citation.document_id,
+          sourceStart: citation.start,
+          sourceEnd: citation.end,
+          sourceSentence: source.slice(citation.start, citation.end),
+        };
+      });
       riskFlags.push({
         id: flagId(flag.source_document_id, flag.source_start, flag.source_end),
         severity: flag.severity,
+        title: flag.title ?? undefined,
+        nextStep: flag.next_step ?? undefined,
+        relatedCitations,
         consequence: flag.consequence,
         triggeringCondition: flag.triggering_condition,
         counterOffer: flag.counter_offer,
@@ -238,6 +285,7 @@ export class SupabaseReviewStore implements ReviewStore {
       ...retentionFromRow(row),
       documents,
       review: {
+        role,
         summary: row.summary,
         riskFlags: ranked,
         coverage: { items },
@@ -251,7 +299,7 @@ export class SupabaseReviewStore implements ReviewStore {
   async listForSigner(signerId: string): Promise<readonly StoredReviewSummary[]> {
     const result = await this.client
       .from("reviews")
-      .select("id, created_at, saved_at, expires_at, clean, review_documents!review_documents_owner_fk(title, position), review_flags!review_flags_owner_fk(rank)")
+      .select("id, created_at, saved_at, expires_at, role, clean, review_documents!review_documents_owner_fk(title, position), review_flags!review_flags_owner_fk(rank)")
       .eq("user_id", signerId)
       .order("created_at", { ascending: false });
     if (result.error) throw new Error(result.error.message);
@@ -262,6 +310,7 @@ export class SupabaseReviewStore implements ReviewStore {
       saved_at: string | null;
       expires_at: string;
       clean: boolean;
+      role: ReviewRole | null;
       review_documents: Array<{ title: string; position: number }>;
       review_flags: Array<{ rank: number }>;
     }>;
@@ -274,6 +323,7 @@ export class SupabaseReviewStore implements ReviewStore {
           ?.title ?? "Untitled review",
       flagCount: row.review_flags.length,
       clean: row.clean,
+      role: row.role ?? undefined,
     }));
   }
 }

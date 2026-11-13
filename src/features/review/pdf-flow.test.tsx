@@ -91,6 +91,7 @@ describe("a signer who has a PDF rather than text to paste", () => {
   it("reads the flags cited from the text inside their own file", async () => {
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await user.upload(
       screen.getByLabelText("Open a PDF instead"),
@@ -142,6 +143,7 @@ describe("a signer who has a PDF rather than text to paste", () => {
   it("sends the extracted text and never the file", async () => {
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await user.upload(
       screen.getByLabelText("Open a PDF instead"),
@@ -156,7 +158,7 @@ describe("a signer who has a PDF rather than text to paste", () => {
 
     // Text and a name for it. There is no third field, and no room for one:
     // the route's schema is strict, so a file field would be a 400.
-    expect(Object.keys(body).sort()).toEqual(["text", "title"]);
+    expect(Object.keys(body).sort()).toEqual(["role", "text", "title"]);
     expect(body.text).toBe(pdfText);
     expect(body.title).toBe("harrowgate-lease.pdf");
 
@@ -177,6 +179,7 @@ describe("a signer whose PDF is a scan", () => {
   it("is told the file cannot be read, and gets no review at all", async () => {
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await user.upload(
       screen.getByLabelText("Open a PDF instead"),
@@ -213,6 +216,7 @@ describe("a signer whose PDF is a scan", () => {
   it("leaves the signer able to paste the lease instead", async () => {
     const user = userEvent.setup();
     renderScreen(await ReviewPage());
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await user.upload(
       screen.getByLabelText("Open a PDF instead"),
@@ -230,7 +234,7 @@ describe("a signer whose PDF is a scan", () => {
     ).toBeInTheDocument();
 
     const body = JSON.parse(requests[0].body) as Record<string, unknown>;
-    expect(Object.keys(body)).toEqual(["text"]);
+    expect(Object.keys(body)).toEqual(["role", "text"]);
     expect(body.text).toBe(pastedLeaseText);
   }, 20_000);
 });

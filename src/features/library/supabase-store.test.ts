@@ -9,11 +9,12 @@ import { SupabaseReviewStore } from "./supabase-store";
 async function databaseRows(fixtureId: "clean-lease" | "adhesion-lease" = "clean-lease") {
   const { text } = loadFixture(fixtureId);
   const review = await runGeneralReview({
+    role: "renter",
     packet: { documents: [{ id: "lease", title: "Lease", text }] },
     model: createFixtureModelClient(),
   });
   return {
-    reviews: { id: "review", user_id: "signer", created_at: "2027-01-01T00:00:00Z", saved_at: null, expires_at: "2027-01-31T00:00:00Z", summary: review.summary, clean: review.clean, dropped_flag_count: 0 },
+    reviews: { id: "review", user_id: "signer", created_at: "2027-01-01T00:00:00Z", saved_at: null, expires_at: "2027-01-31T00:00:00Z", summary: review.summary, clean: review.clean, dropped_flag_count: 0, role: null as string | null },
     review_documents: [{ document_id: "lease", title: "Lease", extracted_text: text, position: 0 }],
     review_flags: review.riskFlags.map((flag) => ({ severity: flag.severity, consequence: flag.consequence, triggering_condition: flag.triggeringCondition, source_document_id: flag.sourceDocumentId, source_start: flag.sourceStart, source_end: flag.sourceEnd, counter_offer: flag.counterOffer, residual_risk: flag.residualRisk })) as Record<string, unknown>[],
     review_checklist_topics: review.coverage.items.map((item) => ({
@@ -70,19 +71,19 @@ describe("stored review citation integrity", () => {
       return { data: { created_at: "2027-02-01T00:00:00Z", saved_at: null, expires_at: "2027-03-03T00:00:00Z" }, error: null };
     } } as unknown as SupabaseClient;
     const documents = [{ id: "lease", title: "Lease", text: loadFixture("adhesion-lease").text }];
-    const review = await runGeneralReview({ packet: { documents }, model: createFixtureModelClient() });
+    const review = await runGeneralReview({ role: "landlord", packet: { documents }, model: createFixtureModelClient() });
     const retention = await new SupabaseReviewStore(client).save({ id: "review", signerId: "signer", createdAt: "2099-01-01T00:00:00Z", documents, review });
     expect(retention).toEqual({ createdAt: "2027-02-01T00:00:00Z", savedAt: null, expiresAt: "2027-03-03T00:00:00Z" });
     expect(calls).toHaveLength(1);
     expect(calls[0].name).toBe("create_review");
     expect(JSON.stringify(calls[0])).not.toContain("2099");
-    expect(calls[0].p_review).toMatchObject({ documents: [{ extracted_text: documents[0].text }], flags: expect.any(Array), topics: expect.any(Array) });
+    expect(calls[0].p_review).toMatchObject({ role: "landlord", documents: [{ extracted_text: documents[0].text }], flags: expect.any(Array), topics: expect.any(Array) });
   });
 
   it("propagates failed atomic saves and does not fabricate successful retention", async () => {
     const client = { async rpc() { return { data: null, error: { message: "Transaction failed" } }; } } as unknown as SupabaseClient;
     const documents = [{ id: "lease", title: "Lease", text: loadFixture("clean-lease").text }];
-    const review = await runGeneralReview({ packet: { documents }, model: createFixtureModelClient() });
+    const review = await runGeneralReview({ role: "renter", packet: { documents }, model: createFixtureModelClient() });
     await expect(new SupabaseReviewStore(client).save({ id: "review", signerId: "signer", createdAt: "2027-01-01T00:00:00Z", documents, review })).rejects.toThrow("could not be stored");
   });
   it("reads each stored proposed edit together with its residual risk", async () => {
@@ -94,6 +95,25 @@ describe("stored review citation integrity", () => {
       expect(flag.counterOffer).toBe(fixture.counterOffer);
       expect(flag.residualRisk).toBe(fixture.residualRisk);
     }
+  });
+
+  it("restores a landlord review and reconstructs its additional citations from document offsets", async () => {
+    const rows = await databaseRows("adhesion-lease");
+    rows.reviews.role = "landlord";
+    const cap = "Total late fees may not exceed $300 per month.";
+    rows.review_documents.push({ document_id: "addendum", title: "Fee addendum", extracted_text: cap, position: 1 });
+    for (const flag of rows.review_flags) {
+      flag.title = "Fee or obligation";
+      flag.next_step = "Clarify the amount in writing.";
+    }
+    rows.review_flags[0].related_citations = [{ document_id: "addendum", start: 0, end: cap.length }];
+    const stored = await storeFor(rows).findForSigner("signer", "review");
+    expect(stored?.review.role).toBe("landlord");
+    expect(stored?.review.riskFlags[0]).toMatchObject({
+      title: "Fee or obligation",
+      nextStep: "Clarify the amount in writing.",
+      relatedCitations: [{ sourceDocumentId: "addendum", sourceSentence: cap, sourceStart: 0, sourceEnd: cap.length }],
+    });
   });
   it("requires a new analysis for legacy flags rather than inventing a proposed edit", async () => {
     const rows = await databaseRows("adhesion-lease");

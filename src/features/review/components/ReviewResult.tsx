@@ -47,7 +47,7 @@ export function ReviewResult({ review, documents, reviewId }: ReviewResultProps)
           id="review-summary-heading"
           className="font-[family-name:var(--font-display)] text-2xl font-bold text-[var(--color-navy-ink)] sm:text-3xl"
         >
-          Lease review
+          {review.role === "renter" ? "Renter review" : review.role === "landlord" ? "Landlord review" : "Lease review"}
         </h2>
         {!review.clean ? <SeverityCounts flags={review.riskFlags} /> : null}
         {review.droppedFlagCount > 0 ? (
@@ -97,8 +97,8 @@ export function ReviewResult({ review, documents, reviewId }: ReviewResultProps)
         </section>
       )}
 
-      <CoverageChecklistSection coverage={review.coverage} documents={documents} />
-      <QuestionPanel documents={documents} />
+      <CoverageChecklistSection coverage={review.coverage} documents={documents} role={review.role} />
+      <QuestionPanel documents={documents} role={review.role} />
       {reviewId ? <RedLinesPanel key={reviewId} reviewId={reviewId} documents={documents} /> : null}
     </div>
   );

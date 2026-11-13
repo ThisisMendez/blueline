@@ -144,7 +144,7 @@ export function SpecimenHero() {
       <div className="grid gap-x-10 gap-y-8 p-6 sm:p-10 md:grid-cols-[1.6fr_1fr] md:p-12">
         <div>
           <p className="font-[family-name:var(--font-data)] text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-navy)]">
-            Specimen — Early Termination Clause
+            Renter example · Early termination clause
           </p>
 
           <p className="mt-5 font-[family-name:var(--font-body)] text-xl leading-relaxed text-[var(--color-navy-ink)] sm:text-2xl">

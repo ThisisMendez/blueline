@@ -8,7 +8,7 @@ const DAY = 86_400_000;
 const start = Date.parse("2027-01-01T09:00:00.000Z");
 async function completedReview() {
   const documents = [{ id: "lease", title: "Synthetic lease", text: loadFixture("clean-lease").text }];
-  return { id: "review-1", signerId: "a", createdAt: new Date(start).toISOString(), documents, review: await runGeneralReview({ packet: { documents }, model: createFixtureModelClient() }) };
+  return { id: "review-1", signerId: "a", createdAt: new Date(start).toISOString(), documents, review: await runGeneralReview({ role: "renter", packet: { documents }, model: createFixtureModelClient() }) };
 }
 
 describe("review retention with a controlled clock", () => {

@@ -34,6 +34,7 @@ export function LibraryList({ reviews, unavailable = false }: LibraryListProps) 
               {review.title}
             </Link>
             <span className="ml-3 font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
+              {review.role ? `${review.role} · ` : ""}
               {review.clean
                 ? "No material flags"
                 : review.flagCount === 1

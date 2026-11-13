@@ -16,12 +16,13 @@ import {
   buildAnalysisUserMessage,
   buildRetryUserMessage,
 } from "./prompt";
-import { CLEAN_REVIEW_STATEMENT, rankFlags, type GeneralReview } from "./types";
+import { CLEAN_REVIEW_STATEMENT, rankFlags, type GeneralReview, type ReviewRole } from "./types";
 import { verifyFlags, type VerificationResult } from "./verify";
 
 export interface GeneralReviewInput {
   readonly packet: Packet;
   readonly model: ModelClient;
+  readonly role: ReviewRole;
 }
 
 /** One structured call: validated, and retried once if the reply is the wrong shape. */
@@ -61,8 +62,9 @@ function askModel(model: ModelClient, user: string): Promise<ModelAnalysis> {
 export async function runGeneralReview({
   packet,
   model,
+  role,
 }: GeneralReviewInput): Promise<GeneralReview> {
-  const first = await askModel(model, buildAnalysisUserMessage(packet));
+  const first = await askModel(model, buildAnalysisUserMessage(packet, role));
   const firstPass: VerificationResult = verifyFlags(first.flags, packet);
 
   let flags = [...firstPass.verified];
@@ -73,6 +75,7 @@ export async function runGeneralReview({
       model,
       buildRetryUserMessage(
         packet,
+        role,
         firstPass.rejected.map((rejection) => rejection.quotation),
       ),
     );
@@ -112,13 +115,14 @@ export async function runGeneralReview({
   const ranked = rankFlags(flags);
   // ADR 0014: no generated text states a legal conclusion. Repaired once,
   // withheld if it still does; the flags themselves always stay.
-  const bounded = await enforceLegalBoundary(first.summary, ranked, model);
+  const bounded = await enforceLegalBoundary(first.summary, ranked, model, role);
   const riskFlags = await checkResidualRiskConsistency(bounded.riskFlags, model);
   // Absences do not make a review dirty. A lease can be silent on repairs
   // and still carry nothing that would cost the signer.
   const clean = riskFlags.length === 0;
 
   return {
+    role,
     summary: bounded.summary,
     riskFlags,
     coverage,

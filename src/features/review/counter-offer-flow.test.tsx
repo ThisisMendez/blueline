@@ -19,12 +19,13 @@ describe("a counter-offer behind a flag's explanation", () => {
     }) });
     const user = userEvent.setup();
     render(<DocumentIntake persists={false} />);
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
     await user.click(screen.getByLabelText("Paste your lease"));
     await user.paste(fixture.text);
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
     await screen.findByRole("heading", { name: /terms to look at/i });
     expect(screen.getByText(/haven’t checked them against local law|haven't checked them against local law/)).toBeInTheDocument();
-    const flags = within(screen.getByRole("region", { name: "Terms to look at" })).getAllByRole("article");
+    const flags = within(screen.getByRole("region", { name: /terms to look at/i })).getAllByRole("article");
     for (const flag of flags) {
       expect(within(flag).queryByRole("button", { name: "See proposed edit" })).toBeNull();
     }
@@ -40,7 +41,7 @@ describe("a counter-offer behind a flag's explanation", () => {
       await user.click(within(flag).getByRole("button", { name: "See proposed edit" }));
       expect(within(flag).getByText(expected.counterOffer)).toBeVisible();
       expect(within(flag).getByText(expected.residualRisk)).toBeVisible();
-      expect(within(flag).getByText(/landlord doesn't have to accept it, and it isn't legal advice/)).toBeVisible();
+      expect(within(flag).getByText(/Any change needs the other party's agreement/)).toBeVisible();
       await user.click(within(flag).getByRole("button", { name: "Hide explanation" }));
       expect(within(flag).queryByText(expected.counterOffer)).toBeNull();
       expect(within(flag).queryByText(expected.residualRisk)).toBeNull();

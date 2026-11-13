@@ -4,12 +4,6 @@ import Link from "next/link";
 export function BrandHero() {
   return (
     <section className="relative overflow-hidden border-b-2 border-[var(--color-navy)] px-6 py-12 sm:px-10 sm:py-16 md:py-20">
-      <p className="absolute left-6 top-[28%] hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] xl:block">
-        Clearer contracts. Stronger renters.
-      </p>
-      <p className="absolute right-6 top-[28%] hidden max-w-[9rem] -translate-y-1/2 border-l border-[var(--color-navy)] pl-4 font-[family-name:var(--font-data)] text-xs uppercase leading-relaxed tracking-[0.16em] text-[var(--color-navy)] xl:block">
-        Same paper. A brighter tomorrow.
-      </p>
 
       <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
         <Image
@@ -27,11 +21,11 @@ export function BrandHero() {
           Blueline <span className="text-[var(--color-red)]">Redline</span>
         </h2>
         <p className="mt-5 font-[family-name:var(--font-data)] text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-navy)] sm:text-base">
-          Read the terms. Make your mark.
+          Review your rental agreement from your perspective.
         </p>
         <p className="mt-4 max-w-md font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          We read your lease and show what it could cost you. We don&apos;t
-          check it against local law.
+          Choose renter or landlord to see what could affect you and what to
+          clarify before signing. We don&apos;t check it against local law.
         </p>
         <Link
           href="/sign-in"

@@ -11,10 +11,11 @@ import {
 
 import { ModelError, type ModelClient } from "../model/client";
 import { runGeneralReview } from "../review";
-import type {
-  AnalysisFailure,
-  AnalysisOutcome,
-  AnalysisRejection,
+import {
+  REVIEW_ROLES,
+  type AnalysisFailure,
+  type AnalysisOutcome,
+  type AnalysisRejection,
 } from "../types";
 
 /**
@@ -58,11 +59,11 @@ const resolutionSchema = z.strictObject({
 });
 
 /**
- * Text in, nothing else. There is no file field to send, which is what keeps
- * original bytes out of the product rather than a policy about deleting them.
- * A packet of several documents is several pieces of text and nothing more.
+ * The role and extracted document text travel together. There is no field
+ * that can carry the original file.
  */
 const analysisRequestSchema = z.strictObject({
+  role: z.enum(REVIEW_ROLES),
   text: z.string(),
   title: z.string().trim().min(1).max(200).optional(),
   /** The documents the lease refers to, in the order the signer added them. */
@@ -183,7 +184,7 @@ export function createAnalysisRoute(
 
     let review;
     try {
-      review = await runGeneralReview({ packet, model: dependencies.model });
+      review = await runGeneralReview({ packet, model: dependencies.model, role: parsed.data.role });
     } catch (error) {
       if (error instanceof ModelError) {
         const reason = failureFor(error);

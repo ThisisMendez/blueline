@@ -54,8 +54,8 @@ export function BelowFold() {
           Every flag opens onto a proposed edit.
         </h2>
         <p className="mt-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]/85">
-          A plausible compromise a landlord might actually accept, with
-          whatever risk would still remain if they said yes.
+          A change you can discuss with the other party, with an explanation
+          of what could still affect you if you agree to it.
         </p>
 
         <div className="mt-8 flex flex-col gap-4">
