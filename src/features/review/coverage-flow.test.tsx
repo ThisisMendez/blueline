@@ -89,6 +89,7 @@ afterEach(() => {
 async function paste(text: string) {
   const user = userEvent.setup();
   renderScreen(await ReviewPage());
+  await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
   const textarea = screen.getByLabelText("Paste your lease");
   await user.click(textarea);

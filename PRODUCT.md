@@ -12,31 +12,31 @@ Next.js, deployed on Vercel. Supabase for authentication and PostgreSQL persiste
 
 ## Users
 
-A renter with a residential lease or renewal in hand who must decide soon whether to sign. They have the document, a deadline, and are deciding whether to sign, not browsing general contract advice or resolving a dispute after signing. The first version serves only this signer; other contract types (freelance, employment, subscriptions, Terms of Service) are explicitly out of scope for now.
+A renter or landlord with a residential lease or renewal in hand and a signing decision approaching. The review is scoped to residential leases. [Product requirements](PRD.md).
 
 ## Product Purpose
 
-Blueline Redline helps a lease signer understand the agreement they were given, see the terms that could hurt them ranked by real consequence, and consider a plausible counter-offer before they decide. It exists because a signer can miss a costly exit term, deposit condition, or dispute-rights change even when they read the lease themselves, and because today's alternatives are self-review, a free consumer grader, or a $300–$660+ lawyer review. Success means an independent evaluator can verify every flag's source sentence and confirm no adjudicated high-severity term in a held-out test set was missed — not user satisfaction or willingness to pay alone.
+Blueline Redline helps a lease signer understand the agreement, see the terms that could affect them ranked by consequence, and prepare questions or proposed changes before deciding. Success means an independent evaluator can verify every flag's source and confirm no adjudicated high-severity term was missed for either role in a held-out test set.
 
 ## Positioning
 
-No competitor found in research combines plain-English summary, severity-ranked and cited risk flags, a drafted counter-offer per flag, and document-grounded Q&A in one consumer-facing flow. Enterprise/legal-ops tools (LawGeex, Ironclad, Spellbook) serve legal teams at $550/mo–$200K/year and assume contract literacy the target user doesn't have. Consumer graders (ToS;DR, LeaseCheck, LeaseAI) summarize and flag but don't draft a counter-offer or answer grounded follow-up questions. This is an absence-of-evidence finding, not a confirmed unique claim.
+“Review your rental agreement from your perspective.” Blueline Redline is a contract self-check. It helps renters and landlords understand what could affect them and what to clarify before signing. Users decide how to act on the report. [Brand voice](BRAND.md).
 
 ## Operating Context
 
-The signer pastes lease text or uploads selectable-text PDFs, including every document the lease references (fee schedules, rules, addenda). The product parses files in the browser and stores only extracted text, never the original file. A missing referenced document blocks review entirely rather than producing a partial one. The signer reads a general review first, then may add personal red lines and rerun the analysis, ask document-grounded follow-up questions, and open a counter-offer draft behind each flag's explanation. Completed reviews live in an authenticated library for 30 days automatically, or 90 days from an explicit save, with the expiry date always visible.
+The signer selects renter or landlord, then pastes lease text or uploads selectable-text PDFs, including every referenced document. Files are parsed in the browser. The stored review uses extracted text and review data. A missing referenced document blocks review. The signer gets one report for the selected role, then may add personal red lines, ask document-grounded questions, and open a counter-offer draft behind each flag's explanation. The role belongs to the review. Completed authenticated reviews stay in the library for 30 days automatically, or 90 days from an explicit save, with the expiry date visible.
 
 ## Capabilities and Constraints
 
 - Accepts pasted text and selectable-text PDFs only. No OCR, no scanned PDFs, no DOCX upload — uncertain extracted text would undermine exact-sentence citations.
 - Every risk flag must show its exact source sentence, verified verbatim against the extracted text. A flag whose source can't be shown is a bug; invalid flags are retried or dropped, never displayed unsourced.
 - A published, fixed coverage checklist (deposit deductions and return, early-exit costs, rent changes, repairs, access, dispute routes) reports "not found" items separately from cited risk flags. The model never invents its own checklist.
-- Severity is based on plausible material consequence to the signer, not on how unusual the wording is or a model judgment about legal enforceability.
-- The product never issues a safe-to-sign or legal-validity verdict. A clean review says "no material flags found in the text reviewed," not that the lease is safe.
+- The role shapes relevance, priority, severity, exposure, and next steps. Contract facts and supported readings stay consistent across roles.
+- Severity measures potential harm to the selected role. Finding confidence reflects how strongly the contract supports the finding. V1 covers contract risk and ambiguity. V2 adds legal context where verified jurisdiction-specific evidence supports it. [Release boundaries](PRD.md#release-boundaries).
 - Personal red lines produce a separate "preference match" list; they never change a term's general severity.
-- Counter-offers aim at a plausible compromise a landlord might accept, revealed only after the signer opens the flag's explanation, always showing residual risk.
+- Counter-offers address the selected role's exposure and aim at a plausible compromise for both parties. They appear after the signer opens the flag's explanation and show residual risk.
 - Open configuration decision: which OpenRouter model, read from an env var. Open decision: whether a Supabase project exists yet — do not scaffold a throwaway project or mock auth to get past a missing key.
-- Vocabulary is fixed by CONTEXT.md (e.g. "lease signer" not "renter," "risk flag" requires a stated consequence, "clean review" is not "safe lease"). Use those terms, not the ones the glossary lists to avoid.
+- Use “lease signer” for either party and “renter” or “landlord” for a specific review role. [Domain glossary](CONTEXT.md).
 
 ## Brand Commitments
 
@@ -45,6 +45,8 @@ Official public name: **Blueline Redline**. Internal/project shorthand: **Blueli
 ## Evidence on Hand
 
 `research/summary.md` and its four source agent files hold the user research. Sourced, real complaints exist for gym/subscription surprise fees, non-compete clauses, and renter rights-waiver/arbitration clauses (Blind forum, BBB, Consumer Reports, FTC rulemaking). No direct willingness-to-pay evidence exists for this specific AI product — all pricing evidence is anchored to lawyer-review cost ($300–$660+ for lease review). The research did not measure how many renters currently self-review, use a free grader, or skip review entirely. Future work must not fabricate testimonials, pricing signals, or a competitive-gap claim stronger than what `research/agent3-what-already-exists.md` supports.
+
+The original comparison considered enterprise legal tools such as LawGeex, Ironclad, and Spellbook and consumer tools such as ToS;DR, LeaseCheck, and LeaseAI. It did not verify a unique feature gap. [Competitor research](research/agent3-what-already-exists.md).
 
 ## Product Principles
 

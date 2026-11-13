@@ -84,6 +84,9 @@ interface IdentifiedDocument extends PromptDocument {
 }
 
 interface ModelFlagPayload {
+  title: string;
+  nextStep: string;
+  relatedCitations: readonly { sourceDocumentId: string; sourceSentence: string }[];
   severity: string;
   consequence: string;
   triggeringCondition: string;
@@ -235,6 +238,9 @@ export function createFixtureModelClient(
 
     const flags: ModelFlagPayload[] = document.fixture.sidecar.plantedFlags.map(
       (planted) => ({
+        title: planted.category.replaceAll("-", " "),
+        nextStep: "Ask how this term would apply in practice.",
+        relatedCitations: [],
         severity: planted.expectedSeverity,
         consequence: planted.consequence,
         triggeringCondition: planted.triggeringCondition,
@@ -250,6 +256,9 @@ export function createFixtureModelClient(
     if (flags.length === 0) {
       return [
         {
+          title: "Monthly report",
+          nextStep: "Ask when a report is needed.",
+          relatedCitations: [],
           severity: "medium",
           consequence: "The Resident would owe an extra duty every month.",
           triggeringCondition: "Each month of the Term begins.",

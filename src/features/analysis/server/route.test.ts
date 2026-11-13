@@ -44,7 +44,7 @@ beforeEach(() => {
 
 describe("the analysis route", () => {
   it("persists extracted text and nothing that could hold a file", async () => {
-    const response = await route()(post({ text: adhesionText }));
+    const response = await route()(post({ role: "renter", text: adhesionText }));
     expect(response.status).toBe(200);
 
     const outcome = (await response.json()) as AnalysisOutcome;
@@ -64,7 +64,7 @@ describe("the analysis route", () => {
 
   it("refuses a body carrying anything but text", async () => {
     const response = await route()(
-      post({ text: adhesionText, file: "JVBERi0xLjQK", fileName: "lease.pdf" }),
+      post({ role: "renter", text: adhesionText, file: "JVBERi0xLjQK", fileName: "lease.pdf" }),
     );
 
     expect(response.status).toBe(400);
@@ -74,7 +74,7 @@ describe("the analysis route", () => {
   });
 
   it("refuses an empty paste before calling the model", async () => {
-    const response = await route()(post({ text: "   \n  " }));
+    const response = await route()(post({ role: "renter", text: "   \n  " }));
 
     expect(response.status).toBe(400);
     const outcome = (await response.json()) as AnalysisOutcome;
@@ -82,10 +82,17 @@ describe("the analysis route", () => {
     expect(store.size).toBe(0);
   });
 
+  it.each([undefined, "both", "tenant"])("rejects role %s before analysis", async (role) => {
+    const response = await route()(post({ text: adhesionText, role }));
+    expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({ status: "rejected", reason: "malformed-request" });
+    expect(store.size).toBe(0);
+  });
+
   it("reviews ephemerally for a signed-out visitor even when accounts are running", async () => {
     accounts = { kind: "signed-out" };
 
-    const response = await route()(post({ text: adhesionText }));
+    const response = await route()(post({ role: "renter", text: adhesionText }));
 
     expect(response.status).toBe(200);
     const outcome = (await response.json()) as AnalysisOutcome;
@@ -100,7 +107,7 @@ describe("the analysis route", () => {
   it("reviews without persisting when accounts are not configured", async () => {
     accounts = { kind: "unconfigured" };
 
-    const response = await route()(post({ text: adhesionText }));
+    const response = await route()(post({ role: "landlord", text: adhesionText }));
 
     expect(response.status).toBe(200);
     const outcome = (await response.json()) as AnalysisOutcome;

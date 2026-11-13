@@ -12,8 +12,10 @@ export const modelLegalRepairSchema = z.object({
   summary: z.string().nullable(),
   items: z.array(z.object({
     index: z.number(),
+    title: z.string().optional(),
     consequence: z.string(),
     triggeringCondition: z.string(),
+    nextStep: z.string().optional(),
     counterOffer: z.string(),
     residualRisk: z.string(),
   })),

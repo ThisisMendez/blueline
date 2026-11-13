@@ -161,6 +161,6 @@ export async function extractPdfText(bytes: ArrayBuffer): Promise<PdfExtraction>
   } catch {
     return { kind: "unreadable", reason: "not-a-pdf" };
   } finally {
-    await document.destroy();
+    await task.destroy();
   }
 }

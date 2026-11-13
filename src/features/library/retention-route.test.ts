@@ -14,7 +14,7 @@ async function setup() {
   const time = Date.parse("2027-01-13T09:00:00Z");
   const store = new InMemoryReviewStore(() => new Date(time));
   const documents = [{ id: "lease", title: "Lease", text: loadFixture("clean-lease").text }];
-  await store.save({ id: "review", signerId: "a", createdAt: "2027-01-01T09:00:00Z", documents, review: await runGeneralReview({ packet: { documents }, model: createFixtureModelClient() }) });
+  await store.save({ id: "review", signerId: "a", createdAt: "2027-01-01T09:00:00Z", documents, review: await runGeneralReview({ role: "renter", packet: { documents }, model: createFixtureModelClient() }) });
   let accounts: AccountsState = { kind: "signed-in", signer: { id: "a", email: "a@example.test" } };
   return { store, setAccounts(value: AccountsState) { accounts = value; }, route: createRetentionRoute({ accounts: async () => accounts, store: async () => store }) };
 }

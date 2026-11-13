@@ -1,10 +1,10 @@
-import { checklistTopic, type ChecklistTopic } from "@/features/analysis/checklist";
+import { checklistTopic, type ChecklistTopic, type ChecklistTopicId } from "@/features/analysis/checklist";
 import {
   notFoundItems,
   type CoverageChecklist,
   type CoverageItem,
   type FoundTopic,
-  type NotFoundItem,
+  type ReviewRole,
 } from "@/features/analysis/types";
 import type { ExtractedDocument } from "@/features/packet/types";
 
@@ -26,9 +26,35 @@ import type { ExtractedDocument } from "@/features/packet/types";
 const FOUND_LABEL = "Found";
 const NOT_FOUND_LABEL = "Not found";
 
-/** What a not-found item says, and the whole of what it says. */
 const NOT_FOUND_EXPLANATION =
   "We did not locate this topic in the complete agreement.";
+
+const CLARIFICATION_QUESTIONS: Record<ChecklistTopicId, Record<ReviewRole, string>> = {
+  "deposit-deductions-and-return": {
+    renter: "When should I expect the deposit back, and what can be deducted?",
+    landlord: "What deductions will we document, and when will we return the balance?",
+  },
+  "early-exit-costs": {
+    renter: "What would I owe if I needed to move out early?",
+    landlord: "What notice and charges would apply if the renter leaves early?",
+  },
+  "rent-changes": {
+    renter: "When could the rent change, and how would I be told?",
+    landlord: "What notice and limits should the lease set for rent changes?",
+  },
+  repairs: {
+    renter: "Who should I contact about a repair, and who pays for it?",
+    landlord: "How should the renter report repairs, and who pays for which work?",
+  },
+  "access-to-the-home": {
+    renter: "How much notice will I get before the landlord needs to enter?",
+    landlord: "What notice should I give before entering, and what counts as an emergency?",
+  },
+  "dispute-routes": {
+    renter: "Where should I raise a disagreement if we cannot resolve it directly?",
+    landlord: "What process should both parties use if direct discussion fails?",
+  },
+};
 
 const BADGE_BASE =
   "inline-block px-2 py-1 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]";
@@ -76,9 +102,10 @@ function FoundCard({
 
 function NotFoundCard({
   topic,
+  role,
 }: {
   readonly topic: ChecklistTopic;
-  readonly item: NotFoundItem;
+  readonly role?: ReviewRole;
 }) {
   const headingId = `coverage-${topic.id}-heading`;
 
@@ -99,6 +126,7 @@ function NotFoundCard({
       </div>
       <p className={TOPIC_DESCRIPTION}>{topic.description}</p>
       <p className={TOPIC_DESCRIPTION}>{NOT_FOUND_EXPLANATION}</p>
+      {role ? <p className={TOPIC_DESCRIPTION}>{CLARIFICATION_QUESTIONS[topic.id][role]}</p> : null}
     </article>
   );
 }
@@ -106,11 +134,13 @@ function NotFoundCard({
 export interface CoverageChecklistSectionProps {
   readonly coverage: CoverageChecklist;
   readonly documents: readonly ExtractedDocument[];
+  readonly role?: ReviewRole;
 }
 
 export function CoverageChecklistSection({
   coverage,
   documents,
+  role,
 }: CoverageChecklistSectionProps) {
   if (coverage.items.length === 0) return null;
 
@@ -159,7 +189,7 @@ export function CoverageChecklistSection({
                   }
                 />
               ) : (
-                <NotFoundCard topic={topic} item={item} />
+                <NotFoundCard topic={topic} role={role} />
               )}
             </li>
           );

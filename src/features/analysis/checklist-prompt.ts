@@ -17,7 +17,7 @@ const TOPIC_LINES = COVERAGE_CHECKLIST.map(
   (topic) => `- ${topic.id} — ${topic.name}: ${topic.description}`,
 ).join("\n");
 
-export const CHECKLIST_SYSTEM_PROMPT = `You are checking a residential lease agreement against a fixed checklist on behalf of the person who has been asked to sign it. The agreement may be spread across several documents; read all of them as one agreement.
+export const CHECKLIST_SYSTEM_PROMPT = `Check a residential lease against a fixed checklist. The agreement may be spread across several documents. Read them as one agreement and check related provisions and addenda before marking anything not found. Report the agreement's coverage independently of which party is reviewing it.
 
 The checklist is these topics and only these topics:
 

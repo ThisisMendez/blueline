@@ -30,6 +30,7 @@ describe("personalizing a reviewed lease", () => {
     const user = userEvent.setup();
     render(<DocumentIntake persists />);
     expect(screen.queryByRole("textbox", { name: "Your red lines" })).toBeNull();
+    await user.click(screen.getByRole("button", { name: "I’m a renter" }));
     await user.click(screen.getByLabelText("Paste your lease"));
     await user.paste(fixture.text);
     await user.click(screen.getByRole("button", { name: "Read my lease" }));

@@ -24,10 +24,10 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
           </Link>
 
           {accounts.kind === "signed-in" ? (
-            <div className="flex items-center gap-4">
-              <span className="font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
-                {accounts.signer.email ?? "Signed in"}
-              </span>
+            <nav aria-label="Account" className="flex items-center gap-4">
+              <Link href="/account" className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-wide text-[var(--color-navy)] underline decoration-2 underline-offset-4">
+                Your account
+              </Link>
               <form action={signOutAction}>
                 <button
                   type="submit"
@@ -36,7 +36,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
                   Sign out
                 </button>
               </form>
-            </div>
+            </nav>
           ) : accounts.kind === "signed-out" ? (
             <Link
               href="/sign-in"

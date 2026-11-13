@@ -46,7 +46,7 @@ describe("the coverage checklist on an agreement that covers all six topics", ()
     const { sidecar } = loadFixture("adhesion-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
 
     expect(topicIds(review.coverage)).toEqual([...CHECKLIST_TOPIC_IDS]);
     expect(notFoundItems(review.coverage)).toEqual([]);
@@ -69,7 +69,7 @@ describe("the coverage checklist on an agreement that covers all six topics", ()
     const { packet } = packetFor("adhesion-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
 
-    await runGeneralReview({ packet, model });
+    await runGeneralReview({ role: "renter", packet, model });
 
     expect(model.checklistRequests).toHaveLength(1);
     const schema = model.checklistRequests[0].jsonSchema as {
@@ -88,7 +88,7 @@ describe("the coverage checklist on an agreement that leaves two topics out", ()
     const { packet } = packetFor("clean-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
 
     expect(notFoundItems(review.coverage).map((item) => item.topicId)).toEqual([
       "repairs",
@@ -107,7 +107,7 @@ describe("the coverage checklist on an agreement that leaves two topics out", ()
     const { packet } = packetFor("clean-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
 
     expect(review.clean).toBe(true);
     expect(review.cleanStatement).toBe("No material flags found in the text reviewed");
@@ -118,7 +118,7 @@ describe("the coverage checklist on an agreement that leaves two topics out", ()
     const { packet, text } = packetFor("clean-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
     const [absent] = notFoundItems(review.coverage);
 
     // Structural, not cosmetic: the value holds a status and a topic id, and
@@ -186,6 +186,7 @@ describe("the coverage checklist on a complete agreement of several documents", 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          role: "renter",
           text: referencing.text,
           title: "Residential Lease Agreement",
           referenced: [
@@ -230,7 +231,7 @@ describe("the coverage checklist when the model answers badly", () => {
         return { topics };
       },
     };
-    await expect(runGeneralReview({ packet, model })).rejects.toMatchObject({
+    await expect(runGeneralReview({ role: "renter", packet, model })).rejects.toMatchObject({
       kind: failure === "wrong-document" ? "verification-failed" : "unreadable",
     });
   });
@@ -249,7 +250,7 @@ describe("the coverage checklist when the model answers badly", () => {
           : topic) };
       },
     };
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
     expect(foundTopics(review.coverage)).toHaveLength(6);
     expect(notFoundItems(review.coverage)).toEqual([]);
     expect(attempts).toBe(2);
@@ -266,7 +267,7 @@ describe("the coverage checklist when the model answers badly", () => {
       ],
     });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
 
     expect(text).toContain(inventedSentence);
     expect(topicIds(review.coverage)).toEqual([...CHECKLIST_TOPIC_IDS]);
@@ -283,7 +284,7 @@ describe("the coverage checklist when the model answers badly", () => {
       topicCitations: { repairs: UNQUOTABLE_SENTENCE },
     });
 
-    await expect(runGeneralReview({ packet, model })).rejects.toMatchObject({
+    await expect(runGeneralReview({ role: "renter", packet, model })).rejects.toMatchObject({
       kind: "verification-failed",
     });
     // One retry, then the unverifiable citation is gone rather than shown.
@@ -301,7 +302,7 @@ describe("the coverage checklist when the model answers badly", () => {
       },
     };
 
-    await expect(runGeneralReview({ packet, model })).rejects.toMatchObject({
+    await expect(runGeneralReview({ role: "renter", packet, model })).rejects.toMatchObject({
       kind: "unreadable",
     });
   });
@@ -312,7 +313,7 @@ describe("what a not-found item is allowed to say", () => {
     const { packet } = packetFor("clean-lease");
     const model = createFixtureModelClient({ behaviour: "correct" });
 
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
     const everything = JSON.stringify(review.coverage).toLowerCase();
 
     for (const forbidden of [

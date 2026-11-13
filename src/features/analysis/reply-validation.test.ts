@@ -41,7 +41,7 @@ async function analyse(invalidReplies: Record<string, number>): Promise<Analysis
   const response = await analysisRoute(invalidReplies)(new Request("http://localhost/api/analysis", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: lease.text }),
+    body: JSON.stringify({ role: "renter", text: lease.text }),
   }));
   return (await response.json()) as AnalysisOutcome;
 }
@@ -49,15 +49,15 @@ async function analyse(invalidReplies: Record<string, number>): Promise<Analysis
 describe("the analysis call", () => {
   it("uses a valid first reply with no retry", async () => {
     const model = createFixtureModelClient();
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
     expect(review.riskFlags.length).toBeGreaterThan(0);
     expect(model.analysisRequests).toHaveLength(1);
   });
 
   it("recovers an invalid first reply with one retry and keeps every flag", async () => {
-    const expected = await runGeneralReview({ packet, model: createFixtureModelClient() });
+    const expected = await runGeneralReview({ role: "renter", packet, model: createFixtureModelClient() });
     const model = createFixtureModelClient({ invalidReplies: { [ANALYSIS_SCHEMA_NAME]: 1 } });
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
     expect(model.analysisRequests).toHaveLength(2);
     expect(model.analysisRequests[1].retryAfterInvalidReply).toBe(true);
     expect(review.riskFlags).toEqual(expected.riskFlags);
@@ -66,7 +66,7 @@ describe("the analysis call", () => {
 
   it("fails as unreadable when the retry is invalid too", async () => {
     const model = createFixtureModelClient({ invalidReplies: { [ANALYSIS_SCHEMA_NAME]: 2 } });
-    await expect(runGeneralReview({ packet, model })).rejects.toMatchObject({ kind: "unreadable" });
+    await expect(runGeneralReview({ role: "renter", packet, model })).rejects.toMatchObject({ kind: "unreadable" });
     expect(model.analysisRequests).toHaveLength(2);
   });
 });
@@ -110,16 +110,16 @@ describe("the coverage checklist call", () => {
 
 describe("the consistency call", () => {
   it("recovers an invalid first reply with one retry and keeps every residual risk", async () => {
-    const expected = await runGeneralReview({ packet, model: createFixtureModelClient() });
+    const expected = await runGeneralReview({ role: "renter", packet, model: createFixtureModelClient() });
     const model = createFixtureModelClient({ invalidReplies: { [CONSISTENCY_SCHEMA_NAME]: 1 } });
-    const review = await runGeneralReview({ packet, model });
+    const review = await runGeneralReview({ role: "renter", packet, model });
     expect(model.consistencyRequests).toHaveLength(2);
     expect(review.riskFlags).toEqual(expected.riskFlags);
   });
 
   it("fails as unreadable when the retry is invalid too", async () => {
     const model = createFixtureModelClient({ invalidReplies: { [CONSISTENCY_SCHEMA_NAME]: 2 } });
-    await expect(runGeneralReview({ packet, model })).rejects.toMatchObject({ kind: "unreadable" });
+    await expect(runGeneralReview({ role: "renter", packet, model })).rejects.toMatchObject({ kind: "unreadable" });
   });
 });
 

@@ -51,7 +51,7 @@ export function createRedLineRoutes(dependencies: RedLineDependencies) {
         const review = await reviews.findForSigner(signer.id, parsed.data.reviewId);
         if (!review) return fail("review-not-found", 404);
         const lines = await preferences.read(signer.id);
-        const matches = await matchRedLines({ documents: review.documents }, lines, dependencies.model);
+        const matches = await matchRedLines({ documents: review.documents }, lines, dependencies.model, review.review.role);
         return respond({ status: "matched", matches });
       } catch (error) {
         if (error instanceof ModelError) return fail(error.kind, error.kind === "rate-limited" ? 429 : error.kind === "timeout" ? 504 : 502);

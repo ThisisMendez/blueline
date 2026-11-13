@@ -32,7 +32,7 @@ function SeverityBadge({ severity }: { severity: Severity }) {
 export interface RiskFlagCardProps {
   readonly flag: RiskFlag;
   readonly position: number;
-  readonly documentTitle: string;
+  readonly titleById: ReadonlyMap<string, string>;
 }
 
 /**
@@ -45,7 +45,7 @@ export interface RiskFlagCardProps {
  * of flags the gloss sits beside its clause already, and a page of drawn
  * lines would be decoration rather than identification.
  */
-export function RiskFlagCard({ flag, position, documentTitle }: RiskFlagCardProps) {
+export function RiskFlagCard({ flag, position, titleById }: RiskFlagCardProps) {
   const headingId = `flag-${flag.id}-heading`;
   const [explanationOpen, setExplanationOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -59,19 +59,32 @@ export function RiskFlagCard({ flag, position, documentTitle }: RiskFlagCardProp
     >
       <div className="grid gap-x-10 gap-y-6 p-6 sm:p-8 md:grid-cols-[1.6fr_1fr]">
         <div>
-          <p
+          <h3
             id={headingId}
             className="font-[family-name:var(--font-data)] text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-navy)]"
           >
-            Risk flag {String(position).padStart(2, "0")}
-          </p>
+            {flag.title ?? `Risk flag ${String(position).padStart(2, "0")}`}
+          </h3>
           <p className="mt-4 font-[family-name:var(--font-body)] text-lg leading-relaxed text-[var(--color-navy-ink)]">
             <mark className="cited-mark">{flag.sourceSentence}</mark>
           </p>
+          {flag.relatedCitations?.map((citation) => (
+            <div key={`${citation.sourceDocumentId}-${citation.sourceStart}-${citation.sourceEnd}`} className="mt-4 border-l-2 border-[var(--color-navy)] pl-3">
+              <blockquote className="font-[family-name:var(--font-body)] text-base">{citation.sourceSentence}</blockquote>
+              <p className="mt-1 font-[family-name:var(--font-data)] text-xs">
+                Source: {titleById.get(citation.sourceDocumentId) ?? citation.sourceDocumentId}, characters {citation.sourceStart} to {citation.sourceEnd}
+              </p>
+            </div>
+          ))}
         </div>
 
         <div className="flex flex-col gap-5">
           <SeverityBadge severity={flag.severity} />
+          {flag.nextStep ? (
+            <p className="font-[family-name:var(--font-body)] text-sm leading-snug">
+              <strong>Next step</strong> {flag.nextStep}
+            </p>
+          ) : null}
           <button
             type="button"
             aria-expanded={explanationOpen}
@@ -102,14 +115,14 @@ export function RiskFlagCard({ flag, position, documentTitle }: RiskFlagCardProp
 
       {explanationOpen && editOpen ? <section id={editId} aria-labelledby={`${editId}-heading`} className="m-6 border-2 border-[var(--color-navy)] bg-[var(--color-paper)] p-6 shadow-[0_24px_46px_-22px_rgba(18,59,93,0.5),0_8px_18px_-12px_rgba(18,59,93,0.32)] sm:m-8">
         <h3 id={`${editId}-heading`} className="font-[family-name:var(--font-display)] text-xl font-bold text-[var(--color-navy-ink)]">Proposed edit</h3>
-        <p className="mt-2 font-[family-name:var(--font-body)] text-sm leading-snug text-[var(--color-navy-ink)]">Use it to start the conversation. Your landlord doesn&apos;t have to accept it, and it isn&apos;t legal advice.</p>
+        <p className="mt-2 font-[family-name:var(--font-body)] text-sm leading-snug text-[var(--color-navy-ink)]">Use it to start the conversation. Any change needs the other party&apos;s agreement. We haven&apos;t checked it against local law.</p>
         <p className="mt-3 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">{flag.counterOffer}</p>
         <h4 className="mt-5 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">Risk that remains</h4>
         <p className="mt-2 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">{flag.residualRisk}</p>
       </section> : null}
 
       <p className="border-t-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-6 py-4 font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)] sm:px-8">
-        Source: {documentTitle}, characters {flag.sourceStart} to {flag.sourceEnd}
+        Source: {titleById.get(flag.sourceDocumentId) ?? flag.sourceDocumentId}, characters {flag.sourceStart} to {flag.sourceEnd}
       </p>
     </article>
   );

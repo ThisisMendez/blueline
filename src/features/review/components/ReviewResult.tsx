@@ -31,6 +31,11 @@ export function ReviewResult({ review, documents, reviewId }: ReviewResultProps)
 
   return (
     <div className="flex flex-col gap-10">
+      {review.role ? (
+        <h2 className="font-[family-name:var(--font-display)] text-2xl font-bold">
+          {review.role === "renter" ? "Renter review" : "Landlord review"}
+        </h2>
+      ) : null}
       <section
         aria-labelledby="review-summary-heading"
         className="border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-6 sm:p-8"
@@ -58,11 +63,9 @@ export function ReviewResult({ review, documents, reviewId }: ReviewResultProps)
             {review.cleanStatement}
           </h2>
           <p className="mt-4 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-            Nothing in the text you gave us carried a material downside we could
-            quote a sentence for. That is what we found in the text you gave
-            us. It is not a verdict on the agreement: read it yourself before
-            you sign, and check that everything it refers to is in front of
-            you. We haven&apos;t checked it against local law either.
+            We found no material downside for your review in the text you
+            supplied. Read the agreement yourself before signing. We
+            haven&apos;t checked it against local law either.
           </p>
         </section>
       ) : (
@@ -90,7 +93,7 @@ export function ReviewResult({ review, documents, reviewId }: ReviewResultProps)
                 <RiskFlagCard
                   flag={flag}
                   position={index + 1}
-                  documentTitle={titleById.get(flag.sourceDocumentId) ?? flag.sourceDocumentId}
+                  titleById={titleById}
                 />
               </li>
             ))}
@@ -106,8 +109,8 @@ export function ReviewResult({ review, documents, reviewId }: ReviewResultProps)
         </p>
       ) : null}
 
-      <CoverageChecklistSection coverage={review.coverage} documents={documents} />
-      <QuestionPanel documents={documents} />
+      <CoverageChecklistSection coverage={review.coverage} documents={documents} role={review.role} />
+      <QuestionPanel documents={documents} role={review.role} />
       {reviewId ? <RedLinesPanel key={reviewId} reviewId={reviewId} documents={documents} /> : null}
     </div>
   );

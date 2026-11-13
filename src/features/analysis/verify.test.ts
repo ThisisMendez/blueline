@@ -4,6 +4,7 @@ import type { Packet } from "@/features/packet/types";
 
 import { loadFixture } from "~tests/fixtures/index";
 
+import type { CandidateFlag } from "./model/schema";
 import { verifyFlags } from "./verify";
 
 const { text, sidecar } = loadFixture("adhesion-lease");
@@ -13,8 +14,11 @@ const packet: Packet = {
 
 const planted = sidecar.plantedFlags[0];
 
-function candidate(overrides: Partial<{ sourceSentence: string; sourceDocumentId: string }>) {
+function candidate(overrides: Partial<CandidateFlag>) {
   return {
+    title: "Contract obligation",
+    nextStep: "Ask when the obligation applies.",
+    relatedCitations: [],
     severity: "high" as const,
     consequence: planted.consequence,
     triggeringCondition: planted.triggeringCondition,
@@ -61,5 +65,14 @@ describe("citation verification", () => {
   it("keeps one flag when the same sentence is cited twice", () => {
     const { verified } = verifyFlags([candidate({}), candidate({})], packet);
     expect(verified).toHaveLength(1);
+  });
+
+  it("withholds a finding whose primary citation is real but whose related evidence is fabricated", () => {
+    const sourceSentence = "The fee is limited to $100.";
+    const { verified, rejected } = verifyFlags([
+      candidate({ relatedCitations: [{ sourceDocumentId: "pasted-lease", sourceSentence }] }),
+    ], packet);
+    expect(verified).toEqual([]);
+    expect(rejected[0]).toMatchObject({ reason: "quotation-not-found", quotation: sourceSentence });
   });
 });

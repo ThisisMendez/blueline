@@ -87,12 +87,13 @@ export class OpenRouterModelClient implements ModelClient {
     };
     if (this.siteUrl) headers["HTTP-Referer"] = this.siteUrl;
 
+    const signal = AbortSignal.timeout(this.timeoutMs);
     let response: Response;
     try {
       response = await fetch(ENDPOINT, {
         method: "POST",
         headers,
-        signal: AbortSignal.timeout(this.timeoutMs),
+        signal,
         body: JSON.stringify({
           model,
           messages: [
@@ -130,8 +131,15 @@ export class OpenRouterModelClient implements ModelClient {
       );
     }
 
+    const body = (await response.json().catch(() => {
+      // Fetch can receive headers before the model finishes writing the body.
+      if (signal.aborted) {
+        throw new ModelError("timeout", "The analysis request timed out.");
+      }
+      return null;
+    })) as OpenRouterBody | null;
+
     if (!response.ok) {
-      const body = (await response.json().catch(() => null)) as OpenRouterBody | null;
       const message = body?.error?.message ?? response.statusText;
       if (response.status === 429) {
         throw new ModelError("rate-limited", message);
@@ -139,7 +147,6 @@ export class OpenRouterModelClient implements ModelClient {
       throw new ModelError("unavailable", `${response.status}: ${message}`);
     }
 
-    const body = (await response.json().catch(() => null)) as OpenRouterBody | null;
     if (body?.error) {
       throw new ModelError("unavailable", body.error.message ?? "The provider returned an error.");
     }

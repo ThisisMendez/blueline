@@ -4,13 +4,14 @@ import type { ReviewRetention } from "@/features/library/store";
 import { RetentionControls } from "@/features/library/RetentionControls";
 
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type {
   AnalysisFailure,
   AnalysisOutcome,
   AnalysisRejection,
   GeneralReview,
+  ReviewRole,
 } from "@/features/analysis/types";
 import type {
   CompleteAgreement,
@@ -122,9 +123,8 @@ export interface DocumentIntakeProps {
  * The packet: the lease, the documents it refers to, and one send.
  *
  * Every document is opened in the signer's browser and reduced to text
- * before anything leaves the page. The request carries text and the names
- * the signer gave it, and nothing else; there is no field for a file, so
- * there is no path an original could take.
+ * before anything leaves the page. The request carries the role, document
+ * text and titles, and any answers about document references.
  *
  * The send does two things in order, and the screen shows which answer came
  * back. If the agreement names a document nobody supplied, the answer is a
@@ -132,6 +132,42 @@ export interface DocumentIntakeProps {
  * reaches the review pipeline.
  */
 export function DocumentIntake({ persists }: DocumentIntakeProps) {
+  const [role, setRole] = useState<ReviewRole | null>(null);
+
+  if (role) {
+    return <ReviewIntake persists={persists} role={role} onStartOver={() => setRole(null)} />;
+  }
+
+  return (
+    <section aria-labelledby="review-role-heading" className="flex flex-col gap-4">
+      <h2 id="review-role-heading" className="font-[family-name:var(--font-display)] text-2xl font-bold">
+        Which side of the lease are you on?
+      </h2>
+      <div className="flex flex-wrap gap-3">
+        {([
+          ["renter", "I’m a renter"],
+          ["landlord", "I’m a landlord"],
+        ] as const).map(([value, label]) => (
+          <button
+            key={value}
+            type="button"
+            onClick={() => setRole(value)}
+            className="border-2 border-[var(--color-navy)] bg-[var(--color-paper)] px-5 py-3 font-[family-name:var(--font-display)] font-bold text-[var(--color-navy)] hover:bg-[var(--color-paper-deep)]"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ReviewIntake({
+  persists,
+  role,
+  onStartOver,
+}: DocumentIntakeProps & { readonly role: ReviewRole; readonly onStartOver: () => void }) {
+  const roleStatus = useRef<HTMLParagraphElement>(null);
   const [slots, setSlots] = useState<readonly Slot[]>([emptySlot("lease")]);
   const [nextKey, setNextKey] = useState(2);
   const [choices, setChoices] = useState<ReferenceChoices>({});
@@ -139,6 +175,10 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
 
   const working = phase.kind === "working";
   const reading = slots.some((slot) => slot.file.kind === "reading");
+
+  useEffect(() => {
+    roleStatus.current?.focus();
+  }, []);
 
   function updateSlot(index: number, change: Partial<Slot>) {
     setSlots((current) =>
@@ -213,8 +253,8 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
         const response = await fetch("/api/analysis", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          // Text, and the names the signer gave it. The bytes are long gone.
           body: JSON.stringify({
+            role,
             text: lease.text,
             ...(leaseTitle ? { title: leaseTitle } : {}),
             ...(referenced.length > 0 ? { referenced } : {}),
@@ -265,7 +305,7 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
             : FAILURE_MESSAGE[outcome.reason],
       });
     },
-    [],
+    [role],
   );
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -289,6 +329,14 @@ export function DocumentIntake({ persists }: DocumentIntakeProps) {
 
   return (
     <div className="flex flex-col gap-10">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p ref={roleStatus} tabIndex={-1} className="font-[family-name:var(--font-data)] text-sm">
+          Reviewing as {role === "renter" ? "a renter" : "a landlord"}
+        </p>
+        <button type="button" onClick={onStartOver} disabled={working || reading} className="underline disabled:opacity-70">
+          Start a new review
+        </button>
+      </div>
       <form onSubmit={submit} className="flex flex-col gap-6">
         {slots.map((slot, index) => (
           <DocumentSlot

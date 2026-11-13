@@ -27,10 +27,15 @@ it("lets a visitor review without signing in even when accounts exist", async ()
   expect(screen.getByRole("link", { name: "Sign in" })).toBeInTheDocument();
   expect(screen.queryByText("Accounts aren't running yet")).toBeNull();
   const user = userEvent.setup();
+  expect(screen.queryByLabelText("Paste your lease")).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "I’m a renter" })).toBeEnabled();
+  await user.click(screen.getByRole("button", { name: "I’m a landlord" }));
   await user.click(screen.getByLabelText("Paste your lease"));
   await user.paste(loadFixture("clean-lease").text);
   await user.click(screen.getByRole("button", { name: "Read my lease" }));
   expect(await screen.findByRole("heading", { name: "No material flags found in the text reviewed" })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "Landlord review" })).toBeInTheDocument();
+  expect(screen.queryByRole("heading", { name: "Renter review" })).not.toBeInTheDocument();
   expect(screen.getByText(/haven't checked it against local law either/)).toBeInTheDocument();
   expect(screen.getByText(/don't check it against local law/)).toBeInTheDocument();
   expect(screen.queryByRole("region", { name: /your reviews/i })).toBeNull();

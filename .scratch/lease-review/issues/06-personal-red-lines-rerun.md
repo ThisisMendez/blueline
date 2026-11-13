@@ -1,6 +1,6 @@
 # 06: Personal red lines with rerun
 
-**What to build:** After seeing the general review, a lease signer can set and edit personal red lines and rerun analysis. The rerun produces preference matches — lease terms that conflict with the signer's stated red lines — shown as their own result category, separate from general risk flags. Adding red lines never changes the severity a different signer would see on the same lease.
+**What to build:** After seeing the general review, a lease signer can set and edit personal red lines and rerun preference matching. The review keeps its selected role and severity. Matches for personal red lines appear separately from the role's risk flags. [Review-role acceptance criteria](../spec.md#acceptance-criteria).
 
 **Blocked by:** 01 (red lines are edited and rerun against a general review that must already exist — ADR 0009: review comes before red lines)
 
