@@ -23,6 +23,12 @@ vi.mock("@/features/library/supabase-store", () => ({
   openReviewStore: async () => adapters.store,
 }));
 
+// Only the PDF layout is substituted, so the lease text is exactly the fixture's.
+vi.mock("@/features/packet/extract/pdf", async (original) =>
+  (await import("@/features/review/session/testing")).withTextPdfs(await original()),
+);
+
+import SavedReviewPage from "@/app/(app)/review/[reviewId]/page";
 import ReviewPage from "@/app/(app)/review/page";
 import { COVERAGE_CHECKLIST } from "@/features/analysis/checklist";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
@@ -33,9 +39,10 @@ import {
   UNQUOTABLE_SENTENCE,
   type FixtureModelClientOptions,
 } from "~tests/support/fixture-model-client";
-import { renderScreen } from "~tests/support/render-screen";
 import { installRouteFetch } from "~tests/support/route-fetch";
 import { loadFixture } from "~tests/fixtures/index";
+
+import { renderReviewFlow, textPdf } from "./session/testing";
 
 const SIGNER: AccountsState = {
   kind: "signed-in",
@@ -88,12 +95,14 @@ afterEach(() => {
 
 async function paste(text: string) {
   const user = userEvent.setup();
-  renderScreen(await ReviewPage());
+  renderReviewFlow(await ReviewPage(), {
+    savedReview: (reviewId) =>
+      SavedReviewPage({ params: Promise.resolve({ reviewId }) } as PageProps<"/review/[reviewId]">),
+  });
   await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
-  const textarea = screen.getByLabelText("Paste your lease");
-  await user.click(textarea);
-  await user.paste(text);
+  await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", text));
+  await screen.findByText("lease.pdf · 1 page");
   await user.click(screen.getByRole("button", { name: "Read my lease" }));
 }
 
@@ -105,7 +114,7 @@ describe("a signer reading the coverage checklist", () => {
   it("shows all six published topics, and the sentence covering each one", async () => {
     useModel();
     await paste(adhesionLease.text);
-    await screen.findByRole("heading", { name: /terms to look at/i }, { timeout: 10_000 });
+    await screen.findByRole("heading", { name: /flagged terms/i }, { timeout: 10_000 });
 
     const checklist = checklistSection();
 
@@ -120,7 +129,7 @@ describe("a signer reading the coverage checklist", () => {
     }
 
     // Nothing was missing from this agreement, so nothing is marked absent.
-    expect(within(checklist).queryAllByText("Not found")).toHaveLength(0);
+    expect(within(checklist).queryAllByText("Not found in the text reviewed")).toHaveLength(0);
     expect(within(checklist).getAllByText("Found")).toHaveLength(6);
 
     for (const topicId of COVERAGE_CHECKLIST.map((topic) => topic.id)) {
@@ -140,7 +149,7 @@ describe("a signer reading the coverage checklist", () => {
     );
 
     const checklist = checklistSection();
-    const absentLabels = within(checklist).getAllByText("Not found");
+    const absentLabels = within(checklist).getAllByText("Not found in the text reviewed");
     expect(absentLabels).toHaveLength(2);
 
     const absentCards = absentLabels.map((label) => label.closest("article")!);
@@ -152,7 +161,7 @@ describe("a signer reading the coverage checklist", () => {
     for (const card of absentCards) {
       // No sentence, because there is none: an absence has nothing to quote.
       expect(card.querySelector("blockquote")).toBeNull();
-      expect(card.textContent).not.toContain("Source:");
+      expect(card.textContent).not.toContain("characters");
 
       const said = (card.textContent ?? "").toLowerCase();
       for (const claim of LEGAL_CLAIMS) {
@@ -180,17 +189,19 @@ describe("a signer reading the coverage checklist", () => {
 
     // Two absences did not turn into two warnings.
     expect(screen.queryAllByText(/^Severity: /)).toHaveLength(0);
-    expect(screen.queryByRole("heading", { name: /terms to look at/i })).toBeNull();
-    expect(within(checklistSection()).getAllByText("Not found")).toHaveLength(2);
+    const flagged = screen.getByRole("region", { name: /flagged terms/i });
+    expect(within(flagged).queryAllByRole("article")).toHaveLength(0);
+    expect(screen.queryByRole("group", { name: "Filter flags" })).toBeNull();
+    expect(within(checklistSection()).getAllByText("Not found in the text reviewed")).toHaveLength(2);
   }, 20_000);
 
   it("shows an error when a checklist citation cannot be verified", async () => {
     useModel({ topicCitations: { repairs: UNQUOTABLE_SENTENCE } });
     await paste(adhesionLease.text);
 
-    expect(await screen.findByText(/couldn't verify the answer against your document/i)).toBeInTheDocument();
+    expect(await screen.findByText(/couldn't match the answer to your document/i)).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: /six topics/i })).toBeNull();
-    expect(screen.queryByText("Not found")).toBeNull();
+    expect(screen.queryByText("Not found in the text reviewed")).toBeNull();
     expect(screen.queryByRole("heading", { name: /no material flags found/i })).toBeNull();
   }, 20_000);
 
@@ -208,7 +219,7 @@ describe("a signer reading the coverage checklist", () => {
     expect(cards).toHaveLength(6);
 
     for (const card of cards) {
-      const labels = within(card).queryAllByText(/^(Found|Not found)$/);
+      const labels = within(card).queryAllByText(/^(Found|Not found in the text reviewed)$/);
       expect(labels).toHaveLength(1);
       // Each card is named by its topic, so the list reads in order.
       expect(within(card).getByRole("heading", { level: 3 })).toBeInTheDocument();

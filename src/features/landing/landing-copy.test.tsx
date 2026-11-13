@@ -30,4 +30,12 @@ describe("landing page capability boundary", () => {
     expect(checklist.querySelectorAll("li")).toHaveLength(6);
     expect(container.textContent).not.toMatch(/protections/);
   });
+
+  // Questions about the agreement were removed from the product.
+  it("no longer offers to answer questions about the document", () => {
+    const below = render(<BelowFold />);
+    expect(below.container.textContent).not.toMatch(/Ask the document/);
+    const notes = render(<FieldNotes />);
+    expect(notes.container.textContent).not.toMatch(/document-grounded answers/);
+  });
 });

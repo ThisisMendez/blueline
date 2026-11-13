@@ -24,7 +24,7 @@ Blueline Redline helps a lease signer understand the agreement, see the terms th
 
 ## Operating Context
 
-The signer selects renter or landlord, then pastes lease text or uploads selectable-text PDFs, including every referenced document. Files are parsed in the browser. The stored review uses extracted text and review data. A missing referenced document blocks review. The signer gets one report for the selected role, then may add personal red lines, ask document-grounded questions, and open a counter-offer draft behind each flag's explanation. The role belongs to the review. Completed authenticated reviews stay in the library for 30 days automatically, or 90 days from an explicit save, with the expiry date visible.
+The signer selects renter or landlord, then pastes lease text or uploads selectable-text PDFs, including every referenced document. Files are parsed in the browser. The stored review uses extracted text and review data. A missing referenced document blocks review. The signer gets one report for the selected role, then may add personal red lines and open a counter-offer draft behind each flag's explanation. The role belongs to the review. Completed authenticated reviews stay in the library for 30 days automatically, or 90 days from an explicit save, with the expiry date visible. Document-grounded Q&A ("Ask about your agreement") is removed from the beta; the report offers no way to ask questions.
 
 ## Capabilities and Constraints
 

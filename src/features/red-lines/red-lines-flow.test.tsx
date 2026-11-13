@@ -1,10 +1,16 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
 import { InMemoryReviewStore } from "@/features/library/memory-store";
 import { DocumentIntake } from "@/features/review/components/DocumentIntake";
 import { ReviewResult } from "@/features/review/components/ReviewResult";
+import { scoreFromStoredReview } from "@/features/score";
+import { renderReviewFlow, textPdf } from "@/features/review/session/testing";
+
+vi.mock("@/features/packet/extract/pdf", async (original) =>
+  (await import("@/features/review/session/testing")).withTextPdfs(await original()),
+);
 import { createFixtureModelClient } from "~tests/support/fixture-model-client";
 import { loadFixture } from "~tests/fixtures/index";
 import { installRouteFetch } from "~tests/support/route-fetch";
@@ -28,13 +34,19 @@ describe("personalizing a reviewed lease", () => {
       "/api/red-lines": redLines.preferences, "/api/red-lines/matches": redLines.matches,
     });
     const user = userEvent.setup();
-    render(<DocumentIntake persists />);
+    // A kept review opens on its own page; this stands in for that page's report.
+    renderReviewFlow(<DocumentIntake persists />, {
+      savedReview: async (reviewId) => {
+        const saved = await reviews.findForSigner("signer-a", reviewId);
+        return <ReviewResult review={saved!.review} documents={saved!.documents} reviewId={saved!.id} title={saved!.title} score={scoreFromStoredReview(saved!)} />;
+      },
+    });
     expect(screen.queryByRole("textbox", { name: "Your red lines" })).toBeNull();
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
-    await user.click(screen.getByLabelText("Paste your lease"));
-    await user.paste(fixture.text);
+    await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", fixture.text));
+    await screen.findByText("lease.pdf · 1 page");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
-    const heading = await screen.findByRole("heading", { name: /terms to look at/i });
+    const heading = await screen.findByRole("heading", { name: /flagged terms/i });
     const flagsSection = heading.closest("section")!;
     const originalFlags = flagsSection.textContent;
     const editor = await screen.findByRole("textbox", { name: "Your red lines" });
@@ -57,7 +69,7 @@ describe("personalizing a reviewed lease", () => {
     expect(await preferences.read("signer-a")).toEqual([fixture.sidecar.redLines[1].redLine]);
     cleanup();
     const stored = await reviews.findForSigner("signer-a", "review-1");
-    render(<ReviewResult review={stored!.review} documents={stored!.documents} reviewId={stored!.id} />);
+    render(<ReviewResult review={stored!.review} documents={stored!.documents} reviewId={stored!.id} title={stored!.title} score={scoreFromStoredReview(stored!)} />);
     expect(await screen.findByDisplayValue(fixture.sidecar.redLines[1].redLine)).toBeInTheDocument();
     const restoredEditor = screen.getByRole("textbox", { name: "Your red lines" });
     await user.clear(restoredEditor);

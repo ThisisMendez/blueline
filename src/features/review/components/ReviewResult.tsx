@@ -1,104 +1,113 @@
-import type { GeneralReview, RiskFlag } from "@/features/analysis/types";
+import type { ReactNode } from "react";
+
+import type { GeneralReview, ReviewRole } from "@/features/analysis/types";
+import { ReviewSuggestions } from "@/features/negotiation/ReviewSuggestions";
+import { discussionShortlist } from "@/features/negotiation/shortlist";
 import type { ExtractedDocument } from "@/features/packet/types";
-import { QuestionPanel } from "@/features/questions/QuestionPanel";
 import { RedLinesPanel } from "@/features/red-lines/RedLinesPanel";
+import type { LeaseRiskScore } from "@/features/score";
 
 import { CoverageChecklistSection } from "./CoverageChecklistSection";
 import { RiskFlagList } from "./RiskFlagList";
+import { ScorePanel } from "./report/ScorePanel";
+import { firstSentences } from "./report/report-helpers";
 
 export interface ReviewResultProps {
   readonly review: GeneralReview;
   readonly documents: readonly ExtractedDocument[];
+  /** The display title: the session's title in-tab, the stored (possibly renamed) title when saved. */
+  readonly title: string;
+  /** Used when the review itself doesn't record a role. Legacy reviews may have neither. */
+  readonly role?: ReviewRole | null;
+  /** From `scoreFromOutcome` in-tab or `scoreFromStoredReview` for a saved review. */
+  readonly score: LeaseRiskScore;
   readonly reviewId?: string | null;
+  /** Shown under the header: retention controls, a save failure. */
+  readonly notices?: ReactNode;
 }
 
-function SeverityCounts({ flags }: { readonly flags: readonly RiskFlag[] }) {
-  const counts = { high: 0, medium: 0, low: 0 };
-  for (const flag of flags) counts[flag.severity] += 1;
-
-  return (
-    <ul
-      aria-label="Flags by severity"
-      className="mt-5 grid grid-cols-3 divide-x divide-[var(--color-navy)]/25 border-y border-[var(--color-navy)]/25"
-    >
-      <li className="py-3 pr-3 font-[family-name:var(--font-data)] text-sm font-semibold text-[var(--color-navy)]">
-        <span className="block text-2xl font-bold">{counts.high}</span> High
-      </li>
-      <li className="px-3 py-3 font-[family-name:var(--font-data)] text-sm font-semibold text-[var(--color-navy)]">
-        <span className="block text-2xl font-bold">{counts.medium}</span> Medium
-      </li>
-      <li className="px-3 py-3 font-[family-name:var(--font-data)] text-sm font-semibold text-[var(--color-navy)]">
-        <span className="block text-2xl font-bold">{counts.low}</span> Low
-      </li>
-    </ul>
-  );
+export function roleLabel(role: ReviewRole): string {
+  return role === "renter" ? "Reviewed as a renter" : "Reviewed as a landlord";
 }
 
-export function ReviewResult({ review, documents, reviewId }: ReviewResultProps) {
+const H2 = "font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)]";
+const BODY = "max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]";
+
+/**
+ * One report for the side the signer picked: header, score, then the flagged
+ * terms beside the six checklist topics (stacked on small screens, flags
+ * first), then personal red lines for a saved review.
+ */
+export function ReviewResult({ review, documents, title, role, score, reviewId, notices }: ReviewResultProps) {
   const documentTitles = new Map(documents.map((document) => [document.id, document.title]));
+  const side = review.role ?? role ?? undefined;
+  const about = firstSentences(review.summary, 2);
+  const suggestions = side ? discussionShortlist(review.riskFlags) : [];
 
   return (
-    <div className="flex flex-col gap-8 sm:gap-10">
-      <section
-        aria-labelledby="review-summary-heading"
-        className="border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-5 sm:p-8"
-      >
-        <h2
-          id="review-summary-heading"
-          className="font-[family-name:var(--font-display)] text-2xl font-bold text-[var(--color-navy-ink)] sm:text-3xl"
-        >
-          {review.role === "renter" ? "Renter review" : review.role === "landlord" ? "Landlord review" : "Lease review"}
-        </h2>
-        {!review.clean ? <SeverityCounts flags={review.riskFlags} /> : null}
-        {review.droppedFlagCount > 0 ? (
-          <p className="mt-4 text-sm leading-relaxed text-[var(--color-navy-ink)]">
-            {review.droppedFlagCount === 1
-              ? "We left out one flag because its quote did not match your lease text."
-              : `We left out ${review.droppedFlagCount} flags because their quotes did not match your lease text.`}
+    <div className="flex flex-col gap-6">
+      <header className="flex flex-col gap-1">
+        {side ? (
+          <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-navy)]">
+            {roleLabel(side)}
           </p>
         ) : null}
-        <h3 className="mt-5 font-[family-name:var(--font-display)] text-sm font-bold text-[var(--color-navy)]">
-          What this agreement says
-        </h3>
-        <p className="mt-2 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          {review.summary}
-        </p>
-      </section>
+        <h1 className="[overflow-wrap:anywhere] font-[family-name:var(--font-display)] text-3xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-4xl">
+          {title}
+        </h1>
+      </header>
 
-      {review.clean ? (
-        <section
-          aria-labelledby="clean-review-heading"
-          className="border-2 border-[var(--color-navy)] bg-[var(--color-paper)] p-5 sm:p-8"
-        >
-          <h2
-            id="clean-review-heading"
-            className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)]"
-          >
-            {review.cleanStatement}
-          </h2>
-          <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-            Read the full agreement before you sign. We haven&apos;t checked it against local law either.
-          </p>
-        </section>
-      ) : (
-        <section aria-labelledby="risk-flags-heading" className="flex flex-col gap-4">
-          <div>
-            <h2
-              id="risk-flags-heading"
-              className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl"
-            >
-              Terms to look at
+      {notices}
+
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-start lg:gap-8">
+        {about ? (
+          <section aria-labelledby="about-agreement-heading">
+            <h2 id="about-agreement-heading" className="font-[family-name:var(--font-display)] text-lg font-bold text-[var(--color-navy-ink)]">
+              About this agreement
             </h2>
-            <p className="mt-2 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-              Start with the biggest risks. We haven&apos;t checked them against local law.
-            </p>
-          </div>
-          <RiskFlagList flags={review.riskFlags} documentTitles={documentTitles} />
-        </section>
-      )}
+            <p className={`mt-1 ${BODY}`}>{about}</p>
+          </section>
+        ) : (
+          <div />
+        )}
+        <ScorePanel score={score} droppedFlagCount={review.droppedFlagCount} />
+      </div>
 
-      <CoverageChecklistSection coverage={review.coverage} documents={documents} role={review.role} />
-      <QuestionPanel documents={documents} role={review.role} />
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-start">
+        <section aria-labelledby="risk-flags-heading" className="flex min-w-0 flex-col gap-3">
+          <div>
+            <h2 id="risk-flags-heading" className={H2}>
+              Flagged terms
+            </h2>
+            {review.clean ? null : (
+              <p className={`mt-1 ${BODY}`}>
+                Most serious first. We haven&apos;t checked them against local law.
+              </p>
+            )}
+          </div>
+          {review.clean ? (
+            <div className="border-2 border-[var(--color-navy)] bg-[var(--color-paper)] p-4">
+              <h3 className="font-[family-name:var(--font-display)] text-xl font-bold leading-tight text-[var(--color-navy-ink)]">
+                {review.cleanStatement}
+              </h3>
+              <p className={`mt-2 ${BODY}`}>
+                Read the full agreement before you sign. We haven&apos;t checked it against local law either.
+              </p>
+            </div>
+          ) : (
+            <RiskFlagList flags={review.riskFlags} documentTitles={documentTitles} />
+          )}
+        </section>
+
+        <div className="min-w-0">
+          <CoverageChecklistSection coverage={review.coverage} documents={documents} role={side} />
+        </div>
+      </div>
+
+      {side && suggestions.length > 0 ? (
+        <ReviewSuggestions key={side} role={side} flags={suggestions} documentTitles={documentTitles} />
+      ) : null}
+
       {reviewId ? <RedLinesPanel key={reviewId} reviewId={reviewId} documents={documents} /> : null}
     </div>
   );

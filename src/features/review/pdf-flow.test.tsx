@@ -1,4 +1,5 @@
-import { screen, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
+import { firstSentences } from "@/features/review/components/report/report-helpers";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -12,7 +13,7 @@ const adapters = vi.hoisted(() => ({
 
 // The same two adapters ticket 01's flow test substitutes: who is signed in,
 // and where reviews are kept. The PDF reader, the pipeline, the verifier, the
-// route and the screen all run unmodified.
+// route and the screens all run unmodified.
 vi.mock("@/features/auth/session", () => ({
   getAccountsState: async () => adapters.accounts,
   getSignedInSigner: async () =>
@@ -23,6 +24,7 @@ vi.mock("@/features/library/supabase-store", () => ({
   openReviewStore: async () => adapters.store,
 }));
 
+import SavedReviewPage from "@/app/(app)/review/[reviewId]/page";
 import ReviewPage from "@/app/(app)/review/page";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
 import { InMemoryReviewStore } from "@/features/library/memory-store";
@@ -30,16 +32,18 @@ import { extractPdfText } from "@/features/packet/extract/pdf";
 import { normalizeText } from "@/features/packet/normalize";
 
 import { createFixtureModelClient } from "~tests/support/fixture-model-client";
-import { renderScreen } from "~tests/support/render-screen";
 import { installRouteFetch } from "~tests/support/route-fetch";
 import { loadFixture, loadFixturePdf } from "~tests/fixtures/index";
+
+import { PDF_PROBLEM_MESSAGE } from "./session/messages";
+import { renderReviewFlow } from "./session/testing";
 
 const SIGNER: AccountsState = {
   kind: "signed-in",
   signer: { id: "signer-a", email: "a@example.test" },
 };
 
-const { text: pastedLeaseText, sidecar } = loadFixture("adhesion-lease");
+const { text: fixtureText, sidecar } = loadFixture("adhesion-lease");
 
 /** The bytes of the selectable-text fixture, and the text really inside it. */
 const selectablePdfBytes = loadFixturePdf("adhesion-lease");
@@ -53,6 +57,13 @@ let requests: { readonly path: string; readonly body: string }[];
 
 function pdfFile(name: string, bytes: ArrayBuffer): File {
   return new File([bytes], name, { type: "application/pdf" });
+}
+
+function renderFlow(intake: Awaited<ReturnType<typeof ReviewPage>>) {
+  return renderReviewFlow(intake, {
+    savedReview: (reviewId) =>
+      SavedReviewPage({ params: Promise.resolve({ reviewId }) } as PageProps<"/review/[reviewId]">),
+  });
 }
 
 beforeEach(async () => {
@@ -87,30 +98,29 @@ afterEach(() => {
   restoreFetch();
 });
 
-describe("a signer who has a PDF rather than text to paste", () => {
+describe("a signer with a PDF lease", () => {
   it("reads the flags cited from the text inside their own file", async () => {
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    const flow = renderFlow(await ReviewPage());
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await user.upload(
-      screen.getByLabelText("Open a PDF instead"),
+      screen.getByLabelText("Choose file for your lease"),
       pdfFile("harrowgate-lease.pdf", selectablePdfBytes),
     );
 
-    expect(
-      await screen.findByText(/read 5 pages of harrowgate-lease\.pdf/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("harrowgate-lease.pdf · 5 pages")).toBeInTheDocument();
+    expect(screen.getByText("Residential Lease Agreement")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
+    await waitFor(() => expect(flow.currentPath()).toBe("/review/review-1"), { timeout: 10_000 });
 
     const flagsHeading = await screen.findByRole(
       "heading",
-      { name: /terms to look at/i },
+      { name: /flagged terms/i },
       { timeout: 10_000 },
     );
-    expect(flagsHeading).toBeInTheDocument();
-    expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+    expect(screen.getByText(firstSentences(sidecar.summary))).toBeInTheDocument();
 
     // A sentence can be both a flag and the sentence covering a checklist
     // topic, so the flag assertions below look inside the flag list.
@@ -121,8 +131,9 @@ describe("a signer who has a PDF rather than text to paste", () => {
     const stored = await store.findForSigner("signer-a", "review-1");
     expect(stored).not.toBeNull();
     expect(stored!.documents).toEqual([
-      { id: "pasted-lease", title: "harrowgate-lease.pdf", text: pdfText },
+      { id: "pasted-lease", title: "Residential Lease Agreement", text: pdfText },
     ]);
+    expect(stored!.title).toBe("Residential Lease Agreement");
     expect(stored!.review.riskFlags.length).toBe(sidecar.plantedFlags.length);
 
     expect(
@@ -142,16 +153,16 @@ describe("a signer who has a PDF rather than text to paste", () => {
 
   it("sends the extracted text and never the file", async () => {
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    const flow = renderFlow(await ReviewPage());
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await user.upload(
-      screen.getByLabelText("Open a PDF instead"),
+      screen.getByLabelText("Choose file for your lease"),
       pdfFile("harrowgate-lease.pdf", selectablePdfBytes),
     );
-    await screen.findByText(/read 5 pages of harrowgate-lease\.pdf/i);
+    await screen.findByText("harrowgate-lease.pdf · 5 pages");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
-    await screen.findByRole("heading", { name: /terms to look at/i }, { timeout: 10_000 });
+    await waitFor(() => expect(flow.currentPath()).toBe("/review/review-1"), { timeout: 10_000 });
 
     expect(requests).toHaveLength(1);
     const body = JSON.parse(requests[0].body) as Record<string, unknown>;
@@ -160,12 +171,12 @@ describe("a signer who has a PDF rather than text to paste", () => {
     // the route's schema is strict, so a file field would be a 400.
     expect(Object.keys(body).sort()).toEqual(["role", "text", "title"]);
     expect(body.text).toBe(pdfText);
-    expect(body.title).toBe("harrowgate-lease.pdf");
+    expect(body.title).toBe("Residential Lease Agreement");
 
-    // What was sent is the PDF's text, not the pasted fixture it was made
-    // from, and carries no trace of the bytes themselves.
-    expect(body.text).not.toBe(pastedLeaseText);
-    expect(normalizeText(body.text as string)).toContain(normalizeText(pastedLeaseText));
+    // What was sent is the PDF's text, not the fixture it was made from, and
+    // carries no trace of the bytes themselves.
+    expect(body.text).not.toBe(fixtureText);
+    expect(normalizeText(body.text as string)).toContain(normalizeText(fixtureText));
     expect(requests[0].body).not.toContain("JVBERi0");
     expect(requests[0].body).not.toContain("%PDF-");
 
@@ -178,33 +189,33 @@ describe("a signer who has a PDF rather than text to paste", () => {
 describe("a signer whose PDF is a scan", () => {
   it("is told the file cannot be read, and gets no review at all", async () => {
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    renderFlow(await ReviewPage());
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await user.upload(
-      screen.getByLabelText("Open a PDF instead"),
+      screen.getByLabelText("Choose file for your lease"),
       pdfFile("scanned-lease.pdf", textlessPdfBytes),
     );
 
-    expect(
-      await screen.findByText(/nothing to read in scanned-lease\.pdf/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Can't use scanned-lease.pdf")).toBeInTheDocument();
+    expect(screen.getByText(PDF_PROBLEM_MESSAGE.scanned)).toBeInTheDocument();
     expect(screen.getByText(/probably a scan or a photo/i)).toBeInTheDocument();
 
     // The rejection is its own outcome. No summary, no flags, no clean
     // review, and nothing that could be read as "this lease is fine".
-    expect(screen.queryByRole("heading", { name: /terms to look at/i })).toBeNull();
+    expect(screen.queryByRole("heading", { name: /flagged terms/i })).toBeNull();
     expect(
       screen.queryByRole("heading", { name: /no material flags found/i }),
     ).toBeNull();
-    expect(screen.queryByText("What this agreement says")).toBeNull();
+    expect(screen.queryByText("About this agreement")).toBeNull();
+    expect(screen.getByRole("button", { name: "Read my lease" })).toBeDisabled();
 
     // Nothing was sent, so nothing was kept.
     expect(requests).toEqual([]);
     expect(store.size).toBe(0);
 
     // And the control the signer used says so itself.
-    const input = screen.getByLabelText("Open a PDF instead");
+    const input = screen.getByLabelText("Choose file for your lease");
     expect(input).toHaveAttribute("aria-invalid", "true");
     const describedBy = input.getAttribute("aria-describedby")?.split(" ") ?? [];
     const described = describedBy
@@ -213,28 +224,26 @@ describe("a signer whose PDF is a scan", () => {
     expect(described).toMatch(/probably a scan or a photo/i);
   }, 20_000);
 
-  it("leaves the signer able to paste the lease instead", async () => {
+  it("lets the signer choose a different file instead", async () => {
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    const flow = renderFlow(await ReviewPage());
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     await user.upload(
-      screen.getByLabelText("Open a PDF instead"),
+      screen.getByLabelText("Choose file for your lease"),
       pdfFile("scanned-lease.pdf", textlessPdfBytes),
     );
-    await screen.findByText(/nothing to read in scanned-lease\.pdf/i);
+    await screen.findByText("Can't use scanned-lease.pdf");
 
-    const textarea = screen.getByLabelText("Paste your lease");
-    await user.click(textarea);
-    await user.paste(pastedLeaseText);
+    await user.upload(
+      screen.getByLabelText("Choose file for your lease"),
+      pdfFile("harrowgate-lease.pdf", selectablePdfBytes),
+    );
+    await screen.findByText("harrowgate-lease.pdf · 5 pages");
+    expect(screen.queryByText("Can't use scanned-lease.pdf")).toBeNull();
+
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
-
-    expect(
-      await screen.findByRole("heading", { name: /terms to look at/i }, { timeout: 10_000 }),
-    ).toBeInTheDocument();
-
-    const body = JSON.parse(requests[0].body) as Record<string, unknown>;
-    expect(Object.keys(body)).toEqual(["role", "text"]);
-    expect(body.text).toBe(pastedLeaseText);
+    await waitFor(() => expect(flow.currentPath()).toBe("/review/review-1"), { timeout: 10_000 });
+    expect(JSON.parse(requests[0].body).text).toBe(pdfText);
   }, 20_000);
 });

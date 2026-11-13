@@ -7,6 +7,7 @@ import { openReviewStore } from "@/features/library/supabase-store";
 import { ReviewNeedsRerunError } from "@/features/library/store";
 import { RetentionControls } from "@/features/library/RetentionControls";
 import { ReviewResult } from "@/features/review/components/ReviewResult";
+import { scoreFromStoredReview } from "@/features/score";
 
 /**
  * A review read back from the library.
@@ -58,20 +59,29 @@ export default async function SavedReviewPage(
     </section>;
   }
   if (!stored) notFound();
+  const supportingDocuments = stored.documents.slice(1);
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col gap-10">
-      <div>
-        <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-navy)]">
-          Saved review
-        </p>
-        <h1 className="mt-3 font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl">
-          {stored.documents[0]?.title ?? "Your review"}
-        </h1>
-      </div>
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
+      <ReviewResult
+        review={stored.review}
+        documents={stored.documents}
+        reviewId={stored.id}
+        title={stored.title}
+        score={scoreFromStoredReview(stored)}
+        notices={<RetentionControls reviewId={stored.id} retention={stored} />}
+      />
 
-      <RetentionControls reviewId={stored.id} retention={stored} />
-      <ReviewResult review={stored.review} documents={stored.documents} reviewId={stored.id} />
+      {supportingDocuments.length > 0 ? (
+        <section aria-labelledby="saved-supporting-documents">
+          <h2 id="saved-supporting-documents" className="font-[family-name:var(--font-display)] text-lg font-bold">
+            Other documents in this review
+          </h2>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm [overflow-wrap:anywhere]">
+            {supportingDocuments.map((document) => <li key={document.id}>{document.title}</li>)}
+          </ul>
+        </section>
+      ) : null}
 
       <p>
         <Link

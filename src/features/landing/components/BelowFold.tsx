@@ -63,19 +63,7 @@ export function BelowFold() {
         </div>
       </section>
 
-      <div className="mx-auto grid w-full max-w-4xl gap-3 md:grid-cols-2 md:gap-6">
-        <div className="border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-4 py-3">
-          <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
-            Ask the document
-          </p>
-          <p className="mt-2 font-[family-name:var(--font-body)] text-sm italic text-[var(--color-navy-ink)]">
-            &ldquo;Can I have a roommate take over my lease?&rdquo;
-          </p>
-          <p className="mt-2 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]">
-            The agreement doesn&apos;t answer this. Reassignment isn&apos;t
-            mentioned anywhere in the text you gave us.
-          </p>
-        </div>
+      <div className="mx-auto w-full max-w-4xl">
         <div className="border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)] px-4 py-3">
           <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]">
             Your red lines

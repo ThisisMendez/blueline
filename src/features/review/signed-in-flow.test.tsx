@@ -1,4 +1,5 @@
 import { cleanup, screen, waitFor, within } from "@testing-library/react";
+import { firstSentences } from "@/features/review/components/report/report-helpers";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -24,6 +25,11 @@ vi.mock("@/features/library/supabase-store", () => ({
   openReviewStore: async () => adapters.store,
 }));
 
+// Only the PDF layout is substituted, so the lease text is exactly the fixture's.
+vi.mock("@/features/packet/extract/pdf", async (original) =>
+  (await import("@/features/review/session/testing")).withTextPdfs(await original()),
+);
+
 import SavedReviewPage from "@/app/(app)/review/[reviewId]/page";
 import ReviewPage from "@/app/(app)/review/page";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
@@ -35,6 +41,16 @@ import { createFixtureModelClient } from "~tests/support/fixture-model-client";
 import { renderScreen } from "~tests/support/render-screen";
 import { installRouteFetch } from "~tests/support/route-fetch";
 import { loadFixture } from "~tests/fixtures/index";
+
+import { renderReviewFlow, textPdf } from "./session/testing";
+
+/** The intake, and the saved review's own page for a review that was kept. */
+function renderFlow(intake: Awaited<ReturnType<typeof ReviewPage>>) {
+  return renderReviewFlow(intake, {
+    savedReview: (reviewId) =>
+      SavedReviewPage({ params: Promise.resolve({ reviewId }) } as PageProps<"/review/[reviewId]">),
+  });
+}
 
 const SIGNER_A: AccountsState = {
   kind: "signed-in",
@@ -89,28 +105,28 @@ afterEach(() => {
   restoreFetch();
 });
 
-async function pasteAndSubmit() {
+async function chooseAndSubmit() {
   const user = userEvent.setup();
-  renderScreen(await ReviewPage());
+  const flow = renderFlow(await ReviewPage());
 
   await user.click(screen.getByRole("button", { name: "I’m a renter" }));
-  const textarea = screen.getByLabelText("Paste your lease");
-  await user.click(textarea);
-  await user.paste(adhesionText);
+  await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", adhesionText));
+  await screen.findByText("lease.pdf · 1 page");
   await user.click(screen.getByRole("button", { name: "Read my lease" }));
   await waitFor(() => expect(screen.getByRole("textbox", { name: "Your red lines" })).toBeEnabled());
+  return flow;
 }
 
-describe("a signed-in signer pasting a lease", () => {
+describe("a signed-in signer choosing a lease", () => {
   it("explains a library load failure without losing the analysis entry point", async () => {
     vi.spyOn(store, "listForSigner").mockRejectedValueOnce(new Error("Database unavailable"));
-    renderScreen(await ReviewPage());
+    renderFlow(await ReviewPage());
     expect(screen.getByRole("alert")).toHaveTextContent("Your library could not be loaded.");
     expect(screen.getByRole("button", { name: "I’m a renter" })).toBeEnabled();
     expect(screen.queryByText(/No reviews in your library/)).not.toBeInTheDocument();
   });
   it("shows automatic expiry, extends from a later save, and removes the expired review and text", async () => {
-    await pasteAndSubmit();
+    await chooseAndSubmit();
     expect(screen.getByText("Mar 3, 2027, 09:00 AM UTC")).toHaveAttribute("dateTime", "2027-03-03T09:00:00.000Z");
     time += 12 * DAY;
     await userEvent.click(screen.getByRole("button", { name: "Save for 90 days from now" }));
@@ -118,11 +134,11 @@ describe("a signed-in signer pasting a lease", () => {
     const expiresAt = new Date(time + 90 * DAY).toISOString();
     expect(screen.getByText("May 14, 2027, 09:00 AM UTC")).toHaveAttribute("dateTime", expiresAt);
     cleanup();
-    renderScreen(await ReviewPage());
+    renderFlow(await ReviewPage());
     expect(within(screen.getByRole("region", { name: "Your reviews" })).getByText("May 14, 2027, 09:00 AM UTC")).toBeInTheDocument();
     cleanup();
     time += 90 * DAY;
-    renderScreen(await ReviewPage());
+    renderFlow(await ReviewPage());
     expect(screen.getByText(/No reviews in your library/)).toBeInTheDocument();
     expect(await store.findForSigner("signer-a", "review-1")).toBeNull();
     expect(store.size).toBe(0);
@@ -130,7 +146,7 @@ describe("a signed-in signer pasting a lease", () => {
   });
 
   it("keeps the previous expiry visible when an explicit save fails", async () => {
-    await pasteAndSubmit();
+    await chooseAndSubmit();
     vi.spyOn(store, "retainForSigner").mockRejectedValueOnce(new Error("Database unavailable"));
     await userEvent.click(screen.getByRole("button", { name: "Save for 90 days from now" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("The review was not saved for longer.");
@@ -142,24 +158,26 @@ describe("a signed-in signer pasting a lease", () => {
     vi.spyOn(store, "save").mockRejectedValueOnce(new Error("Database unavailable"));
     // There is no trusted review id, so personal red lines are unavailable too.
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    const flow = renderFlow(await ReviewPage());
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
-    await user.click(screen.getByLabelText("Paste your lease"));
-    await user.paste(adhesionText);
+    await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", adhesionText));
+    await screen.findByText("lease.pdf · 1 page");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
-    await screen.findByRole("heading", { name: /terms to look at/i });
-    expect(screen.getByRole("alert")).toHaveTextContent("This review was not saved to your library.");
+    await screen.findByRole("heading", { name: /flagged terms/i });
+    // Not kept, so it is read in this tab rather than on a saved page.
+    expect(flow.currentPath()).toBe("/review/report");
+    expect(screen.getByRole("alert")).toHaveTextContent("This review wasn't saved to your library.");
     expect(screen.queryByRole("link", { name: /open this review on its own page/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Save for 90 days from now" })).not.toBeInTheDocument();
     expect(store.size).toBe(0);
   });
 
   it("reads the ranked flags on screen and finds the review again after a reload", async () => {
-    await pasteAndSubmit();
+    const flow = await chooseAndSubmit();
 
     const flagsHeading = await screen.findByRole(
       "heading",
-      { name: /terms to look at/i },
+      { name: /flagged terms/i },
       { timeout: 10_000 },
     );
     expect(flagsHeading).toBeInTheDocument();
@@ -168,7 +186,7 @@ describe("a signed-in signer pasting a lease", () => {
     // lookup is scoped to the flag list because one sentence can be both a
     // flag and the sentence covering a checklist topic.
     const flagsSection = flagsHeading.closest("section")!;
-    expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+    expect(screen.getByText(firstSentences(sidecar.summary))).toBeInTheDocument();
     for (const planted of sidecar.plantedFlags) {
       expect(within(flagsSection).getByText(planted.sourceSentence)).toBeInTheDocument();
     }
@@ -180,8 +198,8 @@ describe("a signed-in signer pasting a lease", () => {
     expect(ranks).toEqual([...ranks].sort((left, right) => left - right));
     expect(severities[0]).toBe("Severity: High");
 
-    const savedLink = screen.getByRole("link", { name: /open this review on its own page/i });
-    expect(savedLink).toHaveAttribute("href", "/review/review-1");
+    // A kept review opens on its own page, without the history entry for processing.
+    expect(flow.navigations.at(-1)).toEqual({ kind: "replace", href: "/review/review-1" });
 
     // Reload: the same review, read back out of the store.
     cleanup();
@@ -191,9 +209,9 @@ describe("a signed-in signer pasting a lease", () => {
     renderScreen(reloaded);
     await waitFor(() => expect(screen.getByRole("textbox", { name: "Your red lines" })).toBeEnabled());
 
-    expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+    expect(screen.getByText(firstSentences(sidecar.summary))).toBeInTheDocument();
     const reloadedFlags = screen
-      .getByRole("heading", { name: /terms to look at/i })
+      .getByRole("heading", { name: /flagged terms/i })
       .closest("section")!;
     for (const planted of sidecar.plantedFlags) {
       expect(within(reloadedFlags).getByText(planted.sourceSentence)).toBeInTheDocument();
@@ -205,8 +223,8 @@ describe("a signed-in signer pasting a lease", () => {
   }, 20_000);
 
   it("keeps one signer's review away from another signer", async () => {
-    await pasteAndSubmit();
-    await screen.findByRole("heading", { name: /terms to look at/i }, { timeout: 10_000 });
+    await chooseAndSubmit();
+    await screen.findByRole("heading", { name: /flagged terms/i }, { timeout: 10_000 });
     cleanup();
 
     expect(await store.findForSigner("signer-a", "review-1")).not.toBeNull();
@@ -226,19 +244,19 @@ describe("a signed-in signer pasting a lease", () => {
   }, 20_000);
 
   it("lists the signer's own reviews and nobody else's", async () => {
-    await pasteAndSubmit();
-    await screen.findByRole("heading", { name: /terms to look at/i }, { timeout: 10_000 });
+    await chooseAndSubmit();
+    await screen.findByRole("heading", { name: /flagged terms/i }, { timeout: 10_000 });
     cleanup();
 
-    renderScreen(await ReviewPage());
+    renderFlow(await ReviewPage());
     const library = screen.getByRole("region", { name: /your reviews/i });
     expect(
-      within(library).getByRole("link", { name: "Lease text you pasted" }),
+      within(library).getByRole("link", { name: "Residential Lease Agreement" }),
     ).toHaveAttribute("href", "/review/review-1");
 
     cleanup();
     adapters.accounts = SIGNER_B;
-    renderScreen(await ReviewPage());
+    renderFlow(await ReviewPage());
     expect(screen.getByText(/No reviews in your library/)).toBeInTheDocument();
   }, 20_000);
 });

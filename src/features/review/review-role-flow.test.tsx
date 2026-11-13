@@ -6,11 +6,12 @@ import SavedReviewPage from "@/app/(app)/review/[reviewId]/page";
 import ReviewPage from "@/app/(app)/review/page";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
 import { InMemoryReviewStore } from "@/features/library/memory-store";
-import { createQuestionRoute } from "@/features/questions/route";
 import { createRedLineRoutes } from "@/features/red-lines/routes";
 import { access, addendum, cap, lateFee, lease, repairRedLine, repairs, roleFixtureModel as model } from "~tests/support/role-fixture-model";
 import { renderScreen } from "~tests/support/render-screen";
 import { installRouteFetch } from "~tests/support/route-fetch";
+
+import { renderReviewFlow, textPdf } from "./session/testing";
 
 const { accounts, store } = vi.hoisted(() => ({
   accounts: { kind: "signed-in", signer: { id: "owner", email: "owner@example.test" } } as const,
@@ -18,6 +19,10 @@ const { accounts, store } = vi.hoisted(() => ({
 }));
 vi.mock("@/features/auth/session", () => ({ getAccountsState: async () => accounts }));
 vi.mock("@/features/library/supabase-store", () => ({ openReviewStore: async () => store.current }));
+// Only the PDF layout is substituted, so the lease text is exactly the fixture's.
+vi.mock("@/features/packet/extract/pdf", async (original) =>
+  (await import("@/features/review/session/testing")).withTextPdfs(await original()),
+);
 
 
 let restore: (() => void) | undefined;
@@ -42,37 +47,39 @@ it("uses one selected role through missing documents and reopening, with differe
       model, now, accounts: async () => accounts, store: async () => store.current,
       newReviewId: () => `review-${++nextId}`,
     }),
-    "/api/questions": createQuestionRoute(model),
     "/api/red-lines": redLines.preferences,
     "/api/red-lines/matches": redLines.matches,
   });
 
   const user = userEvent.setup();
-  renderScreen(await ReviewPage());
+  const renderFlow = async () => renderReviewFlow(await ReviewPage(), {
+    savedReview: (reviewId) =>
+      SavedReviewPage({ params: Promise.resolve({ reviewId }), searchParams: Promise.resolve({}) }),
+  });
+  await renderFlow();
   await user.click(screen.getByRole("button", { name: "I’m a landlord" }));
-  await user.click(screen.getByLabelText("Paste your lease"));
-  await user.paste(lease);
+  await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", lease));
+  await screen.findByText("lease.pdf · 1 page");
   await user.click(screen.getByRole("button", { name: "Read my lease" }));
   await screen.findByRole("heading", { name: /points at a document that isn.t here/i });
+  await user.click(screen.getByRole("button", { name: "Add the missing document" }));
   expect(screen.getByText("Reviewing as a landlord")).toBeInTheDocument();
 
   async function supplyAddendum() {
-    await user.click(screen.getByRole("button", { name: "Add another document" }));
-    await user.type(screen.getByLabelText("Name for document 2"), "Fee Addendum");
-    await user.click(screen.getByLabelText("Paste document 2"));
-    await user.paste(addendum);
+    await user.upload(screen.getByLabelText("Add another PDF"), textPdf("Fee Addendum.pdf", addendum));
+    await screen.findByText("Fee Addendum.pdf · 1 page");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
   }
 
-  async function askAboutMyDeadline() {
-    await user.type(screen.getByRole("textbox", { name: "Your question" }), "What is my deadline?");
-    await user.click(screen.getByRole("button", { name: "Ask about this agreement" }));
-    return within(screen.getByRole("region", { name: "Ask about your agreement" }));
+  // Q&A is out of the beta: no report offers to answer questions.
+  function expectNoQuestionPanel() {
+    expect(screen.queryByRole("region", { name: "Ask about your agreement" })).toBeNull();
+    expect(screen.queryByRole("textbox", { name: "Your question" })).toBeNull();
   }
 
   await supplyAddendum();
-  await screen.findByRole("heading", { name: "Landlord review" });
-  const roleReport = () => screen.getByRole("heading", { name: /terms to look at/i }).closest("section")!;
+  await screen.findByText("Reviewed as a landlord");
+  const roleReport = () => screen.getByRole("heading", { name: /flagged terms/i }).closest("section")!;
   expect(within(roleReport()).getAllByRole("heading", { level: 3 }).map((node) => node.textContent)).toEqual([
     "Repair and access timelines conflict", "Narrow notice window", "Daily late charge",
   ]);
@@ -81,7 +88,7 @@ it("uses one selected role through missing documents and reopening, with differe
   expect(within(landlordFee).getByText(/simplify collections/)).toBeInTheDocument();
   expect(within(landlordFee).getByText(lateFee)).toBeInTheDocument();
   expect(within(landlordFee).getByText(cap)).toBeInTheDocument();
-  expect(within(landlordFee).getByText(/Fee Addendum, characters/)).toBeInTheDocument();
+  expect(within(landlordFee).getByText("From Fee Addendum")).toBeInTheDocument();
   await user.click(within(landlordFee).getByRole("button", { name: "Read explanation" }));
   expect(within(landlordFee).getByText(/harder to collect/)).toBeInTheDocument();
   const conflict = within(roleReport()).getByRole("article", { name: "Repair and access timelines conflict" });
@@ -93,17 +100,18 @@ it("uses one selected role through missing documents and reopening, with differe
   expect(within(repairCoverage).getByText("Found", { exact: true })).toBeInTheDocument();
   const accessCoverage = screen.getByRole("article", { name: "Access to the home" });
   expect(within(accessCoverage).getByText(access)).toBeInTheDocument();
-  expect(within(accessCoverage).getByText(/Fee Addendum, characters/)).toBeInTheDocument();
+  expect(within(accessCoverage).getByText("From Fee Addendum")).toBeInTheDocument();
   const depositCoverage = screen.getByRole("article", { name: "Deposit deductions and return" });
-  expect(within(depositCoverage).getByText("Not found", { exact: true })).toBeInTheDocument();
+  expect(within(depositCoverage).getByText("Not found in the text reviewed", { exact: true })).toBeInTheDocument();
   expect(within(depositCoverage).getByText(/what deductions will we document/i)).toBeInTheDocument();
-  expect(screen.queryByRole("heading", { name: "Renter review" })).not.toBeInTheDocument();
+  expect(screen.queryByText("Reviewed as a renter")).not.toBeInTheDocument();
+  expectNoQuestionPanel();
 
   cleanup();
   renderScreen(await SavedReviewPage({ params: Promise.resolve({ reviewId: "review-1" }), searchParams: Promise.resolve({}) }));
-  expect(screen.getByRole("heading", { name: "Landlord review" })).toBeInTheDocument();
+  expect(screen.getByText("Reviewed as a landlord")).toBeInTheDocument();
   expect(within(roleReport()).getByText(cap)).toBeInTheDocument();
-  expect(await (await askAboutMyDeadline()).findByText(repairs)).toBeInTheDocument();
+  expectNoQuestionPanel();
   const redLineInput = screen.getByRole("textbox", { name: "Your red lines" });
   await waitFor(() => expect(redLineInput).toBeEnabled());
   await user.type(redLineInput, repairRedLine);
@@ -112,14 +120,14 @@ it("uses one selected role through missing documents and reopening, with differe
   expect(within(roleReport()).getByText("Severity: High")).toBeInTheDocument();
 
   cleanup();
-  renderScreen(await ReviewPage());
-  expect(screen.queryByLabelText("Paste your lease")).not.toBeInTheDocument();
+  await renderFlow();
+  expect(screen.queryByLabelText(/Choose file/)).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "I’m a renter" }));
-  await user.click(screen.getByLabelText("Paste your lease"));
-  await user.paste(lease);
+  await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", lease));
+  await screen.findByText("lease.pdf · 1 page");
   await supplyAddendum();
-  await screen.findByRole("heading", { name: "Renter review" });
-  expect(screen.queryByRole("heading", { name: "Landlord review" })).not.toBeInTheDocument();
+  await screen.findByText("Reviewed as a renter");
+  expect(screen.queryByText("Reviewed as a landlord")).not.toBeInTheDocument();
   expect(within(roleReport()).getAllByRole("heading", { level: 3 }).map((node) => node.textContent)).toEqual([
     "Early-exit payment", "Daily late charge", "Narrow notice window",
   ]);
@@ -132,5 +140,5 @@ it("uses one selected role through missing documents and reopening, with differe
   expect(within(renterFee).getByText("You could owe $300 after three late days.")).toBeInTheDocument();
   expect(screen.getByText("Rent carries a $100 daily late fee with a $300 monthly cap.")).toBeInTheDocument();
   expect(screen.getByText(/haven’t checked them against local law|haven't checked them against local law/)).toBeInTheDocument();
-  expect(await (await askAboutMyDeadline()).findByText(access)).toBeInTheDocument();
+  expectNoQuestionPanel();
 });

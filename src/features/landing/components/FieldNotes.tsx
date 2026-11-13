@@ -1,7 +1,7 @@
 const NOTES = [
   {
     term: "What this is",
-    body: "A plain-English summary, ranked and cited risk flags, a coverage checklist, document-grounded answers, and a proposed edit for each flag.",
+    body: "A plain-English summary, ranked and cited risk flags, a coverage checklist, and a proposed edit for each flag.",
   },
   {
     term: "What this isn't",
@@ -9,7 +9,7 @@ const NOTES = [
   },
   {
     term: "What it reads",
-    body: "Pasted text and PDFs with selectable text. Scans and photographs of pages are out: if a machine can't read the text reliably, we won't guess at it.",
+    body: "PDFs with selectable text. Scans and photographs of pages are out: if a machine can't read the text reliably, we won't guess at it.",
   },
   {
     term: "What it covers",

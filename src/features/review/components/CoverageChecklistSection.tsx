@@ -11,23 +11,18 @@ import type { ExtractedDocument } from "@/features/packet/types";
 /**
  * The published coverage checklist, on screen.
  *
- * The signer reads the whole list — all six topics, what each one means, and
- * which of them this agreement addresses — rather than a list of complaints.
- * A not-found item wears the system's reserved third state: a 2px dashed
- * navy border and the words "Not found", never a severity badge, never the
+ * All six topics, in published order, each with what it means. A not-found
+ * item wears the system's reserved third state: a dashed navy border and the
+ * words "Not found in the text reviewed", never a severity badge, never the
  * alert treatment, and no red anywhere in this section. Absence and risk are
  * different kinds of thing, so they do not look alike.
  *
  * Neither state is carried by colour or border alone: every item says in
- * words which one it is, so the distinction survives a screen reader, a
- * greyscale print and a high-contrast mode.
+ * words which one it is.
  */
 
-const FOUND_LABEL = "Found";
-const NOT_FOUND_LABEL = "Not found";
-
-const NOT_FOUND_EXPLANATION =
-  "We did not locate this topic in the complete agreement.";
+export const FOUND_LABEL = "Found";
+export const NOT_FOUND_LABEL = "Not found in the text reviewed";
 
 const CLARIFICATION_QUESTIONS: Record<ChecklistTopicId, Record<ReviewRole, string>> = {
   "deposit-deductions-and-return": {
@@ -56,11 +51,11 @@ const CLARIFICATION_QUESTIONS: Record<ChecklistTopicId, Record<ReviewRole, strin
   },
 };
 
-const BADGE_BASE =
-  "inline-block px-2 py-1 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]";
+const STATUS =
+  "shrink-0 px-1.5 py-0.5 font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-wide text-[var(--color-navy)]";
 const TOPIC_NAME =
-  "font-[family-name:var(--font-display)] text-lg font-bold leading-tight text-[var(--color-navy-ink)]";
-const TOPIC_DESCRIPTION =
+  "font-[family-name:var(--font-display)] text-base font-bold leading-snug text-[var(--color-navy-ink)]";
+const SMALL =
   "font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--color-navy-ink)]";
 
 function FoundCard({
@@ -75,26 +70,19 @@ function FoundCard({
   const headingId = `coverage-${topic.id}-heading`;
 
   return (
-    <article
-      aria-labelledby={headingId}
-      className="border-2 border-[var(--color-navy)] bg-[var(--color-paper-deep)]"
-    >
-      <div className="flex flex-col gap-3 p-6 sm:p-8">
-        <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h3 id={headingId} className={TOPIC_NAME}>
-            {topic.name}
-          </h3>
-          <span className={`${BADGE_BASE} border-2 border-[var(--color-navy)]`}>
-            {FOUND_LABEL}
-          </span>
-        </div>
-        <p className={TOPIC_DESCRIPTION}>{topic.description}</p>
-        <blockquote className="border-l-2 border-[var(--color-navy)] pl-4 font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          {item.sourceSentence}
-        </blockquote>
+    <article aria-labelledby={headingId} className="border-2 border-[var(--color-navy)] bg-[var(--color-paper)] p-3">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h3 id={headingId} className={TOPIC_NAME}>
+          {topic.name}
+        </h3>
+        <span className={`${STATUS} border-2 border-[var(--color-navy)]`}>{FOUND_LABEL}</span>
       </div>
-      <p className="border-t-2 border-[var(--color-navy)] px-6 py-4 font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)] sm:px-8">
-        Source: {documentTitle}, characters {item.sourceStart} to {item.sourceEnd}
+      <p className={`mt-0.5 ${SMALL}`}>{topic.description}</p>
+      <blockquote className="mt-2 border-l-2 border-[var(--color-navy)] pl-3 [overflow-wrap:anywhere] font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--color-navy-ink)]">
+        {item.sourceSentence}
+      </blockquote>
+      <p className="mt-1 pl-3 [overflow-wrap:anywhere] font-[family-name:var(--font-data)] text-xs leading-relaxed text-[var(--color-navy)]">
+        From {documentTitle}
       </p>
     </article>
   );
@@ -112,21 +100,14 @@ function NotFoundCard({
   return (
     <article
       aria-labelledby={headingId}
-      className="flex flex-col gap-3 border-2 border-dashed border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-6 sm:p-8"
+      className="border-2 border-dashed border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-3"
     >
-      <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h3 id={headingId} className={TOPIC_NAME}>
-          {topic.name}
-        </h3>
-        <span
-          className={`${BADGE_BASE} border-2 border-dashed border-[var(--color-navy)]`}
-        >
-          {NOT_FOUND_LABEL}
-        </span>
-      </div>
-      <p className={TOPIC_DESCRIPTION}>{topic.description}</p>
-      <p className={TOPIC_DESCRIPTION}>{NOT_FOUND_EXPLANATION}</p>
-      {role ? <p className={TOPIC_DESCRIPTION}>{CLARIFICATION_QUESTIONS[topic.id][role]}</p> : null}
+      <h3 id={headingId} className={TOPIC_NAME}>
+        {topic.name}
+      </h3>
+      <p className={`mt-0.5 ${SMALL}`}>{topic.description}</p>
+      <p className={`mt-2 inline-block ${STATUS} border-2 border-dashed border-[var(--color-navy)]`}>{NOT_FOUND_LABEL}</p>
+      {role ? <p className={`mt-2 ${SMALL}`}>You could ask: {CLARIFICATION_QUESTIONS[topic.id][role]}</p> : null}
     </article>
   );
 }
@@ -145,35 +126,26 @@ export function CoverageChecklistSection({
   if (coverage.items.length === 0) return null;
 
   const titleById = new Map(documents.map((document) => [document.id, document.title]));
-  const absent = notFoundItems(coverage);
+  const absent = notFoundItems(coverage).length;
+  const found = coverage.items.length - absent;
 
   return (
-    <section
-      aria-labelledby="coverage-checklist-heading"
-      className="flex flex-col gap-6"
-    >
+    <section aria-labelledby="coverage-checklist-heading" className="flex flex-col gap-3">
       <div>
         <h2
           id="coverage-checklist-heading"
-          className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl"
+          className="font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)]"
         >
-          The six topics we check on every lease
+          Six topics we check
         </h2>
-        <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          We check these topics across every document you supplied. Found
-          topics show their source sentence. Not-found items identify topics
-          we did not locate.
-        </p>
-        <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
-          {absent.length === 0
-            ? "We located all six topics in your documents."
-            : absent.length === 1
-              ? "We did not locate one of the six topics."
-              : `We did not locate ${absent.length} of the six topics.`}
+        <p className={`mt-1 ${SMALL}`}>
+          {absent === 0
+            ? "We found all 6 in your documents."
+            : `We found ${found} of 6 in your documents.`}
         </p>
       </div>
 
-      <ol className="flex list-none flex-col gap-4 p-0">
+      <ol className="flex list-none flex-col gap-2 p-0">
         {coverage.items.map((item: CoverageItem) => {
           const topic = checklistTopic(item.topicId);
           if (!topic) return null;
@@ -184,9 +156,7 @@ export function CoverageChecklistSection({
                 <FoundCard
                   topic={topic}
                   item={item}
-                  documentTitle={
-                    titleById.get(item.sourceDocumentId) ?? item.sourceDocumentId
-                  }
+                  documentTitle={titleById.get(item.sourceDocumentId) ?? item.sourceDocumentId}
                 />
               ) : (
                 <NotFoundCard topic={topic} role={role} />

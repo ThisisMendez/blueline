@@ -6,7 +6,7 @@
 
 **Depends on:** the completed report's review role for recipient selection. Uses clause headings from 25 if present. [Review-role implementation](../spec.md#review-role-implementation).
 
-**Status:** ready-for-agent
+**Status:** a smaller version is implemented in the beta candidate. The report shows up to three verified High or Medium findings with usable proposed wording. Renters can edit and copy a message for each finding. Landlords can edit and copy a proposed clarification. The combined email, tone choices, and download are still open.
 
 **Scope:** a new `src/features/negotiation/` folder (a pure `assembleNegotiationEmail` function, its tests and a `NegotiationDraft` component), wired into `ReviewResult.tsx` and the proposed-edit panel in `RiskFlagCard.tsx`. It reads the completed report and assembles the draft locally.
 

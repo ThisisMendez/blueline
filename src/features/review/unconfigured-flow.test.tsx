@@ -1,6 +1,7 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import { firstSentences } from "@/features/review/components/report/report-helpers";
 import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import ReviewPage from "@/app/(app)/review/page";
 import { createAnalysisRoute } from "@/features/analysis/server/route";
@@ -9,9 +10,15 @@ import { InMemoryReviewStore } from "@/features/library/memory-store";
 import { openReviewStore } from "@/features/library/supabase-store";
 
 import { createFixtureModelClient } from "~tests/support/fixture-model-client";
-import { renderScreen } from "~tests/support/render-screen";
 import { installRouteFetch } from "~tests/support/route-fetch";
 import { loadFixture } from "~tests/fixtures/index";
+
+import { renderReviewFlow, textPdf } from "./session/testing";
+
+// Only the PDF layout is substituted, so the lease text is exactly the fixture's.
+vi.mock("@/features/packet/extract/pdf", async (original) =>
+  (await import("@/features/review/session/testing")).withTextPdfs(await original()),
+);
 
 /**
  * Supabase absent, nothing mocked.
@@ -48,22 +55,22 @@ afterEach(() => {
 });
 
 describe("the product with accounts unavailable", () => {
-  it("says so, offers no library or saving, and still reviews a pasted lease", async () => {
+  it("says so, offers no library or saving, and still reviews a lease", async () => {
     expect(await getAccountsState()).toEqual({ kind: "unconfigured" });
     expect(await openReviewStore()).toBeNull();
 
     const user = userEvent.setup();
-    renderScreen(await ReviewPage());
+    const flow = renderReviewFlow(await ReviewPage());
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     expect(screen.getByText("Accounts aren't running yet")).toBeInTheDocument();
     expect(screen.getByText("Not saved by Blueline")).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: /your reviews/i })).toBeNull();
 
-    const textarea = screen.getByLabelText("Paste your lease");
-    await user.click(textarea);
-    await user.paste(cleanText);
+    await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", cleanText));
+    await screen.findByText("lease.pdf · 1 page");
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
+    await waitFor(() => expect(flow.currentPath()).toBe("/review/report"));
 
     expect(
       await screen.findByRole(
@@ -72,7 +79,7 @@ describe("the product with accounts unavailable", () => {
         { timeout: 10_000 },
       ),
     ).toBeInTheDocument();
-    expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+    expect(screen.getByText(firstSentences(sidecar.summary))).toBeInTheDocument();
 
     // Nothing saved, nothing to open later, and no claim that the lease is fine.
     expect(store.size).toBe(0);
