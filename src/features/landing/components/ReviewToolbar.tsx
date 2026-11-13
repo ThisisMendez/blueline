@@ -10,13 +10,10 @@ export function ReviewToolbar() {
   return (
     <section
       aria-labelledby="review-toolbar-heading"
-      className="mx-auto max-w-6xl border-y-2 border-[var(--color-navy)] py-5 sm:py-6"
+      className="mx-auto max-w-6xl border-y-2 border-[var(--color-navy)] py-2.5 sm:py-3"
     >
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
+      <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center lg:gap-8">
         <div className="shrink-0 lg:border-r lg:border-[var(--color-navy)] lg:pr-8">
-          <p className="font-[family-name:var(--font-data)] text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-red-ink)]">
-            First version
-          </p>
           <h2
             id="review-toolbar-heading"
             className="mt-1 font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-[var(--color-navy-ink)] sm:text-4xl"
@@ -24,7 +21,7 @@ export function ReviewToolbar() {
             What you can review
           </h2>
         </div>
-        <ul className="grid flex-1 grid-cols-2 gap-y-4 sm:grid-cols-4 sm:gap-0">
+        <ul className="grid flex-1 grid-cols-2 gap-y-2 sm:grid-cols-4 sm:gap-0">
           {reviewTypes.map((type, index) => (
             <li
               key={type.label}
@@ -43,9 +40,6 @@ export function ReviewToolbar() {
           ))}
         </ul>
       </div>
-      <p className="mt-5 border-t border-[var(--color-navy)] pt-3 font-[family-name:var(--font-data)] text-[10px] uppercase tracking-[0.14em] text-[var(--color-navy)]/75">
-        Blueline Redline / exact source sentences / clearer signing decisions
-      </p>
     </section>
   );
 }

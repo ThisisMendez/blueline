@@ -5,13 +5,17 @@ import { BelowFold } from "./components/BelowFold";
 import { BrandHero } from "./components/BrandHero";
 import { FieldNotes } from "./components/FieldNotes";
 
-// Layer 1 boundary: the landing page says Blueline reads the lease text and
-// does not check it against local law, and never calls the checklist topics
-// "protections", which reads as legal protection.
 describe("landing page capability boundary", () => {
+// Layer 1 boundary (ADR 0014): the hero says Blueline reads the lease text
+// and does not check it against local law. The role choice (ADR 0015) is live.
   it("says the review does not check the lease against local law", () => {
     render(<BrandHero />);
     expect(screen.getByText(/don't\s+check it against local law/)).toBeInTheDocument();
+  });
+
+  it("asks the signer to choose renter or landlord", () => {
+    render(<BrandHero />);
+    expect(screen.getByText(/Choose renter or landlord/)).toBeInTheDocument();
   });
 
   it("lists a local-law check among what the product isn't", () => {
@@ -20,16 +24,10 @@ describe("landing page capability boundary", () => {
   });
 
   it("calls the coverage checklist topics, not protections", () => {
-    // BelowFold animates on scroll; jsdom has neither API.
-    window.matchMedia ??= ((query: string) => ({
-      matches: true, media: query, onchange: null,
-      addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {}, dispatchEvent: () => false,
-    })) as unknown as typeof window.matchMedia;
-    globalThis.IntersectionObserver ??= class {
-      observe() {} unobserve() {} disconnect() {} takeRecords() { return []; }
-    } as unknown as typeof IntersectionObserver;
     const { container } = render(<BelowFold />);
-    expect(container.textContent).toMatch(/six topics/);
+    const checklist = screen.getByRole("region", { name: "What We Check" });
+    expect(checklist).toHaveTextContent(/six topics/);
+    expect(checklist.querySelectorAll("li")).toHaveLength(6);
     expect(container.textContent).not.toMatch(/protections/);
   });
 });
