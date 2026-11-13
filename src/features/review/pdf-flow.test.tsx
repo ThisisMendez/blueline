@@ -1,4 +1,5 @@
 import { screen, waitFor, within } from "@testing-library/react";
+import { firstSentences } from "@/features/review/components/report/report-helpers";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -116,10 +117,10 @@ describe("a signer with a PDF lease", () => {
 
     const flagsHeading = await screen.findByRole(
       "heading",
-      { name: /terms to look at/i },
+      { name: /flagged terms/i },
       { timeout: 10_000 },
     );
-    expect(screen.getByText(sidecar.summary)).toBeInTheDocument();
+    expect(screen.getByText(firstSentences(sidecar.summary))).toBeInTheDocument();
 
     // A sentence can be both a flag and the sentence covering a checklist
     // topic, so the flag assertions below look inside the flag list.
@@ -202,11 +203,11 @@ describe("a signer whose PDF is a scan", () => {
 
     // The rejection is its own outcome. No summary, no flags, no clean
     // review, and nothing that could be read as "this lease is fine".
-    expect(screen.queryByRole("heading", { name: /terms to look at/i })).toBeNull();
+    expect(screen.queryByRole("heading", { name: /flagged terms/i })).toBeNull();
     expect(
       screen.queryByRole("heading", { name: /no material flags found/i }),
     ).toBeNull();
-    expect(screen.queryByText("What this agreement says")).toBeNull();
+    expect(screen.queryByText("About this agreement")).toBeNull();
     expect(screen.getByRole("button", { name: "Read my lease" })).toBeDisabled();
 
     // Nothing was sent, so nothing was kept.

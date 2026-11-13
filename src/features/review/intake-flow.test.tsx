@@ -129,7 +129,7 @@ describe("choosing a side and a lease", () => {
     expect(flow.navigations[1]).toEqual({ kind: "replace", href: "/review/report" });
     expect(await screen.findByRole("heading", { level: 1, name: "Residential Lease Agreement" })).toBeInTheDocument();
     expect(screen.getByText(/Reviewed as a landlord/)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /terms to look at/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /flagged terms/i })).toBeInTheDocument();
 
     expect(requests).toHaveLength(1);
     expect(JSON.parse(requests[0])).toEqual({ role: "landlord", title: "Residential Lease Agreement", text: adhesion.text });
@@ -283,7 +283,7 @@ describe("a lease that names a document that isn't here", () => {
     await addPdf(user, textPdf("pets.pdf", petAddendum.text));
     await user.click(screen.getByRole("button", { name: "Read my lease" }));
     await waitFor(() => expect(flow.currentPath()).toBe("/review/report"));
-    expect(await screen.findByRole("heading", { name: /terms to look at/i })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: /flagged terms/i })).toBeInTheDocument();
     expect(JSON.parse(requests[1]).referenced.map((document: { title: string }) => document.title)).toEqual(["fees", "pets"]);
   }, 30_000);
 });
