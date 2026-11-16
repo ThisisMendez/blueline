@@ -4,7 +4,7 @@ Use this checklist to review Blueline briefs, specs, research summaries, and des
 
 | ID | Check | Pass when |
 | --- | --- | --- |
-| 1 | **Name** | The public product name is **Blueline Lease**. Reserve “Blueline Redline” for the campaign motto and “Blueline” for project shorthand. ([Brand](../BRAND.md)) |
+| 1 | **Name** | Use **Blueline Lease** publicly, with **Blueline Lease™** on the first visible homepage mention. Use **Blueline** for internal project shorthand. ([Brand](../BRAND.md)) |
 | 2 | **First-version audience and scope** | Any first-version proposal serves a lease signer with a residential lease or renewal in hand. Other contract categories are clearly labeled as future possibilities, not current requirements. ([Brief](../PRD.md)) |
 | 3 | **Evidence** | Factual claims about users, competitors, prices, or legal effects point to a source. Claims without support are labeled as assumptions or questions, not findings. ([Research](../research/summary.md), [brief](../PRD.md)) |
 | 4 | **Domain language** | Terms such as risk flag, severity, not-found item, preference match, complete agreement, and counter-offer are used as defined in [CONTEXT.md](../CONTEXT.md). |

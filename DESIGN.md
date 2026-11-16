@@ -67,7 +67,7 @@ components:
 
 **Creative North Star: "The Field Guide"**
 
-Blueline Lease uses a field guide as the model for its worked examples: each flagged clause is identified, labeled, and cited. The homepage opens with a plain description of the review and a callout for the campaign motto, followed by the worked examples. Navy carries the wordmark, structure, and primary action. Red marks citations and alerts, and Red Ink underlines “Redline” in the homepage motto.
+Blueline Lease uses a field guide as the model for its worked examples: each flagged clause is identified, labeled, and cited. The homepage opens with a plain description of the review and a callout for the campaign motto, followed by the worked examples. Navy carries the wordmark, structure, and primary action. Red marks citations and alerts, and Red Ink draws the rule beside the homepage motto.
 
 The system is calm and procedural. Worked examples use generous card padding (2.5–3rem) and precise leader lines inside each specimen. A two-layer shadow separates the paper cards from the page.
 
@@ -157,7 +157,7 @@ Radius-0 by default: every card, badge, border, and button is a sharp rectangle 
 - **Internal Padding:** `1.5rem` mobile, `2.5rem`–`3rem` at `md:`/`lg:`.
 
 ### Navigation
-Single-row header, `max-w-6xl`, bottom-bordered (2px navy). Wordmark in Archivo bold with the "Redline" half of the name set in signal red as the one static (non-diagnostic) use of red in the wordmark. One nav action — an underlined "Sign in" text link, navy at rest, red on hover. No mobile menu, no additional nav items; the same pattern repeats in the footer.
+The header uses a single row, `max-w-6xl`, and a 2px navy bottom border. The wordmark uses bold Archivo in navy, with the blue and red document mark beside it. Desktop displays the main links and Analyze My Lease. Mobile places the links in a Menu control.
 
 ### Specimen Card (signature component)
 The hero's defining custom pattern: a two-column bordered plate holding a quoted lease clause (Source Serif 4) with one or more phrases wrapped in `.cited-mark`, each connected by a runtime-measured SVG leader line (`getBoundingClientRect`, redrawn on resize via `ResizeObserver`) to a margin label carrying a badge plus a one-line plain-English gloss. Lines are hidden entirely below `md:` (768px). On entering the viewport (`IntersectionObserver`, 0.3 threshold), leader lines draw on via `stroke-dashoffset` (0.9s) and margin labels fade/settle in 0.6s at a 0.5s delay; `prefers-reduced-motion` disables both and renders the end state immediately. This measured-leader-line pattern is reusable wherever the product needs to connect an exact source phrase to a plain-English explanation — it is the system's signature interaction, not a one-off hero effect.

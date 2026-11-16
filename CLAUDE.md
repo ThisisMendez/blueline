@@ -1,10 +1,10 @@
-# Blueline
+# Blueline Lease
 
 ## Read these first
 
 - `PRD.md` holds the first-version brief.
 - `.scratch/lease-review/spec.md` holds the implementation spec; tickets are tracked in `.scratch/lease-review/issues/`.
-- `BRAND.md` holds the product name, palette, and voice.
+- Branding and user-facing copy follow `BRAND.md`. See ADR 0018 for the site domain and redirect.
 - `CONTEXT.md` holds the domain vocabulary. Use its terms, not the ones it lists to avoid.
 - `research/summary.md` holds the user research behind these decisions.
 

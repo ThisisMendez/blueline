@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useRef } from "react";
 
-import { PRODUCT_NAME } from "@/shared/brand";
+import { PRODUCT_MARK, PRODUCT_NAME, PRODUCT_TRADEMARK } from "@/shared/brand";
 
 const navigation = [
   { label: "How It Works", href: "/how-it-works" },
@@ -18,6 +19,7 @@ const navLinkClassName =
   "inline-flex min-h-11 items-center text-[var(--color-navy)] underline-offset-4 hover:text-[var(--color-red-ink)] hover:underline focus-visible:underline";
 
 export function Nav() {
+  const isHome = usePathname() === "/";
   const menu = useRef<HTMLDetailsElement>(null);
   const menuToggle = useRef<HTMLElement>(null);
 
@@ -34,7 +36,7 @@ export function Nav() {
           aria-label={`${PRODUCT_NAME} home`}
         >
           <Image
-            src="/brand/blueline-redline-mark.png"
+            src={PRODUCT_MARK}
             alt=""
             width={32}
             height={32}
@@ -42,7 +44,7 @@ export function Nav() {
             priority
           />
           <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight text-[var(--color-navy-ink)]">
-            {PRODUCT_NAME}
+            {isHome ? PRODUCT_TRADEMARK : PRODUCT_NAME}
           </span>
         </Link>
         <details

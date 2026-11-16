@@ -4,6 +4,7 @@ import Link from "next/link";
 import { linkClassName, PageShell, Panel, primaryActionClassName, StatusTag } from "@/features/site/PageShell";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pricing" },
   title: "Pricing",
   description: "Blueline Lease is free while in beta. No cost and no card.",
 };

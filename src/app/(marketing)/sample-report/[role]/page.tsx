@@ -9,10 +9,15 @@ import { canIssueReviewContinuation } from "@/features/review/session/continuati
 import { scoreFromStoredReview } from "@/features/score";
 import { primaryActionClassName } from "@/features/site/PageShell";
 
-export const metadata: Metadata = {
-  title: "Sample lease reports",
-  description: "Explore an example rental agreement from the renter and landlord perspectives.",
-};
+export async function generateMetadata({ params }: PageProps<"/sample-report/[role]">): Promise<Metadata> {
+  const { role } = await params;
+  const validRole = REVIEW_ROLES.find((value) => value === role);
+  return {
+    title: "Sample lease reports",
+    description: "Explore an example rental agreement from the renter and landlord perspectives.",
+    ...(validRole ? { alternates: { canonical: `/sample-report/${validRole}` } } : {}),
+  };
+}
 
 const LABELS = { renter: "Renter", landlord: "Landlord" } as const;
 const ROLE_LINK = "inline-flex min-h-11 items-center border-2 border-[var(--color-navy)] px-4 py-2 text-sm font-bold text-[var(--color-navy)] hover:bg-[var(--color-paper-deep)] aria-[current=page]:bg-[var(--color-navy)] aria-[current=page]:text-[var(--color-paper)]";

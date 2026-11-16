@@ -7,6 +7,7 @@ import { linkClassName, PageShell, Panel } from "@/features/site/PageShell";
 import { availableRhodeIslandReferences, rhodeIslandPilotEnabled } from "@/features/site/rhode-island-references";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources/rhode-island" },
   title: "Rhode Island rental law",
   description: "Official Rhode Island law links for residential renters and landlords.",
 };

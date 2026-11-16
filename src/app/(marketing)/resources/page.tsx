@@ -5,6 +5,7 @@ import { linkClassName, PageShell, Panel } from "@/features/site/PageShell";
 import { rhodeIslandPilotEnabled } from "@/features/site/rhode-island-references";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/resources" },
   title: "Resources",
   description: "Official U.S. government sources for renters and landlords.",
 };

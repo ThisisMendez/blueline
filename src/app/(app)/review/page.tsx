@@ -9,6 +9,7 @@ import { LibraryList } from "@/features/review/components/LibraryList";
 import { DocumentIntake } from "@/features/review/components/DocumentIntake";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/review" },
   title: "Review a lease",
 };
 

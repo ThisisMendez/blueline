@@ -1,6 +1,6 @@
 # Version control and releases
 
-Blueline is in beta. Version 0.1.0 shipped from `main` at commit `66bd8d7` through [PR #8](https://github.com/ThisisMendez/blueline/pull/8). Version 0.2.0 shipped at `32db23c`. Version 0.3.0 adds interactive sample reports, a simpler phone menu, more landlord recommendations, and support for signup codes. GitHub releases record the deployed commits and activation status.
+Blueline Lease is in beta. Version 0.1.0 shipped from `main` at commit `66bd8d7` through [PR #8](https://github.com/ThisisMendez/blueline/pull/8). Version 0.2.0 shipped at `32db23c`. Version 0.3.0 adds interactive sample reports, a simpler phone menu, more landlord recommendations, and support for signup codes. GitHub releases record the deployed commits and activation status.
 
 ## Version numbers
 
@@ -19,4 +19,16 @@ Use `major.minor.patch`. During beta, keep the major number at zero. Add one to 
 - Run local checks before merging. For a direct production release, merge the tested branch into `main`, watch the Vercel production deployment, and check the public routes before publishing the tag and release. GitHub may build a preview automatically when a branch is pushed.
 - If production verification fails, restore the last working Vercel deployment and reconcile `main` with a revert. Keep published tags pointing at their original commits. Version a subsequent fix separately.
 
-The [production site](https://blueline-khaki-eta.vercel.app/) and [GitHub releases](https://github.com/ThisisMendez/blueline/releases) show what users can access and when each version shipped.
+[GitHub releases](https://github.com/ThisisMendez/blueline/releases) record when each version shipped.
+
+## Production domain
+
+The [original production address](https://blueline-khaki-eta.vercel.app/) stays active during the move to [bluelinelease.com](https://bluelinelease.com/).
+
+1. Attach `bluelinelease.com` and `www.bluelinelease.com` to the Production deployment. Apply the DNS records Vercel shows for the project. Confirm each host resolves publicly and serves the production site over HTTPS with a valid certificate.
+2. Add the apex URL and its `/auth/confirm` and `/auth/callback` URLs to production Supabase Auth URL Configuration. Keep the original auth URLs during the cutover. Check Google and auth email configuration for any callback URLs that need changing.
+3. Set `NEXT_PUBLIC_SITE_URL=https://bluelinelease.com` for Vercel Production and redeploy. This switches the canonical metadata, robots and sitemap to the apex and turns on the app’s 301 for page requests from the two old addresses.
+4. Check the apex homepage and a deep link on each old host. Confirm the 301 points to the apex with the same path and query. Check both sample reports, contact delivery, email confirmation, password recovery, and Google sign-in on the apex.
+5. If verification fails, remove the apex value from the production environment and redeploy or restore the last working production deployment. Browsers can remember a 301, so keep the apex working while fixing any issue.
+
+See [ADR 0018](adr/0018-use-blueline-lease-and-canonical-domain.md) for redirect scope.

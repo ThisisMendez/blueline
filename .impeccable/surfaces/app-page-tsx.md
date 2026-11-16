@@ -15,7 +15,7 @@ Scope: the public, unauthenticated marketing route (`/`). Visitor mode: Persuade
 - **Job**: understand in seconds what Blueline Lease does and decide whether to try it on their own document.
 - **Action**: “Review a lease” opens the review page. “See sample report” jumps to the worked examples.
 - **Proof/content**: one worked demonstration — a real (or clearly labeled synthetic) lease clause turning into a ranked, cited flag, live on the page. No testimonial, customer, statistic, or case study (none exist; PRODUCT.md's Evidence on Hand is explicit about this).
-- **Constraints**: use “Blueline Lease” as the product name and “Blueline Redline” as the campaign motto; no verdict on whether to sign; no legal-advice claim; no scanned/photographed-document claim (paste + selectable-text PDF only); no document types beyond residential leases; free-to-use-for-this-version stated plainly, no other pricing claim; WCAG 2.1 AA; all copy through the humanizer skill before commit.
+- **Constraints**: use “Blueline Lease” as the product name and “Draw the line before you sign.” as the campaign motto; no verdict on whether to sign; no legal-advice claim; no scanned/photographed-document claim (paste + selectable-text PDF only); no document types beyond residential leases; free-to-use-for-this-version stated plainly, no other pricing claim; WCAG 2.1 AA; all copy through the humanizer skill before commit.
 
 ## Direction contract
 

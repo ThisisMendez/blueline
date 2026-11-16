@@ -61,10 +61,13 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
 
       <footer className="border-t-2 border-[var(--color-navy)]">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-6 py-6 font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
-          <p>
-            {PRODUCT_NAME} reports what your document says. It does not tell
-            you whether to sign it.
-          </p>
+          <div>
+            <p>© 2026 {PRODUCT_NAME}</p>
+            <p>
+              {PRODUCT_NAME} reports what your document says. It does not tell
+              you whether to sign it.
+            </p>
+          </div>
           <FeedbackLink />
         </div>
       </footer>

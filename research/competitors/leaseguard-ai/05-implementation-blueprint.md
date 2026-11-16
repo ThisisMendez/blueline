@@ -1,8 +1,8 @@
-# Implementation blueprint: 12 LeaseGuard-equivalent features for Blue Line
+# Implementation blueprint: 12 LeaseGuard-equivalent features for Blueline Lease
 
 Status: **design only. No code has been written.** Each feature still needs its own ticket in `.scratch/lease-review/issues/` before work starts (CLAUDE.md, "Scope"). All copy a user will read goes through the humanizer skill before it is committed.
 
-Nothing here describes LeaseGuard's backend. "Observed" means rendered output that REA captured, almost all of it from the fictional sample report. Every architecture, algorithm, prompt and schema below is Blue Line's own design, built on the code as it stands at `main` `d0f198c`.
+Nothing here describes LeaseGuard's backend. "Observed" means rendered output that REA captured, almost all of it from the fictional sample report. Every architecture, algorithm, prompt and schema below is Blueline Lease's own design, built on the code as it stands at `main` `d0f198c`.
 
 ---
 
@@ -42,7 +42,7 @@ The other six features (2, 5, 6, 7, 8, 9) fit the current rules as designed.
 
 ---
 
-## 1. Blue Line today (read-only survey)
+## 1. Blueline Lease today (read-only survey)
 
 | Area | What exists | Where |
 |---|---|---|
@@ -94,7 +94,7 @@ Move-in record (12) ──────▶ /api/move-in/* ───────�
 
 ## 3. The 12 features
 
-Each feature has the same seven parts: (1) observed behaviour, (2) evidence and what is assumed, (3) architecture, (4) algorithms, rules, prompts and schemas, (5) how it fits Blue Line, (6) dependencies and tests, (7) edge cases.
+Each feature has the same seven parts: (1) observed behaviour, (2) evidence and what is assumed, (3) architecture, (4) algorithms, rules, prompts and schemas, (5) how it fits Blueline Lease, (6) dependencies and tests, (7) edge cases.
 
 ### Feature 1: Findings grade (Lease Health Score equivalent) — gate G1
 
@@ -254,7 +254,7 @@ create table public.review_fees (
 - **Output:** statute chips on flags (e.g. `F.S. 83.49(3)`), a `MAY NOT BE ENFORCEABLE` badge, and a free "Key Tenant Rights" box (deposit limit, notice period).
 - **SEO:** 50 `/tenant-rights/<state>` guides.
 
-**2. Evidence.** `analyze` and `sample-report` Evidence; how-it-works "updated quarterly". *Not verified:* any legal statement. The flag-level statute claims are exactly what ADR 0014 forbids for Blue Line now.
+**2. Evidence.** `analyze` and `sample-report` Evidence; how-it-works "updated quarterly". *Not verified:* any legal statement. The flag-level statute claims are exactly what ADR 0014 forbids for Blueline Lease now.
 
 **3. Architecture (the version that fits the current rules).**
 - **Frontend:**
@@ -699,4 +699,4 @@ Ordered by how much each step builds on existing code, then by risk to the trust
 
 - Whether LeaseGuard's analyzer output on real leases matches its sample. No real lease was run (see the README).
 - Whether its statute statements are accurate. They weren't checked, and must not be reused.
-- How its score, its clause splitting, its comparison, its dashboard or its sharing actually work. Each design above is Blue Line's own.
+- How its score, its clause splitting, its comparison, its dashboard or its sharing actually work. Each design above is Blueline Lease's own.

@@ -45,7 +45,7 @@ Each page used the same bounded scenario (inputs are in `evidence/scenarios/`): 
 
 ## Technical observations (rendered output only)
 
-- **Third-party origins on every page:** Google Tag Manager and Analytics, Google Ads/DoubleClick, Reddit pixel (`redditstatic.com`, `alb.reddit.com`), and Google Fonts. `/analyze` and `/contact` also load Cloudflare Turnstile. (Comparison: Blue Line uses no analytics, per ADR 0014.)
+- **Third-party origins on every page:** Google Tag Manager and Analytics, Google Ads/DoubleClick, Reddit pixel (`redditstatic.com`, `alb.reddit.com`), and Google Fonts. `/analyze` and `/contact` also load Cloudflare Turnstile. (Comparison: Blueline Lease uses no analytics, per ADR 0014.)
 - **Framework:** robots.txt disallows `/_next/`, which points to Next.js. This is an inference from the path, not something verified.
 - **Sample report rendering:** the locked flags' explanations are blurred on screen. We didn't check whether the text is still in the DOM (see the README's Boundaries).
 - **What LeaseGuard says about itself, not verified:** the trust page lists "AI Model: GPT-4o (OpenAI)". Lease documents are "processed in memory and discarded", while results, including clause snippets, are kept 7 days. Payments run through Stripe.

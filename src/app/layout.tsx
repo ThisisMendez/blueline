@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Archivo, Source_Serif_4, JetBrains_Mono } from "next/font/google";
 
-import { PRODUCT_NAME } from "@/shared/brand";
+import { PRODUCT_DESCRIPTION, PRODUCT_MARK, PRODUCT_NAME } from "@/shared/brand";
+import { publicSiteOrigin } from "@/shared/site-origin";
 
 import "./globals.css";
 
@@ -25,12 +26,20 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(publicSiteOrigin()),
+  applicationName: PRODUCT_NAME,
+  icons: { icon: PRODUCT_MARK },
   title: {
     default: PRODUCT_NAME,
     template: `%s | ${PRODUCT_NAME}`,
   },
-  description:
-    `${PRODUCT_NAME} reads your lease and shows you the exact sentences that could hurt you, ranked by consequence, with a proposed edit for each one.`,
+  description: PRODUCT_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: PRODUCT_NAME,
+    title: PRODUCT_NAME,
+    description: PRODUCT_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

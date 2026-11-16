@@ -32,9 +32,6 @@ export function BrandHero() {
         </div>
         <div className="border-l-[3px] border-[var(--color-red-ink)] py-1 pl-4 md:py-4 md:pl-6">
           <p className="font-[family-name:var(--font-display)] text-2xl font-extrabold leading-tight tracking-tight text-[var(--color-navy-ink)] sm:text-3xl">
-            Blueline <span className="text-[var(--color-red-ink)] underline decoration-2 underline-offset-[0.18em]">Redline.</span>
-          </p>
-          <p className="mt-2 text-base text-[var(--color-navy-ink)]">
             Draw the line before you sign.
           </p>
         </div>
