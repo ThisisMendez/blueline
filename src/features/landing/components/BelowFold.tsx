@@ -9,6 +9,15 @@ const topicLabels = {
   "dispute-routes": "How disputes are handled",
 } satisfies Record<ChecklistTopicId, string>;
 
+const topicIconPaths = {
+  "deposit-deductions-and-return": "M6 3h12v18l-3-2-3 2-3-2-3 2V3Zm3 5h6m-6 4h6",
+  "early-exit-costs": "M11 5H5v14h6m3-11 4 4-4 4m-5-4h9",
+  "rent-changes": "M5 8h14m-4-4 4 4-4 4m4 4H5m4-4-4 4 4 4",
+  repairs: "M14.5 5.5a4 4 0 0 0-5.1 5.1l-5.2 5.2a2 2 0 0 0 2.8 2.8l5.2-5.2a4 4 0 0 0 5.1-5.1l-2.7 2.7-2.8-2.8 2.7-2.7Z",
+  "access-to-the-home": "M4 20h16M7 20V5h10v15m-3-7h.01",
+  "dispute-routes": "M4 4h12v8H9l-4 3v-3H4V4Zm8 11h4l3 3v-3h1V8h-2",
+} satisfies Record<ChecklistTopicId, string>;
+
 export function BelowFold() {
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6 md:gap-8">
@@ -30,9 +39,23 @@ export function BelowFold() {
             your report marks it as &ldquo;Not found&rdquo; in the checklist.
           </p>
         </div>
-        <ul className="grid list-disc gap-x-8 gap-y-1.5 border border-[var(--color-navy)] bg-[var(--color-paper-deep)] py-2.5 pr-5 pl-9 text-base text-[var(--color-navy-ink)] marker:text-[var(--color-navy)] sm:grid-cols-2 sm:gap-y-2">
+        <ul role="list" className="grid list-none gap-x-5 gap-y-3 border border-[var(--color-navy)] bg-[var(--color-paper-deep)] p-4 text-sm text-[var(--color-navy-ink)] sm:grid-cols-2 lg:gap-y-4">
           {CHECKLIST_TOPIC_IDS.map((id) => (
-            <li key={id}>{topicLabels[id]}</li>
+            <li key={id} className="flex items-start gap-2.5">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-5 shrink-0 text-[var(--color-navy)]"
+              >
+                <path d={topicIconPaths[id]} />
+              </svg>
+              {topicLabels[id]}
+            </li>
           ))}
         </ul>
       </section>

@@ -1,10 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function BrandHero() {
   return (
-    <section className="border-b-2 border-[var(--color-navy)] px-6 py-8 sm:px-10 md:py-12">
-      <div className="mx-auto grid max-w-6xl items-center gap-7 md:grid-cols-[3fr_2fr] md:gap-12">
-        <div>
+    <section className="border-b-2 border-[var(--color-navy)] px-6 pt-8 sm:px-10 md:pt-10">
+      <div className="mx-auto grid max-w-6xl items-center gap-6 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] md:gap-8 lg:gap-12">
+        <div className="md:pb-10">
           <h1 className="max-w-[16ch] text-balance font-[family-name:var(--font-display)] text-4xl font-extrabold leading-none tracking-[-0.05em] text-[var(--color-navy-ink)] sm:text-5xl lg:text-6xl">
             Understand your rental lease.
           </h1>
@@ -29,11 +30,26 @@ export function BrandHero() {
               See sample report
             </a>
           </div>
+          <div className="mt-6 border-l-[3px] border-[var(--color-red-ink)] py-1 pl-4 sm:mt-7">
+            <p className="font-[family-name:var(--font-display)] text-xl font-extrabold leading-tight tracking-tight text-[var(--color-navy-ink)] sm:text-2xl">
+              Draw the line before you sign.
+            </p>
+          </div>
         </div>
-        <div className="border-l-[3px] border-[var(--color-red-ink)] py-1 pl-4 md:py-4 md:pl-6">
-          <p className="font-[family-name:var(--font-display)] text-2xl font-extrabold leading-tight tracking-tight text-[var(--color-navy-ink)] sm:text-3xl">
-            Draw the line before you sign.
-          </p>
+        <div className="relative mx-auto aspect-[10/9] w-full max-w-[440px] self-end">
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-[9%] inset-y-[7%] bg-[var(--color-paper-deep)]/60 [clip-path:polygon(18%_0,100%_0,88%_100%,0_100%)]"
+          />
+          <Image
+            src="/images/homepage/spotter-hero.webp"
+            alt=""
+            fill
+            sizes="(min-width: 64rem) min(440px, calc(40vw - 3.2rem)), (min-width: 48rem) calc(40vw - 2.8rem), (min-width: 40rem) 440px, min(440px, calc(100vw - 3rem))"
+            loading="eager"
+            fetchPriority="high"
+            className="object-contain object-bottom"
+          />
         </div>
       </div>
     </section>
