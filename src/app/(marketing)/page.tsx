@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
+
 import { BelowFold } from "@/features/landing/components/BelowFold";
 import { BrandHero } from "@/features/landing/components/BrandHero";
 import { ReviewToolbar } from "@/features/landing/components/ReviewToolbar";
 import { SampleReportLinks } from "@/features/landing/components/SampleReportLinks";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (

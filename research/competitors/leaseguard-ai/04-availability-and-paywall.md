@@ -27,4 +27,4 @@ Sources: the pricing page, the `/analyze` header, the pricing FAQ (from the serv
 - Pricing calls $19.99 "Pro-level", but the `/analyze` header labels it "PRO REPORT $19.99 one-time".
 - The how-it-works and terms pages say the statute database is updated quarterly, while the FAQ says it "includes … relevant case law for every state".
 
-**What this means for Blue Line:** Blue Line has no payment flow and none is ticketed. The blueprint treats every feature as available to signed-in signers and makes no tiering choice. Pricing is a separate decision for you.
+**What this means for Blueline Lease:** Blueline Lease has no payment flow and none is ticketed. The blueprint treats every feature as available to signed-in signers and makes no tiering choice. Pricing is a separate decision for you.

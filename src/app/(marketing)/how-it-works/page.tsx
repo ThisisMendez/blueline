@@ -4,7 +4,8 @@ import Link from "next/link";
 import { linkClassName, PageShell, Panel, primaryActionClassName } from "@/features/site/PageShell";
 
 export const metadata: Metadata = {
-  title: "How It Works | Blueline Redline",
+  alternates: { canonical: "/how-it-works" },
+  title: "How It Works",
   description:
     "Upload your lease as a PDF, pick renter or landlord, and get a report that quotes the exact words behind each flag.",
 };

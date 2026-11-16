@@ -67,4 +67,4 @@ No feature was observed running on a real lease (see the README's Boundaries sec
 - Only pricing lines. No sharing UI was found.
 
 ### 12. Deposit Shield
-- The pricing FAQ calls it "an upcoming Premium feature that helps you document your unit condition at move-in, track landlord communications, and build a record that supports deposit return disputes. It's currently in development." **It doesn't exist on LeaseGuard yet**, so anything Blue Line builds here is our own design.
+- The pricing FAQ calls it "an upcoming Premium feature that helps you document your unit condition at move-in, track landlord communications, and build a record that supports deposit return disputes. It's currently in development." **It doesn't exist on LeaseGuard yet**, so anything Blueline Lease builds here is our own design.

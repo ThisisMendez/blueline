@@ -54,7 +54,7 @@ export function StoppedPacket({ completeness, actions }: StoppedPacketProps) {
     body = (
       <>
         <p className={bodyClass}>
-          Blueline Redline only reviews residential leases and the documents
+          Blueline Lease only reviews residential leases and the documents
           they point at, so we stopped before reviewing anything. It reads
           like {description.replace(/\.$/, "")}.
         </p>
@@ -79,7 +79,7 @@ export function StoppedPacket({ completeness, actions }: StoppedPacketProps) {
     title = "We couldn't tell whether this is a residential lease";
     body = (
       <p className={bodyClass}>
-        Blueline Redline only reviews residential leases, so we stopped
+        Blueline Lease only reviews residential leases, so we stopped
         instead of guessing. If it is one, check that the file holds the
         whole lease from its first page, then try again.
       </p>

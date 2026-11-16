@@ -1,6 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useId } from "react";
+
+import { CURRENT_LEGAL } from "@/features/site/policy-versions";
 
 import {
   requestPasswordResetAction,
@@ -9,7 +12,6 @@ import {
   sendSignInLinkAction,
   signInWithPasswordAction,
   signUpAction,
-  startGoogleSignInAction,
   verifySignupCodeAction,
   verifySignupLinkAction,
 } from "../actions";
@@ -28,7 +30,7 @@ const FORM = {
 };
 
 const MESSAGE: Record<Exclude<SignInState["status"], "idle">, string> = {
-  "sign-in-link-sent": "Check your inbox for a sign-in link and open it in this browser.",
+  "sign-in-link-sent": "If you have an account, check your inbox for a sign-in link and open it in this browser.",
   "confirmation-sent": "If this address needs confirmation, check your inbox for a code or confirmation link.",
   "recovery-sent": "If an account can use this address, you’ll receive a password reset link. Open it in this browser.",
   "confirmation-required": "Confirm your email before signing in. You can request a fresh confirmation email.",
@@ -41,7 +43,8 @@ const MESSAGE: Record<Exclude<SignInState["status"], "idle">, string> = {
   "invalid-password": "Use at least 8 characters. If your password is very long, shorten it and try again.",
   "password-mismatch": "Enter the same password in both fields.",
   "invalid-credentials": "The email or password didn’t match. Try again or reset your password.",
-  "provider-unavailable": "Google sign-in is unavailable here right now. You can sign in with email and password.",
+  "policy-agreement-required": "Confirm your age and agree to the policies to create an account.",
+  "policy-version-changed": "The policies changed while this page was open. Refresh the page and review the current versions.",
   "unconfigured": "This sign-in option isn’t set up here.",
   "email-rate-limited": "Too many account emails have gone out. Wait a while, then try again.",
   "recovery-required": "Your reset link is missing or expired. Request a new link.",
@@ -125,9 +128,10 @@ export function VerifySignupLinkForm() {
   );
 }
 
-export function SignInForm({ mode = "sign-in", next = "/account" }: {
+export function SignInForm({ mode = "sign-in", next = "/account", submitDisabled = false }: {
   readonly mode?: AuthFormMode;
   readonly next?: string;
+  readonly submitDisabled?: boolean;
 }) {
   const form = FORM[mode];
   const [state, action, pending] = useActionState(form.action, initialSignInState);
@@ -179,26 +183,27 @@ export function SignInForm({ mode = "sign-in", next = "/account" }: {
             <input id="auth-password-confirmation" name="confirmPassword" type="password" autoComplete="new-password" required className={INPUT} />
           </>
         ) : null}
-        <button type="submit" disabled={pending} className={PRIMARY}>{pending ? form.pending : form.label}</button>
-      </form>
-      <Message state={state} />
-    </div>
-  );
-}
-
-export function GoogleSignInForm({ next }: { readonly next: string }) {
-  const [state, action, pending] = useActionState(startGoogleSignInAction, initialSignInState);
-  return (
-    <div>
-      <form action={action}>
-        <input type="hidden" name="next" value={next} />
-        <button
-          type="submit"
-          disabled={pending}
-          className="w-full border-2 border-[var(--color-navy)] px-6 py-3 font-[family-name:var(--font-display)] text-sm font-bold text-[var(--color-navy)] hover:bg-[var(--color-paper-deep)] disabled:opacity-70"
-        >
-          {pending ? "Opening Google…" : "Continue with Google"}
-        </button>
+        {isSignup ? (
+          <div className="flex items-start gap-2 text-sm">
+            <input type="hidden" name="termsVersion" value={CURRENT_LEGAL.termsVersion} />
+            <input type="hidden" name="privacyVersion" value={CURRENT_LEGAL.privacyVersion} />
+            <input
+              id="auth-accept-policies"
+              name="acceptPolicies"
+              type="checkbox"
+              aria-labelledby="auth-policies-label"
+              required
+              className="mt-0.5 size-4 shrink-0 accent-[var(--color-navy)]"
+            />
+            <span id="auth-policies-label">
+              <label htmlFor="auth-accept-policies">I&apos;m 18 or older and I agree to the</label>{" "}
+              <Link href={CURRENT_LEGAL.termsPath} target="_blank" rel="noopener noreferrer" className="underline">Terms of Use</Link>
+              {" and "}
+              <Link href={CURRENT_LEGAL.privacyPath} target="_blank" rel="noopener noreferrer" className="underline">Privacy Policy</Link>
+            </span>
+          </div>
+        ) : null}
+        <button type="submit" disabled={pending || submitDisabled} className={PRIMARY}>{pending ? form.pending : form.label}</button>
       </form>
       <Message state={state} />
     </div>

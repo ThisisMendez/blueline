@@ -1,6 +1,6 @@
 # Beta claims
 
-What the public site may say about Blueline Redline during the beta, the evidence behind each claim, and what it must not say. Audited against the beta refresh candidate on 2026-11-13. When the code or the evals change, re-check this list before changing copy.
+What the public site may say about Blueline Lease during the beta, the evidence behind each claim, and what it must not say. Audited against the beta refresh candidate on 2026-11-13. When the code or the evals change, re-check this list before changing copy.
 
 ## Claims the site may make
 
@@ -47,7 +47,7 @@ Traced from the code. Use these facts for the notice shown before a review is se
 1. **In the browser.** A PDF is parsed with pdf.js (`extractPdfText`). Only its text is kept. The app generates a lease title from a recognized heading or readable filename, with a generic fallback (`title.ts`). A supporting document uses a readable filename or a generic attachment label. Reviewers can rename saved reviews in their library.
 2. **To Blueline's server.** `POST /api/analysis` carries `role`, `text`, an optional `title`, up to 11 `referenced` documents as `{ text, title }`, and the signer's `resolutions` (which supplied document answers which reference). No file bytes and no account details are in the body.
 3. **To OpenRouter.** `src/features/analysis/model/openrouter.ts` posts to `https://openrouter.ai/api/v1/chat/completions` with:
-   - headers: the server's API key, `X-OpenRouter-Title: Blueline Redline`, and `HTTP-Referer` set to `NEXT_PUBLIC_SITE_URL` when set. No user id, email or IP field is added by Blueline.
+   - headers: the server's API key, `X-OpenRouter-Title: Blueline Lease`, and `HTTP-Referer` set to `NEXT_PUBLIC_SITE_URL` when set. No user id, email or IP field is added by Blueline.
    - body: a fixed system prompt, a user message, a strict JSON schema, `temperature: 0`, `reasoning: { effort: "low" }`, model from `OPENROUTER_MODEL`, and `provider: { only: [OPENROUTER_PROVIDER or "fireworks"], allow_fallbacks: false, require_parameters: true }`.
    - **No `data_collection: "deny"`, no zero-data-retention flag and no other retention setting is sent.** Retention depends on the OpenRouter account's privacy settings and the provider's terms, which this audit could not see.
 4. **What each call contains.** Every document goes in full as `=== DOCUMENT id=… title="…" ===` blocks (`src/features/packet/render.ts`), so document text and titles reach the provider.

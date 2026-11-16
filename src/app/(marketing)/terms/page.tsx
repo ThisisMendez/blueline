@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
-import { draftLegalPagesVisible } from "@/features/site/legal-gate";
-import { TERMS_SECTIONS } from "@/features/site/legal-content";
-import { LegalDraft } from "@/features/site/LegalDraft";
+import { TERMS_V1 } from "@/features/site/legal-content";
+import { LegalPolicy } from "@/features/site/LegalPolicy";
+import { CURRENT_LEGAL } from "@/features/site/policy-versions";
 
 export const metadata: Metadata = {
-  title: "Terms | Blueline Redline",
-  robots: { index: false, follow: false },
+  title: "Terms of Use",
+  alternates: { canonical: "/terms" },
 };
 
-/** Unreviewed draft: preview and development only, a 404 on production. */
 export default function TermsPage() {
-  if (!draftLegalPagesVisible()) notFound();
-  return <LegalDraft eyebrow="Terms" title="Terms of Use" sections={TERMS_SECTIONS} />;
+  return <LegalPolicy
+    title="Terms of Use"
+    version={CURRENT_LEGAL.termsVersion}
+    effectiveDate={CURRENT_LEGAL.effectiveDate}
+    sections={TERMS_V1}
+    versionPath={CURRENT_LEGAL.termsPath}
+  />;
 }

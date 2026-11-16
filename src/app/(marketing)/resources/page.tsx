@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { linkClassName, PageShell, Panel } from "@/features/site/PageShell";
+import { rhodeIslandPilotEnabled } from "@/features/site/rhode-island-references";
 
 export const metadata: Metadata = {
-  title: "Resources | Blueline Redline",
+  alternates: { canonical: "/resources" },
+  title: "Resources",
   description: "Official U.S. government sources for renters and landlords.",
 };
 
@@ -48,7 +51,7 @@ export default function ResourcesPage() {
       title="Where to learn about your rights"
       intro={
         <p>
-          Blueline Redline reads your lease. It doesn&apos;t check it against
+          Blueline Lease reads your lease. It doesn&apos;t check it against
           the law. These official sources can help you with that part, and
           rules differ by state and city.
         </p>
@@ -76,6 +79,11 @@ export default function ResourcesPage() {
           </p>
         </Panel>
       </div>
+      {rhodeIslandPilotEnabled() ? (
+        <Panel id="ri-resources-heading" title="Rhode Island">
+          <p><Link href="/resources/rhode-island" className={linkClassName}>See official state rental law links</Link></p>
+        </Panel>
+      ) : null}
     </PageShell>
   );
 }

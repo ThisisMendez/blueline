@@ -1,15 +1,22 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-/**
- * Next 16 calls this Proxy; it is what used to be Middleware. Its one job
- * here is refreshing an expiring Supabase token, because a server client is
- * built with `autoRefreshToken: false` and cannot refresh itself.
- *
- * With Supabase absent it passes the request straight through. No account, no
- * refresh, no crash — the rest of the product still works.
- */
+import { apexDomainConfigured, isLegacyHost, publicSiteOrigin } from "@/shared/site-origin";
+
 export async function proxy(request: NextRequest) {
+  const hostname = request.headers.get("host")?.toLowerCase() ?? request.nextUrl.hostname;
+  // Auth links and API requests stay on the host that issued them.
+  const isPageRequest = ["GET", "HEAD"].includes(request.method)
+    && !/^\/(?:api|auth)(?:\/|$)/.test(request.nextUrl.pathname);
+  if (isPageRequest && apexDomainConfigured() && isLegacyHost(hostname)) {
+    const incoming = new URL(request.url);
+    const target = new URL(publicSiteOrigin());
+    target.pathname = incoming.pathname;
+    target.search = incoming.search;
+    return NextResponse.redirect(target, 301);
+  }
+
+  // Refresh the Supabase token when accounts are configured.
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !anonKey) return NextResponse.next({ request });

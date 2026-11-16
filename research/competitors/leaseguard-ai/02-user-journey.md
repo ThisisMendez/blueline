@@ -22,14 +22,14 @@ The top bar reads: How It Works · Features · Pricing · Blog · Contact · My 
 5. **Upgrade.** Pay $19.99 once or subscribe; the report is emailed. "Upgrade to Pro any time within 7 days — no need to re-upload." Results are kept for 7 days.
 6. **Account** (`account.png`). Email and password sign-in or create an account, described as optional and used to keep report history.
 
-## Things worth copying in Blue Line's own form
+## Things worth copying in Blueline Lease's own form
 
 - The order on the results page: overall signal first, then counts by severity, then ranked cards.
 - Each card answers the same questions in the same order: what it says, why it matters, what to do.
 - The free preview shows locked items' **titles and quotes** and hides only the explanations, so the reader can still see that the lease has them.
 
-## Things to avoid, given Blue Line's settled rules
+## Things to avoid, given Blueline Lease's settled rules
 
 - A grade that means "Safe to sign" (CLAUDE.md, ADR 0004, ADR 0014).
 - `MAY NOT BE ENFORCEABLE` badges and statute-based conclusions. These are Layer 2 (ADR 0014).
-- The phrase "could put your deposit or rights at risk… Review before signing" is a verdict-shaped headline. Blue Line's summary is neutral and gives no verdict.
+- The phrase "could put your deposit or rights at risk… Review before signing" is a verdict-shaped headline. Blueline Lease's summary is neutral and gives no verdict.

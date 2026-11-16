@@ -10,7 +10,7 @@ import {
   USEFULNESS_ANSWERS,
 } from "./contact-fields";
 
-const SUBJECT = "[Blue Line] Website Contact";
+const SUBJECT = "[Blueline Lease] Website Contact";
 const MAX_BODY_LENGTH = 16_000;
 const email = z.string().trim().max(CONTACT_LIMITS.email).pipe(z.email());
 const message = z.string().trim().min(1).max(CONTACT_LIMITS.message);

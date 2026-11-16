@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-09-21T00:00:00Z",
-  "title": "Design System: Blueline Redline",
+  "title": "Design System: Blueline Lease",
   "extensions": {
     "colorMeta": {
       "navy": {
@@ -140,10 +140,10 @@
   ],
   "narrative": {
     "northStar": "The Field Guide",
-    "overview": "Blueline Redline's landing world reads a lease clause the way a naturalist field guide reads a specimen: identified, labeled, and cited — never pitched. The build refuses the category default of hero claim, feature grid, and testimonial carousel; the first viewport is the specimen card itself, at rest, doing the identification live. Everything locks to a strict shared grid of 2px navy rules; nothing floats free of a border. Paper is the ground the specimen sits on, navy is the ink that does the identifying (labels, leader lines, structure, body), and signal red is rationed to exactly one job — marking the cited, diagnostic phrase and the severity/alert state. It is never a button color or a general accent.\n\nThe system is calm and procedural rather than persuasive. Density is moderate: generous card padding (2.5–3rem), wide section rhythm (5–7rem between below-fold plates), but tight, exact leader-line geometry inside the specimen itself. Confirmed visual rejection: no hero claim headline, no feature-icon grid, no testimonial carousel, no rounded 'SaaS card' chrome, no flat zero-blur block shadow (the craft floor rejected the original hard-offset shadow during finish review; the shipped shadow is a real two-layer offset+blur elevation, documented below).",
+    "overview": "Blueline Lease uses a field guide as the model for its worked examples: each flagged clause is identified, labeled, and cited. The homepage opens with a plain description of the review and a callout for the campaign motto, followed by the worked examples. Navy carries the wordmark, structure, and primary action. Red marks citations and alerts, and Red Ink underlines “Redline” in the homepage motto.",
     "keyCharacteristics": [
       "Paper-ground specimen cards bordered in solid 2px navy, radius-0, holding diagnostic content the way a museum plate holds a labeled specimen.",
-      "Signal red reserved to the cited mark and the alert-severity badge only; every other UI color role runs on navy/paper.",
+      "Red marks citations and alerts. The homepage motto uses Red Ink for its underline, text, and margin rule.",
       "A three-voice type system — Archivo for structural/display and label text, Source Serif 4 for prose and the clause itself, JetBrains Mono for data/citation labels — never interchanged.",
       "Runtime-measured SVG leader lines connecting cited phrases to margin labels, drawing on via stroke-dashoffset on viewport entry.",
       "Two-layer soft elevation shadow (not a flat block shadow) reserved for the specimen hero card and the 'Proposed edit' counter-offer card."

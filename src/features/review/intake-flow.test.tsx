@@ -127,7 +127,7 @@ describe("choosing a side and a lease", () => {
     expect(screen.getByText(/This review stays in this tab\./)).toHaveTextContent(
       "This review stays in this tab. Sign in to keep reviews in your library and set personal red lines.",
     );
-    expect(screen.getByText(/may keep them or use them for training/)).toBeInTheDocument();
+    expect(screen.getByText(/send the text and names of your documents to our AI providers/)).toBeInTheDocument();
 
     await chooseLease(user, textPdf("harrowgate-lease.pdf", adhesion.text));
     expect(await screen.findByText("Residential Lease Agreement")).toBeInTheDocument();

@@ -39,18 +39,29 @@ describe("contact submissions", () => {
     expect(url).toBe("https://formspree.io/f/testForm");
     expect(options.headers.Accept).toBe("application/json");
     expect(JSON.parse(options.body)).toEqual({
-      subject: "[Blue Line] Website Contact",
+      subject: "[Blueline Lease] Website Contact",
       name: "Sam",
       email: "sam@example.com",
       message: "Topic: Something isn't working\n\nThe next step was unclear.",
     });
   });
 
+  it("does not forward production messages until support delivery is verified", async () => {
+    vi.stubEnv("VERCEL_ENV", "production");
+    vi.stubEnv("FORMSPREE_SUPPORT_VERIFIED", "");
+    expect((await submitContact(post(contact))).status).toBe(503);
+    expect(send).not.toHaveBeenCalled();
+
+    vi.stubEnv("FORMSPREE_SUPPORT_VERIFIED", "true");
+    expect((await submitContact(post(contact))).status).toBe(204);
+    expect(send).toHaveBeenCalledOnce();
+  });
+
   it("tags guest feedback and forwards only the permitted report context", async () => {
     const feedback = { kind: "feedback", useful: "Yes", message: "Easy to read", source: "report", role: "renter" };
     expect((await submitContact(post(feedback))).status).toBe(204);
     expect(JSON.parse(send.mock.calls[0][1].body)).toEqual({
-      subject: "[Blue Line] Website Contact",
+      subject: "[Blueline Lease] Website Contact",
       category: "beta-feedback",
       message: "Topic: Beta feedback\nWas this useful? Yes\nFrom: report\nSide: renter\n\nEasy to read",
     });

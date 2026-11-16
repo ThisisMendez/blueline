@@ -298,7 +298,7 @@ export function DocumentIntake({ persists, notice }: DocumentIntakeProps) {
                 Read my lease
               </button>
               <p className="font-[family-name:var(--font-data)] text-xs uppercase tracking-wide text-[var(--color-navy)]">
-                {persists ? "Saved to your library" : "Not saved by Blueline"}
+                {persists ? "Saved to your library" : "Not saved by Blueline Lease"}
               </p>
             </div>
             {notice ? (

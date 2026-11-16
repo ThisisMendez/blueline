@@ -6,7 +6,7 @@ import { AuthFrame } from "@/features/auth/components/AuthFrame";
 import { VerifySignupLinkForm } from "@/features/auth/components/SignInForm";
 
 export const metadata: Metadata = {
-  title: "Confirm your email | Blueline Redline",
+  title: "Confirm your email",
   robots: { index: false, follow: false },
 };
 

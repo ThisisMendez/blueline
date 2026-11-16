@@ -1,14 +1,14 @@
 # LeaseGuard AI research
 
-Research date: 12 November 2026. Target: <https://leaseguardai.com/>. Purpose: learn how LeaseGuard AI's 12 advertised features behave in public, and plan how Blue Line could build equivalent features of its own.
+Research date: 12 November 2026. Target: <https://leaseguardai.com/>. Purpose: learn how LeaseGuard AI's 12 advertised features behave in public, and plan how Blueline Lease could build equivalent features of its own.
 
-This folder is research only. No Blue Line application code, configuration, dependency or migration was changed.
+This folder is research only. No Blueline Lease application code, configuration, dependency or migration was changed.
 
 ## Files
 
 | File | What it holds |
 |---|---|
-| [05-implementation-blueprint.md](05-implementation-blueprint.md) | **The main deliverable.** For all 12 features: what was observed, the evidence, the Blue Line architecture, schemas and prompts, how it fits the existing code, dependencies and tests, edge cases, and a build sequence. |
+| [05-implementation-blueprint.md](05-implementation-blueprint.md) | **The main deliverable.** For all 12 features: what was observed, the evidence, the Blueline Lease architecture, schemas and prompts, how it fits the existing code, dependencies and tests, edge cases, and a build sequence. |
 | [01-feature-inventory.md](01-feature-inventory.md) | What each of the 12 features is, where it appears, and how far it was verified. |
 | [02-user-journey.md](02-user-journey.md) | The public journey from landing page to sample report, with screenshots. |
 | [03-rea-evidence.md](03-rea-evidence.md) | How REA was run, its Evidence IDs, and the third-party origins each page contacted. |
@@ -34,8 +34,8 @@ None of the 12 features was observed running on a real lease. The reasons are un
 - **No bundle analysis or source-map recovery.** The terms forbid trying to "extract, reverse-engineer, or reproduce our AI models or legal database". REA's `analyze-web-bundle` was therefore not run. Only rendered page content, screenshots and request origins were captured, with no request or response bodies and no header values.
 - **No crawl.** 17 pages were captured one at a time, out of a sitemap of about 150 URLs: every product and legal page, the account page, the sample report, one state guide and three blog posts about LeaseGuard itself.
 - **Blurred content stayed blurred.** The sample report blurs the explanations for its three locked flags. Those explanations were not read out of the DOM.
-- **Nothing here describes LeaseGuard's backend.** Anything about how its server works is LeaseGuard's own published claim (for example, the trust page names "GPT-4o (OpenAI)"), not something we observed. The Blue Line design in the blueprint is our own.
+- **Nothing here describes LeaseGuard's backend.** Anything about how its server works is LeaseGuard's own published claim (for example, the trust page names "GPT-4o (OpenAI)"), not something we observed. The Blueline Lease design in the blueprint is our own.
 
 ## LeaseGuard legal text must not be reused
 
-The sample report and features page cite Florida statutes (for example F.S. 83.49(3), 83.808, 83.53 and 83.48) and state legal rules. **None of these statements was checked**, and Blue Line must not copy them into prompts, fixtures or reference data. Feature 4 in the blueprint describes how Blue Line would build and review its own statute data.
+The sample report and features page cite Florida statutes (for example F.S. 83.49(3), 83.808, 83.53 and 83.48) and state legal rules. **None of these statements was checked**, and Blueline Lease must not copy them into prompts, fixtures or reference data. Feature 4 in the blueprint describes how Blueline Lease would build and review its own statute data.

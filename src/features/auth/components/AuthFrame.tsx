@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
+import { PRODUCT_NAME } from "@/shared/brand";
+
 import { AccountsNotice } from "./AccountsNotice";
 
 export interface AuthPageProps {
@@ -26,7 +28,7 @@ export function AuthFrame({ title, description, configured = true, problem, chil
       <div className="flex w-full max-w-lg flex-col gap-6">
         <div>
           <Link href="/" className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight text-[var(--color-navy-ink)]">
-            Blueline <span className="text-[var(--color-red-ink)]">Redline</span>
+            {PRODUCT_NAME}
           </Link>
           <h1 className="mt-6 font-[family-name:var(--font-display)] text-2xl font-bold leading-tight text-[var(--color-navy-ink)] sm:text-3xl">
             {title}

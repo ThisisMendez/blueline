@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ReportScreen } from "@/features/review/session/ReportScreen";
 
 export const metadata: Metadata = {
-  title: "Your report | Blueline Redline",
+  title: "Your report",
 };
 
 /**

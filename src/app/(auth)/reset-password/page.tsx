@@ -7,7 +7,7 @@ import { hasPasswordRecovery } from "@/features/auth/recovery-authorization";
 import { signInReturnPath } from "@/features/auth/redirects";
 import { createServerSupabaseClient } from "@/features/auth/server-client";
 
-export const metadata: Metadata = { title: "New password | Blueline Redline" };
+export const metadata: Metadata = { title: "New password" };
 
 export default async function ResetPasswordPage({ searchParams }: AuthPageProps) {
   const next = signInReturnPath((await searchParams).next);

@@ -1,6 +1,6 @@
 # 10: Public landing page
 
-**What to build:** A public, unauthenticated landing page that is the product's front door — the one Persuade-mode surface in this product; everything past sign-in is Operate mode. It states what Blueline Redline does — plain-English summary, cited risk flags, coverage checklist, document-grounded Q&A, counter-offers, an editable personal red-line list, and a saved library — in the calm, precise, quietly defiant voice from BRAND.md, leads with the mechanism rather than an emotional appeal, and its single primary call to action is to sign in and start a review.
+**What to build:** A public, unauthenticated landing page that is the product's front door — the one Persuade-mode surface in this product; everything past sign-in is Operate mode. It states what Blueline Lease does — plain-English summary, cited risk flags, coverage checklist, document-grounded Q&A, counter-offers, an editable personal red-line list, and a saved library — in the calm, precise, quietly defiant voice from BRAND.md, leads with the mechanism rather than an emotional appeal, and its single primary call to action is to sign in and start a review.
 
 **Blocked by:** None (can start immediately) — "sign in to start" only needs Supabase auth wired up, not the review flow itself.
 

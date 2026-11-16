@@ -4,12 +4,15 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
 
+import { CURRENT_LEGAL } from "@/features/site/policy-versions";
+
 import { isValidNewPassword } from "./password-validation";
 import { readAuthProviderSettings } from "./provider-settings";
 import { clearPasswordRecovery, hasPasswordRecovery, isRecoveryConfigured } from "./recovery-authorization";
 import { authCallbackUrl, signInReturnPath } from "./redirects";
 import { createServerSupabaseClient } from "./server-client";
 import type { SignInState } from "./sign-in-state";
+import { publicSignupEmailReady } from "./signup-delivery";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CONFIRMATION_EMAIL_COOKIE = "blueline-confirmation-email";
@@ -65,10 +68,10 @@ export async function sendSignInLinkAction(
 
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo, shouldCreateUser: true },
+    options: { emailRedirectTo, shouldCreateUser: false },
   });
   if (error?.code === "over_email_send_rate_limit") return { status: "email-rate-limited" };
-  if (error && !["user_not_found", "email_address_not_authorized"].includes(error.code ?? "")) {
+  if (error && !["user_not_found", "email_address_not_authorized", "otp_disabled", "signup_disabled"].includes(error.code ?? "")) {
     return { status: "error" };
   }
   return { status: "sign-in-link-sent" };
@@ -102,6 +105,13 @@ export async function signUpAction(
   const password = textField(formData, "password");
   if (!email || !firstName || firstName.length > 80) return { status: "invalid-input" };
   if (!isValidNewPassword(password)) return { status: "invalid-password" };
+  if (formData.get("acceptPolicies") !== "on") return { status: "policy-agreement-required" };
+  if (formData.get("termsVersion") !== String(CURRENT_LEGAL.termsVersion)
+    || formData.get("privacyVersion") !== String(CURRENT_LEGAL.privacyVersion)) {
+    return { status: "policy-version-changed" };
+  }
+
+  if (!publicSignupEmailReady()) return { status: "confirmation-unavailable" };
 
   const supabase = await createServerSupabaseClient();
   const emailRedirectTo = await authCallbackUrl("/auth/confirm", {
@@ -116,7 +126,16 @@ export async function signUpAction(
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { display_name: firstName }, emailRedirectTo },
+    options: {
+      data: {
+        display_name: firstName,
+        terms_version: CURRENT_LEGAL.termsVersion,
+        privacy_version: CURRENT_LEGAL.privacyVersion,
+        accepted_at: new Date().toISOString(),
+        age_confirmed: true,
+      },
+      emailRedirectTo,
+    },
   });
   // A signup session means Confirm Email is disabled in this Supabase project.
   if (data.session) {
@@ -233,25 +252,6 @@ export async function resetPasswordAction(
   await clearPasswordRecovery();
   revalidatePath("/", "layout");
   redirect(signInReturnPath(formData.get("next")));
-}
-
-export async function startGoogleSignInAction(
-  _previous: SignInState,
-  formData: FormData,
-): Promise<SignInState> {
-  const supabase = await createServerSupabaseClient();
-  const redirectTo = await authCallbackUrl("/auth/callback", {
-    next: signInReturnPath(formData.get("next")),
-  });
-  if (!supabase || !redirectTo) return { status: "unconfigured" };
-  if ((await readAuthProviderSettings())?.external?.google !== true) return { status: "provider-unavailable" };
-
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: { redirectTo, scopes: "openid email profile" },
-  });
-  if (error || !data.url) return { status: "provider-unavailable" };
-  redirect(data.url);
 }
 
 export async function signOutAction(): Promise<void> {

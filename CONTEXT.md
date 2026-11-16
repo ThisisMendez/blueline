@@ -1,12 +1,11 @@
-# Blueline
+# Blueline Lease
 
 Language for the people and contract judgments Blueline serves.
 
 ## Language
 
-**Blueline Redline**:
-The official public-facing product name.
-_Avoid_: Blueline as the public product name
+**Blueline Lease**:
+The public name of the residential lease review product.
 
 **Blueline**:
 The project shorthand used in internal documents and conversation.

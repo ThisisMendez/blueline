@@ -7,9 +7,11 @@ import { openReviewStore } from "@/features/library/supabase-store";
 import type { StoredReviewSummary } from "@/features/library/store";
 import { LibraryList } from "@/features/review/components/LibraryList";
 import { DocumentIntake } from "@/features/review/components/DocumentIntake";
+import { CURRENT_LEGAL } from "@/features/site/policy-versions";
 
 export const metadata: Metadata = {
-  title: "Review a lease | Blueline Redline",
+  alternates: { canonical: "/review" },
+  title: "Review a lease",
 };
 
 /** Public intake; authenticated signers also see their retained reviews. */
@@ -50,10 +52,17 @@ export default async function ReviewPage() {
         notice={
           <>
             <p>
-              When you click Read my lease, we send the text and names of your
-              documents to an AI provider. The provider may keep them or use
-              them for training.
+              We send the text and names of your documents to our AI providers to run the review.
+              Remove sensitive details, such as bank information or signatures, before you upload.
             </p>
+            {!signedIn ? (
+              <p>
+                By starting a review you agree to the{" "}
+                <Link href={CURRENT_LEGAL.termsPath} target="_blank" rel="noopener noreferrer" className="underline">Terms of Use</Link>
+                {" and "}
+                <Link href={CURRENT_LEGAL.privacyPath} target="_blank" rel="noopener noreferrer" className="underline">Privacy Policy</Link>.
+              </p>
+            ) : null}
             {accounts.kind === "signed-out" ? (
               <p>
                 This review stays in this tab. <Link href="/sign-in" className="underline decoration-2 underline-offset-4">Sign in</Link> to
