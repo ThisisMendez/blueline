@@ -1,12 +1,15 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { usePathname } from "next/navigation";
 import { describe, expect, it, vi } from "vitest";
+
+import { sampleDocument, sampleReview } from "@/features/review/sample-report";
 
 import { BelowFold } from "./components/BelowFold";
 import { BrandHero } from "./components/BrandHero";
 import { FieldNotes } from "./components/FieldNotes";
 import { Footer } from "./components/Footer";
 import { Nav } from "./components/Nav";
+import { SampleReportLinks } from "./components/SampleReportLinks";
 
 vi.mock("next/navigation", () => ({ usePathname: vi.fn() }));
 
@@ -62,4 +65,24 @@ describe("landing page capability boundary", () => {
     const notes = render(<FieldNotes />);
     expect(notes.container.textContent).not.toMatch(/document-grounded answers/);
   });
+});
+
+it("keeps both sample destinations and quotes the renter's fictional lease verbatim", () => {
+  render(<SampleReportLinks />);
+  const samples = within(screen.getByRole("region", { name: "Sample reports" }));
+  expect(samples.getByRole("link", { name: "Renter sample Pick issues to raise and draft an email." }))
+    .toHaveAttribute("href", "/sample-report/renter");
+  expect(samples.getByRole("link", { name: "Landlord sample See what to clarify and edit suggested wording." }))
+    .toHaveAttribute("href", "/sample-report/landlord");
+
+  const earlyExit = sampleReview("renter").riskFlags.find((flag) => flag.id === "earlyExit");
+  if (!earlyExit) throw new Error("The renter sample is missing the early-exit flag.");
+  const excerpt = within(samples.getByRole("figure", { name: "Renter sample Maple Court sample lease" }));
+  expect(excerpt.getByRole("heading", { name: earlyExit.title })).toBeInTheDocument();
+  expect(excerpt.getByText("Severity: High")).toBeInTheDocument();
+  const quote = excerpt.getByRole("blockquote");
+  expect(quote.textContent).toBe(sampleDocument.text.slice(earlyExit.sourceStart, earlyExit.sourceEnd));
+  expect(within(quote).getByRole("mark").textContent)
+    .toBe("even if a new renter has started paying rent for the same apartment");
+  expect(excerpt.getByText(earlyExit.consequence)).toBeInTheDocument();
 });

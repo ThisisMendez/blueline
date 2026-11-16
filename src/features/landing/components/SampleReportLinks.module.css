@@ -1,0 +1,73 @@
+.photoCard {
+  --card-gutter: clamp(0.875rem, 2.5vw, 1.5rem);
+  --card-copy-max: 14rem;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 10rem;
+  border: 2px solid var(--color-navy);
+  background: var(--color-navy-ink);
+  padding: var(--card-gutter);
+  color: var(--color-paper);
+}
+
+.photoCard::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    var(--color-navy-ink) 3%,
+    color-mix(in srgb, var(--color-navy-ink) 80%, transparent)
+      min(75%, calc(var(--card-copy-max) + var(--card-gutter))),
+    color-mix(in srgb, var(--color-navy-ink) 15%, transparent) 100%
+  );
+}
+
+.cardCopy {
+  max-width: min(75%, var(--card-copy-max));
+  overflow-wrap: anywhere;
+}
+
+.cardTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 2.2vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  text-underline-offset: 0.18em;
+}
+
+.photoCard:is(:hover, :focus-visible) .cardTitle {
+  text-decoration: underline;
+}
+
+.photoCard:focus-visible {
+  outline-color: var(--color-red-ink);
+}
+
+@media (min-width: 64rem) {
+  .photoCard {
+    min-height: 12.5rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .photoCard {
+    border-color: LinkText;
+    color: LinkText;
+  }
+
+  .photoCard::before,
+  .photoCard > img {
+    display: none;
+  }
+
+  .photoCard:focus-visible {
+    outline-color: Highlight;
+  }
+}
