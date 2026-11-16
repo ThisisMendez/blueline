@@ -4,31 +4,32 @@ Draft dated 2026-11-13. Not in effect. The page at the matching route renders on
 
 ## Owner/counsel must verify
 
-- [ ] Confirm Blueline Redline's legal entity name, address, and the governing law and venue.
-- [ ] Write the disclaimer and limitation-of-liability text (placeholder in the page).
-- [ ] Confirm the public support contact before publishing these terms.
-- [ ] Confirm the minimum age for users.
+- [ ] Confirm Blueline Lease's legal entity name, address, and the governing law and venue.
+- [ ] Ask counsel to review the AI-output disclaimer and write the liability and dispute sections. The owner chose to omit forced arbitration from the beta terms.
+- [ ] Confirm the dedicated support address on a domain the operator controls. Show it beside the contact form when it is ready for public use.
+- [x] The owner chose 18 as the minimum age for the beta.
 - [ ] Confirm the "not a law firm, no legal advice" wording satisfies unauthorized-practice-of-law concerns in the states we serve.
 - [ ] Confirm the account suspension wording and any acceptable-use rules you want.
-- [ ] Confirm whether a separate AI-output disclaimer or arbitration clause is wanted (none drafted).
 
 ---
 
-## What Blueline Redline is
+## What Blueline Lease is
 
-Blueline Redline is a contract review app for residential leases. You choose whether you are the renter or the landlord, and the report points out clauses that could work against that side, quoting the exact words.
+Blueline Lease is a contract review app for residential leases. You choose whether you are the renter or the landlord, and the report points out clauses that could work against that side, quoting the exact words.
 
-It helps you understand your agreement and prepare questions for a qualified lawyer. Blueline Redline is not a law firm and does not give legal advice. It does not decide whether a term is enforceable, whether it is allowed where you live, or whether you should sign.
+It helps you understand your agreement and prepare questions for a qualified lawyer. Blueline Lease is not a law firm and does not give legal advice. It does not decide whether a term is enforceable, whether it is allowed where you live, or whether you should sign.
 
 ## The beta
 
-Blueline Redline is free during the beta. Features may change, pause, or stop while we work on the product, and the service may be unavailable at times.
+Blueline Lease is free during the beta. Features may change, pause, or stop while we work on the product, and the service may be unavailable at times.
+
+You must be 18 or older to use Blueline Lease.
 
 ## What you upload
 
 Upload only documents you have the right to share. You keep whatever rights you have in them. You let us process the text so we can run the review, including sending it to the AI provider described in the Privacy Policy.
 
-Don't use Blueline Redline to break the law, to get into other people's accounts, or to interfere with the service.
+Don't use Blueline Lease to break the law, to get into other people's accounts, or to interfere with the service.
 
 ## Reports can be wrong or incomplete
 
@@ -50,4 +51,4 @@ If we change these terms, we will update this page and the date at the top.
 
 ## Contact
 
-Use the contact page when sending is available.
+Use the contact form to ask a question about these terms or your account.

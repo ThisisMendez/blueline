@@ -1,6 +1,8 @@
-# Blueline Redline
+# Blueline Lease
 
 Production: https://blueline-khaki-eta.vercel.app
+
+Launch domain: `bluelinelease.com`. When connecting it, set `NEXT_PUBLIC_SITE_URL` to `https://bluelinelease.com` in production and verify that the Supabase email and Google sign-in flows return to that domain.
 
 A contract review app for residential leases, built for renters first and supporting landlords. Choose your side, and the review highlights clauses that could harm it, each with its exact source citation. The selected role belongs to that review. V1 reads the lease text only (see ADR 0014). The Next.js application lives in `src/app/`; feature code lives in `src/features/`.
 

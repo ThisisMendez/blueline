@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { FeedbackLink } from "@/features/site/FeedbackLink";
+import { PRODUCT_NAME } from "@/shared/brand";
 
 const footerLinks = [
   { label: "How It Works", href: "/how-it-works" },
@@ -28,7 +29,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <p className="font-[family-name:var(--font-display)] text-sm font-bold text-[var(--color-navy-ink)]">
-            Blueline <span className="text-[var(--color-red-ink)]">Redline</span>
+            {PRODUCT_NAME}
           </p>
           <p className="mt-1 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]/70">
             Free while in beta. No cost, no card for the beta.

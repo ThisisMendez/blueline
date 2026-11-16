@@ -18,7 +18,7 @@ export function AccountsNotice() {
       <p className="mt-3 max-w-[var(--measure)] font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--color-navy-ink)]">
         Accounts are not configured on this deployment, so the library and
         personal red lines are unavailable. You can still review a lease here.
-        Blueline does not save anonymous reviews; closing this tab loses the review.
+        Blueline Lease does not save anonymous reviews; closing this tab loses the review.
       </p>
     </section>
   );

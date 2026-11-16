@@ -13,5 +13,7 @@ Recorded from the owner's answers. Details are in `research/competitors/leasegua
 
 ## Still open
 
+- **Legal publication.** Confirm who operates Blue Line and the public support address on a domain they control. Counsel still needs to resolve the liability, disputes, and applicable privacy rights wording. The owner chose short terms for a free beta, age 18 and up, and no forced arbitration.
+- **Self-service deletion.** The owner chose manual deletion through Contact first. Decide separately whether to ticket an in-app option for deleting a review or account.
 - **Manual checks after the 2026-11-13 release:** a real selectable-text PDF upload (pdfjs-dist 6), and a real password-reset email, on production.
 - **Optional dependencies.** None are planned. `@react-pdf/renderer`, `diff` or an email provider would need approval.

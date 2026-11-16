@@ -4,9 +4,9 @@ import Link from "next/link";
 import { linkClassName, PageShell, Panel, StatusTag } from "@/features/site/PageShell";
 
 export const metadata: Metadata = {
-  title: "Features | Blueline Redline",
+  title: "Features",
   description:
-    "What you can use in Blueline Redline today, and what we plan to build next.",
+    "What you can use in Blueline Lease today, and what we plan to build next.",
 };
 
 const liveFeatures = [

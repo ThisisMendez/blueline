@@ -9,7 +9,7 @@ import { LibraryList } from "@/features/review/components/LibraryList";
 import { DocumentIntake } from "@/features/review/components/DocumentIntake";
 
 export const metadata: Metadata = {
-  title: "Review a lease | Blueline Redline",
+  title: "Review a lease",
 };
 
 /** Public intake; authenticated signers also see their retained reviews. */

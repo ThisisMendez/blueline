@@ -7,13 +7,13 @@ After deploying the verification screens, confirm the production Site URL and en
 Subject
 
 ```text
-Confirm your Blueline email
+Confirm your Blueline Lease email
 ```
 
 Body
 
 ```html
-<h2>Confirm your Blueline email</h2>
+<h2>Confirm your Blueline Lease email</h2>
 <p>Paste this one-time code into the signup screen:</p>
 <p><strong>{{ .Token }}</strong></p>
 <p>You can also <a href="{{ .SiteURL }}/verify-email#token_hash={{ .TokenHash }}">open the confirmation page</a> and choose Verify email.</p>

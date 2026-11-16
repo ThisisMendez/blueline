@@ -6,7 +6,7 @@ import { TERMS_SECTIONS } from "@/features/site/legal-content";
 import { LegalDraft } from "@/features/site/LegalDraft";
 
 export const metadata: Metadata = {
-  title: "Terms | Blueline Redline",
+  title: "Terms",
   robots: { index: false, follow: false },
 };
 

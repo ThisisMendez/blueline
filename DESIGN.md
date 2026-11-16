@@ -1,5 +1,5 @@
 ---
-name: Blueline Redline
+name: Blueline Lease
 description: A field-guide specimen system that identifies risky lease clauses instead of selling them.
 colors:
   navy: "#123b5d"
@@ -61,19 +61,19 @@ components:
     padding: "4px 8px"
 ---
 
-# Design System: Blueline Redline
+# Design System: Blueline Lease
 
 ## Overview
 
 **Creative North Star: "The Field Guide"**
 
-Blueline Redline's landing world reads a lease clause the way a naturalist field guide reads a specimen: identified, labeled, and cited — never pitched. The build refuses the category default of hero claim, feature grid, and testimonial carousel; the first viewport is the specimen card itself, at rest, doing the identification live. Everything locks to a strict shared grid of 2px navy rules; nothing floats free of a border. Paper is the ground the specimen sits on, navy is the ink that does the identifying (labels, leader lines, structure, body), and signal red is rationed to exactly one job — marking the cited, diagnostic phrase and the severity/alert state. It is never a button color or a general accent.
+Blueline Lease uses a field guide as the model for its worked examples: each flagged clause is identified, labeled, and cited. The homepage opens with a plain description of the review and a callout for the campaign motto, followed by the worked examples. Navy carries the wordmark, structure, and primary action. Red marks citations and alerts, and Red Ink underlines “Redline” in the homepage motto.
 
-The system is calm and procedural rather than persuasive. Density is moderate: generous card padding (2.5–3rem), wide section rhythm (5–7rem between below-fold plates), but tight, exact leader-line geometry inside the specimen itself. Confirmed visual rejection: no hero claim headline, no feature-icon grid, no testimonial carousel, no rounded "SaaS card" chrome, no flat zero-blur block shadow (the craft floor rejected the original hard-offset shadow during finish review; the shipped shadow is a real two-layer offset+blur elevation, documented below).
+The system is calm and procedural. Worked examples use generous card padding (2.5–3rem) and precise leader lines inside each specimen. A two-layer shadow separates the paper cards from the page.
 
 **Key Characteristics:**
 - Paper-ground specimen cards bordered in solid 2px navy, radius-0, holding diagnostic content the way a museum plate holds a labeled specimen.
-- Signal red reserved to the cited mark and the alert-severity badge only; every other UI color role runs on navy/paper.
+- Red marks citations and alerts. The homepage motto uses Red Ink for its underline, text, and margin rule.
 - A three-voice type system — Archivo for structural/display and label text, Source Serif 4 for prose and the clause itself, JetBrains Mono for data/citation labels — never interchanged.
 - Runtime-measured SVG leader lines connecting cited phrases to margin labels, drawing on via `stroke-dashoffset` on viewport entry.
 - Two-layer soft elevation shadow (not a flat block shadow) reserved for the specimen hero card and the "Proposed edit" counter-offer card.
@@ -177,6 +177,6 @@ STORY's language called for a "circled" mark on the cited clause. The build did 
 
 ### Don't:
 - **Don't** use a flat, zero-blur, hard-offset block shadow anywhere in this system — it was tried on the elevated cards and rejected in finish review as a craft-floor violation.
-- **Don't** use signal red as a button, link, or general accent color; it is reserved to citation and alert states.
+- **Use** red for citation and alert states, with Red Ink for the homepage motto. Keep primary actions navy.
 - **Don't** merge the "not found" (dashed navy) treatment with a risk-flag or alert badge — absence and risk are product-distinct and must stay visually distinct.
 - **Don't** treat the checkmark glyphs in the coverage checklist (BelowFold.tsx) as an established icon system. They are a single incumbent instance, not a documented icon convention — this system otherwise has no icon language, and a future surface should not extend glyph iconography from this one unreviewed use.

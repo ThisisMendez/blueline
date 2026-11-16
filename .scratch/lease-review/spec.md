@@ -12,7 +12,7 @@ The signer chooses renter or landlord for the review, supplies the complete agre
 
 ## User Stories
 
-0. As a prospective lease signer who has not yet started a review, I want a public landing page that explains what Blueline Redline does and why, so that I can decide whether to start before I paste anything.
+0. As a prospective lease signer who has not yet started a review, I want a public landing page that explains what Blueline Lease does and why, so that I can decide whether to start before I paste anything.
 1. As a lease signer, I want to paste lease text, so that I can review an agreement without preparing a file.
 2. As a lease signer, I want to provide a PDF with selectable text, so that I can review the agreement I intend to sign.
 3. As a lease signer, I want to know when a PDF has no usable selectable text, so that I do not mistake an unreviewable scan for a clean lease.

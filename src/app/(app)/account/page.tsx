@@ -7,7 +7,7 @@ import type { StoredReviewSummary } from "@/features/library/store";
 import { openReviewStore } from "@/features/library/supabase-store";
 import { LibraryList } from "@/features/review/components/LibraryList";
 
-export const metadata: Metadata = { title: "Your account | Blueline Redline" };
+export const metadata: Metadata = { title: "Your account" };
 
 export default async function AccountPage() {
   const accounts = await getAccountsState();

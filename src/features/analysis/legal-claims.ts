@@ -88,11 +88,11 @@ type FlagField = (typeof FLAG_FIELDS)[number];
 export const WITHHELD_TEXT: Readonly<Record<FlagField, string>> = {
   title: "Term to review",
   consequence:
-    "Blueline couldn't describe this term without stating a legal conclusion it can't support, so that explanation isn't shown. Read the quoted sentence and judge it yourself.",
+    "Blueline Lease couldn't describe this term without stating a legal conclusion it can't support, so that explanation isn't shown. Read the quoted sentence and judge it yourself.",
   triggeringCondition: "Not shown, for the same reason.",
   nextStep: "Ask the other party to clarify the quoted term in writing.",
   counterOffer:
-    "No proposed edit is shown for this term, because the one drafted stated a legal conclusion Blueline can't support.",
+    "No proposed edit is shown for this term, because the one drafted stated a legal conclusion Blueline Lease can't support.",
   residualRisk: "Not shown, because no proposed edit is shown.",
 };
 

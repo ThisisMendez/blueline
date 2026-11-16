@@ -7,7 +7,7 @@ import { SignInForm } from "@/features/auth/components/SignInForm";
 import { signInReturnPath } from "@/features/auth/redirects";
 import { getAccountsState } from "@/features/auth/session";
 
-export const metadata: Metadata = { title: "Create account | Blueline Redline" };
+export const metadata: Metadata = { title: "Create account" };
 
 export default async function SignUpPage({ searchParams }: AuthPageProps) {
   const query = await searchParams;

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ProcessingScreen } from "@/features/review/session/ProcessingScreen";
 
 export const metadata: Metadata = {
-  title: "Reading your lease | Blueline Redline",
+  title: "Reading your lease",
 };
 
 /** The wait after "Read my lease". The review itself lives in the tab's session. */

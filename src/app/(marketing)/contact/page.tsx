@@ -6,8 +6,8 @@ import { ContactForm } from "@/features/site/ContactForm";
 import { PageShell, Panel } from "@/features/site/PageShell";
 
 export const metadata: Metadata = {
-  title: "Contact | Blueline Redline",
-  description: "Send the Blueline Redline team a question or feedback.",
+  title: "Contact",
+  description: "Send the Blueline Lease team a question or feedback.",
 };
 
 export default async function ContactPage({ searchParams }: PageProps<"/contact">) {
@@ -22,7 +22,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
       eyebrow={feedback ? "Beta feedback" : "Contact"}
       title={feedback ? "Tell us how it went" : "We'd love to hear from you"}
       intro={
-        <p>{feedback ? "What did Blue Line help you understand? Tell us where you got stuck, too." : "Send us a question or tell us what went wrong."}</p>
+        <p>{feedback ? "What did Blueline Lease help you understand? Tell us where you got stuck, too." : "Send us a question or tell us what went wrong."}</p>
       }
     >
       <div className="grid gap-4 md:grid-cols-[1.5fr_1fr] md:items-start md:gap-6">

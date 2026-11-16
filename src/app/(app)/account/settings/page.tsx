@@ -7,7 +7,7 @@ import { signOutAction } from "@/features/auth/actions";
 import { isRecoveryConfigured } from "@/features/auth/recovery-authorization";
 import { getAccountsState } from "@/features/auth/session";
 
-export const metadata: Metadata = { title: "Account settings | Blueline Redline" };
+export const metadata: Metadata = { title: "Account settings" };
 
 const DETAILS_LABEL = "font-[family-name:var(--font-data)] text-xs font-semibold uppercase tracking-wide text-[var(--color-navy)]";
 const DETAILS_VALUE = "mt-1 break-words font-[family-name:var(--font-body)]";

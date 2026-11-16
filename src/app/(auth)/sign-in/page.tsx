@@ -9,7 +9,7 @@ import { isRecoveryConfigured } from "@/features/auth/recovery-authorization";
 import { signInReturnPath } from "@/features/auth/redirects";
 import { getAccountsState } from "@/features/auth/session";
 
-export const metadata: Metadata = { title: "Sign in | Blueline Redline" };
+export const metadata: Metadata = { title: "Sign in" };
 
 const PROBLEM_MESSAGE: Record<string, string> = {
   "link-unreadable": "That confirmation link is incomplete. Request a new one.",
@@ -31,7 +31,7 @@ export default async function SignInPage({ searchParams }: AuthPageProps) {
 
   return (
     <AuthFrame
-      title="Sign in to Blueline Redline"
+      title="Sign in to Blueline Lease"
       description="Open your saved lease reviews and account settings."
       configured={accounts.kind !== "unconfigured"}
       problem={problem}

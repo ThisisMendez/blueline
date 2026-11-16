@@ -22,23 +22,24 @@ export const LEGAL_DRAFT_DATE = "2026-11-13";
 
 export const TERMS_SECTIONS: readonly LegalSection[] = [
   {
-    heading: "What Blueline Redline is",
+    heading: "What Blueline Lease is",
     paragraphs: [
-      "Blueline Redline is a contract review app for residential leases. You choose whether you are the renter or the landlord, and the report points out clauses that could work against that side, quoting the exact words.",
-      "It helps you understand your agreement and prepare questions for a qualified lawyer. Blueline Redline is not a law firm and does not give legal advice. It does not decide whether a term is enforceable, whether it is allowed where you live, or whether you should sign.",
+      "Blueline Lease is a contract review app for residential leases. You choose whether you are the renter or the landlord, and the report points out clauses that could work against that side, quoting the exact words.",
+      "It helps you understand your agreement and prepare questions for a qualified lawyer. Blueline Lease is not a law firm and does not give legal advice. It does not decide whether a term is enforceable, whether it is allowed where you live, or whether you should sign.",
     ],
   },
   {
     heading: "The beta",
     paragraphs: [
-      "Blueline Redline is free during the beta. Features may change, pause, or stop while we work on the product, and the service may be unavailable at times.",
+      "Blueline Lease is free during the beta. Features may change, pause, or stop while we work on the product, and the service may be unavailable at times.",
+      "You must be 18 or older to use Blueline Lease.",
     ],
   },
   {
     heading: "What you upload",
     paragraphs: [
       "Upload only documents you have the right to share. You keep whatever rights you have in them. You let us process the text so we can run the review, including sending it to the AI provider described in the Privacy Policy.",
-      "Don't use Blueline Redline to break the law, to get into other people's accounts, or to interfere with the service.",
+      "Don't use Blueline Lease to break the law, to get into other people's accounts, or to interfere with the service.",
     ],
   },
   {
@@ -69,7 +70,7 @@ export const TERMS_SECTIONS: readonly LegalSection[] = [
   {
     heading: "Contact",
     paragraphs: [
-      "Use the contact page when sending is available.",
+      "Use the contact form to ask a question about these terms or your account.",
     ],
   },
 ];
@@ -81,7 +82,7 @@ export const PRIVACY_SECTIONS: readonly LegalSection[] = [
       "The text of your lease and any documents you add, the titles they carry, the side you chose, and the review we produce. We never receive the PDF file itself.",
       "If you create an account, we collect your email address and the name you enter. The signup form asks for your first name. Supabase handles your password and confirmation email. If Google sign-in is available and you use it, we receive your name and email address from Google.",
       "If you are signed in: the personal red lines you write (up to 20).",
-      "We use cookies to keep you signed in.",
+      "We use cookies to keep you signed in. While you confirm your email address, a cookie holds that address for up to 24 hours. Where you can sign in and return to a guest report, a separate cookie links the report to your browser for up to two hours.",
       "If you send a contact message, we receive your name, reply email, topic, and message. Feedback can include your comment, whether the report was useful, the page you came from, and whether you reviewed as a renter or landlord. Email is optional for feedback.",
     ],
   },
@@ -90,27 +91,27 @@ export const PRIVACY_SECTIONS: readonly LegalSection[] = [
     paragraphs: [
       "Your browser reads the text out of each PDF. The file stays on your device.",
       "The text and your chosen side go to our server, which sends them to an AI model through OpenRouter. OpenRouter passes the request to a single model provider that we choose in our settings, and that provider processes the text to write the review.",
-      "Guest reviews stay in the open browser tab. Where guest saving is available, the app keeps a temporary encrypted copy in that tab for up to two hours so you can sign in and return to the report. It adds the guest review to your library when you choose to save it.",
+      "Guest reviews stay in the open browser tab. Where guest saving is available, the app keeps an encrypted copy in that tab so you can sign in and return to the report. The option to return expires after two hours. The app adds the guest review to your library when you choose to save it.",
     ],
   },
   {
     heading: "How long we keep it",
     paragraphs: [
-      "If you are signed in, each completed review is kept in your library for 30 days. If you save it, we keep it for 90 days from that save. The library shows each review's expiry date.",
-      "When a review expires you can no longer open it. A scheduled cleanup then deletes the stored text and results. [Owner: confirm the cleanup job runs in production before publishing.]",
+      "A review stored in your library expires 30 days after completion. If you extend a review, it expires 90 days after your most recent extension. The library shows the expiry date for each review.",
+      "When a review expires, you can no longer open it. A scheduled cleanup deletes the text and results we stored for that review.",
       "Your red lines stay until you change them or your account is deleted.",
     ],
   },
   {
     heading: "Deleting your data",
     paragraphs: [
-      "There is no button yet to delete a single review or your whole account. Until there is, email [support address, pending] and we will delete it. [Owner: a working contact address is required before publishing.]",
+      "To ask us to delete a review or your account, use the contact form and enter the email address on your account. We’ll check that you control that address before acting. Expect an acknowledgment within five business days. We’ll complete verified requests within 30 days of receiving them or explain any exception that applies.",
     ],
   },
   {
     heading: "Who else handles your data",
     paragraphs: [
-      "Supabase stores accounts and saved reviews. Vercel hosts the site. OpenRouter and the model provider it routes to process the text of each review. When contact and feedback sending is available, Formspree receives the submission and sends a notification to the support inbox.",
+      "Supabase stores accounts and saved reviews. Vercel hosts the site. OpenRouter and the model provider it routes to process the text of each review. Formspree receives contact and feedback submissions and sends a copy to our support inbox.",
       "We don't sell your data.",
     ],
   },
@@ -123,7 +124,7 @@ export const PRIVACY_SECTIONS: readonly LegalSection[] = [
   {
     heading: "Changes and contact",
     paragraphs: [
-      "If we change this policy, we will update this page and the date at the top. To reach us, use the contact page. We are still setting up a public contact address.",
+      "If we change this policy, we will update this page and the date at the top. Use the contact form for privacy questions or requests.",
     ],
   },
 ];

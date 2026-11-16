@@ -6,7 +6,7 @@ import { SignInForm } from "@/features/auth/components/SignInForm";
 import { isAccountsConfigured } from "@/features/auth/config";
 import { signInReturnPath } from "@/features/auth/redirects";
 
-export const metadata: Metadata = { title: "Forgot password | Blueline Redline" };
+export const metadata: Metadata = { title: "Forgot password" };
 
 export default async function ForgotPasswordPage({ searchParams }: AuthPageProps) {
   const query = await searchParams;

@@ -18,7 +18,7 @@ import type { RiskFlag } from "./types";
  * withheld rather than shown wrong.
  */
 export const RESIDUAL_RISK_UNCONFIRMED =
-  "Blueline could not confirm what would remain if this edit were accepted. Read the proposed edit above and judge for yourself what it does not address.";
+  "Blueline Lease could not confirm what would remain if this edit were accepted. Read the proposed edit above and judge for yourself what it does not address.";
 
 /** One structured call: validated, and retried once if the reply is the wrong shape. */
 function askModel(model: ModelClient, user: string): Promise<ModelConsistency> {

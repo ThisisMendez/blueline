@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 
+import { PRODUCT_NAME } from "@/shared/brand";
+
 const navigation = [
   { label: "How It Works", href: "/how-it-works" },
   { label: "Features", href: "/features" },
@@ -29,7 +31,7 @@ export function Nav() {
         <Link
           href="/"
           className="flex min-h-11 items-center gap-2.5 justify-self-start rounded-sm"
-          aria-label="Blueline Redline home"
+          aria-label={`${PRODUCT_NAME} home`}
         >
           <Image
             src="/brand/blueline-redline-mark.png"
@@ -40,8 +42,7 @@ export function Nav() {
             priority
           />
           <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight text-[var(--color-navy-ink)]">
-            Blueline{" "}
-            <span className="text-[var(--color-red-ink)]">Redline</span>
+            {PRODUCT_NAME}
           </span>
         </Link>
         <details

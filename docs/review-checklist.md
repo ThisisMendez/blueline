@@ -1,10 +1,10 @@
 # Blueline project document review checklist
 
-Use this checklist to review Blueline briefs, specs, research summaries, and design documents. It is separate from the lease-protection coverage checklist that Blueline Redline shows to signers. Score every item **pass** or **fail**. If an item's condition does not apply, it passes with an explanation; if the document lacks evidence needed to judge it, it fails until that evidence is supplied.
+Use this checklist to review Blueline briefs, specs, research summaries, and design documents. It is separate from the lease-protection coverage checklist that Blueline Lease shows to signers. Score every item **pass** or **fail**. If an item's condition does not apply, it passes with an explanation; if the document lacks evidence needed to judge it, it fails until that evidence is supplied.
 
 | ID | Check | Pass when |
 | --- | --- | --- |
-| 1 | **Name** | Any public-facing product name is **Blueline Redline**. “Blueline” is used only as the project shorthand. ([Brand](../BRAND.md)) |
+| 1 | **Name** | The public product name is **Blueline Lease**. Reserve “Blueline Redline” for the campaign motto and “Blueline” for project shorthand. ([Brand](../BRAND.md)) |
 | 2 | **First-version audience and scope** | Any first-version proposal serves a lease signer with a residential lease or renewal in hand. Other contract categories are clearly labeled as future possibilities, not current requirements. ([Brief](../PRD.md)) |
 | 3 | **Evidence** | Factual claims about users, competitors, prices, or legal effects point to a source. Claims without support are labeled as assumptions or questions, not findings. ([Research](../research/summary.md), [brief](../PRD.md)) |
 | 4 | **Domain language** | Terms such as risk flag, severity, not-found item, preference match, complete agreement, and counter-offer are used as defined in [CONTEXT.md](../CONTEXT.md). |

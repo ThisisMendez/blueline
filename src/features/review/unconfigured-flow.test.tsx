@@ -64,7 +64,7 @@ describe("the product with accounts unavailable", () => {
     await user.click(screen.getByRole("button", { name: "I’m a renter" }));
 
     expect(screen.getByText("Accounts aren't running yet")).toBeInTheDocument();
-    expect(screen.getByText("Not saved by Blueline")).toBeInTheDocument();
+    expect(screen.getByText("Not saved by Blueline Lease")).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: /your reviews/i })).toBeNull();
 
     await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", cleanText));

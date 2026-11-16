@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Archivo, Source_Serif_4, JetBrains_Mono } from "next/font/google";
+
+import { PRODUCT_NAME } from "@/shared/brand";
+
 import "./globals.css";
 
 const archivo = Archivo({
@@ -22,9 +25,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Blueline Redline",
+  title: {
+    default: PRODUCT_NAME,
+    template: `%s | ${PRODUCT_NAME}`,
+  },
   description:
-    "Blueline Redline reads your lease and shows you the exact sentences that could hurt you, ranked by consequence, with a proposed edit for each one.",
+    `${PRODUCT_NAME} reads your lease and shows you the exact sentences that could hurt you, ranked by consequence, with a proposed edit for each one.`,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

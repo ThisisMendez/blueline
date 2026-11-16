@@ -4,16 +4,18 @@ Draft dated 2026-11-13. Not in effect. The page at the matching route renders on
 
 ## Owner/counsel must verify
 
-- [ ] Confirm Blueline Redline's legal entity name, address, and the governing law and venue.
-- [ ] Write the disclaimer and limitation-of-liability text (placeholder in the page).
-- [ ] Confirm the public support contact and the data handled by the contact delivery service before publishing this policy.
-- [ ] Confirm the minimum age for users.
-- [ ] Confirm the model provider OpenRouter routes to in production (`OPENROUTER_PROVIDER`, Fireworks by default) and read OpenRouter's and that provider's data retention and training terms. The request does not currently set a data-collection or zero-retention flag.
+- [ ] Identify the operator or entity responsible for personal data and confirm the public support address on a domain it controls.
+- [x] The owner chose 18 as the minimum age for the beta.
+- [x] The production contact and beta feedback forms were tested through Formspree to the support inbox.
+- [x] OpenRouter activity filtered to the production site showed GLM 5.3 Flash through Fireworks on November 13, 2026.
+- [ ] Confirm data retention and logging for the deployed provider and workspace. The request does not set a data-collection or zero-retention flag. [OpenRouter retention controls](https://openrouter.ai/docs/guides/features/zdr) · [Fireworks privacy policy](https://fireworks.ai/privacy-policy)
 - [ ] Confirm what Vercel and Supabase log (request logs, IP addresses, auth events) and for how long; the draft does not cover logs.
-- [ ] Confirm no analytics, advertising, or tracking scripts are added; the draft says only that we don't sell data.
-- [ ] Confirm that pg_cron cleanup (migration 0006) is applied in production, since the draft says expired reviews are deleted every minute.
-- [ ] Decide how deletion requests are handled until there is an in-app delete for reviews and accounts, and who handles them.
-- [ ] Write the state privacy rights section (CCPA/CPRA and others), and say where data is stored (Supabase and Vercel regions).
+- [x] No analytics, advertising, or tracking integration was found in the app. On November 15, Vercel Web Analytics was off and Speed Insights showed no installation data.
+- [x] On November 15, 2026, the production Supabase Cron dashboard showed the review purge job active every minute and its latest run succeeded.
+- [ ] Verify physical deletion of an expired synthetic review and its children in hosted Supabase before publishing a deletion guarantee or exact purge interval.
+- [x] The owner chose manual deletion requests through Contact, with acknowledgment within five business days and completion within 30 days for verified requests.
+- [ ] Test the deletion procedure, including account-email verification, what is deleted in each service, and escalation for vendor copies. See [deletion procedure](privacy-deletion-procedure.md).
+- [ ] Confirm which state privacy rules apply and finish the rights section. Supabase shows `us-east-1` for the production database. Confirm Vercel and the other providers' data locations before making any broader claim.
 - [ ] Confirm whether Supabase auth emails (sign-in links, password reset) go through Supabase's mailer or a custom SMTP provider, and name it if needed.
 
 ---
@@ -26,7 +28,7 @@ If you create an account, we collect your email address and the name you enter. 
 
 If you are signed in: the personal red lines you write (up to 20).
 
-We use cookies to keep you signed in.
+We use cookies to keep you signed in. While you confirm your email address, a cookie holds that address for up to 24 hours. Where you can sign in and return to a guest report, a separate cookie links the report to your browser for up to two hours.
 
 If you send a contact message, we receive your name, reply email, topic, and message. Feedback can include your comment, whether the report was useful, the page you came from, and whether you reviewed as a renter or landlord. Email is optional for feedback.
 
@@ -36,23 +38,23 @@ Your browser reads the text out of each PDF. The file stays on your device.
 
 The text and your chosen side go to our server, which sends them to an AI model through OpenRouter. OpenRouter passes the request to a single model provider that we choose in our settings, and that provider processes the text to write the review.
 
-Guest reviews stay in the open browser tab. Where guest saving is available, the app keeps a temporary encrypted copy in that tab for up to two hours so you can sign in and return to the report. It adds the guest review to your library when you choose to save it.
+Guest reviews stay in the open browser tab. Where guest saving is available, the app keeps an encrypted copy in that tab so you can sign in and return to the report. The option to return expires after two hours. The app adds the guest review to your library when you choose to save it.
 
 ## How long we keep it
 
-If you are signed in, each completed review is kept in your library for 30 days. If you save it, we keep it for 90 days from that save. The library shows each review's expiry date.
+A review stored in your library expires 30 days after completion. If you extend a review, it expires 90 days after your most recent extension. The library shows the expiry date for each review.
 
-When a review expires you can no longer open it, and a scheduled cleanup that runs every minute deletes the stored text and results.
+When a review expires, you can no longer open it. A scheduled cleanup deletes the text and results we stored for that review.
 
 Your red lines stay until you change them or your account is deleted.
 
 ## Deleting your data
 
-There is no button yet to delete a single review or your whole account. Until there is, ask us through the contact page and we will delete it.
+To ask us to delete a review or your account, use the contact form and enter the email address on your account. We’ll check that you control that address before acting. Expect an acknowledgment within five business days. We’ll complete verified requests within 30 days of receiving them or explain any exception that applies.
 
 ## Who else handles your data
 
-Supabase stores accounts and saved reviews. Vercel hosts the site. OpenRouter and the model provider it routes to process the text of each review. When contact and feedback sending is available, Formspree receives the submission and sends a notification to the support inbox.
+Supabase stores accounts and saved reviews. Vercel hosts the site. OpenRouter and the model provider it routes to process the text of each review. Formspree receives contact and feedback submissions and sends a copy to our support inbox.
 
 We don't sell your data.
 
@@ -62,4 +64,4 @@ We don't sell your data.
 
 ## Changes and contact
 
-If we change this policy, we will update this page and the date at the top. To reach us, use the contact page. We are still setting up a public contact address.
+If we change this policy, we will update this page and the date at the top. Use the contact form for privacy questions or requests.

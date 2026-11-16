@@ -4,9 +4,12 @@ Language for the people and contract judgments Blueline serves.
 
 ## Language
 
-**Blueline Redline**:
+**Blueline Lease**:
 The official public-facing product name.
-_Avoid_: Blueline as the public product name
+_Avoid_: Blueline or Blueline Redline as the public product name
+
+**Blueline Redline**:
+The campaign motto, paired with “Draw the line before you sign.”
 
 **Blueline**:
 The project shorthand used in internal documents and conversation.

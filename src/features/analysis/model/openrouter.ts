@@ -1,3 +1,5 @@
+import { PRODUCT_NAME } from "@/shared/brand";
+
 import { ModelError, type ModelClient, type ModelRequest } from "./client";
 
 /**
@@ -66,7 +68,7 @@ export class OpenRouterModelClient implements ModelClient {
   constructor(options: OpenRouterModelClientOptions = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.siteUrl = options.siteUrl;
-    this.appTitle = options.appTitle ?? "Blueline Redline";
+    this.appTitle = options.appTitle ?? PRODUCT_NAME;
   }
 
   async complete(request: ModelRequest): Promise<unknown> {

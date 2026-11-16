@@ -10,7 +10,7 @@ import { scoreFromStoredReview } from "@/features/score";
 import { primaryActionClassName } from "@/features/site/PageShell";
 
 export const metadata: Metadata = {
-  title: "Sample lease reports | Blueline Redline",
+  title: "Sample lease reports",
   description: "Explore an example rental agreement from the renter and landlord perspectives.",
 };
 

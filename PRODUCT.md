@@ -16,11 +16,11 @@ A renter with a residential lease or renewal in hand and a signing decision appr
 
 ## Product Purpose
 
-Blueline Redline helps a lease signer understand the agreement, see the terms that could affect them ranked by consequence, and prepare questions or proposed changes before deciding. Success means an independent evaluator can verify every flag's source and confirm no adjudicated high-severity term was missed for either role in a held-out test set.
+Blueline Lease helps a lease signer understand the agreement, see the terms that could affect them ranked by consequence, and prepare questions or proposed changes before deciding. Success means an independent evaluator can verify every flag's source and confirm no adjudicated high-severity term was missed for either role in a held-out test set.
 
 ## Positioning
 
-“Review your rental agreement from your perspective.” Blueline Redline is a contract review app. The user picks their side, and the report highlights clauses that could harm it. It helps renters first, and landlords too, understand what could affect them and what to clarify before signing. Users decide how to act on the report. [Brand voice](BRAND.md).
+Blueline Lease is a contract review app for residential leases. The user picks their side, and the report highlights clauses that could harm it. It helps renters first, and landlords too, understand what could affect them and what to clarify before signing. Users decide how to act on the report. [Brand voice](BRAND.md).
 
 ## Operating Context
 
@@ -40,7 +40,7 @@ The signer selects renter or landlord, then pastes lease text or uploads selecta
 
 ## Brand Commitments
 
-Official public name: **Blueline Redline**. Internal/project shorthand: **Blueline**. Brand voice is calm, precise, and quietly defiant — show the source, explain the consequence, make room for a better reply. Agreements should feel like working documents, not intimidating legal artifacts. All user-facing copy runs through the humanizer skill before commit; copy that reads like a model wrote it is a defect. Visual direction (Blueprint navy `#123B5D`, Paper `#F6F1E7`, Signal red `#E5453A`) is recorded in BRAND.md and belongs to DESIGN.md, not here.
+Use **Blueline Lease** as the product name and **Blueline** as project shorthand. See [BRAND.md](BRAND.md) for the campaign motto, homepage wording, and palette. Show the source, explain the consequence, and make room for a better reply. Run user-facing copy through the humanizer skill before committing.
 
 ## Evidence on Hand
 

@@ -10,7 +10,7 @@ describe("landing page capability boundary", () => {
 // and does not check it against local law. The role choice (ADR 0015) is live.
   it("says the review does not check the lease against local law", () => {
     render(<BrandHero />);
-    expect(screen.getByText(/don't\s+check it against local law/)).toBeInTheDocument();
+    expect(screen.getByText(/don't check your lease against local law/)).toBeInTheDocument();
   });
 
   it("asks the signer to choose renter or landlord", () => {
