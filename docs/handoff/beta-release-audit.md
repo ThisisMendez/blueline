@@ -108,3 +108,13 @@ The following records were documented before outbound email setup. Use as histor
 | MX | `@` | `route1.mx.cloudflare.net` (67), `route2.mx.cloudflare.net` (58), `route3.mx.cloudflare.net` (45) | Auto | Cloudflare inbound forwarding |
 | TXT | `@` | `v=spf1 include:_spf.mx.cloudflare.net ~all` | Auto | Cloudflare root SPF |
 | TXT | `_dmarc` | `v=DMARC1; p=none; rua=mailto:support@bluelinelease.com` | Auto | DMARC monitoring |
+
+
+## Email setup follow-up
+
+November 16, 2026, after the v0.4.2 deployment.
+
+- Supabase custom SMTP and four branded templates were installed. A synthetic confirmation reached the inbox from `no-reply@bluelinelease.com`, opened the production verification page, and established access to `/account`.
+- A synthetic password reset email reached the inbox and opened the production password form through the verified recovery callback. A separate Supabase Auth PKCE test consumed the delivered recovery link, changed the synthetic password, and signed in with the new password. The temporary message and verifier were removed. After both checks passed, `AUTH_EMAIL_DELIVERY_VERIFIED=true` was set for Vercel Production and the v0.4.2 source was redeployed. The live signup route returned HTTP 200 with the create-account form.
+- Both Gmail aliases were verified with a separate domain-scoped Sending access key. Synthetic messages from `support@bluelinelease.com` and `alexismendez@bluelinelease.com` reached the inbox with the expected From headers. Gmail replies from the address that received the message.
+- A fresh signup from the production form was staged. Its final submission requires browser action-time approval for its age and policy checkbox. The synthetic preflight account also awaits admin cleanup.
