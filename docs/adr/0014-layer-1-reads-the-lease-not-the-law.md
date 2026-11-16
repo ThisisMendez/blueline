@@ -1,6 +1,6 @@
 # 0014. Layer 1 reads the lease, not the law
 
-Blueline Redline reports what the supplied lease says and what could follow from it. It does not check terms against the law where the signer lives, decide whether a term is enforceable, or say a lease is safe to sign. Checking a lease against local law ("jurisdiction intelligence", Layer 2) is a possible later capability with its own sources, validation and review, and is not built or offered now.
+Blueline Lease reports what the supplied lease says and what could follow from it. It does not check terms against the law where the signer lives, decide whether a term is enforceable, or say a lease is safe to sign. Checking a lease against local law ("jurisdiction intelligence", Layer 2) is a possible later capability with its own sources, validation and review, and is not built or offered now.
 
 The boundary is enforced in behaviour as well as copy. The landing page, the review page, the results and each proposed edit say the review is not checked against local law; the prompts forbid legal conclusions; a deterministic check looks for them in generated text; and questions that need local law are answered from the lease with a fixed note that the law was not checked.
 

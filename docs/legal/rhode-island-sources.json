@@ -1,16 +1,107 @@
 {
   "publicLawsYear": 2026,
   "sources": [
-    { "id": "chapter-34-18", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/index.htm" },
-    { "id": "chapter-application", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-7.htm" },
-    { "id": "chapter-exclusions", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-8.htm" },
-    { "id": "rental-terms", "title": "Terms and conditions of rental agreement", "section": "34-18-15", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-15.htm" },
-    { "id": "rent-increase-notice", "title": "Rent increases — Notice requirements", "section": "34-18-16.1", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-16.1.htm" },
-    { "id": "prohibited-provisions", "title": "Provisions prohibited in rental agreements", "section": "34-18-17", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-17.htm" },
-    { "id": "security-deposits", "title": "Security deposits", "section": "34-18-19", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-19.htm" },
-    { "id": "maintenance", "title": "Landlord to maintain premises", "section": "34-18-22", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-22.htm" },
-    { "id": "access", "title": "Access", "section": "34-18-26", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-26.htm" },
-    { "id": "periodic-tenancy", "title": "Termination of periodic tenancy", "section": "34-18-37", "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-37.htm" },
-    { "id": "public-laws-2026", "url": "https://webserver.rilegislature.gov/Lawrevision/plshort/pl2026sub.htm" }
+    {
+      "id": "chapter-34-18",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/index.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "4ba8d183ef208774cf7cffa3107e082b648bfe786e482166c09de7ed1a56c6e4"
+    },
+    {
+      "id": "chapter-application",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-7.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "96fc399ce76e73148ea0fc07abcf6b6b0f023ea6c1291c9514fbe2f20a04b138"
+    },
+    {
+      "id": "chapter-exclusions",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-8.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "981e63cd3413c3618db344cb8e35b1a3f686fe454e3cd2b5f230a9545de7b032"
+    },
+    {
+      "id": "rental-terms",
+      "title": "Terms and conditions of rental agreement",
+      "section": "34-18-15",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-15.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "beb39c4115a9faf995001fde035b3fa9ac8a29fc05fc4ac42d15ba0bb93f4446"
+    },
+    {
+      "id": "rent-increase-notice",
+      "title": "Rent increases — Notice requirements",
+      "section": "34-18-16.1",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-16.1.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "37aa5d02c9fc4130bffa9a1bb9c5c37db99302feed7ba5a5558a4b06c9fc0356"
+    },
+    {
+      "id": "prohibited-provisions",
+      "title": "Prohibited provisions in rental agreements",
+      "section": "34-18-17",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-17.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "a3d5ef80f2e6f42ee2e426b5931f29580cf3f1f4e24ffd4717f329fa10e68e19"
+    },
+    {
+      "id": "security-deposits",
+      "title": "Security deposits",
+      "section": "34-18-19",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-19.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "1d6fc4042865d649f3d5fe621e3067a1264104e51a7d9672af991d58b0b3a8de"
+    },
+    {
+      "id": "maintenance",
+      "title": "Landlord to maintain premises",
+      "section": "34-18-22",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-22.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "d9f2bcf0937027172696dda65d873068dc097595e0099d1650e60aa850a0be1a"
+    },
+    {
+      "id": "access",
+      "title": "Access",
+      "section": "34-18-26",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-26.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "5fec8306be942b332c42120c9e983b8a09a8b6be19f16f8dd7f384194360fe3b"
+    },
+    {
+      "id": "periodic-tenancy",
+      "title": "Termination of periodic tenancy",
+      "section": "34-18-37",
+      "url": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-37.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "7e64bb428bb37aa5a4f5c0a9978875dcae477dc59fe229f8a913b8204ec5652f"
+    },
+    {
+      "id": "public-laws-2026",
+      "url": "https://webserver.rilegislature.gov/Lawrevision/plshort/pl2026sub.htm",
+      "reviewer": "Codex automated review, 2026-11-16",
+      "reviewedOn": "2026-11-16",
+      "reviewBy": "2026-12-16",
+      "sha256": "2f9c6db9a7c2deb38b26f6380a4b36986cc050a6127cc031157ea7c773b2a991"
+    }
   ]
 }

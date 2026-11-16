@@ -1,6 +1,6 @@
 # 0015. Renter first, with landlord reviews
 
-Blueline Redline is a contract review app for residential leases. Before each review the user chooses whose side they are on, renter or landlord, and the report highlights the clauses that could harm that side, each with its exact source sentence.
+Blueline Lease is a contract review app for residential leases. Before each review the user chooses whose side they are on, renter or landlord, and the report highlights the clauses that could harm that side, each with its exact source sentence.
 
 Renters remain the primary audience. The user research, the initial flag priorities (deposit forfeiture, early-exit costs, waivers of dispute rights), the default examples and the order of the role choice all start from the renter. Landlords are supported as a review role, not as a separate product: the same complete packet, the same verified citations and the same contract facts, with severity and next steps assessed for the landlord's own exposure.
 
