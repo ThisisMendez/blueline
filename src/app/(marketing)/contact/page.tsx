@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { contactFormId } from "@/features/site/contact-config";
 import { FEEDBACK_TOPIC, type FeedbackContext } from "@/features/site/contact-fields";
 import { ContactForm } from "@/features/site/ContactForm";
 import { PageShell, Panel } from "@/features/site/PageShell";
+import { SUPPORT_EMAIL } from "@/features/site/policy-versions";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
 
 export default async function ContactPage({ searchParams }: PageProps<"/contact">) {
   const query = await searchParams;
+  const formAvailable = contactFormId() !== null;
   const feedback: FeedbackContext | undefined = query.topic === FEEDBACK_TOPIC ? {
     source: query.source === "footer" || query.source === "report" ? query.source : undefined,
     role: query.source === "report" && (query.role === "renter" || query.role === "landlord") ? query.role : undefined,
@@ -27,7 +30,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
     >
       <div className="grid gap-4 md:grid-cols-[1.5fr_1fr] md:items-start md:gap-6">
         <Panel id="contact-form-heading" title={feedback ? "Your feedback" : "Write to us"}>
-          <ContactForm available={contactFormId() !== null} feedback={feedback} />
+          <ContactForm available={formAvailable} feedback={feedback} />
         </Panel>
 
         <Panel id="contact-notes-heading" title="Before you write" tone="deep">
@@ -37,7 +40,12 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
             problem in your own words instead.
           </p>
           <p>
-            We can&apos;t give legal advice or tell you whether to sign.
+            You can email <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.
+            {!formAvailable && " The web form is off while we confirm its delivery."}
+          </p>
+          <p>
+            For data requests and our response times, see the <Link className="underline" href="/privacy">Privacy Policy</Link>.
+            Read our <Link className="underline" href="/terms">Terms of Use</Link> for what the service can help with.
           </p>
         </Panel>
       </div>

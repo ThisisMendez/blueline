@@ -3,8 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { AuthFrame, authPageHref, type AuthPageProps } from "@/features/auth/components/AuthFrame";
-import { GoogleSignInForm, SignInForm } from "@/features/auth/components/SignInForm";
-import { readAuthProviderSettings } from "@/features/auth/provider-settings";
+import { SignInForm } from "@/features/auth/components/SignInForm";
 import { isRecoveryConfigured } from "@/features/auth/recovery-authorization";
 import { signInReturnPath } from "@/features/auth/redirects";
 import { getAccountsState } from "@/features/auth/session";
@@ -15,7 +14,7 @@ const PROBLEM_MESSAGE: Record<string, string> = {
   "link-unreadable": "That confirmation link is incomplete. Request a new one.",
   "link-expired": "That confirmation link has expired. Request a new one and open it in this browser.",
   "accounts-unavailable": "Accounts aren’t running on this deployment yet.",
-  "google-incomplete": "Google sign-in didn’t finish. Try again or sign in with email and password.",
+  "google-incomplete": "Google sign-in didn’t finish. Sign in with your email.",
 };
 
 export default async function SignInPage({ searchParams }: AuthPageProps) {
@@ -23,8 +22,6 @@ export default async function SignInPage({ searchParams }: AuthPageProps) {
   const query = await searchParams;
   const next = signInReturnPath(query.next);
   if (accounts.kind === "signed-in") redirect(next);
-  const showGoogle = accounts.kind !== "unconfigured"
-    && (await readAuthProviderSettings())?.external?.google === true;
   const problem = typeof query.problem === "string" && Object.hasOwn(PROBLEM_MESSAGE, query.problem)
     ? PROBLEM_MESSAGE[query.problem]
     : undefined;
@@ -36,7 +33,6 @@ export default async function SignInPage({ searchParams }: AuthPageProps) {
       configured={accounts.kind !== "unconfigured"}
       problem={problem}
     >
-      {showGoogle ? <GoogleSignInForm next={next} /> : null}
       <SignInForm next={next} />
       <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
         {isRecoveryConfigured() ? (

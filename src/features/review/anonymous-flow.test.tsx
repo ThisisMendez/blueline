@@ -33,6 +33,10 @@ it("lets a visitor review without signing in even when accounts exist", async ()
   expect(screen.getByRole("button", { name: "I’m a renter" })).toBeEnabled();
   await user.click(screen.getByRole("button", { name: "I’m a landlord" }));
   expect(screen.getByRole("link", { name: "Sign in" })).toBeInTheDocument();
+  const terms = screen.getByRole("link", { name: "Terms of Use" });
+  expect(terms.closest("p")).toHaveTextContent("By starting a review you agree to the Terms of Use and Privacy Policy.");
+  expect(terms).toHaveAttribute("href", "/terms/v1");
+  expect(screen.getByRole("link", { name: "Privacy Policy" })).toHaveAttribute("href", "/privacy/v1");
   await user.upload(screen.getByLabelText("Choose file for your lease"), textPdf("lease.pdf", loadFixture("clean-lease").text));
   await screen.findByText("lease.pdf · 1 page");
   await user.click(screen.getByRole("button", { name: "Read my lease" }));

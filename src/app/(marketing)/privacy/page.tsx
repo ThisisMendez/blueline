@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
-import { draftLegalPagesVisible } from "@/features/site/legal-gate";
-import { PRIVACY_SECTIONS } from "@/features/site/legal-content";
-import { LegalDraft } from "@/features/site/LegalDraft";
+import { PRIVACY_V1 } from "@/features/site/legal-content";
+import { LegalPolicy } from "@/features/site/LegalPolicy";
+import { CURRENT_LEGAL } from "@/features/site/policy-versions";
 
 export const metadata: Metadata = {
-  title: "Privacy",
-  robots: { index: false, follow: false },
+  title: "Privacy Policy",
+  alternates: { canonical: "/privacy" },
 };
 
-/** Unreviewed draft: preview and development only, a 404 on production. */
 export default function PrivacyPage() {
-  if (!draftLegalPagesVisible()) notFound();
-  return <LegalDraft eyebrow="Privacy" title="Privacy Policy" sections={PRIVACY_SECTIONS} />;
+  return <LegalPolicy
+    title="Privacy Policy"
+    version={CURRENT_LEGAL.privacyVersion}
+    effectiveDate={CURRENT_LEGAL.effectiveDate}
+    sections={PRIVACY_V1}
+    versionPath={CURRENT_LEGAL.privacyPath}
+  />;
 }

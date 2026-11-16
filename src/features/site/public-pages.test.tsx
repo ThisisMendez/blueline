@@ -6,16 +6,17 @@ import ContactPage from "@/app/(marketing)/contact/page";
 import FeaturesPage from "@/app/(marketing)/features/page";
 import HowItWorksPage from "@/app/(marketing)/how-it-works/page";
 import PricingPage from "@/app/(marketing)/pricing/page";
-import PrivacyPage from "@/app/(marketing)/privacy/page";
+import PrivacyPage, { metadata as privacyMetadata } from "@/app/(marketing)/privacy/page";
+import PrivacyVersionOnePage, { metadata as privacyV1Metadata } from "@/app/(marketing)/privacy/v1/page";
 import ResourcesPage from "@/app/(marketing)/resources/page";
-import TermsPage from "@/app/(marketing)/terms/page";
+import TermsPage, { metadata as termsMetadata } from "@/app/(marketing)/terms/page";
+import TermsVersionOnePage, { metadata as termsV1Metadata } from "@/app/(marketing)/terms/v1/page";
 import { BelowFold } from "@/features/landing/components/BelowFold";
 import { BrandHero } from "@/features/landing/components/BrandHero";
 import { FieldNotes } from "@/features/landing/components/FieldNotes";
 import { ReviewToolbar } from "@/features/landing/components/ReviewToolbar";
 
 import { ContactForm } from "./ContactForm";
-import { draftLegalPagesVisible } from "./legal-gate";
 import { FeedbackLink } from "./FeedbackLink";
 
 afterEach(() => {
@@ -32,7 +33,6 @@ const newPages = {
   features: FeaturesPage,
   pricing: PricingPage,
   resources: ResourcesPage,
-  terms: TermsPage,
   privacy: PrivacyPage,
 } as const;
 
@@ -94,7 +94,7 @@ describe("contact", () => {
     expect(screen.getByText(/temporarily unavailable/)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Send message" })).toBeDisabled();
     expect(screen.getByLabelText("Message")).toBeDisabled();
-    expect(container.querySelector('a[href^="mailto:"]')).toBeNull();
+    expect(screen.getByRole("link", { name: "support@bluelinelease.com" })).toHaveAttribute("href", "mailto:support@bluelinelease.com");
     expect(container.textContent).not.toMatch(/reply within|respond within|we usually reply/i);
     expect(container.textContent).not.toMatch(/safe to sign|legally (valid|binding)|guarantee/i);
     expect(container.textContent).toMatch(/Leave your lease out/);
@@ -144,28 +144,34 @@ describe("contact", () => {
   });
 });
 
-describe("draft legal pages", () => {
-  it("are visible on preview and development, hidden on production", () => {
-    expect(draftLegalPagesVisible("production")).toBe(false);
-    expect(draftLegalPagesVisible("preview")).toBe(true);
-    expect(draftLegalPagesVisible("development")).toBe(true);
-    expect(draftLegalPagesVisible(undefined)).toBe(true);
+describe("public legal pages", () => {
+  it("explains the legal limits of a lease report", () => {
+    render(<TermsPage />);
+    expect(screen.getByText(/is not a law firm and does not give legal advice/)).toHaveTextContent(
+      /does not create an attorney-client relationship.*whether it is safe to sign/,
+    );
   });
 
   it.each([
-    ["terms", TermsPage],
-    ["privacy", PrivacyPage],
-  ] as const)("%s returns not found in production", (_, Page) => {
+    ["/terms", TermsPage, termsMetadata, "Terms of Use"],
+    ["/privacy", PrivacyPage, privacyMetadata, "Privacy Policy"],
+  ] as const)("%s is public in production and links to a permanent version", (path, Page, metadata, heading) => {
     vi.stubEnv("VERCEL_ENV", "production");
-    expect(() => Page()).toThrow(/NEXT_HTTP_ERROR_FALLBACK;404/);
+    render(<Page />);
+    expect(screen.getByRole("heading", { name: heading, level: 1 })).toBeVisible();
+    expect(screen.getByText(/Version 1.*Effective November 16, 2026/)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Permanent link to version 1" })).toHaveAttribute("href", `${path}/v1`);
+    expect(metadata.alternates?.canonical).toBe(path);
+    expect(screen.getByRole("link", { name: "support@bluelinelease.com" })).toHaveAttribute("href", "mailto:support@bluelinelease.com");
   });
 
   it.each([
-    ["terms", TermsPage],
-    ["privacy", PrivacyPage],
-  ] as const)("%s shows the draft banner on preview", (_, Page) => {
-    vi.stubEnv("VERCEL_ENV", "preview");
+    [TermsVersionOnePage, termsV1Metadata, "Terms of Use"],
+    [PrivacyVersionOnePage, privacyV1Metadata, "Privacy Policy"],
+  ] as const)("returns a version archive that search crawlers can follow", (Page, metadata, heading) => {
     render(<Page />);
-    expect(screen.getByRole("note", { name: "Draft for review" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: heading, level: 1 })).toBeVisible();
+    expect(screen.getByText(/Version 1.*Effective November 16, 2026/)).toBeVisible();
+    expect(metadata.robots).toEqual({ index: false, follow: true });
   });
 });

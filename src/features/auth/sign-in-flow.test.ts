@@ -17,7 +17,6 @@ import {
   signInWithPasswordAction,
   signOutAction,
   signUpAction,
-  startGoogleSignInAction,
   verifySignupCodeAction,
   verifySignupLinkAction,
 } from "./actions";
@@ -28,7 +27,6 @@ const auth = vi.hoisted(() => ({
   getClaims: vi.fn(),
   getUser: vi.fn(),
   resetPasswordForEmail: vi.fn(),
-  signInWithOAuth: vi.fn(),
   signInWithOtp: vi.fn(),
   signInWithPassword: vi.fn(),
   signOut: vi.fn(),
@@ -74,6 +72,8 @@ vi.mock("next/headers", () => ({
 
 vi.mock("next/cache", () => ({ revalidatePath: vi.fn() }));
 
+const policyFields = { acceptPolicies: "on", termsVersion: "1", privacyVersion: "1" };
+
 function form(fields: Record<string, string>) {
   const values = new FormData();
   for (const [key, value] of Object.entries(fields)) values.set(key, value);
@@ -113,25 +113,30 @@ describe("sign-in flows at the Supabase boundary", () => {
     vi.unstubAllGlobals();
   });
 
-  it("offers password and Google sign-in from the same screen", async () => {
+  it("offers password sign-in without an account-creating Google shortcut", async () => {
     auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
     renderScreen(await SignInPage({ searchParams: Promise.resolve({}) }));
 
     expect(screen.getByLabelText(/^email address$/i)).toBeVisible();
     expect(screen.getByLabelText(/^password$/i)).toBeVisible();
     expect(screen.getByRole("button", { name: /^sign in$/i })).toBeVisible();
-    expect(screen.getByRole("button", { name: /continue with google/i })).toBeVisible();
+    expect(screen.queryByRole("button", { name: /continue with google/i })).toBeNull();
     expect(screen.getByRole("link", { name: /forgot password/i })).toBeVisible();
     expect(screen.getByRole("link", { name: /create.*account/i })).toBeVisible();
   });
 
-  it("asks for a first name at signup", async () => {
+  it("asks for a first name and explicit agreement at signup", async () => {
     auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
     renderScreen(await SignUpPage({ searchParams: Promise.resolve({}) }));
 
     expect(screen.getByLabelText("First name")).toHaveAttribute("autocomplete", "given-name");
     expect(screen.getByLabelText("Email address")).toBeVisible();
     expect(screen.getByLabelText("Password")).toBeVisible();
+    const consent = screen.getByRole("checkbox", { name: "I'm 18 or older and I agree to the Terms of Use and Privacy Policy" });
+    expect(consent).toBeRequired();
+    expect(consent).not.toBeChecked();
+    expect(screen.getByRole("link", { name: "Terms of Use" })).toHaveAttribute("href", "/terms/v1");
+    expect(screen.getByRole("link", { name: "Privacy Policy" })).toHaveAttribute("href", "/privacy/v1");
   });
 
   it("shows the verification field and resend action after signup", async () => {
@@ -142,6 +147,7 @@ describe("sign-in flows at the Supabase boundary", () => {
     await user.type(screen.getByLabelText("First name"), "Alexis");
     await user.type(screen.getByLabelText("Email address"), email);
     await user.type(screen.getByLabelText("Password"), password);
+    await user.click(screen.getByRole("checkbox"));
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     const input = await screen.findByLabelText("Verification code");
@@ -170,7 +176,7 @@ describe("sign-in flows at the Supabase boundary", () => {
       .toEqual({ status: "sign-in-link-sent" });
     expect(auth.signInWithOtp).toHaveBeenCalledWith({
       email,
-      options: { emailRedirectTo: `${origin}/auth/confirm?next=%2Freview%2Fsaved-review`, shouldCreateUser: true },
+      options: { emailRedirectTo: `${origin}/auth/confirm?next=%2Freview%2Fsaved-review`, shouldCreateUser: false },
     });
   });
 
@@ -201,7 +207,7 @@ describe("sign-in flows at the Supabase boundary", () => {
       return { error: null };
     });
 
-    const registration = form({ firstName: "Alexis", email, password, confirmPassword: password });
+    const registration = form({ firstName: "Alexis", email, password, confirmPassword: password, ...policyFields });
     expect(await signUpAction({ status: "idle" }, registration)).toMatchObject({ status: "confirmation-sent" });
     expect(await getAccountsState()).toEqual({ kind: "signed-out" });
     expect(await signInWithPasswordAction({ status: "idle" }, form({ email, password }))).toMatchObject({
@@ -226,8 +232,18 @@ describe("sign-in flows at the Supabase boundary", () => {
   it("verifies the pasted code with the signup address and keeps leading zeroes", async () => {
     auth.signUp.mockResolvedValue({ data: { session: null }, error: null });
     auth.verifyOtp.mockResolvedValue({ data: { session: {} }, error: null });
-    await signUpAction({ status: "idle" }, form({ firstName: "Alexis", email, password }));
-    expect(auth.signUp.mock.calls[0]?.[0].options.data).toEqual({ display_name: "Alexis" });
+    await signUpAction({ status: "idle" }, form({
+      firstName: "Alexis", email, password, ...policyFields, accepted_at: "forged-time",
+    }));
+    const metadata = auth.signUp.mock.calls[0]?.[0].options.data;
+    expect(metadata).toEqual({
+      display_name: "Alexis",
+      terms_version: 1,
+      privacy_version: 1,
+      accepted_at: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T/),
+      age_confirmed: true,
+    });
+    expect(new Date(metadata.accepted_at).toISOString()).toBe(metadata.accepted_at);
 
     const next = "/review/saved-review";
     const input = { code: " 001234 ", confirmationEmail: email, next };
@@ -272,38 +288,32 @@ describe("sign-in flows at the Supabase boundary", () => {
     }
   });
 
-  it("starts Google sign-in and returns a canceled attempt to the app without exchanging a code", async () => {
-    const googleAuthorization = "https://auth.example.test/auth/v1/authorize?provider=google";
-    auth.signInWithOAuth.mockResolvedValue({ data: { url: googleAuthorization }, error: null });
-
-    const result = await redirectDestination(startGoogleSignInAction({ status: "idle" }, form({
-      next: "/review/saved-review",
-    })));
-    expect(result.href).toBe(googleAuthorization);
-    const { provider, options } = auth.signInWithOAuth.mock.calls[0][0];
-    expect(provider).toBe("google");
-    expect(options.scopes.split(" ").sort()).toEqual(["email", "openid", "profile"]);
-    const returnTo = new URL(options.redirectTo);
-    expect(returnTo.origin).toBe(origin);
-    expect(returnTo.pathname).toBe("/auth/callback");
-
-    returnTo.searchParams.set("error", "access_denied");
+  it("returns an old canceled Google attempt to email sign-in without exchanging a code", async () => {
+    const returnTo = new URL("/auth/callback?next=%2Freview%2Fsaved-review&error=access_denied", origin);
     const canceled = await redirectDestination(googleCallback(new NextRequest(returnTo)));
     expect(canceled.pathname).toBe("/sign-in");
-    expect(canceled.searchParams.get("problem")).toBeTruthy();
+    expect(canceled.searchParams.get("problem")).toBe("google-incomplete");
     expect(auth.exchangeCodeForSession).not.toHaveBeenCalled();
   });
 
-  it("keeps the visitor on the sign-in page if Google is disabled", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json({
-      ...providerSettings,
-      external: { ...providerSettings.external, google: false },
-    })));
+  it.each([
+    [{ termsVersion: "1", privacyVersion: "1" }, "policy-agreement-required"],
+    [{ ...policyFields, acceptPolicies: "false" }, "policy-agreement-required"],
+    [{ ...policyFields, termsVersion: "0" }, "policy-version-changed"],
+    [{ ...policyFields, privacyVersion: "0" }, "policy-version-changed"],
+  ] as const)("rejects missing, unchecked, or stale agreement before signup", async (submitted, status) => {
+    const registration = form({ firstName: "Alexis", email, password, ...submitted });
+    expect(await signUpAction({ status: "idle" }, registration)).toEqual({ status });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
 
-    expect(await startGoogleSignInAction({ status: "idle" }, form({}))).toMatchObject({
-      status: "provider-unavailable",
-    });
-    expect(auth.signInWithOAuth).not.toHaveBeenCalled();
+  it("gives the same response for sign-in links when no account exists", async () => {
+    auth.signInWithOtp
+      .mockResolvedValueOnce({ error: null })
+      .mockResolvedValueOnce({ error: { code: "otp_disabled" } });
+    const existing = await sendSignInLinkAction({ status: "idle" }, form({ email }));
+    const unknown = await sendSignInLinkAction({ status: "idle" }, form({ email: "unknown@example.test" }));
+    expect(unknown).toEqual(existing);
   });
 
   it("does not create a password account if the project would auto-confirm email", async () => {
@@ -315,7 +325,7 @@ describe("sign-in flows at the Supabase boundary", () => {
     auth.signOut.mockResolvedValue({ error: null });
 
     expect(await signUpAction({ status: "idle" }, form({
-      firstName: "Alexis", email, password,
+      firstName: "Alexis", email, password, ...policyFields,
     }))).toMatchObject({ status: "confirmation-unavailable" });
     expect(auth.signUp).not.toHaveBeenCalled();
   });

@@ -1,130 +1,124 @@
-/**
- * Draft Terms and Privacy text. Unreviewed: the pages that render it are
- * gated off production (see legal-gate.ts), and docs/legal/*.md carries the
- * same text with the checklist the owner and counsel must work through.
- *
- * Every factual statement here should trace to code:
- * - browser-only PDF parsing: src/features/packet/extract/pdf.ts
- * - request carries text, never a file: src/features/analysis/server/route.ts
- * - model calls through OpenRouter, one pinned provider: src/features/analysis/model/openrouter.ts
- * - anonymous reviews are not persisted: route.ts (`accounts.kind === "signed-in"`)
- * - 30/90-day retention and per-minute purge: supabase/migrations/0005, 0006
- * - red lines table, deleted with the account: supabase/migrations/0003
- * - sign-in methods: src/features/auth/actions.ts
- */
-
 export interface LegalSection {
   readonly heading: string;
   readonly paragraphs: readonly string[];
 }
 
-export const LEGAL_DRAFT_DATE = "2026-11-13";
-
-export const TERMS_SECTIONS: readonly LegalSection[] = [
+export const TERMS_V1: readonly LegalSection[] = [
   {
-    heading: "What Blueline Lease is",
+    heading: "Who we are",
     paragraphs: [
-      "Blueline Lease is a contract review app for residential leases. You choose whether you are the renter or the landlord, and the report points out clauses that could work against that side, quoting the exact words.",
-      "It helps you understand your agreement and prepare questions for a qualified lawyer. Blueline Lease is not a law firm and does not give legal advice. It does not decide whether a term is enforceable, whether it is allowed where you live, or whether you should sign.",
+      "Blueline Lease™ helps renters and landlords read residential lease documents and prepare questions. Blueline Lease is operated by Alexis Mendez, an individual in Rhode Island.",
+      "Blueline Lease is not a law firm and does not give legal advice. Using the service does not create an attorney-client relationship. A report does not decide whether a lease is legal or enforceable, or whether it is safe to sign. A lawyer licensed in the relevant place can advise you about your situation.",
     ],
   },
   {
-    heading: "The beta",
+    heading: "Who can use the beta",
     paragraphs: [
-      "Blueline Lease is free during the beta. Features may change, pause, or stop while we work on the product, and the service may be unavailable at times.",
-      "You must be 18 or older to use Blueline Lease.",
+      "You must be 18 or older. The beta is free. We may change, pause, or end the beta or any feature. You can run a review as a guest. You need an account to save reviews to your library or use some drafting tools when available.",
     ],
   },
   {
-    heading: "What you upload",
+    heading: "Your uploads and account",
     paragraphs: [
-      "Upload only documents you have the right to share. You keep whatever rights you have in them. You let us process the text so we can run the review, including sending it to the AI provider described in the Privacy Policy.",
-      "Don't use Blueline Lease to break the law, to get into other people's accounts, or to interfere with the service.",
+      "Upload only documents you have the right to share. You keep any rights you have in those documents. You give us permission to process the text to provide the service, including sending it to the companies listed in our Privacy Policy.",
+      "Keep your account details secure and tell us if you suspect someone has accessed your account. Do not use the service to break the law, violate another person's rights, access an account that isn't yours, or disrupt or abuse the service. We may suspend or close accounts that break these terms or threaten the security of the service. You can ask us to close your account.",
     ],
   },
   {
-    heading: "Reports can be wrong or incomplete",
+    heading: "How to use your report",
     paragraphs: [
-      "An AI model writes the report. Our software checks that each quoted sentence appears word for word in the text you gave us, but the explanations, severity levels, Lease Risk Score, and suggested edits can still be wrong. The report can also miss terms that matter to you.",
-      "The Lease Risk Score sums up the flags we verified. It is not approval to sign, a statement about legality, or a promise that every risk was found. Read the lease yourself, and talk to a qualified lawyer before relying on the report.",
+      "AI helps write the report. We check quoted text against the text we received. The report can still miss important terms or give wrong explanations, scores, or suggestions. Check the lease yourself before you rely on any part of the report.",
+      "If the app includes a legal reference, check the original source and ask a lawyer how it applies to your lease. A lease score reflects the concerns flagged during the review.",
     ],
   },
   {
-    heading: "Accounts",
+    heading: "Copyright",
     paragraphs: [
-      "You can run a review without an account. If you create one, confirm your email address and keep your sign-in details private. Saving to your library requires an account. Some drafting tools may ask you to sign in. We may suspend an account that is used to misuse the service.",
+      "We and our licensors keep our rights in the service, its software, and our branding. You may use your report for your own lease review and share it with someone helping you, subject to your rights in the underlying documents. These terms leave any rights you have under copyright law in place.",
     ],
   },
   {
-    heading: "Disclaimers and limits on liability",
+    heading: "Warranties and limits on liability",
     paragraphs: [
-      "[Counsel to draft. The service is provided as is during the beta, and the wording, limits, and governing law have not been decided.]",
+      "As far as the law allows, the service is provided as is and as available. We disclaim express and implied warranties, including merchantability, fitness for a particular purpose, and noninfringement. We make no promise that the service will be uninterrupted or that any report will be accurate or complete.",
+      "As far as the law allows, our total liability for claims arising out of the service or these terms is limited to the greater of $50 or what you paid us to use the service in the 12 months before the event giving rise to the claim. We are not liable for indirect or consequential damages to the extent the law allows. These terms do not limit any rights or liability the law says cannot be limited.",
+      "To the extent permitted by law, you agree to cover reasonable costs and losses we incur from third-party claims caused by your misuse of the service or your violation of the law.",
     ],
   },
   {
-    heading: "Changes to these terms",
+    heading: "Disputes and these terms",
     paragraphs: [
-      "If we change these terms, we will update this page and the date at the top.",
+      "Rhode Island law governs these terms, subject to any consumer rights the law gives you that cannot be waived. Disputes must be brought in the state or federal courts in Rhode Island that have jurisdiction, unless applicable law requires a different court. Either party may bring an eligible claim in a small claims court that has jurisdiction.",
+      "If part of these terms cannot be enforced, the rest still apply. These terms are the entire agreement between you and us about using the service.",
     ],
   },
   {
-    heading: "Contact",
+    heading: "Changes and support",
     paragraphs: [
-      "Use the contact form to ask a question about these terms or your account.",
+      "When we change these terms, we update the version and date and keep prior versions available. We give notice of material changes before they take effect, such as through the site or account email.",
     ],
   },
 ];
 
-export const PRIVACY_SECTIONS: readonly LegalSection[] = [
+export const PRIVACY_V1: readonly LegalSection[] = [
+  {
+    heading: "Who handles your information",
+    paragraphs: [
+      "Blueline Lease is operated by Alexis Mendez, an individual in Rhode Island. We use information to run reviews, manage accounts, reply to messages, and protect the service.",
+      "We do not sell personal data or share it for targeted advertising. We may disclose information when the law requires it or to address a threat to the service or someone's safety.",
+    ],
+  },
   {
     heading: "What we collect",
     paragraphs: [
-      "The text of your lease and any documents you add, the titles they carry, the side you chose, and the review we produce. We never receive the PDF file itself.",
-      "If you create an account, we collect your email address and the name you enter. The signup form asks for your first name. Supabase handles your password and confirmation email. If Google sign-in is available and you use it, we receive your name and email address from Google.",
-      "If you are signed in: the personal red lines you write (up to 20).",
-      "We use cookies to keep you signed in. While you confirm your email address, a cookie holds that address for up to 24 hours. Where you can sign in and return to a guest report, a separate cookie links the report to your browser for up to two hours.",
-      "If you send a contact message, we receive your name, reply email, topic, and message. Feedback can include your comment, whether the report was useful, the page you came from, and whether you reviewed as a renter or landlord. Email is optional for feedback.",
+      "For a review, we receive the text and names of your submitted documents and whether you chose renter or landlord. We also create a report from that information. The text can include information about other people.",
+      "For an account, we collect your first name, email address and account ID, along with the policy versions you accepted, the date and time you accepted them, and your confirmation that you are at least 18. Supabase handles passwords and email verification. We store any personal red lines you choose to save.",
+      "If you contact us, we receive the details you send, such as your name, email, topic, and message. Beta feedback may also include a usefulness rating, the page you came from, and which side you chose. You can leave out your email when using the feedback form.",
+      "The services that run the site may receive technical information such as IP addresses and request times to operate, secure, and troubleshoot the site.",
     ],
   },
   {
-    heading: "How a review is processed",
+    heading: "What happens to your lease",
     paragraphs: [
-      "Your browser reads the text out of each PDF. The file stays on your device.",
-      "The text and your chosen side go to our server, which sends them to an AI model through OpenRouter. OpenRouter passes the request to a single model provider that we choose in our settings, and that provider processes the text to write the review.",
-      "Guest reviews stay in the open browser tab. Where guest saving is available, the app keeps an encrypted copy in that tab so you can sign in and return to the report. The option to return expires after two hours. The app adds the guest review to your library when you choose to save it.",
+      "Your browser reads the PDF. We receive the extracted text and document names, while the PDF file itself stays on your device. Remove sensitive details, such as Social Security numbers, bank details, health information, and signatures, from the copy you upload.",
+      "Our server sends review content to OpenRouter, which routes it to the model provider Fireworks AI for processing. The AI provider receives the text to generate findings. If you ask us to check your personal red lines, we send those preferences with the relevant lease text. Provider handling depends on their service terms and settings.",
+      "A guest review stays in the current browser tab and is not stored in our review library. If guest continuation is available, the option to return to the report after signing in expires after two hours. You can choose whether to save that guest review after signing in.",
     ],
   },
   {
-    heading: "How long we keep it",
+    heading: "Who helps run the service",
     paragraphs: [
-      "A review stored in your library expires 30 days after completion. If you extend a review, it expires 90 days after your most recent extension. The library shows the expiry date for each review.",
-      "When a review expires, you can no longer open it. A scheduled cleanup deletes the text and results we stored for that review.",
-      "Your red lines stay until you change them or your account is deleted.",
+      "Vercel hosts the site. Supabase handles accounts and stores saved reviews. Our primary Supabase database and Auth project are in the eastern United States. Hosting, service providers, backups, and support may handle data in other locations.",
+      "When the contact form is available, Formspree handles submissions and sends them to our support mailbox. That mailbox uses Google for email. If we enable Cloudflare Email Routing, it forwards messages sent to our support address. If we enable Resend, it handles account and verification email delivery.",
+      "If we add Google sign-in and you choose it, Google would handle that sign-in and share your name and email address with us.",
     ],
   },
   {
-    heading: "Deleting your data",
+    heading: "How long information stays",
     paragraphs: [
-      "To ask us to delete a review or your account, use the contact form and enter the email address on your account. We’ll check that you control that address before acting. Expect an acknowledgment within five business days. We’ll complete verified requests within 30 days of receiving them or explain any exception that applies.",
+      "A review in your library expires after 30 days, unless you extend it. An extension sets the expiry to 90 days after that extension. Once a review expires, it is no longer available in your library. A scheduled cleanup deletes the expired review and associated document text from our live database.",
+      "We keep account information until the account is deleted. Red lines stay until you remove them or close your account. Support messages stay as needed to respond and follow up. Copies in backups, security logs, or vendor systems may follow separate timelines. We may keep some information longer if needed to meet legal obligations or resolve a dispute.",
     ],
   },
   {
-    heading: "Who else handles your data",
+    heading: "Cookies, security, and age",
     paragraphs: [
-      "Supabase stores accounts and saved reviews. Vercel hosts the site. OpenRouter and the model provider it routes to process the text of each review. Formspree receives contact and feedback submissions and sends a copy to our support inbox.",
-      "We don't sell your data.",
+      "We use essential cookies to keep you signed in, remember your email while you confirm it, and return you to an open review.",
+      "We use encrypted connections and account access controls. If a breach requires notice, we will notify affected people without unreasonable delay and follow applicable law.",
+      "The service is for people 18 or older. We do not knowingly collect personal information from people under 18. Contact us if you believe a minor's information has been provided.",
     ],
   },
   {
-    heading: "Your rights",
+    heading: "Your choices and requests",
     paragraphs: [
-      "[Counsel to draft: rights under state privacy laws, age limits, and where data is stored.]",
+      "Anyone can ask to access, correct, or delete their personal information or get a copy of it. Email support or use the Contact form when it is available. For an account request, use the email on your account. We verify control of that email before acting. Never include a password, verification code, or lease in your request.",
+      "We acknowledge requests within five business days and complete verified requests within 30 days of receipt or explain any applicable exception.",
     ],
   },
   {
-    heading: "Changes and contact",
+    heading: "Changes to this policy",
     paragraphs: [
-      "If we change this policy, we will update this page and the date at the top. Use the contact form for privacy questions or requests.",
+      "We update the version and effective date when this policy changes and keep prior versions available. We give notice of material changes before they take effect, such as through the site or account email.",
     ],
   },
 ];
