@@ -71,4 +71,40 @@ Release prepared November 16, 2026. Blueline Lease has an HTTPS apex and two per
 - **Rhode Island.** The page is held off. Source hiding tests pass, but direct live fetches timed out on this workstation, reviewed fingerprints are pending, and Vercel source reachability is unverified.
 - **Preflight.** The combined branch passed 653 tests, lint, type check, and the production build. See the tagged release for post-deploy HTTP and browser checks. [Human steps](../../HUMAN-STEPS.md)
 
-To roll back, restore the previous Vercel production deployment, revert the PR, and set the prior `NEXT_PUBLIC_SITE_URL` and Supabase Site URL if leaving the apex. Keep the apex reachable while clients may have cached the 301. Keep both hosted auth redirect origins during the transition. Restore DNS from the [record table](../../HUMAN-STEPS.md) only if rolling back the domain connection. Web CNAMEs and inbound mail MX records are separate. To roll back outbound email, turn off the verified signup flag first, then restore Supabase's default mailer. Unset the verified Formspree flag before changing the contact destination. Do not discard existing account or consent records.
+To roll back, restore the previous Vercel production deployment, revert the PR, and set the prior `NEXT_PUBLIC_SITE_URL` and Supabase Site URL if leaving the apex. Keep the apex reachable while clients may have cached the 301. Keep both hosted auth redirect origins during the transition. The baseline DNS evidence is preserved in the [v0.4.0 DNS baseline](#v040-dns-baseline) below. Web CNAMEs and inbound mail MX records are separate. To roll back outbound email, turn off the verified signup flag first, then restore Supabase's default mailer. Unset the verified Formspree flag before changing the contact destination. Do not discard existing account or consent records.
+
+## Version 0.4.1
+
+Release checks recorded November 16, 2026. This section records completed, pending and recovery evidence for the v0.4.1 release; pending checks are not represented as passed.
+
+| Area | Status and evidence |
+| --- | --- |
+| Contact | **On.** Verified Formspree support recipient. Local synthetic contact and feedback requests returned HTTP 204; both notices were delivered with subject `[Blueline Lease] Website Contact` and Reply-To matching the synthetic submitter. After enabling `FORMSPREE_SUPPORT_VERIFIED=true` and redeploying the same v0.4.0 source, a live synthetic contact submission arrived in the support inbox with the expected subject. No private email or message content is recorded. |
+| Signup and My Account | **Off / pending.** Resend DNS records are published and Resend is checking DNS. Custom Supabase SMTP and branded templates are not yet configured. After domain verification, configure SMTP and templates, verify confirmation/reset delivery and the authenticated `/account` flow with a synthetic user before setting `AUTH_EMAIL_DELIVERY_VERIFIED=true`. Then enable and redeploy; remove only the synthetic test user. Public sign-in returned HTTP 200 and unauthenticated `/account` redirected, but authenticated account access is unverified. |
+| Inbound routing | **Configured and checked.** Existing Cloudflare forwarding and mailbox labels/filters remain in place. |
+| Gmail send-as | **Not configured or tested.** Add a separate domain-scoped Resend Sending Access key and the two Gmail aliases. Keep **Treat as an alias** unchecked, choose same-address replies, and preserve the personal Gmail address as the default From. See [remaining owner steps](../../HUMAN-STEPS.md). |
+| Rhode Island resources | **Source review and protected preview passed; production gate pending coordinator deployment.** Lane B completed the automated comparison and recorded eleven exact fingerprints for seven section links and four shared checks, reviewed November 16 with expiry December 16 UTC. Seven focused tests passed; hosted `npm run legal:check-ri` passed all eleven sources. Protected preview f6279a2 returned HTTP 200 with all seven exact source links, last-reviewed dates, and required copy. The local source check could not reach the state host. Coordinator owns production activation and live check. No human reviewed the sources. Providence and § 34-18-20 remain excluded. |
+| Privacy deletion | **Pending.** Lane C did not attempt a production write because no Supabase admin credential was available. Use only an authorized synthetic account after the secure local credential handoff, then record the synthetic request ID and result. |
+| Vendor agreements | **Acceptance unconfirmed.** Do not mark DPAs accepted without account-specific evidence. Vercel DPA remains unresolved on Hobby. See [vendor DPA register](../legal/vendor-dpas.md). |
+| Routes | **Passed with account-flow limitation.** Live homepage, renter and landlord synthetic review samples, `/review`, sign-in, `/terms` and `/privacy` returned HTTP 200. Unauthenticated `/account` returned 307 to `/sign-in?next=/account`; authenticated account access remains unverified until SMTP/signup is tested. Both legacy hosts returned 301 preserving path and query. Synthetic review samples used offline fixtures and did not incur model charges. |
+| Checks | **Passed on baseline.** The coordinator reports 653 tests across 60 files, lint, typecheck, production build, and offline renter/landlord smoke checks passed on the baseline package. Lane D is rerunning checks after these documentation-only changes. |
+
+### Recovery for v0.4.1
+
+- For application rollback, restore the prior Vercel production deployment and revert the release merge. Contact was enabled with `FORMSPREE_SUPPORT_VERIFIED=true`; unset that flag before changing the verified recipient or form configuration.
+- Signup is gated by `AUTH_EMAIL_DELIVERY_VERIFIED=true`. If an enabled signup flow fails, unset the flag and redeploy before restoring Supabase's default mailer. Preserve account and consent records.
+- Rhode Island resources are gated by `RHODE_ISLAND_RESOURCES_ENABLED=true`. If source or page checks fail after enablement, unset the flag and redeploy.
+- Resend outbound DNS records are distinct from the web host CNAMEs and Cloudflare inbound MX. Preserve Cloudflare inbound forwarding while rolling back outbound email. Remove only the specific Resend records after checking current DNS dependencies; never replace the apex SPF or `_dmarc` with a second conflicting record.
+- Prior domain rollback evidence remains in the DNS table below. Keep the apex reachable during any redirect transition and retain the hosted auth redirect origins.
+
+### v0.4.0 DNS baseline
+
+The following records were documented before outbound email setup. Use as historical baseline only; check current DNS before making changes.
+
+| Type | Name | Value | TTL | Purpose |
+| --- | --- | --- | --- | --- |
+| CNAME | `@` | `2c999c955c014cdf.vercel-dns-017.com` | Auto | Vercel apex, DNS-only |
+| CNAME | `www` | `2c999c955c014cdf.vercel-dns-017.com` | Auto | Vercel secondary host, DNS-only |
+| MX | `@` | `route1.mx.cloudflare.net` (67), `route2.mx.cloudflare.net` (58), `route3.mx.cloudflare.net` (45) | Auto | Cloudflare inbound forwarding |
+| TXT | `@` | `v=spf1 include:_spf.mx.cloudflare.net ~all` | Auto | Cloudflare root SPF |
+| TXT | `_dmarc` | `v=DMARC1; p=none; rua=mailto:support@bluelinelease.com` | Auto | DMARC monitoring |
