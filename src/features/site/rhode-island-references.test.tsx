@@ -36,7 +36,10 @@ function officialPage(body = baseline) {
   return new Response(body, { headers: { "content-type": "text/html; charset=utf-8" } });
 }
 
-afterEach(() => vi.unstubAllEnvs());
+afterEach(() => {
+  vi.unstubAllEnvs();
+  vi.unstubAllGlobals();
+});
 
 describe("Rhode Island reference publication", () => {
   it("loads only the approved sections when all verified baselines match", async () => {
@@ -85,8 +88,12 @@ describe("Rhode Island reference publication", () => {
   });
 
   it("keeps pending baselines and a stale calendar year off the page without fetching", async () => {
+    const pendingRegister: RhodeIslandRegister = {
+      ...register,
+      sources: register.sources.map(({ id, url, title, section }) => ({ id, url, title, section })),
+    };
     const fetchSource = vi.fn<typeof fetch>(async () => officialPage());
-    await expect(availableRhodeIslandReferences(sourceRegister, now, fetchSource)).resolves.toEqual([]);
+    await expect(availableRhodeIslandReferences(pendingRegister, now, fetchSource)).resolves.toEqual([]);
     await expect(availableRhodeIslandReferences(register, new Date("2027-01-01T00:00:00Z"), fetchSource)).resolves.toEqual([]);
     expect(fetchSource).not.toHaveBeenCalled();
   });
@@ -105,6 +112,7 @@ describe("Rhode Island reference publication", () => {
     await expect(RhodeIslandResourcesPage()).rejects.toThrow("404");
 
     vi.stubEnv("RHODE_ISLAND_RESOURCES_ENABLED", "true");
+    vi.stubGlobal("fetch", vi.fn<typeof fetch>(async () => officialPage("Changed state source")));
     hub.rerender(<ResourcesPage />);
     expect(screen.getByRole("link", { name: /official state rental law/ })).toHaveAttribute("href", "/resources/rhode-island");
     render(await RhodeIslandResourcesPage());

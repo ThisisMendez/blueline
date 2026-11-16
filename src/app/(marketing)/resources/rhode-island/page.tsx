@@ -26,8 +26,8 @@ export default async function RhodeIslandResourcesPage() {
       title="Rhode Island rental law"
       intro={
         <>
-          <p>These links go to Rhode Island state law. Providence and other cities and towns can add requirements. This list leaves out local rules.</p>
-          <p>The official links are for general information. For legal advice, talk to a qualified lawyer. Your lease review and score use only the documents you provide.</p>
+          <p>This page links only to Rhode Island state law. Providence and other cities and towns can add requirements. This list leaves out local rules.</p>
+          <p>The official links are for general information. For legal advice about how these laws apply to your lease, talk to a qualified lawyer. Your lease review and score use only the documents you provide.</p>
         </>
       }
     >
