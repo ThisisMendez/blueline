@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { FeedbackLink } from "@/features/site/FeedbackLink";
+import { SUPPORT_EMAIL } from "@/features/site/policy-versions";
 import { PRODUCT_NAME } from "@/shared/brand";
 
 const footerLinks = [
@@ -27,6 +28,7 @@ export function Footer() {
           <p className="mt-1 font-[family-name:var(--font-body)] text-sm text-[var(--color-navy-ink)]/70">
             Free while in beta. No cost, no card for the beta.
           </p>
+          <a href={`mailto:${SUPPORT_EMAIL}`} className={footerLinkClass}>{SUPPORT_EMAIL}</a>
         </div>
         <nav aria-label="Footer">
           <ul className="grid grid-cols-2 gap-x-6 sm:grid-cols-4">

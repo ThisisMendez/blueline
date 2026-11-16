@@ -5,7 +5,7 @@ Blueline Lease is a free beta operated by Alexis Mendez, an individual in Rhode 
 ## Materials to review
 
 - Current and permanent versions of the public [Terms and Privacy text](../../src/features/site/legal-content.ts), [signup and guest disclosure](../../src/features/auth/components/SignInForm.tsx), and [review intake](../../src/app/(app)/review/page.tsx).
-- The [data map](data-map.md), [vendor evidence list](vendor-dpas.md), [retention schedule](retention-schedule.md), [privacy request procedure](privacy-deletion-procedure.md), [incident response procedure](incident-response.md), and [legal changelog](changelog.md).
+- The [data map](data-map.md), [vendor evidence list](vendor-dpas.md), [retention schedule](retention-schedule.md), [privacy request procedure](privacy-deletion-procedure.md), [incident response procedure](incident-response.md), and [legal changelog](CHANGELOG.md).
 - Synthetic screenshots of renter and landlord intake, review, any source citations, drafting, and the consent checkbox. Include approved private vendor contracts and configuration evidence separately.
 
 ## Questions to resolve

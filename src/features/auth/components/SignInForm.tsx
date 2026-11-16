@@ -128,9 +128,10 @@ export function VerifySignupLinkForm() {
   );
 }
 
-export function SignInForm({ mode = "sign-in", next = "/account" }: {
+export function SignInForm({ mode = "sign-in", next = "/account", submitDisabled = false }: {
   readonly mode?: AuthFormMode;
   readonly next?: string;
+  readonly submitDisabled?: boolean;
 }) {
   const form = FORM[mode];
   const [state, action, pending] = useActionState(form.action, initialSignInState);
@@ -202,7 +203,7 @@ export function SignInForm({ mode = "sign-in", next = "/account" }: {
             </span>
           </div>
         ) : null}
-        <button type="submit" disabled={pending} className={PRIMARY}>{pending ? form.pending : form.label}</button>
+        <button type="submit" disabled={pending || submitDisabled} className={PRIMARY}>{pending ? form.pending : form.label}</button>
       </form>
       <Message state={state} />
     </div>

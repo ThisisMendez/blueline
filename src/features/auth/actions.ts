@@ -12,6 +12,7 @@ import { clearPasswordRecovery, hasPasswordRecovery, isRecoveryConfigured } from
 import { authCallbackUrl, signInReturnPath } from "./redirects";
 import { createServerSupabaseClient } from "./server-client";
 import type { SignInState } from "./sign-in-state";
+import { publicSignupEmailReady } from "./signup-delivery";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CONFIRMATION_EMAIL_COOKIE = "blueline-confirmation-email";
@@ -109,6 +110,8 @@ export async function signUpAction(
     || formData.get("privacyVersion") !== String(CURRENT_LEGAL.privacyVersion)) {
     return { status: "policy-version-changed" };
   }
+
+  if (!publicSignupEmailReady()) return { status: "confirmation-unavailable" };
 
   const supabase = await createServerSupabaseClient();
   const emailRedirectTo = await authCallbackUrl("/auth/confirm", {

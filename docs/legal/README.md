@@ -6,7 +6,7 @@ The public policies come from [the application's policy text](../../src/features
 
 | File | What it records |
 | --- | --- |
-| [Legal changelog](changelog.md) | Policy releases and notice procedure |
+| [Legal changelog](CHANGELOG.md) | Policy releases and notice procedure |
 | [Data map](data-map.md) | Where data flows and what operations use it |
 | [Subprocessors](subprocessors.md) | Services, processing roles, and status |
 | [Retention schedule](retention-schedule.md) | Retention rules and outstanding vendor checks |

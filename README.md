@@ -46,7 +46,8 @@ Production needs these four settings. Each is set on Vercel (production environm
 `OPENROUTER_PROVIDER` is optional here. The production model id doesn't end in `:free`, so calls go to Fireworks by default.
 
 - `REVIEW_CONTINUATION_SECRET` enables sign-in to draft or save a guest report. Generate a random secret of at least 32 bytes and keep it on the server. Verify public signup and sign-in before enabling it. Keep the guest report tab open during sign-in. The report can be resumed for two hours in the original browser. Rotating the secret expires existing continuations.
-- `FORMSPREE_FORM_ID` enables Contact and beta feedback. Verify a test message reaches the approved inbox with the fixed subject and expected Reply-To before setting the production value. See [contact setup](research/contact-delivery-options.md).
+- `FORMSPREE_FORM_ID` and `FORMSPREE_SUPPORT_VERIFIED=true` enable Contact and beta feedback in production after a delivery test to the support address. See [contact setup](research/contact-delivery-options.md).
+- `AUTH_EMAIL_DELIVERY_VERIFIED=true` opens public signup in production after the configured sender reaches a non-team test address. Existing password sign-in remains available during setup.
 - See [signup email setup](docs/handoff/signup-confirmation.md) for the code-based confirmation template, prerequisites, and live checks.
 
 ## Verify
@@ -80,8 +81,8 @@ Provide `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` for an ex
 Use the `redline` Supabase project for staging. Set `NEXT_PUBLIC_SITE_URL` to the test app's origin and set a unique server-only `AUTH_RECOVERY_COOKIE_SECRET` with `openssl rand -hex 32`. Configure the app origin and the `/auth/confirm` and `/auth/callback` redirect paths in staging's Supabase Auth URL Configuration. Include any required query-string matches for the allowlist, and keep preview rules limited to the staging host.
 
 - Keep **Confirm email** enabled. Email/password users verify their address once when they sign up. Later sign-ins use their password. Existing email-link users can keep using **Sign in with an email link**. When password recovery is configured, they can choose **Forgot password?** to set a password on their existing account. Open standard PKCE email links in the same browser profile where they were requested. Public confirmation and recovery email require a [custom SMTP sender](https://supabase.com/docs/guides/auth/auth-smtp). Use a free sender within its quotas and a domain you control.
-- For Google, configure a web OAuth client in Google Cloud with the staging Supabase provider's exact `/auth/v1/callback` URL, then enter the client ID and secret in Supabase Auth → Sign In / Providers → Google. Use the basic identity scopes in the [Supabase setup guide](https://supabase.com/docs/guides/auth/social-sign-in/auth-google). The app's OAuth callback is `/auth/callback`. The Google secret belongs in Supabase's provider settings.
-- Test email confirmation, subsequent password sign-in without a new email, recovery, and Google sign-in using test accounts. Reload `/account`, reopen a saved renter and landlord review, and confirm a second account cannot open them. Test that an existing confirmed account using Google with the same verified address retains its UID and library.
+- Google sign-in is disabled in production. Keep it off until new Google accounts can record the same policy agreement as email signups.
+- Test email confirmation, subsequent password sign-in without a new email, and recovery using test accounts. Reload `/account`, reopen a saved renter and landlord review, and confirm a second account cannot open them.
 
 Do not commit private lease text, environment files, database dumps or credentials.
 

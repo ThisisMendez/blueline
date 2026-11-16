@@ -6,6 +6,7 @@ import { AuthFrame, authPageHref, type AuthPageProps } from "@/features/auth/com
 import { SignInForm } from "@/features/auth/components/SignInForm";
 import { signInReturnPath } from "@/features/auth/redirects";
 import { getAccountsState } from "@/features/auth/session";
+import { publicSignupEmailReady } from "@/features/auth/signup-delivery";
 
 export const metadata: Metadata = { title: "Create account" };
 
@@ -15,6 +16,7 @@ export default async function SignUpPage({ searchParams }: AuthPageProps) {
   const accounts = await getAccountsState();
   if (accounts.kind === "signed-in") redirect(next);
   const resend = query.mode === "resend";
+  const signupPaused = !resend && !publicSignupEmailReady();
 
   return (
     <AuthFrame
@@ -24,7 +26,8 @@ export default async function SignUpPage({ searchParams }: AuthPageProps) {
         : "Create an account, then confirm your email."}
       configured={accounts.kind !== "unconfigured"}
     >
-      <SignInForm mode={resend ? "resend" : "sign-up"} next={next} />
+      {signupPaused ? <p role="status">New accounts are paused while we finish setting up verification email. You can still review a lease as a guest.</p> : null}
+      <SignInForm mode={resend ? "resend" : "sign-up"} next={next} submitDisabled={signupPaused} />
       <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
         <Link href={authPageHref("/sign-in", next)} className="underline">Back to sign in</Link>
         {resend ? null : (

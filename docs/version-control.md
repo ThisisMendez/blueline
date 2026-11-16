@@ -1,6 +1,6 @@
 # Version control and releases
 
-Blueline Lease is in beta. Version 0.1.0 shipped from `main` at commit `66bd8d7` through [PR #8](https://github.com/ThisisMendez/blueline/pull/8). Version 0.2.0 shipped at `32db23c`. Version 0.3.0 adds interactive sample reports, a simpler phone menu, more landlord recommendations, and support for signup codes. GitHub releases record the deployed commits and activation status.
+Blueline Lease is in beta. Version 0.1.0 shipped from `main` at commit `66bd8d7` through [PR #8](https://github.com/ThisisMendez/blueline/pull/8). Version 0.2.0 shipped at `32db23c`. Version 0.3.0 added interactive sample reports and support for signup codes. Version 0.4.0 moves to the owned domain and adds versioned policies and signup agreement. GitHub releases record the deployed commits and activation status.
 
 ## Version numbers
 
@@ -28,7 +28,7 @@ The [original production address](https://blueline-khaki-eta.vercel.app/) stays 
 1. Attach `bluelinelease.com` and `www.bluelinelease.com` to the Production deployment. Apply the DNS records Vercel shows for the project. Confirm each host resolves publicly and serves the production site over HTTPS with a valid certificate.
 2. Add the apex URL and its `/auth/confirm` and `/auth/callback` URLs to production Supabase Auth URL Configuration. Keep the original auth URLs during the cutover. Check Google and auth email configuration for any callback URLs that need changing.
 3. Set `NEXT_PUBLIC_SITE_URL=https://bluelinelease.com` for Vercel Production and redeploy. This switches the canonical metadata, robots and sitemap to the apex and turns on the app’s 301 for page requests from the two old addresses.
-4. Check the apex homepage and a deep link on each old host. Confirm the 301 points to the apex with the same path and query. Check both sample reports, contact delivery, email confirmation, password recovery, and Google sign-in on the apex.
+4. Check the apex homepage and a deep link on each old host. Confirm the 301 points to the apex with the same path and query. Check both sample reports. Verify contact delivery and account email before enabling the features. Google sign-in is disabled.
 5. If verification fails, remove the apex value from the production environment and redeploy or restore the last working production deployment. Browsers can remember a 301, so keep the apex working while fixing any issue.
 
 See [ADR 0018](adr/0018-use-blueline-lease-and-canonical-domain.md) for redirect scope.

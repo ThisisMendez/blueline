@@ -34,7 +34,7 @@ export const TERMS_V1: readonly LegalSection[] = [
   {
     heading: "Copyright",
     paragraphs: [
-      "We and our licensors keep our rights in the service, its software, and our branding. You may use your report for your own lease review and share it with someone helping you, subject to your rights in the underlying documents. These terms leave any rights you have under copyright law in place.",
+      "© 2026 Blueline Lease. We and our licensors keep our rights in the service, its software, and our branding. You may use your report for your own lease review and share it with someone helping you, subject to your rights in the underlying documents. These terms leave any rights you have under copyright law in place.",
     ],
   },
   {
@@ -88,8 +88,8 @@ export const PRIVACY_V1: readonly LegalSection[] = [
   {
     heading: "Who helps run the service",
     paragraphs: [
-      "Vercel hosts the site. Supabase handles accounts and stores saved reviews. Our primary Supabase database and Auth project are in the eastern United States. Hosting, service providers, backups, and support may handle data in other locations.",
-      "When the contact form is available, Formspree handles submissions and sends them to our support mailbox. That mailbox uses Google for email. If we enable Cloudflare Email Routing, it forwards messages sent to our support address. If we enable Resend, it handles account and verification email delivery.",
+      "Vercel hosts the site. Our primary Supabase database and Auth project are in the eastern United States. Vercel runs our site functions in the Washington, D.C., region. The site’s delivery network, other service providers, backups, and support may handle data in other locations.",
+      "Cloudflare Email Routing forwards messages sent to our support address to a mailbox hosted by Google. When the contact form is available, Formspree handles submissions and sends them to the support address. Supabase manages account email. If we enable Resend, it delivers those messages.",
       "If we add Google sign-in and you choose it, Google would handle that sign-in and share your name and email address with us.",
     ],
   },

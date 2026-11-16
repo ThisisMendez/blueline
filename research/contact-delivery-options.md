@@ -13,7 +13,7 @@ Use Formspree for the beta. Keep the forwarding mailbox private, use the fixed s
 
 Contact delivery is separate from account confirmation and password reset. Before prompting more visitors to sign up, verify public signup and email delivery in the existing Supabase project. Supabase’s built-in sender only sends to project organization team addresses. Custom SMTP supports public email delivery. [Supabase Auth email](https://supabase.com/docs/guides/auth/auth-smtp)
 
-If a Blue Line domain is already on Cloudflare DNS, Vercel can call Cloudflare directly with a server-side token. Use the REST API’s `reply_to` field to direct replies to the visitor. [Cloudflare REST API](https://developers.cloudflare.com/email-service/api/send-emails/rest-api/) · [Reply-To field](https://developers.cloudflare.com/email-service/reference/headers/)
+Cloudflare hosts the domain's DNS and forwards inbound mail. Formspree remains the contact submission service. [Cloudflare Email Routing](https://developers.cloudflare.com/email-service/configuration/email-routing-addresses/)
 
 ## Formspree setup
 

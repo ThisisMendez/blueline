@@ -139,6 +139,16 @@ describe("sign-in flows at the Supabase boundary", () => {
     expect(screen.getByRole("link", { name: "Privacy Policy" })).toHaveAttribute("href", "/privacy/v1");
   });
 
+  it("pauses production signup until delivery is verified", async () => {
+    vi.stubEnv("VERCEL_ENV", "production");
+    vi.stubEnv("AUTH_EMAIL_DELIVERY_VERIFIED", "");
+    auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
+    renderScreen(await SignUpPage({ searchParams: Promise.resolve({}) }));
+    expect(screen.getByRole("button", { name: "Create account" })).toBeDisabled();
+    expect(screen.getByText(/new accounts are paused/i)).toBeVisible();
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
   it("shows the verification field and resend action after signup", async () => {
     auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
     auth.signUp.mockResolvedValue({ data: { session: null }, error: null });
