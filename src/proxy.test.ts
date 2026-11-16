@@ -18,7 +18,7 @@ afterEach(() => vi.unstubAllEnvs());
 
 describe("canonical domain redirect", () => {
   it.each([legacy, www])("sends %s to the apex with a permanent 301", async (origin) => {
-    const path = "/sample-report/renter?ref=example&message=two%20words";
+    const path = "/sample-report/renter/?ref=example&message=two%20words";
     const result = await proxy(new NextRequest(origin + path));
 
     expect(result.status).toBe(301);

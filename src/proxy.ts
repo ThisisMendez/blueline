@@ -9,9 +9,10 @@ export async function proxy(request: NextRequest) {
   const isPageRequest = ["GET", "HEAD"].includes(request.method)
     && !/^\/(?:api|auth)(?:\/|$)/.test(request.nextUrl.pathname);
   if (isPageRequest && apexDomainConfigured() && isLegacyHost(hostname)) {
+    const incoming = new URL(request.url);
     const target = new URL(publicSiteOrigin());
-    target.pathname = request.nextUrl.pathname;
-    target.search = request.nextUrl.search;
+    target.pathname = incoming.pathname;
+    target.search = incoming.search;
     return NextResponse.redirect(target, 301);
   }
 
