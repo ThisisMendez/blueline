@@ -7,8 +7,9 @@ export const TERMS_V1: readonly LegalSection[] = [
   {
     heading: "Who we are",
     paragraphs: [
-      "Blueline Lease™ helps renters and landlords read residential lease documents and prepare questions. Blueline Lease is operated by Alexis Mendez, an individual in Rhode Island.",
-      "Blueline Lease is not a law firm and does not give legal advice. Using the service does not create an attorney-client relationship. A report does not decide whether a lease is legal or enforceable, or whether it is safe to sign. A lawyer licensed in the relevant place can advise you about your situation.",
+      "Blueline Lease™ helps renters and landlords better understand residential lease documents, identify important terms, and prepare informed questions.",
+      "Blueline Lease™ is an independent, Rhode Island-based service owned and operated by Alexis Mendez.",
+      "Blueline Lease™ is not a law firm and does not provide legal advice. Using the service does not establish an attorney-client relationship. Reports are intended to help users understand what their documents say, not determine whether a lease is legal, enforceable, or safe to sign. For legal advice specific to your situation, consult a qualified attorney licensed in the relevant jurisdiction.",
     ],
   },
   {
