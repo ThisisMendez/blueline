@@ -4,7 +4,7 @@ Updated November 16, 2026. Production contact and signup are enabled. Both Gmail
 
 ## Release checks still pending
 
-1. **Finish the fresh production signup smoke.** In the staged Blueline signup tab, approve the synthetic age and policy consent for this test. Submit the form, confirm the test email and check `/account`. Remove the synthetic auth test users through the approved Supabase admin workflow.
+1. **Remove the synthetic signup test users.** Use the approved Supabase Auth Admin API to remove only the preflight and live signup test accounts. An admin credential is needed for this step.
 2. **Privacy deletion rehearsal.** The hosted rehearsal is pending because Lane C had no Supabase admin credential and made no production write. In Supabase → production `blueline` → **Project Settings → API Keys**, provide the existing server-side key through a private, temporary local credential file outside the repository; share only its path with the operator. Run the [deletion procedure](docs/legal/privacy-deletion-procedure.md) on a synthetic account, remove the private file, and record the synthetic request ID and outcome in the compliance log.
 3. **Resolve the remaining vendor agreement gaps.** In Formspree → **Help → Contact support**, request the Free-plan DPA/SCC revision and the deletion process for submissions older than 30 days. In OpenRouter → **Settings → Privacy**, review the current workspace settings. Ask OpenRouter support to confirm the applicable Terms/DPA revision and Fireworks model-provider terms for the deployed route. Save account evidence privately and update the [vendor register](docs/legal/vendor-dpas.md).
 
