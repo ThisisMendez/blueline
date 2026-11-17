@@ -28,8 +28,8 @@ export function Nav() {
   }
 
   return (
-    <header className="border-b-2 border-[var(--color-navy)]">
-      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-6 py-3 sm:px-10 lg:grid-cols-[auto_1fr_auto] lg:gap-x-6">
+    <header className={isHome ? "border-b border-[var(--color-navy)] bg-[#fcf7ee]" : "border-b-2 border-[var(--color-navy)]"}>
+      <div className={`mx-auto grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 py-3 lg:grid-cols-[auto_1fr_auto] lg:gap-x-6 ${isHome ? "max-w-[100rem] px-[clamp(1.25rem,3.9vw,3.75rem)]" : "max-w-6xl px-6 sm:px-10"}`}>
         <Link
           href="/"
           className="flex min-h-11 items-center gap-2.5 justify-self-start rounded-sm"
@@ -43,7 +43,7 @@ export function Nav() {
             className="h-8 w-8 object-contain"
             priority
           />
-          <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight text-[var(--color-navy-ink)]">
+          <span className={`font-bold tracking-tight text-[var(--color-navy-ink)] ${isHome ? "font-[family-name:var(--font-body)] text-xl sm:text-[1.7rem]" : "font-[family-name:var(--font-display)] text-lg"}`}>
             {isHome ? PRODUCT_TRADEMARK : PRODUCT_NAME}
           </span>
         </Link>
@@ -79,7 +79,7 @@ export function Nav() {
         </details>
         <nav
           aria-label="Main navigation"
-          className="hidden items-center gap-x-6 justify-self-end font-[family-name:var(--font-display)] text-sm font-semibold lg:flex"
+          className={`hidden items-center gap-x-6 justify-self-end font-[family-name:var(--font-display)] font-semibold lg:flex ${isHome ? "text-sm xl:text-base" : "text-sm"}`}
         >
           {navigation.map(({ label, href }) => (
             <Link key={href} href={href} className={navLinkClassName}>
@@ -89,7 +89,7 @@ export function Nav() {
         </nav>
         <Link
           href="/review"
-          className="hidden min-h-11 items-center justify-center bg-[var(--color-navy)] px-4 py-2 text-center font-[family-name:var(--font-display)] text-sm font-bold text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)] lg:inline-flex"
+          className={`hidden min-h-11 items-center justify-center bg-[var(--color-navy)] py-2 text-center font-[family-name:var(--font-display)] font-bold text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)] lg:inline-flex ${isHome ? "rounded-sm px-4 text-sm xl:px-5 xl:text-base" : "px-4 text-sm"}`}
         >
           Analyze My Lease
         </Link>

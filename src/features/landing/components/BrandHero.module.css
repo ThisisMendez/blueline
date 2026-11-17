@@ -1,0 +1,266 @@
+.hero {
+  --gutter: clamp(1.25rem, 3.9vw, 3.75rem);
+  border-bottom: 1px solid var(--color-navy);
+  background: #fcf7ee;
+}
+
+.layout {
+  position: relative;
+  display: grid;
+  grid-template-areas: "copy" "art" "report";
+  max-width: 100rem;
+  margin-inline: auto;
+  isolation: isolate;
+}
+
+.copy {
+  grid-area: copy;
+  z-index: 1;
+  padding: 2.25rem var(--gutter) 1.75rem;
+}
+
+.copy h1 {
+  max-width: 14ch;
+  font-size: clamp(2.55rem, 5.15vw, 5rem);
+  font-weight: 600;
+  line-height: .98;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+
+.lead,
+.audience {
+  max-width: 32ch;
+  font-size: clamp(1.15rem, 1.92vw, 1.8rem);
+  line-height: 1.3;
+}
+
+.lead {
+  margin-block-start: clamp(.9rem, 1.7vw, 1.5rem);
+}
+
+.audience {
+  margin-block-start: .8em;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .35rem clamp(.9rem, 1.75vw, 1.65rem);
+  margin-block-start: clamp(1.15rem, 1.85vw, 1.75rem);
+  font-family: var(--font-display);
+  font-size: clamp(.95rem, 1.32vw, 1.2rem);
+  font-weight: 700;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+.primaryAction {
+  gap: .8rem;
+  padding: .6em clamp(.9rem, 2.15vw, 2rem);
+  border-radius: .22rem;
+  color: var(--color-paper);
+  background: var(--color-navy);
+}
+
+.primaryAction:hover {
+  background: var(--color-navy-ink);
+}
+
+.secondaryAction {
+  text-decoration: underline;
+  text-underline-offset: .32em;
+}
+
+.secondaryAction:hover {
+  color: var(--color-red-ink);
+}
+
+.scope {
+  margin-block-start: clamp(.75rem, 1.75vw, 1.6rem);
+  font-size: clamp(.95rem, 1.52vw, 1.35rem);
+  line-height: 1.35;
+}
+
+.art {
+  position: relative;
+  grid-area: art;
+  aspect-ratio: 6 / 5;
+  overflow: hidden;
+  background: #eadec9;
+}
+
+.artImage {
+  object-fit: cover;
+  object-position: left top;
+}
+
+.connector {
+  display: none;
+}
+
+.report {
+  grid-area: report;
+  z-index: 1;
+  align-self: center;
+  min-width: 0;
+  margin: 1.25rem var(--gutter) 1.5rem;
+  padding: 1rem 1.125rem 1.15rem;
+  border: 1px solid var(--color-navy);
+  border-radius: .8rem;
+  background: #fffaf2;
+  box-shadow: 0 .45rem 1rem rgb(12 44 70 / 13%);
+  font-family: var(--font-display);
+  font-size: clamp(.9rem, 1.2vw, 1.12rem);
+  line-height: 1.34;
+}
+
+.reportCaption {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding-block-end: .55rem;
+  border-bottom: 1px solid rgb(12 44 70 / 32%);
+}
+
+.reportCaption > img {
+  flex: none;
+  width: 2.15rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.reportCaption strong {
+  display: block;
+  font-size: 1.2em;
+  font-weight: 800;
+  line-height: 1.12;
+}
+
+.reportSource {
+  display: block;
+  margin-block-start: .23rem;
+  font-size: .77em;
+}
+
+.finding {
+  display: flex;
+  align-items: center;
+  gap: .62rem;
+  margin-block: .65rem .32rem;
+  padding: .32rem .6rem;
+  border-radius: .27rem;
+  background: #f8e1de;
+  font-size: 1.26em;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.finding svg {
+  flex: none;
+  color: #98221e;
+}
+
+.quote {
+  font-family: var(--font-body);
+}
+
+.quote mark {
+  padding-inline: .08em;
+  color: inherit;
+  background: #fae38c;
+  text-decoration: underline;
+  text-decoration-color: #98221e;
+  text-underline-offset: .12em;
+}
+
+.reportDetails > div {
+  margin-block-start: .75em;
+  padding-block-start: .63em;
+  border-top: 1px solid rgb(12 44 70 / 32%);
+}
+
+.reportDetails dt {
+  margin-block-end: .1em;
+  font-size: 1.12em;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+@media (min-width: 48rem) and (max-width: 69.999rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, .78fr);
+    grid-template-areas: "copy copy" "art report";
+    gap: 0 1.5rem;
+    padding: 0 var(--gutter) 1.75rem;
+  }
+
+  .copy {
+    padding-inline: 0;
+  }
+
+  .art {
+    align-self: center;
+    border-radius: .35rem;
+  }
+
+  .report {
+    margin: 0;
+  }
+}
+
+@media (min-width: 70rem) {
+  .layout {
+    min-height: clamp(33.5rem, 40.7vw, 40rem);
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr) clamp(17rem, 22vw, 21.25rem);
+    grid-template-areas: "copy . report";
+    align-items: center;
+    column-gap: clamp(1.25rem, 2.2vw, 2.25rem);
+    padding: 1.5rem clamp(2.5rem, 6.05vw, 6rem) 1.5rem var(--gutter);
+  }
+
+  .copy {
+    padding: 0;
+  }
+
+  .copy h1 {
+    width: calc(100% + clamp(1rem, 2.8vw, 2.5rem));
+    max-width: none;
+    font-size: clamp(3.3rem, 4.76vw, 4.65rem);
+  }
+
+  .art {
+    position: absolute;
+    inset: 0 0 0 32%;
+    grid-area: auto;
+    aspect-ratio: auto;
+    background: none;
+  }
+
+  .art::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #fcf7ee, rgb(252 247 238 / 72%) 6%, transparent 24%);
+    content: "";
+  }
+
+  .connector {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .report {
+    margin: 0;
+  }
+}
