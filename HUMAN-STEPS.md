@@ -2,9 +2,9 @@
 
 Updated November 16, 2026. Production contact and signup are enabled. Both Gmail send-as aliases passed live delivery tests. The production site is the existing free-plan project.
 
-## Release checks still pending
+## Awaiting vendor replies
 
-1. **Resolve the remaining vendor agreement gaps.** In Formspree → **Help → Contact support**, request the Free-plan DPA/SCC revision and the deletion process for submissions older than 30 days. In OpenRouter → **Settings → Privacy**, review the current workspace settings. Ask OpenRouter support to confirm the applicable Terms/DPA revision and Fireworks model-provider terms for the deployed route. Save account evidence privately and update the [vendor register](docs/legal/vendor-dpas.md).
+On November 16, 2026, Blueline Lease contacted both vendors from its support address. Formspree was asked for the Free-plan DPA and SCCs and the process for deleting older submissions. OpenRouter was asked to confirm the account's applicable DPA and the Fireworks terms and data handling for the deployed route. [Vendor register](docs/legal/vendor-dpas.md)
 
 ## Later, optional
 
