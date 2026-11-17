@@ -194,6 +194,57 @@
   line-height: 1.2;
 }
 
+@media (width < 48rem) {
+  .layout {
+    grid-template-areas: "copy" "report";
+  }
+
+  .copy {
+    padding-block-end: 1.25rem;
+  }
+
+  .copy h1 {
+    max-width: 61%;
+    font-size: clamp(2rem, 8.5vw, 3.65rem);
+    text-wrap: wrap;
+  }
+
+  .lead,
+  .audience {
+    max-width: min(61%, 26ch);
+  }
+
+  .audience {
+    font-size: 1.05rem;
+  }
+
+  .art {
+    position: absolute;
+    inset: 0 0 auto auto;
+    grid-area: copy;
+    width: 54%;
+    height: min(100%, clamp(14.5rem, 68vw, 20.5rem));
+    aspect-ratio: auto;
+  }
+
+  .artImage {
+    object-position: 17% top;
+  }
+
+  .art::after {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(0deg, #fcf7ee, transparent 27%),
+      linear-gradient(90deg, #fcf7ee, rgb(252 247 238 / 88%) 14%, transparent 61%);
+    content: "";
+  }
+
+  .report {
+    margin-block-start: 0;
+  }
+}
+
 @media (min-width: 48rem) and (max-width: 69.999rem) {
   .layout {
     grid-template-columns: minmax(0, 1fr) minmax(18rem, .78fr);

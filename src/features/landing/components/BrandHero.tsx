@@ -83,7 +83,7 @@ export function BrandHero() {
             src="/images/homepage/spotter-entryway.webp"
             alt=""
             fill
-            sizes="(min-width: 100rem) 1088px, (min-width: 70rem) 68vw, (min-width: 48rem) 55vw, 100vw"
+            sizes="(min-width: 100rem) 1088px, (min-width: 70rem) 68vw, (min-width: 48rem) 55vw, 54vw"
             loading="eager"
             fetchPriority="high"
             className={styles.artImage}
