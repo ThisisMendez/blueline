@@ -40,9 +40,9 @@ describe("landing page capability boundary", () => {
     expect(screen.getByText(/don't check your lease against local law/)).toBeInTheDocument();
   });
 
-  it("asks the signer to choose renter or landlord", () => {
+  it("identifies renters and landlords as the audience", () => {
     render(<BrandHero />);
-    expect(screen.getByText(/Choose renter or landlord/)).toBeInTheDocument();
+    expect(screen.getByText("For renters and landlords.")).toBeInTheDocument();
   });
 
   it("lists a local-law check among what the product isn't", () => {
@@ -67,22 +67,27 @@ describe("landing page capability boundary", () => {
   });
 });
 
-it("keeps both sample destinations and quotes the renter's fictional lease verbatim", () => {
+it("keeps both full sample report destinations", () => {
   render(<SampleReportLinks />);
   const samples = within(screen.getByRole("region", { name: "Sample reports" }));
   expect(samples.getByRole("link", { name: "Renter sample Pick issues to raise and draft an email." }))
     .toHaveAttribute("href", "/sample-report/renter");
   expect(samples.getByRole("link", { name: "Landlord sample See what to clarify and edit suggested wording." }))
     .toHaveAttribute("href", "/sample-report/landlord");
+});
 
-  const earlyExit = sampleReview("renter").riskFlags.find((flag) => flag.id === "earlyExit");
-  if (!earlyExit) throw new Error("The renter sample is missing the early-exit flag.");
-  const excerpt = within(samples.getByRole("figure", { name: "Renter sample Maple Court sample lease" }));
-  expect(excerpt.getByRole("heading", { name: earlyExit.title })).toBeInTheDocument();
-  expect(excerpt.getByText("Severity: High")).toBeInTheDocument();
+it("previews a cited renter flag and links to the full sample reports", () => {
+  render(<BrandHero />);
+  expect(screen.getByRole("link", { name: "See sample report" })).toHaveAttribute("href", "#sample-report");
+
+  const lateFee = sampleReview("renter").riskFlags.find((flag) => flag.id === "lateFee");
+  if (!lateFee?.nextStep) throw new Error("The renter sample is missing the daily late fee flag or next step.");
+
+  const excerpt = within(screen.getByRole("figure", { name: /Sample report Maple Court sample lease/ }));
+  expect(excerpt.getByRole("heading", { name: lateFee.title })).toBeInTheDocument();
   const quote = excerpt.getByRole("blockquote");
-  expect(quote.textContent).toBe(sampleDocument.text.slice(earlyExit.sourceStart, earlyExit.sourceEnd));
-  expect(within(quote).getByRole("mark").textContent)
-    .toBe("even if a new renter has started paying rent for the same apartment");
-  expect(excerpt.getByText(earlyExit.consequence)).toBeInTheDocument();
+  expect(quote.textContent).toBe(sampleDocument.text.slice(lateFee.sourceStart, lateFee.sourceEnd));
+  expect(within(quote).getByRole("mark").textContent).toBe("for each day");
+  expect(excerpt.getByText(lateFee.consequence)).toBeInTheDocument();
+  expect(excerpt.getByText(lateFee.nextStep)).toBeInTheDocument();
 });

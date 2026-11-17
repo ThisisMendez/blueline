@@ -1,0 +1,127 @@
+.section {
+  scroll-margin-top: 1.5rem;
+  background: #fffcf7;
+}
+
+.content {
+  max-width: 100rem;
+  margin-inline: auto;
+  padding: clamp(1.65rem, 2vw, 2rem) clamp(1.25rem, 3.9vw, 3.75rem) clamp(2.35rem, 4vw, 4rem);
+}
+
+.content h2 {
+  font-size: clamp(2.2rem, 3.85vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.04em;
+  text-align: center;
+}
+
+.steps {
+  --marker-size: clamp(2rem, 3.1vw, 3rem);
+  --track: #528abd;
+  position: relative;
+  display: grid;
+  gap: 1.4rem;
+  margin-block-start: clamp(1.5rem, 2.15vw, 2rem);
+  padding-block: 0;
+}
+
+.steps::before {
+  position: absolute;
+  inset: 0 auto 0 calc(var(--marker-size) / 2 - 1px);
+  width: 2px;
+  background: var(--track);
+  content: "";
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--marker-size) minmax(0, 1fr);
+  align-items: start;
+  gap: .85rem;
+}
+
+.step:last-child {
+  background: #fffcf7;
+}
+
+.number {
+  display: grid;
+  width: var(--marker-size);
+  height: var(--marker-size);
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-navy);
+  color: var(--color-paper);
+  font: 800 clamp(1rem, 1.65vw, 1.45rem)/1 var(--font-display);
+}
+
+.description {
+  display: flex;
+  align-items: center;
+  gap: clamp(.6rem, 1.2vw, 1.15rem);
+}
+
+.description > svg {
+  flex: none;
+  width: clamp(1.8rem, 4vw, 3.5rem);
+  color: var(--color-navy);
+}
+
+.description > div {
+  min-width: 0;
+  padding-inline-start: clamp(.6rem, 1.2vw, 1.15rem);
+  border-inline-start: 1px solid rgb(12 44 70 / 36%);
+}
+
+.description h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.04rem, 1.82vw, 1.7rem);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -.025em;
+}
+
+.description p {
+  margin-block-start: .25rem;
+  font-size: clamp(.92rem, 1.35vw, 1.22rem);
+  line-height: 1.3;
+}
+
+@media (min-width: 48rem) {
+  .steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .steps::before {
+    inset: calc(var(--marker-size) / 2 - 1px) calc(100% / 6) auto;
+    width: auto;
+    height: 2px;
+  }
+
+  .step {
+    display: block;
+  }
+
+  .step:last-child {
+    background: transparent;
+  }
+
+  .number {
+    margin-inline: auto;
+  }
+
+  .description {
+    align-items: flex-start;
+    min-height: 3.75rem;
+    margin-block-start: clamp(1.25rem, 2.4vw, 2.3rem);
+    padding-inline: clamp(.5rem, 1.25vw, 1.2rem);
+  }
+
+  .step + .step .description {
+    border-inline-start: 1px solid rgb(12 44 70 / 18%);
+  }
+}
