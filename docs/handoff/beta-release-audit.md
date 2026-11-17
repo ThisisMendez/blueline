@@ -84,7 +84,7 @@ Release checks recorded November 16, 2026.
 | Inbound routing | **Configured and checked.** Existing Cloudflare forwarding and mailbox labels/filters remain in place. |
 | Gmail send-as | **Not configured or tested.** Add a separate domain-scoped Resend Sending Access key and the two Gmail aliases. Keep **Treat as an alias** unchecked, choose same-address replies, and preserve the personal Gmail address as the default From. See [remaining owner steps](../../HUMAN-STEPS.md). |
 | Rhode Island resources | **Source review and protected preview passed.** Lane B completed the automated comparison and recorded eleven exact fingerprints for seven section links and four shared checks, reviewed November 16 with expiry December 16 UTC. Seven focused tests passed; hosted `npm run legal:check-ri` passed all eleven sources. Protected preview f6279a2 returned HTTP 200 with all seven exact source links, last-reviewed dates, and required copy. The local source check could not reach the state host. Production activation requires `RHODE_ISLAND_RESOURCES_ENABLED=true`. The [v0.4.1 release record](https://github.com/ThisisMendez/blueline/releases/tag/v0.4.1) records the live check. No human reviewed the sources. Providence and § 34-18-20 remain excluded. |
-| Privacy deletion | **Pending.** Computer Use denied native Terminal access during the credential handoff before any key was copied. The local mock runner passed hard deletion, failure cleanup and identity checks. Production execution requires a private handoff of the existing server-side key. [Deletion procedure](../legal/privacy-deletion-procedure.md) |
+| Privacy deletion | **Passed in follow-up.** The [hosted rehearsal](#hosted-privacy-deletion-rehearsal) verified hard deletion of one synthetic account, its review packet and its red lines through the signed-in dashboard. |
 | Vendor agreements | **Supabase and Resend dashboard coverage confirmed.** Formspree Free coverage, older-submission deletion, and OpenRouter account acceptance evidence and Fireworks terms remain open. Vercel DPA remains unresolved on Hobby. [Vendor register](../legal/vendor-dpas.md) |
 | Routes | **Passed with account-flow limitation.** Live homepage, renter and landlord synthetic review samples, `/review`, sign-in, `/terms` and `/privacy` returned HTTP 200. Unauthenticated `/account` returned 307 to `/sign-in?next=/account`; authenticated account access remains unverified until SMTP/signup is tested. Both legacy hosts returned 301 preserving path and query. Synthetic review samples used offline fixtures and did not incur model charges. |
 | Checks | **Passed.** 653 tests across 60 files, lint, typecheck, production build, and the renter and landlord pipeline smokes with synthetic fixtures. Live model submissions would use billed inference and were skipped under the no-spend instruction. |
@@ -118,3 +118,20 @@ November 16, 2026, after the v0.4.2 deployment.
 - A synthetic password reset email reached the inbox and opened the production password form through the verified recovery callback. A separate Supabase Auth PKCE test consumed the delivered recovery link, changed the synthetic password, and signed in with the new password. The temporary message and verifier were removed. After both checks passed, `AUTH_EMAIL_DELIVERY_VERIFIED=true` was set for Vercel Production and the v0.4.2 source was redeployed. The live signup route returned HTTP 200 with the create-account form.
 - Both Gmail aliases were verified with a separate domain-scoped Sending access key. Synthetic messages from `support@bluelinelease.com` and `alexismendez@bluelinelease.com` reached the inbox with the expected From headers. Gmail replies from the address that received the message.
 - A fresh signup from the live form passed with the required age and policy checkbox selected. The branded confirmation reached Gmail Inbox, and the one-time code opened `/account` for the matching synthetic identity. Signing out protected `/account` again. A fresh password sign-in then reopened that same account, and the tester signed out. Both synthetic signup users were permanently deleted in the production Supabase Auth Users dashboard. Refreshed exact-email searches returned zero matches for both.
+
+
+## Hosted privacy deletion rehearsal
+
+Synthetic request `PRIV-20261116-ee60b6b48c89` passed on November 16, 2026. The rehearsal simulated intake and identity verification for one synthetic account. The operator matched the exact fixture to its confirmed Auth identity and used the signed-in production Supabase dashboard for permanent deletion. SQL Editor counts before and after ran with row-level filtering inactive for the checked tables. A separately refreshed Auth Users lookup found no exact match.
+
+| Record | Before deletion | After deletion |
+| --- | --- | --- |
+| Auth account | 1 | 0 |
+| Auth identity | 1 | 0 |
+| Saved review | 1 | 0 |
+| Extracted document | 1 | 0 |
+| Review flag | 1 | 0 |
+| Review checklist topics | 6 | 0 |
+| Red-line row | 1 | 0 |
+
+The rehearsal covered active Supabase database records. No admin key was transferred, and no customer records or external mail or form submissions were involved. Provider logs and backups were outside this check.
