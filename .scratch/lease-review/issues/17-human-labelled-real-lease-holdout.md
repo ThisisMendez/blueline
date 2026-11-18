@@ -4,8 +4,8 @@
 
 **Blocked by:** 16
 
-**Status:** needs-info — tooling built; awaiting separate owner confirmation and human labels
-**Stage:** Now · Rhode Island pilot quality
+**Status:** wontfix — independent human benchmark waived by owner
+**Stage:** Closed by owner decision, not a passing validation result
 
 The owner chose a renter-only first benchmark on November 18, 2026. This is a planning decision, not approval of the five templates, their use terms, access to real lease data, or any paid run. Keep the AI-assisted development results separate and report the first holdout result as a renter baseline only.
 
@@ -31,6 +31,14 @@ The owner chose a renter-only first benchmark on November 18, 2026. This is a pl
 
 Real-lease recall, false flags and clean-lease false alarms: **not measured**. No human labels exist.
 
-## November 18 readiness check
+## Historical November 18 readiness check (before waiver)
 
 All 33 offline evaluation tests and both deterministic smoke runs passed. The five-template lock is still unconfirmed and there are no frozen labels or seal. Use the [reviewer packet and runbook](../../../docs/handoff/renter-benchmark-runbook.md) to coordinate the human work. These checks do not establish renter accuracy on real leases.
+
+## Superseding owner decision, November 18, 2026
+
+The owner approved use of the five sample leases for renter evaluation and explicitly chose to proceed without recruiting independent volunteers. The original human-review requirement is closed by waiver. No reviewer identities, participation, reviews, adjudication, frozen labels or results have been invented. The unchecked historical steps above were not completed and are no longer active tasks.
+
+Independent renter accuracy remains unmeasured. Future AI-generated labels or assessments must be described as AI-assisted and kept separate from the human benchmark. This waiver does not authorize new spend, a paid inference run or deployment, establish third-party licensing rights, or certify the product's accuracy. No sample content was processed in recording the decision.
+
+The legacy human-only runner and lock remain unchanged; they must continue refusing to manufacture a human result without actual labels. The owner's sample-use approval is recorded here. No renewal of the volunteer request is needed unless the owner reopens independent review.
