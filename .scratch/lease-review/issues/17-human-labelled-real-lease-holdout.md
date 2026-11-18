@@ -30,3 +30,7 @@ The owner chose a renter-only first benchmark on November 18, 2026. This is a pl
 - [x] The tests in `evals/**` are included in `npm test` by `vitest.config.ts`.
 
 Real-lease recall, false flags and clean-lease false alarms: **not measured**. No human labels exist.
+
+## November 18 readiness check
+
+All 33 offline evaluation tests and both deterministic smoke runs passed. The five-template lock is still unconfirmed and there are no frozen labels or seal. Use the [reviewer packet and runbook](../../../docs/handoff/renter-benchmark-runbook.md) to coordinate the human work. These checks do not establish renter accuracy on real leases.

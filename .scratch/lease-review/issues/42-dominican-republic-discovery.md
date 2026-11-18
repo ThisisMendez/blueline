@@ -2,6 +2,7 @@
 
 Status: ready-for-agent
 Stage: Later · Discovery eligible to run alongside Rhode Island
+Target: v0.6.0 candidate for a limited pilot, conditional on discovery, review and separate launch approval
 Decision: approved for planning November 18, 2026. Begin discovery only when authorized. This does not authorize launch, live uploads, paid work or use of real lease data.
 
 Use public official sources and synthetic Dominican Spanish examples to assess a possible long-term residential pilot. Keep Rhode Island as the first market.

@@ -2,6 +2,10 @@
 
 Reviewed November 18, 2026. Discovery only. A Dominican Republic launch or live upload pilot still needs a separate decision. This work stays within the current plans and uses public sources and synthetic documents.
 
+## Future release target: v0.6.0 (tentative)
+
+Run discovery alongside the Rhode Island pilot; v0.5.0 stays focused on making that pilot reliable. Use the discovery results for a v0.6.0 go/no-go decision on a small, invitation-only Dominican pilot. Keep v0.6.0 uncommitted until the requirements below are met and the owner approves launch. If a gate remains open, defer the launch rather than taking live uploads. No new plan or spend is authorized.
+
 ## Why explore it
 
 The Dominican National Statistics Office found that 42.47% of households rented in its 2024 survey. There is a large rental population. Discovery should establish whether people reviewing a lease before signing want document explanations, have suitable files, and can use the report to prepare better questions. [ONE, ENHOGAR 2024, graph 6](https://www.one.gob.do/media/r4tpwmxo/bolet%C3%ADn-demogr%C3%A1fico-y-social-no-13-familia-y-hogares.pdf)

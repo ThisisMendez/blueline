@@ -39,6 +39,12 @@ Recorded from the owner's answers. Details are in `research/competitors/leasegua
 
 These decisions approve planning and filing only. They do not authorize deployment, signing agreements, paid work, using real lease data, confirming holdout use terms, or launching a new market.
 
+## Operating updates, November 18, 2026
+
+- **Rhode Island source maintenance:** The owner should not have to check sources manually every week. Upgrade the existing bot for early warning, evidence and clear resolution; keep changed references held. Proposed target v0.5.0. [Ticket 43](.scratch/lease-review/issues/43-rhode-island-source-monitoring.md)
+- **Dominican Republic:** Discovery in parallel; v0.6.0 is a tentative private-pilot target, subject to the launch gates and separate approval. [Discovery plan](docs/product/dominican-republic-discovery.md)
+- **Accuracy:** Completed the offline checks and prepared the reviewer packet. The human renter benchmark still needs separate data-use approval and independent reviewers. [Runbook](docs/handoff/renter-benchmark-runbook.md)
+
 ## Still open
 
 - [Operating checklist](HUMAN-STEPS.md): vendor evidence and site closeout. Contact, signup, recovery and the synthetic deletion rehearsal have passed.
