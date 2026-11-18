@@ -1,5 +1,7 @@
 # Real-lease holdout (decision 1, ticket 17)
 
+**Owner update, November 18, 2026:** The owner approved the five sample leases for renter evaluation and waived independent human review. The human benchmark is closed as waived, not passed. The original human-only tooling and instructions below are preserved and have not been bypassed. No human participation or results exist. See [the recorded decision](../../.scratch/lease-review/issues/17-human-labelled-real-lease-holdout.md#superseding-owner-decision-november-18-2026).
+
 Five public residential leases held out for one purpose: measuring Blueline on real lease language against labels made by people, after the product is tuned. **Real-lease performance is not measured yet.** Nobody has labelled these documents, and no product, judge or model has been run on them.
 
 The gold set stays. It's synthetic and has no leases, so it can't stand in for this, and this can't replace its regression role.
@@ -48,7 +50,7 @@ No duplicates. The highest overlap is H06 with H09, at 8.4% and 7.3%: both unive
 
 ## The lock
 
-`lock.json` records each document's id, version, original and text SHA-256, the date, and that the evaluation workstream locked it. **The owner hasn't confirmed it.** Until they do, `freeze.ts` refuses. Confirming means setting `ownerConfirmed` to `true` and `ownerConfirmedOn` to the date, in a commit by the owner.
+`lock.json` records each document's id, version, original and text SHA-256, the date, and that the evaluation workstream locked it. **The legacy human-workflow confirmation flag remains false.** The later sample-use approval is recorded in ticket 17; the human workflow was waived rather than executed. `freeze.ts` still requires its original confirmation and genuine frozen human labels. Confirming means setting `ownerConfirmed` to `true` and `ownerConfirmedOn` to the date, in a commit by the owner.
 
 `holdout.test.ts` fails when:
 

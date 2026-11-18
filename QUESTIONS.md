@@ -43,11 +43,10 @@ These decisions approve planning and filing only. They do not authorize deployme
 
 - **Rhode Island source maintenance:** The owner should not have to check sources manually every week. Upgrade the existing bot for early warning, evidence and clear resolution; keep changed references held. Proposed target v0.5.0. [Ticket 43](.scratch/lease-review/issues/43-rhode-island-source-monitoring.md)
 - **Dominican Republic:** Discovery in parallel; v0.6.0 is a tentative private-pilot target, subject to the launch gates and separate approval. [Discovery plan](docs/product/dominican-republic-discovery.md)
-- **Accuracy:** Completed the offline checks and prepared the reviewer packet. The human renter benchmark still needs separate data-use approval and independent reviewers. [Runbook](docs/handoff/renter-benchmark-runbook.md)
+- **Accuracy — superseding owner decision:** The five sample leases are approved for renter evaluation. The owner chose to skip independent human reviewers and move forward. Close the human-review requirement as waived, not passed. Do not claim human validation or invent reviewer records. Existing offline checks and AI-assisted development results stand separately. No new spend or live model run is authorized by this waiver. [Ticket 17](.scratch/lease-review/issues/17-human-labelled-real-lease-holdout.md)
 
 ## Still open
 
 - [Operating checklist](HUMAN-STEPS.md): vendor evidence and site closeout. Contact, signup, recovery and the synthetic deletion rehearsal have passed.
-- [Independent accuracy](evals/holdout/README.md): separately confirm the five-template set and use terms, then recruit human reviewers and complete the first renter score when authorized. The AI-assisted development baseline is complete.
 - [Backlog](BACKLOG.md): the live selectable-text PDF check is still unrecorded.
 - [Counsel packet](docs/legal/counsel-packet.md): optional free legal review. New dependencies, plan upgrades, and paid filings need separate approval.

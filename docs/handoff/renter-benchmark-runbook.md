@@ -1,6 +1,6 @@
 # Renter accuracy benchmark: reviewer packet and runbook
 
-November 18, 2026. Scope: renters. The [five-template set](../../evals/holdout/README.md) remains unapproved for this benchmark. Its owner-confirmation flag is false; no frozen human labels or seal exist in the planning checkout.
+November 18, 2026. Scope: renters. **Archived preparation — human review waived by owner.** The owner approved the five sample leases and chose to proceed without independent reviewers. The instructions below preserve the original procedure, not an active recruitment request. No human benchmark ran; no frozen human labels or seal exist. The legacy runner remains unchanged. [Owner decision](../../.scratch/lease-review/issues/17-human-labelled-real-lease-holdout.md#superseding-owner-decision-november-18-2026)
 
 ## What passed now
 
@@ -16,7 +16,7 @@ Use the [synthetic practice sheet](renter-benchmark-practice.md) to rehearse. Gi
 
 **Coordinator only: synthetic rehearsal check.** A candidate serious term is section 3 of packet A: its trigger is leaving early and its consequence is charging all future rent even after a replacement tenant pays. Packet A's payment timing and routine repair email are ordinary in this exercise. Packet B should be held because it incorporates a fee schedule that was not supplied. Reviewers should cite the exact text and leave disagreements visible for the third person; do not share this note before their submissions.
 
-## Remaining sequence
+## Original sequence if independent review is reopened
 
 1. Confirm the five-template set, the substitute and its use terms with the owner before anyone accesses or distributes the files. Get two independent volunteers and a third, separate person to resolve disagreements. Keep contact details and quotes out of the public repo.
 2. Run the practice round. Then circulate the approved private worksheets without product outputs. Confirm each reviewer worked independently and record only what the examples actually say.
