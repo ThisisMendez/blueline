@@ -1,5 +1,7 @@
 # Blueline Lease
 
+Start with the [product backlog](BACKLOG.md) for planned work and the [operating checklist](HUMAN-STEPS.md) for open vendor and site follow-ups.
+
 See [Version control and releases](docs/version-control.md#production-domain) for the production site and domain migration steps.
 
 A contract review app for residential leases, built for renters first and supporting landlords. Choose your side, and the review highlights clauses that could harm it, each with its exact source citation. The selected role belongs to that review. V1 reads the lease text only (see ADR 0014). The Next.js application lives in `src/app/`; feature code lives in `src/features/`.
