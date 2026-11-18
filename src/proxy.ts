@@ -2,6 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 import { apexDomainConfigured, isLegacyHost, publicSiteOrigin } from "@/shared/site-origin";
+import { getSupabaseConfig } from "@/features/auth/config";
 
 export async function proxy(request: NextRequest) {
   const hostname = request.headers.get("host")?.toLowerCase() ?? request.nextUrl.hostname;
@@ -17,13 +18,12 @@ export async function proxy(request: NextRequest) {
   }
 
   // Refresh the Supabase token when accounts are configured.
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !anonKey) return NextResponse.next({ request });
+  const supabaseConfig = getSupabaseConfig();
+  if (!supabaseConfig) return NextResponse.next({ request });
 
   let response = NextResponse.next({ request });
 
-  const supabase = createServerClient(url, anonKey, {
+  const supabase = createServerClient(supabaseConfig.url, supabaseConfig.anonKey, {
     cookies: {
       getAll() {
         return request.cookies.getAll();

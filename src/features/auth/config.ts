@@ -1,3 +1,5 @@
+import { assertSafeSupabaseTarget } from "@/shared/environment-safety";
+
 export interface SupabaseConfig {
   readonly url: string;
   readonly anonKey: string;
@@ -18,6 +20,12 @@ export interface SupabaseConfig {
 export function getSupabaseConfig(): SupabaseConfig | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // VERCEL_ENV is server-only. The server and build validate the target before
+  // the browser receives its public configuration.
+  if (typeof window === "undefined") {
+    assertSafeSupabaseTarget(url, process.env.VERCEL_ENV);
+  }
 
   if (!url || !anonKey) return null;
   return { url, anonKey };

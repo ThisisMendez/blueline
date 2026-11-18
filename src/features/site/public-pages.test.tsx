@@ -147,8 +147,8 @@ describe("contact", () => {
 describe("public legal pages", () => {
   it("explains the legal limits of a lease report", () => {
     render(<TermsPage />);
-    expect(screen.getByText(/is not a law firm and does not give legal advice/)).toHaveTextContent(
-      /does not create an attorney-client relationship.*whether it is safe to sign/,
+    expect(screen.getByText(/is not a law firm and does not provide legal advice/)).toHaveTextContent(
+      /does not establish an attorney-client relationship.*whether a lease is legal, enforceable, or safe to sign/,
     );
   });
 
