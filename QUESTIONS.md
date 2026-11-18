@@ -1,4 +1,6 @@
-# Parked questions
+# Product decisions and parked questions
+
+See [BACKLOG.md](BACKLOG.md) for the current stages and ticket links.
 
 ## LeaseGuard-equivalent features: decided 2026-11-12
 
@@ -20,9 +22,16 @@ Recorded from the owner's answers. Details are in `research/competitors/leasegua
 - Terms and Privacy v1 are self-drafted and have not been reviewed by counsel. The free beta is 18+, with express account signup acceptance and no arbitration or class waiver. Support handles verified privacy requests. See the [legal index](docs/legal/README.md).
 - Rhode Island's pilot is a separate statewide list of seven official links. Providence, local rules, and § 34-18-20 are excluded. The pilot must pass hosted source checks before going public.
 
+## Rhode Island pilot direction, November 18, 2026
+
+- Start with residential rentals in Rhode Island. Ask users to pick the state; Rhode Island is the only supported state in the pilot. Clearly label official references as statewide and selected. Keep them separate from the lease findings and score.
+- Providence and other municipal rules are future work. Plan later U.S. states individually and treat the Dominican Republic as a distinct market requiring discovery and review before launch.
+- Stay on the current plans with no new spend. The owner confirmed authority to sign for Blueline; the Formspree agreement still needs the owner's review and acceptance when it arrives.
+
 ## Still open
 
-- **Launch follow-ups.** [Human steps](HUMAN-STEPS.md) covers SMTP, verified Contact, provider terms, and the pilot. [Counsel packet](docs/legal/counsel-packet.md) lists legal questions for a possible free review.
-- **Self-service deletion.** The owner chose manual deletion through Contact first. Decide separately whether to ticket an in-app option for deleting a review or account.
-- **Manual checks after the 2026-11-13 release:** a real selectable-text PDF upload (pdfjs-dist 6), and a real password-reset email, on production.
-- **Optional dependencies.** None are planned. `@react-pdf/renderer`, `diff` or an email provider would need approval.
+- [Operating checklist](HUMAN-STEPS.md): vendor evidence and site closeout. Contact, signup, recovery and the synthetic deletion rehearsal have passed.
+- [Pilot ticket](.scratch/lease-review/issues/38-ri-pilot-state-selection.md): choose between a state selection check and state selection plus invite approval. The recommended location is the rental home, so somebody moving to Rhode Island can participate.
+- [Independent accuracy](evals/holdout/README.md): confirm the five-template set and use terms, recruit human reviewers and complete the first scored run. The AI-assisted development baseline is complete.
+- [Backlog](BACKLOG.md): decide the order of report improvements and whether to keep manual deletion until its volume or turnaround warrants self-service. The live selectable-text PDF check is still unrecorded.
+- [Counsel packet](docs/legal/counsel-packet.md): optional free legal review. New dependencies, plan upgrades, and paid filings need separate approval.
