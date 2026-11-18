@@ -28,10 +28,20 @@ Recorded from the owner's answers. Details are in `research/competitors/leasegua
 - Providence and other municipal rules are future work. Plan later U.S. states individually and treat the Dominican Republic as a distinct market requiring discovery and review before launch.
 - Stay on the current plans with no new spend. The owner confirmed authority to sign for Blueline; the Formspree agreement still needs the owner's review and acceptance when it arrives.
 
+## Decisions recorded from the November 18, 2026 decision board
+
+- **Now — pilot entry.** Ask for the rental property’s state before upload. Accept Rhode Island, with no invitation requirement. [Ticket 38](.scratch/lease-review/issues/38-ri-pilot-state-selection.md)
+- **Now — accuracy.** Plan the first human benchmark for renters. This does not confirm the five-template set or its use terms. [Ticket 17](.scratch/lease-review/issues/17-human-labelled-real-lease-holdout.md)
+- **Next — traceability.** Add both [PDF page citations](.scratch/lease-review/issues/39-pdf-page-citations.md) and [saved attachment matches](.scratch/lease-review/issues/40-persist-attachment-matches.md).
+- **Next — printable reports.** Then add browser [Print / Save as PDF](.scratch/lease-review/issues/41-print-save-review-as-pdf.md).
+- **Parked — self-service deletion.** Keep verified manual deletion for the pilot. Revisit if support turnaround or request volume becomes a problem.
+- **Later — market expansion.** Prove the Rhode Island pilot first. Run [Dominican Republic discovery](.scratch/lease-review/issues/42-dominican-republic-discovery.md) in parallel using public sources and synthetic examples. There is no approval to launch a new market.
+
+These decisions approve planning and filing only. They do not authorize deployment, signing agreements, paid work, using real lease data, confirming holdout use terms, or launching a new market.
+
 ## Still open
 
 - [Operating checklist](HUMAN-STEPS.md): vendor evidence and site closeout. Contact, signup, recovery and the synthetic deletion rehearsal have passed.
-- [Pilot ticket](.scratch/lease-review/issues/38-ri-pilot-state-selection.md): choose between a state selection check and state selection plus invite approval. The recommended location is the rental home, so somebody moving to Rhode Island can participate.
-- [Independent accuracy](evals/holdout/README.md): confirm the five-template set and use terms, recruit human reviewers and complete the first scored run. The AI-assisted development baseline is complete.
-- [Backlog](BACKLOG.md): decide the order of report improvements and whether to keep manual deletion until its volume or turnaround warrants self-service. The live selectable-text PDF check is still unrecorded.
+- [Independent accuracy](evals/holdout/README.md): separately confirm the five-template set and use terms, then recruit human reviewers and complete the first renter score when authorized. The AI-assisted development baseline is complete.
+- [Backlog](BACKLOG.md): the live selectable-text PDF check is still unrecorded.
 - [Counsel packet](docs/legal/counsel-packet.md): optional free legal review. New dependencies, plan upgrades, and paid filings need separate approval.

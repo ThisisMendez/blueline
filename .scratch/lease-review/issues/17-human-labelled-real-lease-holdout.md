@@ -4,7 +4,10 @@
 
 **Blocked by:** 16
 
-**Status:** tooling built and holdout locked; awaiting owner confirmation, reviewers and labels
+**Status:** needs-info — tooling built; awaiting separate owner confirmation and human labels
+**Stage:** Now · Rhode Island pilot quality
+
+The owner chose a renter-only first benchmark on November 18, 2026. This is a planning decision, not approval of the five templates, their use terms, access to real lease data, or any paid run. Keep the AI-assisted development results separate and report the first holdout result as a renter baseline only.
 
 - [x] Five replacements for L02, L04, L05, L06, L09 fetched and checked against the corpus's eligibility rules. Four are Internet Archive copies of the same URLs (raw `id_` bytes). L05 is a different university's sample lease, because UMass's file still returns 403 and has no archive copy. Rejected candidates are recorded (`evals/holdout/README.md`)
 - [x] Each recorded in `evals/holdout/manifest.json` and `evals/holdout/annotations/`:
@@ -22,8 +25,8 @@
 - [x] Runner that refuses unless frozen labels exist and match the seal. Not run
 - [ ] Owner confirms the lock, the L05 substitute and the usage terms
 - [ ] Reviewers recruited; calibration labelled and adjudicated; guide questions resolved
-- [ ] Holdout labelled by two reviewers, adjudicated, frozen
-- [ ] First scored holdout run
-- [ ] The tests in `evals/**` run under `npm test` (needs `vitest.config.ts` to include them; lead)
+- [ ] Two independent people label renter concerns with exact quotes before seeing any Blueline outputs; a third person settles disagreements. Freeze the labels before scoring.
+- [ ] After separate authorization and a budget check, run the renter holdout and report the case counts, correctly or incorrectly blocked packets, serious misses, false flags, and exact citation results. State when the set contains too few relevant cases for a measure.
+- [x] The tests in `evals/**` are included in `npm test` by `vitest.config.ts`.
 
 Real-lease recall, false flags and clean-lease false alarms: **not measured**. No human labels exist.
