@@ -1,6 +1,6 @@
 # Blueline Lease backlog
 
-Updated November 18, 2026. This is the starting point for product planning. **Approved** means the direction and place in the backlog are settled. The November 18 decisions authorize planning only. **Proposed** means a choice or priority still needs approval. **Parked** means no work is scheduled. Stages show order, not delivery dates.
+Updated November 19, 2026. The [project tracker](TRACKER.md) is the starting point for decisions and releases. This backlog records build stages. **Approved** means the direction and place in the backlog are settled. The owner approved the safeguards and tracker production release on November 19. Other tickets keep their stated scope and release gates. **Proposed** means a choice or priority still needs approval. **Parked** means no work is scheduled. Stages show order, not delivery dates.
 
 | Where to look | What it contains |
 | --- | --- |
@@ -14,7 +14,11 @@ GitHub **Issues** is used for operating alerts such as a failed official source 
 
 **Future release targets:** v0.5.0 is the proposed Rhode Island pilot hardening release. v0.6.0 is a tentative target for a limited Dominican Republic pilot only if discovery supports launch and the owner approves it. Discovery can run alongside Rhode Island on the current plans. Neither target is a release commitment.
 
-## Now · Rhode Island pilot and trustworthy operations
+## Current release · v0.4.4
+
+Release the PR #24 safeguards and consolidate the previous planning records into the [project tracker](TRACKER.md), using local checks, staging Preview, PR review and a verified production merge.
+
+## Now · v0.5.0 Rhode Island pilot and trustworthy operations
 
 - **In progress — vendor and site closeout.** Finish Formspree Free deletion and contract coverage, and OpenRouter/Fireworks retention and deletion. Confirm the other hosting and inbox questions before expansion. Follow the [operating checklist](HUMAN-STEPS.md). No new spend.
 - **Approved — Rhode Island rental state before upload.** Ask where the rental property is located before accepting a file. Rhode Island is the only supported state; the pilot uses the user’s selection without invitations or proof of residence. Keep the statewide reference links separate from the report and score. Municipal rules remain outside the pilot. [Ticket 38](.scratch/lease-review/issues/38-ri-pilot-state-selection.md)
@@ -22,7 +26,7 @@ GitHub **Issues** is used for operating alerts such as a failed official source 
 - **Closed by owner waiver — independent human renter benchmark.** On November 18 the owner approved the five sample leases for renter evaluation and chose to proceed without recruiting independent reviewers. No reviewer participation, human labels, adjudication or passing benchmark is recorded. Accuracy remains independently unvalidated. Any future AI-only assessment must be labelled as such. [Decision and ticket 17](.scratch/lease-review/issues/17-human-labelled-real-lease-holdout.md) · [Previous offline checks](docs/handoff/renter-benchmark-runbook.md)
 - **Verification — production PDF check.** Do a production selectable-text PDF check with non-sensitive test material when it can be kept within approved controls and budget. This decision board did not authorize running that check. [Release evidence](docs/handoff/v0.4.0-development-evaluation.md)
 
-## Next · Make findings easier to verify
+## Next · v0.5.0 report usability, after pilot controls
 
 - **Approved — help people trace report evidence.** In the same stage, locate verified quotes on PDF pages and retain attachment matches when a saved report is reopened. Preserve useful document-level citations and file lists on older reports. [Ticket 39: PDF page citations](.scratch/lease-review/issues/39-pdf-page-citations.md) · [Ticket 40: saved attachment matches](.scratch/lease-review/issues/40-persist-attachment-matches.md)
 - **Approved — browser Print / Save as PDF after evidence work.** Build it after tickets 39 and 40, using browser printing so users control their copy. Keep emailed reports and live sharing parked. [Ticket 41](.scratch/lease-review/issues/41-print-save-review-as-pdf.md)
