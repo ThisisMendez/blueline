@@ -1,6 +1,6 @@
 # Blueline Lease
 
-Start with the [product backlog](BACKLOG.md) for planned work and the [operating checklist](HUMAN-STEPS.md) for open vendor and site follow-ups.
+Start with the [project tracker](TRACKER.md) for decisions, open items and releases. The [backlog](BACKLOG.md) holds build stages; the [operating checklist](HUMAN-STEPS.md) holds vendor and site follow-ups.
 
 See [Version control and releases](docs/version-control.md#production-domain) for the production site and domain migration steps.
 

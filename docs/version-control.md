@@ -1,6 +1,6 @@
 # Version control and releases
 
-Blueline Lease is in beta. Version 0.1.0 shipped from `main` at commit `66bd8d7` through [PR #8](https://github.com/ThisisMendez/blueline/pull/8). Version 0.2.0 shipped at `32db23c`. Version 0.3.0 added interactive sample reports and support for signup codes. Version 0.4.0 moves to the owned domain and adds versioned policies and signup agreement. GitHub releases record the deployed commits and activation status.
+Blueline Lease is in beta. Version 0.1.0 shipped from `main` at commit `66bd8d7` through [PR #8](https://github.com/ThisisMendez/blueline/pull/8). Version 0.2.0 shipped at `32db23c`. Version 0.3.0 added interactive sample reports and support for signup codes. Version 0.4.0 moves to the owned domain and adds versioned policies and signup agreement. Version 0.4.4 records the safer development workflow and the unified [project tracker](../TRACKER.md). GitHub releases record the deployed commits and activation status.
 
 ## Version numbers
 
@@ -11,6 +11,19 @@ Use `major.minor.patch`. During beta, keep the major number at zero. Add one to 
 | Fix a bug in the current beta | 0.2.0 → 0.2.1 |
 | Release another batch of beta features | 0.2.1 → 0.3.0 |
 | Move from beta to stable | 0.3.0 → 1.0.0 |
+
+## Release process
+
+The owner established this sequence on November 19, 2026:
+
+0. **Start fresh.** Fetch main, inspect the working tree and active work, and create an isolated branch/worktree for the release. Preserve other work. Confirm the local and staging database targets before running the app.
+1. **Develop.** Implement the tracked scope and update the [project tracker](../TRACKER.md), tickets and release notes.
+2. **Test locally.** Run the checks appropriate to the change, including the required quality suite for application changes. Keep ordinary tests credential-free and use synthetic fixtures.
+3. **Preview in staging.** Deploy the reviewed commit to Preview with the separate staging database. Verify the exact SHA, relevant pages and affected behavior. Keep live model calls and other production data outside staging tests.
+4. **Review the PR.** Review both the project standards and the requested behavior. Resolve findings and wait for required checks. Record staging evidence in the PR.
+5. **Merge into main.** Merge the reviewed head through the protected PR flow. Observe the production deployment, verify relevant live routes, and publish the tagged release with evidence. Restore the last working deployment if verification fails.
+
+The owner's November 19 instruction authorizes this release through production after these gates. Future work follows the same sequence; do not treat a planning target as a completed deployment.
 
 ## Branches, commits, and production
 
