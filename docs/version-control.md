@@ -16,10 +16,18 @@ Use `major.minor.patch`. During beta, keep the major number at zero. Add one to 
 
 - `main` is the source branch for the production Vercel site. A working branch holds changes until they are merged. Use the owner's current working branch when one is designated.
 - A commit identifies the exact code. The app version in `package.json` and `package-lock.json` gives the release a readable name. An annotated Git tag such as `v0.2.0` points to the verified production commit. The GitHub release describes what shipped and links to the public site.
-- Run local checks before merging. For a direct production release, merge the tested branch into `main`, watch the Vercel production deployment, and check the public routes before publishing the tag and release. GitHub may build a preview automatically when a branch is pushed.
+- Start each task from current `origin/main` on a fresh feature branch. Run local lint, route type generation, typecheck, tests, build and the renter and landlord offline smokes. Push the feature branch and open a pull request into `main`. Review its changes, passing `Quality checks` result and the exact Preview commit before merging. Obtain the owner's approval before a deployment or production release when that restriction is active. After an approved merge, watch Vercel Production and check the public routes before publishing the tag and release. Update local `main` before starting another task.
 - If production verification fails, restore the last working Vercel deployment and reconcile `main` with a revert. Keep published tags pointing at their original commits. Version a subsequent fix separately.
 
 [GitHub releases](https://github.com/ThisisMendez/blueline/releases) record when each version shipped.
+
+## Local and Preview isolation
+
+- Keep production credentials in Vercel Production. Local `.env.local` and Preview use the separate `redline` Supabase project (`dwjhkcgzrlbobdpzpley`). The application rejects the production database in local and Preview builds and before server account connections. Keep local `VERCEL_ENV` unset.
+- Set the public Supabase URL and publishable key for all Preview branches. Check branch-specific overrides before reusing an older branch. Use `VERCEL_URL` as the Preview auth origin and allow only this project's Preview callback hosts in staging Supabase. Use `http://localhost:3000` locally. Keep production Auth settings separate.
+- Offline tests and browser fixtures require no live model credentials. Keep model and Contact credentials out of ordinary local testing and Preview. Authorize live inference separately with synthetic data and a budget. Fixture builds disable accounts, so staging account and database tests require a normal staging-configured build.
+- The owner approved staging Preview verification and production release on November 19, 2026. The temporary setup-branch deployment exception has been removed. Check each Preview deployment’s actual SHA and staging environment bindings before testing it; a passing local check does not replace hosted staging verification.
+- `PR checks` runs on pull requests into `main` and on pushes to `main`, with read-only repository permissions and no live service credentials. Its required status is `Quality checks`. The source-monitoring workflow remains separate.
 
 ## Production domain
 

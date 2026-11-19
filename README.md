@@ -10,7 +10,9 @@ See [Version control and releases](docs/version-control.md) for the version numb
 
 ## Run locally
 
-Use Node 24 and npm. Run `npm ci`, copy `.env.example` to `.env.local`, fill in the OpenRouter key and model, then run `npm run dev`. Open `http://localhost:3000` or go directly to `/review`.
+Use Node 24 and npm. Run `npm ci` and copy `.env.example` to `.env.local`. Leave credentials blank for offline tests and the browser fixture checks below. For account testing, use the `redline` staging project and environment-specific recovery and continuation secrets. Run `npm run dev` and open `http://localhost:3000` or `/review`. Add a separate model credential only for an approved live test with synthetic data and a budget.
+
+Local development and Preview builds reject the production Supabase hostname. The same check runs before server account clients and session refresh connect. Production credentials belong in Vercel Production. Keep local `VERCEL_ENV` unset. Restart the local server after changing environment values.
 
 The app starts without credentials and explains unavailable services. Real analysis requires `OPENROUTER_API_KEY` and `OPENROUTER_MODEL`. Paid models default to Fireworks. Set `OPENROUTER_PROVIDER` to select another provider. A `:free` model requires an explicit provider and uses zero token and request price caps. Calls still require low reasoning and strict structured JSON, with no provider fallback. An incompatible configuration returns an error.
 
@@ -38,7 +40,7 @@ and [OpenRouter's free quota](https://openrouter.ai/collections/free-models).
 
 ## Production settings
 
-Production needs these four settings. Each is set on Vercel (production environment) and in `.env.local` for local work. Values are never committed.
+Production needs these four settings in Vercel's Production environment. Local and Preview account testing use the separate `redline` staging project. Values are never committed.
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -90,7 +92,7 @@ Do not commit private lease text, environment files, database dumps or credentia
 
 ### Retention deployment gate
 
-Apply the ordered migrations through `0007_review_roles.sql` to an existing staging project before enabling the library. `0007` stores the selected role and additional finding locations in the existing atomic write. `0005` derives lifecycle timestamps from the database clock and limits table access to unexpired owned reviews. Completion retains a review for 30 fixed 24-hour days. Each explicit save sets a new 90-day expiry from that save. The library uses explicit composite-foreign-key hints for its nested queries because multiple relationships exist. See [Supabase joins and nesting](https://supabase.com/docs/guides/database/joins-and-nesting).
+Apply the ordered migrations through `0008_review_titles.sql` to an existing staging project before enabling the library. `0007` stores the selected role and additional finding locations in the existing atomic write. `0005` derives lifecycle timestamps from the database clock and limits table access to unexpired owned reviews. Completion retains a review for 30 fixed 24-hour days. Each explicit save sets a new 90-day expiry from that save. The library uses explicit composite-foreign-key hints for its nested queries because multiple relationships exist. See [Supabase joins and nesting](https://supabase.com/docs/guides/database/joins-and-nesting).
 
 At expiry, account access stops. Physical deletion is a separate operation: `0006` schedules `purge_expired_reviews()` every minute, deleting the review and cascading to its extracted text, flags and checklist rows. It requires [Supabase Cron / pg_cron](https://supabase.com/docs/guides/cron/install); migration failure or a failed cleanup job is a deployment blocker, not evidence that expired text was deleted. A normal successful job removes expired rows on the next run. Monitor job failures and delays; do not promise deletion at the exact expiry instant.
 
