@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { WalkthroughVideo } from "@/features/landing/components/WalkthroughVideo";
 import { linkClassName, PageShell, Panel, primaryActionClassName } from "@/features/site/PageShell";
 
 export const metadata: Metadata = {
@@ -86,6 +87,8 @@ export default function HowItWorksPage() {
           </Panel>
         </li>
       </ol>
+
+      <WalkthroughVideo />
 
       <section
         aria-labelledby="how-limits-heading"
