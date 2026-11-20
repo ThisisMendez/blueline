@@ -105,6 +105,7 @@ export async function signUpAction(
   const password = textField(formData, "password");
   if (!email || !firstName || firstName.length > 80) return { status: "invalid-input" };
   if (!isValidNewPassword(password)) return { status: "invalid-password" };
+  if (password !== textField(formData, "confirmPassword")) return { status: "password-mismatch" };
   if (formData.get("acceptPolicies") !== "on") return { status: "policy-agreement-required" };
   if (formData.get("termsVersion") !== String(CURRENT_LEGAL.termsVersion)
     || formData.get("privacyVersion") !== String(CURRENT_LEGAL.privacyVersion)) {

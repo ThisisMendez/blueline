@@ -157,6 +157,7 @@ describe("sign-in flows at the Supabase boundary", () => {
     await user.type(screen.getByLabelText("First name"), "Alexis");
     await user.type(screen.getByLabelText("Email address"), email);
     await user.type(screen.getByLabelText("Password"), password);
+    await user.type(screen.getByLabelText("Confirm password"), password);
     await user.click(screen.getByRole("checkbox"));
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
@@ -165,6 +166,34 @@ describe("sign-in flows at the Supabase boundary", () => {
     expect(input).toHaveAttribute("type", "text");
     expect(screen.getByRole("button", { name: "Send a new code" })).toBeVisible();
     expect(auth.verifyOtp).not.toHaveBeenCalled();
+  });
+
+  it.each(["", "a-different-password"])("rejects missing or mismatched signup confirmation before calling Supabase (%s)", async (confirmPassword) => {
+    auth.signUp.mockResolvedValue({ data: { session: null }, error: null });
+    expect(await signUpAction({ status: "idle" }, form({
+      firstName: "Alexis", email, password, confirmPassword, ...policyFields,
+    }))).toEqual({ status: "password-mismatch" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("helps an existing confirmed user leave duplicate signup when no new confirmation email is sent", async () => {
+    auth.getUser.mockResolvedValue({ data: { user: null }, error: null });
+    auth.signUp.mockResolvedValue({
+      data: { user: { ...signer, identities: [] }, session: null }, error: null,
+    });
+    renderScreen(await SignUpPage({ searchParams: Promise.resolve({ next: "/review/saved-review" }) }));
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText("First name"), "Alexis");
+    await user.type(screen.getByLabelText("Email address"), email);
+    await user.type(screen.getByLabelText("Password"), password);
+    await user.type(screen.getByLabelText("Confirm password"), password);
+    await user.click(screen.getByRole("checkbox"));
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+    expect(await screen.findByLabelText("Verification code")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Reset password" }))
+      .toHaveAttribute("href", "/forgot-password?next=%2Freview%2Fsaved-review");
+    expect(screen.getByText(/already have an account/i)).toBeVisible();
+    expect(screen.queryByText(/paste the code sent to/i)).toBeNull();
   });
 
   it("keeps email-link sign-in available when Google and recovery are unconfigured", async () => {
@@ -243,7 +272,7 @@ describe("sign-in flows at the Supabase boundary", () => {
     auth.signUp.mockResolvedValue({ data: { session: null }, error: null });
     auth.verifyOtp.mockResolvedValue({ data: { session: {} }, error: null });
     await signUpAction({ status: "idle" }, form({
-      firstName: "Alexis", email, password, ...policyFields, accepted_at: "forged-time",
+      firstName: "Alexis", email, password, confirmPassword: password, ...policyFields, accepted_at: "forged-time",
     }));
     const metadata = auth.signUp.mock.calls[0]?.[0].options.data;
     expect(metadata).toEqual({
@@ -312,7 +341,7 @@ describe("sign-in flows at the Supabase boundary", () => {
     [{ ...policyFields, termsVersion: "0" }, "policy-version-changed"],
     [{ ...policyFields, privacyVersion: "0" }, "policy-version-changed"],
   ] as const)("rejects missing, unchecked, or stale agreement before signup", async (submitted, status) => {
-    const registration = form({ firstName: "Alexis", email, password, ...submitted });
+    const registration = form({ firstName: "Alexis", email, password, confirmPassword: password, ...submitted });
     expect(await signUpAction({ status: "idle" }, registration)).toEqual({ status });
     expect(auth.signUp).not.toHaveBeenCalled();
   });
@@ -335,7 +364,7 @@ describe("sign-in flows at the Supabase boundary", () => {
     auth.signOut.mockResolvedValue({ error: null });
 
     expect(await signUpAction({ status: "idle" }, form({
-      firstName: "Alexis", email, password, ...policyFields,
+      firstName: "Alexis", email, password, confirmPassword: password, ...policyFields,
     }))).toMatchObject({ status: "confirmation-unavailable" });
     expect(auth.signUp).not.toHaveBeenCalled();
   });
