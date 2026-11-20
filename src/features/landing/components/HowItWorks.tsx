@@ -1,4 +1,5 @@
 import styles from "./HowItWorks.module.css";
+import { WalkthroughVideo } from "./WalkthroughVideo";
 
 const steps = [
   {
@@ -56,6 +57,7 @@ export function HowItWorks() {
             </li>
           ))}
         </ol>
+        <WalkthroughVideo headingLevel={3} />
       </div>
     </section>
   );

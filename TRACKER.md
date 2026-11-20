@@ -1,6 +1,6 @@
 # Blueline Lease tracker
 
-Updated November 19, 2026. Start here for decisions, open work and releases. Alexis Mendez owns the product decisions. The delivery agent maintains this tracker with each PR and release. Account details, signed agreements and private data stay outside this public repository.
+Updated November 20, 2026. Start here for decisions, open work and releases. Alexis Mendez owns the product decisions. The delivery agent maintains this tracker with each PR and release. Account details, signed agreements and private data stay outside this public repository.
 
 ## Releases
 
@@ -9,6 +9,7 @@ Updated November 19, 2026. Start here for decisions, open work and releases. Ale
 | [v0.4.3](https://github.com/ThisisMendez/blueline/releases/tag/v0.4.3) | Live beta, email and account flows | Existing production baseline before this release. Contact, confirmation, recovery and synthetic deletion checks are recorded in the [release audit](docs/handoff/beta-release-audit.md). |
 | [v0.4.4](https://github.com/ThisisMendez/blueline/releases/tag/v0.4.4) | Safer development, required PR checks, and this tracker | Released. [PR #24](https://github.com/ThisisMendez/blueline/pull/24) supplies the safeguards; PR #25 adds the tracker. The release records the checks and production result. |
 | [v0.4.5](https://github.com/ThisisMendez/blueline/releases/tag/v0.4.5) | Signup password confirmation, Show/Hide controls and existing-account guidance | Current patch, implemented in [PR #38](https://github.com/ThisisMendez/blueline/pull/38). [Ticket 44](.scratch/lease-review/issues/44-signup-passwords-and-existing-accounts.md) and the [release record](docs/handoff/v0.4.5-release.md) hold the diagnosis and checks. The published release records production completion. |
+| [v0.4.6](https://github.com/ThisisMendez/blueline/releases/tag/v0.4.6) | Finished Product & Approach walkthrough in the existing How It Works locations | [Ticket 45](.scratch/lease-review/issues/45-product-walkthrough-video.md) and the [release record](docs/handoff/v0.4.6-release.md) describe the integration and checks. The published release records production completion. |
 | v0.5.0 | Rhode Island pilot controls, source-monitoring upgrade and report usability | Planned, not shipped. Do the state gate and monitoring first, page citations and saved attachment matches next, and browser Print / Save as PDF after those. [Backlog](BACKLOG.md) |
 | v0.6.0 candidate | Limited Dominican Republic pilot | Discovery only; no launch date or live uploads authorized. Discovery can run alongside the Rhode Island pilot. [Discovery plan](docs/product/dominican-republic-discovery.md) |
 | Later, unassigned | Additional U.S. states, fee list, Homes and revised-lease comparison | Select work using pilot demand and the ability to support it on the current plans. Municipal coverage stays separate. |
@@ -16,6 +17,8 @@ Updated November 19, 2026. Start here for decisions, open work and releases. Ale
 A target is not a promise to ship. The version in the app package and the published GitHub release identify an actual release. A milestone is complete only when its acceptance checks and production verification are recorded.
 
 ## Latest updates
+
+- **November 20:** Added the finished walkthrough with its original poster and captions. The owner authorized direct production for this patch, skipping staging while retaining protected PR review and required checks.
 
 - **November 19:** Investigated the reported missing signup codes. Both addresses already had confirmed accounts; fresh email-link logins succeeded for both. Patch v0.4.5 adds matching-password checks, Show/Hide controls and a direct way out of duplicate signup. No owner's password was changed.
 - **November 19:** The owner approved the full release process and production after its gates. PR #24 completed standards/spec review, local checks and the staging Preview and merged. The earlier planning-tag decisions are consolidated here for publication on main.
