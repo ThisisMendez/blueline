@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useId } from "react";
+import { useActionState, useId, useState } from "react";
 
 import { CURRENT_LEGAL } from "@/features/site/policy-versions";
+
+import { authPageHref } from "./AuthFrame";
 
 import {
   requestPasswordResetAction,
@@ -55,6 +57,46 @@ const LABEL = "font-[family-name:var(--font-data)] text-xs font-bold uppercase t
 const INPUT = "border-2 border-[var(--color-navy)] bg-[var(--color-paper)] px-4 py-3 font-[family-name:var(--font-body)] text-base text-[var(--color-navy-ink)]";
 const PRIMARY = "inline-flex items-center justify-center bg-[var(--color-navy)] px-6 py-3 font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wide text-[var(--color-paper)] transition-colors hover:bg-[var(--color-navy-ink)] disabled:opacity-70";
 
+function PasswordField({ id, name, label, autoComplete, minLength, describedBy, confirmation = false }: {
+  readonly id: string;
+  readonly name: string;
+  readonly label: string;
+  readonly autoComplete: "current-password" | "new-password";
+  readonly minLength?: number;
+  readonly describedBy?: string;
+  readonly confirmation?: boolean;
+}) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <>
+      <label htmlFor={id} className={LABEL}>{label}</label>
+      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+        <input
+          id={id}
+          name={name}
+          type={visible ? "text" : "password"}
+          autoComplete={autoComplete}
+          minLength={minLength}
+          aria-describedby={describedBy}
+          required
+          className={`${INPUT} min-w-0 w-full`}
+        />
+        <button
+          type="button"
+          aria-label={`${visible ? "Hide" : "Show"} ${confirmation ? "confirmation password" : "password"}`}
+          aria-controls={id}
+          aria-pressed={visible}
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => setVisible(!visible)}
+          className="min-h-11 px-3 py-2 text-sm font-semibold underline"
+        >
+          {visible ? "Hide" : "Show"}
+        </button>
+      </div>
+    </>
+  );
+}
+
 function Message({ state }: { state: SignInState }) {
   if (state.status === "idle") return null;
   return (
@@ -70,11 +112,12 @@ function VerifySignupCodeForm({ next, email }: { readonly next: string; readonly
   const [resendState, resendAction, resending] = useActionState(resendConfirmationAction, initialSignInState);
   return (
     <>
+      <p className="mb-4 text-sm">If this address needs confirmation, check your inbox and spam folder for a code.</p>
       <form action={action} className="flex flex-col gap-3">
         <input type="hidden" name="next" value={next} />
         <input type="hidden" name="confirmationEmail" value={email} />
         <label htmlFor={id} className={LABEL}>Verification code</label>
-        <p id={`${id}-hint`} className="text-sm break-all">Paste the code sent to {email} to sign in.</p>
+        <p id={`${id}-hint`} className="text-sm break-all">Enter the verification code for {email}.</p>
         <input
           id={id}
           name="code"
@@ -99,7 +142,14 @@ function VerifySignupCodeForm({ next, email }: { readonly next: string; readonly
         </button>
       </form>
       <Message state={resendState} />
-      <p className="mt-4 text-sm">You can also use the confirmation link in your email.</p>
+      <p className="mt-4 text-sm">
+        Already have an account? Use{" "}
+        <Link href={authPageHref("/sign-in", next)} className="underline">Sign in</Link>
+        {" or "}
+        <Link href={authPageHref("/forgot-password", next)} className="underline">Reset password</Link>
+        {" instead of waiting for another signup code."}
+      </p>
+      <p className="mt-2 text-sm">You can also use the confirmation link in your email.</p>
       <p className="mt-2 text-sm">After signing in, return to your open review and choose Continue after sign-in.</p>
     </>
   );
@@ -167,21 +217,25 @@ export function SignInForm({ mode = "sign-in", next = "/account", submitDisabled
         )}
         {showPassword ? (
           <>
-            <label htmlFor="auth-password" className={LABEL}>{isReset ? "New password" : "Password"}</label>
-            <input
-              id="auth-password" name="password" type="password" required className={INPUT}
+            <PasswordField
+              id="auth-password"
+              name="password"
+              label={isReset ? "New password" : "Password"}
               autoComplete={isSignIn ? "current-password" : "new-password"}
               minLength={isSignIn ? undefined : PASSWORD_MIN_LENGTH}
-              aria-describedby={isSignIn ? undefined : "auth-password-hint"}
+              describedBy={isSignIn ? undefined : "auth-password-hint"}
             />
             {isSignIn ? null : <p id="auth-password-hint" className="text-sm">Use at least {PASSWORD_MIN_LENGTH} characters.</p>}
           </>
         ) : null}
-        {isReset ? (
-          <>
-            <label htmlFor="auth-password-confirmation" className={LABEL}>Confirm new password</label>
-            <input id="auth-password-confirmation" name="confirmPassword" type="password" autoComplete="new-password" required className={INPUT} />
-          </>
+        {isSignup || isReset ? (
+          <PasswordField
+            id="auth-password-confirmation"
+            name="confirmPassword"
+            label={isReset ? "Confirm new password" : "Confirm password"}
+            autoComplete="new-password"
+            confirmation
+          />
         ) : null}
         {isSignup ? (
           <div className="flex items-start gap-2 text-sm">

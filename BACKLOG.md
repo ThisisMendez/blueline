@@ -14,9 +14,9 @@ GitHub **Issues** is used for operating alerts such as a failed official source 
 
 **Future release targets:** v0.5.0 is the proposed Rhode Island pilot hardening release. v0.6.0 is a tentative target for a limited Dominican Republic pilot only if discovery supports launch and the owner approves it. Discovery can run alongside Rhode Island on the current plans. Neither target is a release commitment.
 
-## Current release · v0.4.4
+## Current patch · v0.4.5
 
-Release the PR #24 safeguards and consolidate the previous planning records into the [project tracker](TRACKER.md), using local checks, staging Preview, PR review and a verified production merge.
+Fix signup password confirmation, add accessible Show/Hide controls, and help existing account holders leave the signup-code screen. [Ticket 44](.scratch/lease-review/issues/44-signup-passwords-and-existing-accounts.md) records the diagnosis and acceptance checks. Use local checks, staging Preview, PR review and a verified production merge. The v0.4.4 safeguards and tracker have shipped.
 
 ## Now · v0.5.0 Rhode Island pilot and trustworthy operations
 

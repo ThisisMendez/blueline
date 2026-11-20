@@ -7,7 +7,8 @@ Updated November 19, 2026. Start here for decisions, open work and releases. Ale
 | Release | Purpose | Status and evidence |
 | --- | --- | --- |
 | [v0.4.3](https://github.com/ThisisMendez/blueline/releases/tag/v0.4.3) | Live beta, email and account flows | Existing production baseline before this release. Contact, confirmation, recovery and synthetic deletion checks are recorded in the [release audit](docs/handoff/beta-release-audit.md). |
-| [v0.4.4](https://github.com/ThisisMendez/blueline/releases/tag/v0.4.4) | Safer development, required PR checks, and this tracker | Current release track. [PR #24](https://github.com/ThisisMendez/blueline/pull/24) supplies the safeguards. The linked release record will contain the deployment result and verification. |
+| [v0.4.4](https://github.com/ThisisMendez/blueline/releases/tag/v0.4.4) | Safer development, required PR checks, and this tracker | Released. [PR #24](https://github.com/ThisisMendez/blueline/pull/24) supplies the safeguards; PR #25 adds the tracker. The release records the checks and production result. |
+| [v0.4.5](https://github.com/ThisisMendez/blueline/releases/tag/v0.4.5) | Signup password confirmation, Show/Hide controls and existing-account guidance | Current patch, implemented in [PR #38](https://github.com/ThisisMendez/blueline/pull/38). [Ticket 44](.scratch/lease-review/issues/44-signup-passwords-and-existing-accounts.md) and the [release record](docs/handoff/v0.4.5-release.md) hold the diagnosis and checks. The published release records production completion. |
 | v0.5.0 | Rhode Island pilot controls, source-monitoring upgrade and report usability | Planned, not shipped. Do the state gate and monitoring first, page citations and saved attachment matches next, and browser Print / Save as PDF after those. [Backlog](BACKLOG.md) |
 | v0.6.0 candidate | Limited Dominican Republic pilot | Discovery only; no launch date or live uploads authorized. Discovery can run alongside the Rhode Island pilot. [Discovery plan](docs/product/dominican-republic-discovery.md) |
 | Later, unassigned | Additional U.S. states, fee list, Homes and revised-lease comparison | Select work using pilot demand and the ability to support it on the current plans. Municipal coverage stays separate. |
@@ -16,6 +17,7 @@ A target is not a promise to ship. The version in the app package and the publis
 
 ## Latest updates
 
+- **November 19:** Investigated the reported missing signup codes. Both addresses already had confirmed accounts; fresh email-link logins succeeded for both. Patch v0.4.5 adds matching-password checks, Show/Hide controls and a direct way out of duplicate signup. No owner's password was changed.
 - **November 19:** The owner approved the full release process and production after its gates. PR #24 completed standards/spec review, local checks and the staging Preview and merged. The earlier planning-tag decisions are consolidated here for publication on main.
 - **November 19:** OpenRouter supplied a more specific gateway-policy and deletion answer. Fireworks agreement scope and provider deletion are still unanswered. We asked support to link its older closure reminder to the active request. Formspree has not supplied the signing link.
 - **November 18:** The independent human accuracy requirement was waived by the owner. That is a waiver, not a passing validation.
@@ -48,7 +50,6 @@ A target is not a promise to ship. The version in the app package and the publis
 | Formspree | Wait for secure agreement and clear steps for older Free submissions; review both. | Agreement outcome, deletion procedure or replacement workflow, any affected site copy and live verification are recorded. |
 | OpenRouter / Fireworks | Confirm provider agreement and deletion/backup handling; verify production routing and privacy settings without lease content. | Vendor evidence, supported controls and site disclosures agree; live changes are verified. |
 | Vercel, Cloudflare and Gmail | Verify the current plan/service terms and the data each service handles. Check Vercel Hobby plan fit before further growth. | Coverage or a compatible operational path is recorded; no plan upgrade inferred. |
-| Development release | Complete the documented staging and PR gates, merge, then inspect production. | Release links identify the actual commit, checks and deployed result. |
 | Rhode Island source lifecycle | Implement the bot upgrade before the December 16 deadline. | Deadline warning, recovery, changed-source handling and deployment are verified. |
 | Production PDF exercise | Exercise the live file path with synthetic material under the approved controls and budget. | Result is recorded; offline fixtures alone do not close it. |
 | Dominican discovery | Determine demand, local scope, Spanish quality, privacy path and continuing support. | A documented go/no-go recommendation exists. A positive recommendation still needs launch approval. |
