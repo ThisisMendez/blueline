@@ -1,6 +1,6 @@
 # 44. Fix password entry and the existing-account signup dead end
 
-Status: in-progress
+Status: implemented — production completion is recorded in the published v0.4.5 release
 Stage: Current patch
 Target: v0.4.5
 Owner request: November 19, 2026. Account creation appeared to fail for two addresses; no new signup code arrived. Add password confirmation and a way to show each password.
@@ -22,3 +22,5 @@ A fresh production sign-in email was delivered to each reported address. Both li
 ## Evidence
 
 Before the fix, two server confirmation regressions and the duplicate-signup navigation regression failed. Four password-control tests also failed before the UI change. After the fix, the authentication suite passed 29 tests. Lint, route type generation, typecheck, all 671 tests, the production build and both deterministic role smokes passed locally. The release and deployment evidence belong in the [release record](../../../docs/handoff/v0.4.5-release.md) and published release.
+
+At implementation head `33451b8`, staging password controls and the generic resend screen passed; the latter preserved a synthetic review return path on both Sign in and Reset password links. Separate Standards and Spec reviews found no issues. [PR #38](https://github.com/ThisisMendez/blueline/pull/38) records the final head, required checks and release gates.
