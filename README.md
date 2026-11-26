@@ -6,6 +6,8 @@ See [Version control and releases](docs/version-control.md#production-domain) fo
 
 A contract review app for residential leases, built for renters first and supporting landlords. Choose your side, and the review highlights clauses that could harm it, each with its exact source citation. The selected role belongs to that review. V1 reads the lease text only (see ADR 0014). The Next.js application lives in `src/app/`; feature code lives in `src/features/`.
 
+Blue Line grew out of [Redline Checkpoint](https://github.com/ThisisMendez/redline-checkpoint), a contract-review coursework prototype. I built Blue Line afterward as a dedicated product for reviewing residential leases.
+
 See [Version control and releases](docs/version-control.md) for the version number, production history, and release workflow.
 
 ## Run locally
